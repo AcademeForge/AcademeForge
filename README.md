@@ -70,9 +70,7 @@
             const errorMsg = await res.text();
             alert("Something went wrong. Please try again.\n" + errorMsg);
           }
-        } catch (error) {
-          alert("An error occurred: " + error.message);
-        }
+       
       };
 
       reader.onerror = function() {
