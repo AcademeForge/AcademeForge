@@ -1,6 +1,14 @@
 
 <html lang="en">
 <head>
+<!-- Moving Banner -->
+<div class="banner-container">
+    <marquee behavior="scroll" direction="left">
+        🌟 🚀 10 April Class 9 & 10 all notes will be updated. 
+    <a href="https://t.me/AcademeForge" target="_blank" style="color: #ff4081; text-decoration: underline;">Join our Telegram group</a>
+🌟
+    </marquee>
+
   <meta charset="UTF-8">
   <title>AcademeForge Scholars Test Registration</title>
   <style>
@@ -9,7 +17,7 @@
     label { display: block; margin: 10px 0 5px; }
     input, select, textarea { width: 100%; padding: 8px; }
     .conditional { display: none; }
-    button { margin-top: 20px; padding: 10px 20px; background: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button { margin-top: 20px; padding: 10px 20px; background: #00e5ff; color: white; border: none; border-radius: 5px; cursor: pointer; }
   </style>
 </head>
 <body>
