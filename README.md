@@ -3,7 +3,7 @@
 <!-- Moving Banner -->
 <div style="width: 100%; background-color: #0a0a0a; color: white; padding: 10px 0; overflow: hidden; position: fixed; top: 0; left: 0; z-index: 10000;">
   <div class="scroll-text">
-    After registering, please send your School Name, School Address, and Payment Screenshot to our official Telegram account:
+    After registering, please send your Name, School Name, School Address, and Payment Screenshot to our official Telegram account:
     <a href="https://t.me/AcademeforgeScholarsTest_AST" target="_blank" style="color: #00BFFF; font-weight: bold; text-decoration: underline;">t.me/AcademeforgeScholarsTest_AST</a>
   </div>
 
