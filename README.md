@@ -145,7 +145,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    background: #87ceeb; /* Sky blue */
+    background: #5E60CE; /* Violet blue */
     color: white;
     text-align: center;
     padding: 15px 10px;
@@ -162,7 +162,7 @@
   }
 
   footer .social-links a:hover {
-    color: #5E60CE;
+    color: #F1FAFF;
     text-decoration: underline;
   }
 </style>
