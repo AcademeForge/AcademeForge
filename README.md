@@ -6,7 +6,6 @@
     After registering, please send your School Name, School Address, and Payment Screenshot to our official Telegram account: 
     <a href="https://t.me/AcademeforgeScholarsTest_AST" target="_blank" style="color: #00BFFF; font-weight: bold; text-decoration: underline;">t.me/AcademeforgeScholarsTest_AST</a>
   </div>
-</div>
 
 <style>
 @keyframes scroll-left {
