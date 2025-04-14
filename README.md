@@ -72,7 +72,7 @@
        <button type="button">Pay ₹50 Now</button>
     </a>
     
-    
+    </script>
     document.getElementById("registrationForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const form = e.target;
@@ -107,7 +107,7 @@
 
 <button type="submit">Register Now</button>
   
-   <script>
+ 
 
 </body>
 </html>
