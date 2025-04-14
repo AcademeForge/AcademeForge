@@ -72,9 +72,7 @@
        <button type="button">Pay ₹50 Now</button>
     </a>
     
-    <button type="submit">Register Now</button>
-  
-   <script>
+    
     document.getElementById("registrationForm").addEventListener("submit", function(e) {
       e.preventDefault();
       const form = e.target;
@@ -106,6 +104,10 @@
 
  <p>Or you can email us at: <strong><a href="mailto:academeforge@gmail.com?subject=AST%20Registration%20Query&body=Hello%20Team%20AcademeForge,%0A%0AI%20have%20a%20query%20regarding%20the%20AcademeForge%20Scholars%20Test.%0A%0AThanks!">academeforge@gmail.com</a></strong></p>
 </div>
+
+<button type="submit">Register Now</button>
+  
+   <script>
 
 </body>
 </html>
