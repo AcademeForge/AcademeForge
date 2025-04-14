@@ -2,14 +2,22 @@
 <html lang="en">
 <!-- Moving Banner -->
 <div style="width: 100%; background-color: #0a0a0a; color: white; padding: 10px 0; overflow: hidden; position: fixed; top: 0; left: 0; z-index: 10000;">
-  <div style="white-space: nowrap; display: inline-block; animation: scroll-left 25s linear infinite;">
-    After registering, please send your School Name, School Address, and Payment Screenshot to our official Telegram account: 
+  <div class="scroll-text">
+    After registering, please send your School Name, School Address, and Payment Screenshot to our official Telegram account:
     <a href="https://t.me/AcademeforgeScholarsTest_AST" target="_blank" style="color: #00BFFF; font-weight: bold; text-decoration: underline;">t.me/AcademeforgeScholarsTest_AST</a>
   </div>
+</div>
 
 <style>
+.scroll-text {
+  display: inline-block;
+  white-space: nowrap;
+  animation: scroll-left 18s linear infinite;
+  padding-left: 100%; /* Start closer to visible area */
+}
+
 @keyframes scroll-left {
-  0% { transform: translateX(100%); }
+  0% { transform: translateX(0%); }
   100% { transform: translateX(-100%); }
 }
 </style>
