@@ -106,15 +106,7 @@
  <p>Or you can email us at: <strong><a href="mailto:academeforge@gmail.com?subject=AST%20Registration%20Query&body=Hello%20Team%20AcademeForge,%0A%0AI%20have%20a%20query%20regarding%20the%20AcademeForge%20Scholars%20Test.%0A%0AThanks!">academeforge@gmail.com</a></strong></p>
 
 </div>
-  
-<nav>
-    <a href="https://academeforge.github.io/AcademeForge/" target="_blank">Academeforge</a>
-    <a href="https://academeforge.pages.dev/" target="_blank">Extra material</a>
-<a href="https://t.me/AcademeForge/" target="_blank">Telegram</a>
-    <a href="https://academeforge.wordpress.com/" target="_blank">About AF</a>
-  </nav>  <header>
-    <h1>AcademeForge Scholars Test</h1>
-  </header>  <iframe src="https://forms.gle/MnComSa4Sv7EJRcU6" allowfullscreen></iframe>  <footer>
+  <footer>
     <div class="social-links">
       <a href="https://www.youtube.com/@AcademeForgePro" target="_blank">YouTube</a> |
       <a href="https://www.instagram.com/academeforgee" target="_blank">Instagram</a> |
