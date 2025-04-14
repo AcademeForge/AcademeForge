@@ -162,7 +162,7 @@
   }
 
   footer .social-links a:hover {
-    color: #1E1E2F;
+    color: #5E60CE;
     text-decoration: underline;
   }
 </style>
