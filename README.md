@@ -1,6 +1,5 @@
 
 <html lang="en">
-<head>
 <!-- Moving Banner -->
 <div class="banner-container">
     <marquee behavior="scroll" direction="left">
@@ -8,12 +7,12 @@
     <a href="https://t.me/AcademeForge" target="_blank" style="color: #ff4081; text-decoration: underline;">Join our Telegram group</a>
 🌟
     </marquee>
-
+   </head>
   <meta charset="UTF-8">
   <title>AcademeForge Scholars Test Registration</title>
   <style>
     body { font-family: Arial, sans-serif; background: #ffcc00; padding: 20px; }
-    form { max-width: 600px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; }
+    form { max-width: 600px; margin: auto; background: #121212; padding: 20px; border-radius: 10px; }
     label { display: block; margin: 10px 0 5px; }
     input, select, textarea { width: 100%; padding: 8px; }
     .conditional { display: none; }
