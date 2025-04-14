@@ -5,8 +5,33 @@
     <marquee behavior="scroll" direction="left">
         🌟 🚀 10 April Class 9 & 10 all notes will be updated. 
     <a href="https://t.me/AcademeForge" target="_blank" style="color: #ff4081; text-decoration: underline;">Join our Telegram group</a>
-🌟
-    </marquee>
+  </marquee>
+
+</div>
+<!-- Logo -->
+<div class="logo-container">
+    <a href="https://ibb.co/23qH49sJ" target="_blank">
+        <img src="https://i.ibb.co/k2KvC79Z/IMG-20250320-164334-559.jpg" alt="AcademeForge Logo">
+    </a>
+</div>
+
+<style>
+    /* Logo Styling */
+    .logo-container {
+        position: fixed;
+        top: 120px; /* Adjust this to position it under the banner */
+        Right: 10px; /* Positions the logo on the Right side */
+        z-index: 9997;
+    }
+
+    .logo-container img {
+        height: 40px; /* Reduced size */
+        width: auto; 
+        border-radius: 5px;
+    }
+</style>
+
+
    </head>
   <meta charset="UTF-8">
   <title>AcademeForge Scholars Test Registration</title>
