@@ -1,11 +1,19 @@
 
 <html lang="en">
 <!-- Moving Banner -->
-<div class="banner-container">
-    <marquee behavior="scroll" direction="left">
-        🌟 🚀 10 April Class 9 & 10 all notes will be updated. 
-    <a href="https://t.me/AcademeForge" target="_blank" style="color: #5E60CE; text-decoration: underline;">Join our Telegram group</a>
-  </marquee>
+<div style="width: 100%; background-color: #0a0a0a; color: white; padding: 10px 0; overflow: hidden; position: fixed; top: 0; left: 0; z-index: 10000;">
+  <div style="white-space: nowrap; display: inline-block; animation: scroll-left 15s linear infinite;">
+    After registering, please send your School Name, School Address, and Payment Screenshot to our official Telegram account: 
+    <a href="https://t.me/AcademeforgeScholarsTest_AST" target="_blank" style="color: #00BFFF; font-weight: bold; text-decoration: underline;">t.me/AcademeforgeScholarsTest_AST</a>
+  </div>
+</div>
+
+<style>
+@keyframes scroll-left {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+</style>
 
 </div>
 <!-- Logo -->
