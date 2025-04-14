@@ -36,8 +36,8 @@
   <meta charset="UTF-8">
   <title>AcademeForge Scholars Test Registration</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #ffcc00; padding: 20px; }
-    form { max-width: 600px; margin: auto; background: #121212; padding: 20px; border-radius: 10px; }
+    body { font-family: Arial, sans-serif; background: ##121212; padding: 20px; }
+    form { max-width: 600px; margin: auto; background: ##ffcc00; padding: 20px; border-radius: 10px; }
     label { display: block; margin: 10px 0 5px; }
     input, select, textarea { width: 100%; padding: 8px; }
     .conditional { display: none; }
