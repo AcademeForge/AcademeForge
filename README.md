@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -46,10 +46,8 @@
           schoolAddress: form["school-address"].value || "",
           mobile: form.mobile.value,
           email: form.email.value,
-          gender: form.gender.value,
-          dob: form.dob.value,
           fileData: base64,
-          fileName: fileInput.name,
+          fileName: `${form.name.value}_${form.class.value}_${Date.now()}.${fileInput.name.split('.').pop()}`,
           mimeType: fileInput.type
         };
 
@@ -129,17 +127,6 @@
 
     <label for="email">Email Address*</label>
     <input type="email" id="email" name="email" required>
-
-    <label for="gender">Gender*</label>
-    <select id="gender" name="gender" required>
-      <option value="">Select Gender</option>
-      <option value="Male">Male</option>
-      <option value="Female">Female</option>
-      <option value="Other">Other</option>
-    </select>
-
-    <label for="dob">Date of Birth*</label>
-    <input type="date" id="dob" name="dob" required>
 
     <p><strong>Pay ₹50 to UPI ID:</strong> <code>devrajkumar01@ybl</code> using PhonePe or any UPI app.</p>
 
