@@ -63,11 +63,10 @@
     <label for="dob">Date of Birth*</label>
     <input type="date" id="dob" name="dob" required>
 <!-- Payment Info before screenshot -->
-    <label><strong>Step 1: Pay the Test Fee</strong></label>
-    <p>Pay <strong>₹50</strong> to UPI ID <strong>devrajkumar01@ybl</strong> using any UPI app (PhonePe, Google Pay, etc.).</p>
-    <p><strong>Note:</strong> After payment, upload the screenshot below.</p>
+    <label>
+    <p><strong>Pay ₹50 to UPI ID:</strong> <code>devrajkumar01@ybl</code> using PhonePe or any UPI app.</p>
 
-    <!-- UPI Pay Button -->
+   <!-- UPI Pay Button -->
     <a href="upi://pay?pa=devrajkumar01@ybl&pn=Devraj+Kumar&mc=0000&tid=1234567890&tr=1234567890&tn=Test+Payment&am=50&cu=INR" 
        target="_blank">
        <button type="button">Pay ₹50 Now</button>
@@ -110,3 +109,4 @@
 
 </body>
 </html>
+
