@@ -4,7 +4,7 @@
 <div class="banner-container">
     <marquee behavior="scroll" direction="left">
         🌟 🚀 10 April Class 9 & 10 all notes will be updated. 
-    <a href="https://t.me/AcademeForge" target="_blank" style="color: #ff4081; text-decoration: underline;">Join our Telegram group</a>
+    <a href="https://t.me/AcademeForge" target="_blank" style="color: #5E60CE; text-decoration: underline;">Join our Telegram group</a>
   </marquee>
 
 </div>
