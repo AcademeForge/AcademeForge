@@ -32,7 +32,7 @@
 </style>
 
 
-   </head>
+  
   <meta charset="UTF-8">
   <title>AcademeForge Scholars Test Registration</title>
   <style>
@@ -43,7 +43,7 @@
     .conditional { display: none; }
     button { margin-top: 20px; padding: 10px 20px; background: #00e5ff; color: white; border: none; border-radius: 5px; cursor: pointer; }
   </style>
-</head>
+
 <body>
 
   <h2>AcademeForge Scholars Test Registration</h2>
