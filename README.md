@@ -84,5 +84,7 @@ footer {
     </div>
     <p>&copy; 2025 AcademeForge. All rights reserved.</p>
   </footer>
+
+<iframe allow="join-ad-interest-group" data-tagging-id="G-9RN512817V" data-load-time="1744713543736" height="0" width="0" src="https://td.doubleclick.net/td/ga/rul?tid=G-9RN512817V&amp;gacid=506108405.1744646385&amp;gtm=45je54b0v869872018za200zb866959273&amp;dma=0&amp;gcd=13l3l3l3l1l1&amp;npa=0&amp;pscdl=noapi&amp;aip=1&amp;fledge=1&amp;frm=0&amp;tag_exp=102015666~102509682~102803279~102813109~102887800~102926062~103021830~103027016~103051953~103055465~103077950&amp;z=1206175658" style="display: none; visibility: hidden;"></iframe>
 </body>
 
