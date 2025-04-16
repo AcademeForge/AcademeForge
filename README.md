@@ -107,6 +107,19 @@ footer {
     position: relative;
     bottom: 0;
     width: 100%;
-}
+         } 
+// Simulated live stats update
+document.addEventListener("DOMContentLoaded", function() {
+    // Simulate fetching data
+    const stats = {
+        studentsEnrolled: 1200,
+        citiesCovered: 50,
+        scholarshipsDistributed: 300
+    };
+
+    document.getElementById("students-enrolled").innerText = stats.studentsEnrolled;
+    document.getElementById("cities-covered").innerText = stats.citiesCovered;
+    document.getElementById("scholarships-distributed").innerText = stats.scholarshipsDistributed;
+});
 </body>
 </html>
