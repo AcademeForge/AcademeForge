@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -56,6 +56,57 @@
         <p>&copy; 2023 AcademeForge. All rights reserved.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js"></script> 
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: navy;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.cta-buttons button {
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: orange;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.video-section {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.live-stats {
+    background-color: white;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 5px;
+}
+
+.success-stories {
+    background-color: white;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 5px;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: navy;
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
 </body>
 </html>
