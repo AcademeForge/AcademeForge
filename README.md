@@ -120,6 +120,13 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("students-enrolled").innerText = stats.studentsEnrolled;
     document.getElementById("cities-covered").innerText = stats.citiesCovered;
     document.getElementById("scholarships-distributed").innerText = stats.scholarshipsDistributed;
-});
+}); 
+import React from 'react';
+import { StyleSheet, Text, View, Button } from 'react-native';
+
+const App = () => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>
 </body>
 </html>
