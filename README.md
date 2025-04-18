@@ -1,132 +1,77 @@
 
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AcademeForge</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AcademeForge | All You Need in One Place</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      color: #333;
+    }
+    header {
+      background: #1e3a8a;
+      color: white;
+      padding: 40px 20px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+    p {
+      margin: 10px 0 0;
+      font-size: 1.2rem;
+    }
+    .links {
+      margin: 40px auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 90%;
+      max-width: 500px;
+    }
+    .link-btn {
+      background: #2563eb;
+      color: white;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+    .link-btn:hover {
+      background: #1d4ed8;
+    }
+    footer {
+      margin-top: 50px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>AcademeForge</h1>
-        <nav>
-            <ul>
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#ast">AST</a></li>
-                <li><a href="#courses">Courses</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#contact">Contact Us</a></li>
-            </ul>
-        </nav>
-    </header>
+  <header>
+    <h1>Welcome to AcademeForge</h1>
+    <p>Empowering India's Young Minds</p>
+  </header>
 
-    <main>
-        <section class="hero">
-            <h2>Empowering India's Future, One Scholar at a Time</h2>
-            <div class="cta-buttons">
-                <a href="#register" class="cta">Register for AST</a>
-                <a href="#telegram" class="cta">Join Telegram</a>
-                <a href="#download" class="cta">Download App</a>
-                <a href="#youtube" class="cta">Watch on YouTube</a>
-            </div>
-        </section>
+  <div class="links">
+    <a href="https://academeforge.wordpress.com/" class="link-btn" target="_blank">Visit Our WordPress Site</a>
+    <a href="https://forms.gle/MnComSa4Sv7EJRcU6" class="link-btn" target="_blank">AST Registration Form</a>
+    <a href="https://www.youtube.com/@AcademeForgePro" class="link-btn" target="_blank">YouTube Channel</a>
+    <a href="https://www.instagram.com/academeforgee" class="link-btn" target="_blank">Instagram</a>
+    <a href="https://t.me/+DYChuLLgL-83MThl" class="link-btn" target="_blank">Join Main Telegram Group</a>
+    <a href="https://t.me/addlist/CVX57k_dpG4wNGJl" class="link-btn" target="_blank">Join All Telegram Groups</a>
+    <!-- Add more links as needed -->
+  </div>
 
-        <section class="video">
-            <h3>What is AcademeForge?</h3>
-            <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
-        </section>
-
-        <section class="live-stats">
-            <h3>Live Stats</h3>
-            <p>Students Enrolled: <span id="students-enrolled">1000</span></p>
-            <p>Cities Covered: <span id="cities-covered">50</span></p>
-            <p>Scholarships Distributed: <span id="scholarships-distributed">200</span></p>
-        </section>
-
-        <section class="success-stories">
-            <h3>Success Stories</h3>
-            <div class="testimonials">
-                <p>"AcademeForge changed my life!" - Student A</p>
-                <p>"I achieved my dreams with their help!" - Student B</p>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2023 AcademeForge. All rights reserved.</p>
-    </footer>
-
-    <script src="script.js"></script> 
-    body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
-
-header {
-    background-color: navy;
-    color: white;
-    padding: 20px;
-    text-align: center;
-}
-
-.cta-buttons button {
-    margin: 10px;
-    padding: 10px 20px;
-    background-color: orange;
-    border: none;
-    color: white;
-    cursor: pointer;
-}
-
-.video-section {
-    text-align: center;
-    margin: 20px 0;
-}
-
-.live-stats {
-    background-color: white;
-    padding: 20px;
-    margin: 20px;
-    border-radius: 5px;
-}
-
-.success-stories {
-    background-color: white;
-    padding: 20px;
-    margin: 20px;
-    border-radius: 5px;
-}
-
-footer {
-    text-align: center;
-    padding: 10px;
-    background-color: navy;
-    color: white;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-         } 
-// Simulated live stats update
-document.addEventListener("DOMContentLoaded", function() {
-    // Simulate fetching data
-    const stats = {
-        studentsEnrolled: 1200,
-        citiesCovered: 50,
-        scholarshipsDistributed: 300
-    };
-
-    document.getElementById("students-enrolled").innerText = stats.studentsEnrolled;
-    document.getElementById("cities-covered").innerText = stats.citiesCovered;
-    document.getElementById("scholarships-distributed").innerText = stats.scholarshipsDistributed;
-}); 
-import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
-
-const App = () => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>
+  <footer>
+    &copy; 2025 AcademeForge. All rights reserved.
+  </footer>
 </body>
 </html>
