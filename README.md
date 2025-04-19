@@ -96,5 +96,34 @@
       <a href="#">Sign up</a>
     </div>
   </div>
+   
+<!-- Class Selection Page -->
+<div class="container hidden" id="classContainer">
+    <h2>Select Your Class</h2>
+    <div class="option" onclick="selectClass(9)">Class 9</div>
+    <div class="option" onclick="selectClass(10)">Class 10</div>
+    <div class="option" onclick="selectClass(11)">Class 11</div>
+    <div class="option" onclick="selectClass(12)">Class 12</div>
+</div>
+
+<!-- Stream Selection Page -->
+<div class="container hidden" id="streamContainer">
+    <h2>Select Your Stream</h2>
+    <div class="option" onclick="selectStream('Science')">Science</div>
+    <div class="option" onclick="selectStream('Commerce')">Commerce</div>
+    <div class="option" onclick="selectStream('Arts')">Arts</div>
+</div>
+
+<!-- Subjects Page -->
+<div class="container hidden" id="subjectContainer">
+    <h2>Subjects</h2>
+    <div id="subjectsList"></div>
+</div>
+
+<script>
+    let currentPage = 'login';
+    let selectedClass = null;
+    let selectedStream = null;
+
 </body>
 </html>
