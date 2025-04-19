@@ -1,8 +1,9 @@
-<html lang="en">
+html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Neon Login - AcademeForge</title>
+  <link rel="manifest" href="manifest.json">
   <style>
     * {
       margin: 0;
@@ -76,6 +77,17 @@
       font-weight: bold;
       cursor: pointer;
     }
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      justify-content: left;
+      font-size: 14px;
+      margin-top: -5px;
+    }
+    .checkbox-label input {
+      width: auto;
+      margin-right: 5px;
+    }
   </style>
 </head>
 <body>
@@ -95,17 +107,17 @@
     <div id="login" style="display: none;">
       <input type="text" id="loginUsername" placeholder="Username" />
       <input type="password" id="loginPassword" placeholder="Password" />
+      <label class="checkbox-label"><input type="checkbox" id="rememberMe" /> Remember me</label>
       <button onclick="loginUser()">Login</button>
+      <button onclick="logoutUser()">Logout</button>
     </div>
   </div>  <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js';
     import {
       getAuth,
-      signInWithEmailLink,
-      sendSignInLinkToEmail,
-      isSignInWithEmailLink,
       signInWithEmailAndPassword,
       createUserWithEmailAndPassword,
+      signOut
     } from 'https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js';
     import {
       getFirestore,
@@ -127,13 +139,12 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // Simulated OTP workflow
     let generatedOTP = null;
 
     window.sendOTP = async () => {
       const email = document.getElementById('email').value;
       generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
-      alert(`(Simulated) OTP sent to Gmail: ${generatedOTP}`); // Replace with real email sending in production
+      alert(`(Simulated) OTP sent to Gmail: ${generatedOTP}`);
       document.getElementById('step1').style.display = 'none';
       document.getElementById('step2').style.display = 'block';
     };
@@ -148,6 +159,9 @@
         try {
           await createUserWithEmailAndPassword(auth, email, password);
           await setDoc(doc(db, 'users', username), { email, username });
+          if (document.getElementById('rememberMe')?.checked) {
+            localStorage.setItem('savedUsername', username);
+          }
           window.location.href = 'https://t.me/AcademeForge';
         } catch (err) {
           alert('Error: ' + err.message);
@@ -160,12 +174,14 @@
     window.loginUser = async () => {
       const username = document.getElementById('loginUsername').value;
       const password = document.getElementById('loginPassword').value;
+      const remember = document.getElementById('rememberMe').checked;
       const userDoc = await getDoc(doc(db, 'users', username));
 
       if (userDoc.exists()) {
         const email = userDoc.data().email;
         try {
           await signInWithEmailAndPassword(auth, email, password);
+          if (remember) localStorage.setItem('savedUsername', username);
           window.location.href = 'https://t.me/AcademeForge';
         } catch (err) {
           alert('Login failed: ' + err.message);
@@ -174,5 +190,29 @@
         alert('No such user');
       }
     };
+
+    window.logoutUser = () => {
+      signOut(auth).then(() => {
+        localStorage.removeItem('savedUsername');
+        location.reload();
+      });
+    };
+
+    window.onload = () => {
+      const saved = localStorage.getItem('savedUsername');
+      if (saved) {
+        document.getElementById('login').style.display = 'block';
+        document.getElementById('loginUsername').value = saved;
+        document.getElementById('step1').style.display = 'none';
+      }
+    };
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(reg => console.log('SW registered:', reg.scope))
+          .catch(err => console.log('SW registration failed:', err));
+      });
+    }
   </script></body>
 </html>
