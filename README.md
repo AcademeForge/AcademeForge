@@ -1,10 +1,68 @@
-
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="google-site-verification" content="F1L0xfSoJ09Jp0SjvlmTnzkWK_fuYyhBw36QvRdDGwM" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page with Sidebar</title>
+<meta name="google-site-verification" content="F1L0xfSoJ09Jp0SjvlmTnzkWK_fuYyhBw36QvRdDGwM" />
+<!-- Moving Banner -->
+<div class="banner-container">
+    <marquee behavior="scroll" direction="left">
+        Stay Tuned For more updates 
+    <a href="https://t.me/AcademeForge" target="_blank" style="color: #ff4081; text-decoration: underline;">Join our Telegram group</a>
+🌟
+    </marquee>
+
+</div>
+<!-- Logo -->
+<div class="logo-container">
+    <a href="https://ibb.co/23qH49sJ" target="_blank">
+        <img src="https://i.ibb.co/k2KvC79Z/IMG-20250320-164334-559.jpg" alt="AcademeForge Logo">
+    </a>
+</div>
+
+<style>
+    /* Logo Styling */
+    .logo-container {
+        position: fixed;
+        top: 120px; /* Adjust this to position it under the banner */
+        Right: 10px; /* Positions the logo on the Right side */
+        z-index: 9997;
+    }
+
+    .logo-container img {
+        height: 40px; /* Reduced size */
+        width: auto; 
+        border-radius: 5px;
+    }
+</style>
+<!-- Your existing login form here -->
+<div class="login-container">
+    <!-- Login form content -->
+</div>
+
+<!-- CSS for styling the banner -->
+<style>
+    .banner-container {
+        background-color: #ffcc00; /* Background color */
+        padding: 10px;
+        color: #000; /* Text color */
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 9999;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Shadow effect */
+    }
+
+    marquee {
+        white-space: nowrap;
+        overflow: hidden;
+        display: inline-block;
+    }
+</style>
+<meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+         <title>AcademeForge</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,44 +75,68 @@
             align-items: center;
             height: 100vh;
         }
-
-        /* Banner Styling */
-        .banner-container {
-            background-color: #ffcc00;
-            padding: 10px;
-            color: #000;
-            font-size: 16px;
-            font-weight: bold;
+        .container {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 345px rgba(0, 255, 255, 0.5);
             text-align: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 9999;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 300px;
+            transition: transform 0.3s ease;
         }
-
-        marquee {
-            white-space: nowrap;
-            overflow: hidden;
+        h2 {
+            color: #ff4081;
+        }
+        .option, .access-button, .back-button {
+            background-color: #292929;
+            color: white;
+            padding: 12px;
+            margin: 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            width: 90%;
             display: inline-block;
         }
-
-        /* Logo Styling */
-        .logo-container {
+        .option:hover, .access-button:hover, .back-button:hover {
+            background-color: #00e5ff;
+            color: black;
+        }
+        .hidden {
+            display: none;
+        }
+        .back-button {
             position: fixed;
-            top: 120px; 
-            right: 10px;
-            z-index: 9997;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Back Button -->
+<button class="back-button" id="backButton" onclick="goBack()">Back</button>
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page with Sidebar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            flex-direction: column;
         }
 
-        .logo-container img {
-            height: 40px;
-            width: auto;
-            border-radius: 5px;
-        }
-
-        /* Sidebar Styles */
+        /* Header for Hamburger Icon */
         #menuIcon {
             font-size: 30px;
             color: white;
@@ -67,6 +149,7 @@
             z-index: 100;
         }
 
+        /* Sidebar Styles */
         #sidebar {
             width: 250px;
             background-color: #333;
@@ -74,7 +157,7 @@
             padding: 20px;
             position: fixed;
             top: 0;
-            left: -250px;
+            left: -250px; /* Initially hide sidebar */
             height: 100%;
             transition: left 0.3s ease;
             z-index: 90;
@@ -85,6 +168,7 @@
             margin-top: 20px;
         }
 
+        /* Button Styles */
         .sidebar-button {
             width: 100%;
             padding: 15px;
@@ -102,22 +186,19 @@
             background-color: #45a049;
         }
 
-        /* Login Form Container */
-        .container {
-            background: #1e1e1e;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 345px rgba(0, 255, 255, 0.5);
+        /* Container Styles */
+        #loginContainer {
+            margin: 20px;
+            max-width: 400px;
+            margin-top: 50px;
+            transition: margin-left 0.3s ease; /* Adjust form position when sidebar appears */
+        }
+
+        #loginContainer h2 {
             text-align: center;
-            width: 300px;
-            transition: transform 0.3s ease;
         }
 
-        h2 {
-            color: #ff4081;
-        }
-
-        .container input {
+        #loginContainer input {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -125,7 +206,7 @@
             border-radius: 4px;
         }
 
-        .container button {
+        #loginContainer button {
             width: 100%;
             padding: 10px;
             background-color: #4CAF50;
@@ -135,10 +216,16 @@
             cursor: pointer;
         }
 
-        .container button:hover {
+        #loginContainer button:hover {
             background-color: #45a049;
         }
 
+        marquee {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Footer text */
         .footer {
             margin-top: 30px;
             font-size: 14px;
@@ -149,23 +236,7 @@
     </style>
 </head>
 <body>
-
-    <!-- Moving Banner -->
-    <div class="banner-container">
-        <marquee behavior="scroll" direction="left">
-            Stay Tuned For more updates
-            <a href="https://t.me/AcademeForge" target="_blank" style="color: #ff4081; text-decoration: underline;">Join our Telegram group</a> 🌟
-        </marquee>
-    </div>
-
-    <!-- Logo -->
-    <div class="logo-container">
-        <a href="https://ibb.co/23qH49sJ" target="_blank">
-            <img src="https://i.ibb.co/k2KvC79Z/IMG-20250320-164334-559.jpg" alt="AcademeForge Logo">
-        </a>
-    </div>
-
-    <!-- Hamburger Menu Icon (only on Login Page) -->
+    <!-- Hamburger Menu Icon -->
     <div id="menuIcon" onclick="toggleSidebar()">&#9776;</div>
 
     <!-- Sidebar -->
@@ -177,13 +248,16 @@
         <button class="sidebar-button" onclick="window.location.href='link4.html'">AST Registration Form</button>
         <button class="sidebar-button" onclick="window.location.href='link5.html'">Motivational Reels / Video Lecture</button>
         <button class="sidebar-button" onclick="window.location.href='link6.html'">Frequently Asked Questions</button>
-
+        
         <!-- Powered by AcademeForge -->
         <div class="footer">Powered by AcademeForge</div>
     </div>
 
     <!-- Login Form -->
     <div class="container" id="loginContainer">
+        <marquee behavior="scroll" direction="left">
+            Welcome to AcademeForge – Something Out Of The Box 🎁!
+        </marquee>
         <h2>LOGIN</h2>
         <input type="text" id="username" placeholder="username : Auto-filled" />
         <input type="password" id="password" placeholder="Password : Pre-filled" />
@@ -206,11 +280,12 @@
             }
         }
 
-        // Login functionality
         function login() {
+            // Add login functionality here
             alert("Login functionality goes here!");
         }
     </script>
+
 
 <!-- Class Selection Page -->
 <div class="container hidden" id="classContainer">
