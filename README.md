@@ -160,7 +160,7 @@
             left: -250px; /* Initially hide sidebar */
             height: 100%;
             transition: left 0.3s ease;
-            z-index: 90;
+            z-index: 100; /* Higher z-index to overlap the marquee */
         }
 
         #sidebar h2 {
@@ -223,6 +223,7 @@
         marquee {
             font-size: 18px;
             font-weight: bold;
+            z-index: 10; /* Lower z-index to be behind the sidebar */
         }
 
         /* Footer text */
@@ -285,6 +286,9 @@
             alert("Login functionality goes here!");
         }
     </script>
+</body>
+
+
 
 
 <!-- Class Selection Page -->
