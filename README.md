@@ -269,7 +269,7 @@
         <button class="sidebar-button" onclick="window.location.href='link4.html'">AST Registration Form</button>
         <button class="sidebar-button" onclick="window.location.href='link5.html'">Motivational Reels / Video Lecture</button>
         <button class="sidebar-button" onclick="window.location.href='link6.html'">Frequently Asked Questions</button>
-        <button class="sidebar-button" onclick="window.location.href='https://academeforge.github.io/AST/'">Back Button</button>
+        <button class="sidebar-button" onclick="window.location.href='https://academeforge.github.io/AFCode/'">Back Button</button>
     </div>
 
     <!-- Login Form -->
