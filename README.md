@@ -121,6 +121,7 @@
 <!-- Back Button -->
 <button class="back-button" id="backButton" onclick="goBack()">Back</button>
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -131,6 +132,21 @@
             margin: 0;
             padding: 0;
             display: flex;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        /* Header for Hamburger Icon */
+        #menuIcon {
+            font-size: 30px;
+            color: white;
+            padding: 15px;
+            background-color: #333;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
         }
 
         /* Sidebar Styles */
@@ -141,8 +157,10 @@
             padding: 20px;
             position: fixed;
             top: 0;
-            left: 0;
+            left: -250px; /* Initially hide sidebar */
             height: 100%;
+            transition: left 0.3s ease;
+            z-index: 90;
         }
 
         #sidebar h2 {
@@ -170,10 +188,10 @@
 
         /* Container Styles */
         #loginContainer {
-            margin-left: 270px; /* Space for sidebar */
-            padding: 20px;
+            margin: 20px;
             max-width: 400px;
             margin-top: 50px;
+            transition: margin-left 0.3s ease; /* Adjust form position when sidebar appears */
         }
 
         #loginContainer h2 {
@@ -218,6 +236,9 @@
     </style>
 </head>
 <body>
+    <!-- Hamburger Menu Icon -->
+    <div id="menuIcon" onclick="toggleSidebar()">&#9776;</div>
+
     <!-- Sidebar -->
     <div id="sidebar">
         <h2>Menu</h2>
@@ -244,6 +265,21 @@
     </div>
 
     <script>
+        // Function to toggle the sidebar visibility
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const loginContainer = document.getElementById('loginContainer');
+            
+            // Toggle the sidebar's left position
+            if (sidebar.style.left === '-250px') {
+                sidebar.style.left = '0';
+                loginContainer.style.marginLeft = '250px'; // Adjust the login form when sidebar appears
+            } else {
+                sidebar.style.left = '-250px';
+                loginContainer.style.marginLeft = '20px'; // Reset the margin when sidebar is hidden
+            }
+        }
+
         function login() {
             // Add login functionality here
             alert("Login functionality goes here!");
