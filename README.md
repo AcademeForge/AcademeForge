@@ -249,7 +249,17 @@
         <button class="sidebar-button" onclick="window.location.href='link4.html'">AST Registration Form</button>
         <button class="sidebar-button" onclick="window.location.href='link5.html'">Motivational Reels / Video Lecture</button>
         <button class="sidebar-button" onclick="window.location.href='link6.html'">Frequently Asked Questions</button>
-        
+    <div id="sidebar" class="sidebar">
+    <button id="backButton" onclick="goBack()">Back</button>
+    <!-- Sidebar Content here -->
+</div>
+
+<!-- Add the main content for your login page here -->
+<div class="login-page-content">
+    <form>
+        <!-- Login Form Elements -->
+    </form>
+</div>
         <!-- Powered by AcademeForge -->
         <div class="footer">Powered by AcademeForge</div>
     </div>
