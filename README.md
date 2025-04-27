@@ -303,7 +303,9 @@ body.login-page #sidebar {
         <!-- Powered by AcademeForge -->
         <div class="footer">Powered by AcademeForge</div>
     </div>
-
+function goBack() {
+    window.history.back();
+}
     <!-- Login Form -->
     <div class="container" id="loginContainer">
         <marquee behavior="scroll" direction="left">
