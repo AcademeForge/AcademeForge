@@ -185,47 +185,28 @@
         .sidebar-button:hover {
             background-color: #45a049;
         }
-/* Sidebar Style */
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 250px; /* Adjust width as needed */
-    height: 100%;
-    background-color: #333;
-    color: white;
-    padding-top: 20px;
-    display: none; /* Initially hidden */
-    z-index: 999;
-}
 
-/* Display Sidebar only on the Login Page */
-body.login-page #sidebar {
-    display: block;
-}
+        /* Sidebar Style for Login Page */
+        body.login-page #sidebar {
+            display: block;
+        }
 
-/* Back Button Style */
-#backButton {
-    background-color: #f44336;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin: 10px;
-    text-align: center;
-    font-size: 16px;
-}
+        /* Back Button Style */
+        #backButton {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin: 10px;
+            text-align: center;
+            font-size: 16px;
+        }
 
-#backButton:hover {
-    background-color: #d32f2f;
-}
+        #backButton:hover {
+            background-color: #d32f2f;
+        }
 
-/* Additional Styling for Sidebar Content */
-.sidebar .content {
-    margin-top: 20px;
-    padding: 15px;
-    text-align: left;
-}
         /* Container Styles */
         #loginContainer {
             margin: 20px;
@@ -273,10 +254,9 @@ body.login-page #sidebar {
             text-align: center;
             color: #aaa;
         }
-
     </style>
 </head>
-<body>
+<body class="login-page">
     <!-- Hamburger Menu Icon -->
     <div id="menuIcon" onclick="toggleSidebar()">&#9776;</div>
 
@@ -289,23 +269,10 @@ body.login-page #sidebar {
         <button class="sidebar-button" onclick="window.location.href='link4.html'">AST Registration Form</button>
         <button class="sidebar-button" onclick="window.location.href='link5.html'">Motivational Reels / Video Lecture</button>
         <button class="sidebar-button" onclick="window.location.href='link6.html'">Frequently Asked Questions</button>
-    <div id="sidebar" class="sidebar">
-    <button id="backButton" onclick="goBack()">Back</button>
-    <!-- Sidebar Content here -->
-</div>
-
-<!-- Add the main content for your login page here -->
-<div class="login-page-content">
-    <form>
-        <!-- Login Form Elements -->
-    </form>
-</div>
-        <!-- Powered by AcademeForge -->
-        <div class="footer">Powered by AcademeForge</div>
+        <!-- Back Button in Sidebar -->
+        <button id="backButton" onclick="goBack()">Back</button>
     </div>
-function goBack() {
-    window.history.back();
-}
+
     <!-- Login Form -->
     <div class="container" id="loginContainer">
         <marquee behavior="scroll" direction="left">
@@ -316,6 +283,9 @@ function goBack() {
         <input type="password" id="password" placeholder="Password : Pre-filled" />
         <button onclick="login()">Sign In</button>
     </div>
+
+    <!-- Footer -->
+    <div class="footer">Powered by AcademeForge</div>
 
     <script>
         // Function to toggle the sidebar visibility
@@ -333,8 +303,13 @@ function goBack() {
             }
         }
 
+        // Back button function to go back to the previous page
+        function goBack() {
+            window.history.back();
+        }
+
+        // Placeholder login function
         function login() {
-            // Add login functionality here
             alert("Login functionality goes here!");
         }
     </script>
