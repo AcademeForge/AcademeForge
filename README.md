@@ -185,7 +185,47 @@
         .sidebar-button:hover {
             background-color: #45a049;
         }
+/* Sidebar Style */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px; /* Adjust width as needed */
+    height: 100%;
+    background-color: #333;
+    color: white;
+    padding-top: 20px;
+    display: none; /* Initially hidden */
+    z-index: 999;
+}
 
+/* Display Sidebar only on the Login Page */
+body.login-page #sidebar {
+    display: block;
+}
+
+/* Back Button Style */
+#backButton {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin: 10px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#backButton:hover {
+    background-color: #d32f2f;
+}
+
+/* Additional Styling for Sidebar Content */
+.sidebar .content {
+    margin-top: 20px;
+    padding: 15px;
+    text-align: left;
+}
         /* Container Styles */
         #loginContainer {
             margin: 20px;
