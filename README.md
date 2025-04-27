@@ -3,7 +3,7 @@
 <meta name="google-site-verification" content="F1L0xfSoJ09Jp0SjvlmTnzkWK_fuYyhBw36QvRdDGwM" />
 
 
-</div>
+
 <!-- Logo -->
 <div class="logo-container">
     <a href="https://ibb.co/23qH49sJ" target="_blank">
