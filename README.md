@@ -211,8 +211,6 @@
             alert("Login functionality goes here!");
         }
     </script>
-</body>
-</html>
 
 <!-- Class Selection Page -->
 <div class="container hidden" id="classContainer">
