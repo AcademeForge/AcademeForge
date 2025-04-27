@@ -302,12 +302,13 @@
                 loginContainer.style.marginLeft = '20px'; // Reset the margin when sidebar is hidden
             }
         }
+
 function goBack() {
     if (window.history.length > 1) {
         window.history.back();
     } else {
-        // If there's no history, you can redirect to a fallback page (e.g., home page)
-        window.location.href = 'index.html'; // Replace with your desired fallback URL
+        // If there's no history, redirect to the specified URL
+        window.location.href = 'https://academeforge.github.io/AcademeForge/';
     }
 }
         
