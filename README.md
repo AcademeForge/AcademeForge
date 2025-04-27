@@ -121,17 +121,134 @@
 <!-- Back Button -->
 <button class="back-button" id="backButton" onclick="goBack()">Back</button>
 
-<!-- Login Page -->
-<div class="container" id="loginContainer">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page with Sidebar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        /* Sidebar Styles */
+        #sidebar {
+            width: 250px;
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+        }
+
+        #sidebar h2 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Button Styles */
+        .sidebar-button {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 18px;
+        }
+
+        .sidebar-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Container Styles */
+        #loginContainer {
+            margin-left: 270px; /* Space for sidebar */
+            padding: 20px;
+            max-width: 400px;
+            margin-top: 50px;
+        }
+
+        #loginContainer h2 {
+            text-align: center;
+        }
+
+        #loginContainer input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #loginContainer button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #loginContainer button:hover {
+            background-color: #45a049;
+        }
+
+        marquee {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Footer text */
+        .footer {
+            margin-top: 30px;
+            font-size: 14px;
+            text-align: center;
+            color: #aaa;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div id="sidebar">
+        <h2>Menu</h2>
+        <button class="sidebar-button" onclick="window.location.href='link1.html'">Notes</button>
+        <button class="sidebar-button" onclick="window.location.href='link2.html'">Time Table</button>
+        <button class="sidebar-button" onclick="window.location.href='link3.html'">About AST</button>
+        <button class="sidebar-button" onclick="window.location.href='link4.html'">AST Registration Form</button>
+        <button class="sidebar-button" onclick="window.location.href='link5.html'">Motivational Reels / Video Lecture</button>
+        <button class="sidebar-button" onclick="window.location.href='link6.html'">Frequently Asked Questions</button>
+        
+        <!-- Powered by AcademeForge -->
+        <div class="footer">Powered by AcademeForge</div>
+    </div>
+
+    <!-- Login Form -->
+    <div class="container" id="loginContainer">
         <marquee behavior="scroll" direction="left">
             Welcome to AcademeForge – Something Out Of The Box 🎁!
         </marquee>
-    <h2>LOGIN</h2>
-    <input type="text" id="username" placeholder="username : Auto-filled" />
-    <input type="password" id="password" placeholder="Password : Pre-filled" />
-    <button onclick="login()">Sign In</button>
-</div>
+        <h2>LOGIN</h2>
+        <input type="text" id="username" placeholder="username : Auto-filled" />
+        <input type="password" id="password" placeholder="Password : Pre-filled" />
+        <button onclick="login()">Sign In</button>
+    </div>
 
+    <script>
+        function login() {
+            // Add login functionality here
+            alert("Login functionality goes here!");
+        }
+    </script>
 
 
 <!-- Class Selection Page -->
