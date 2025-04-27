@@ -266,8 +266,8 @@
         <button class="sidebar-button" onclick="window.location.href='link1.html'">Notes</button>
         <button class="sidebar-button" onclick="window.location.href='link2.html'">Time Table</button>
         <button class="sidebar-button" onclick="window.location.href='link3.html'">About AST</button>
-        <button class="sidebar-button" onclick="window.location.href='link4.html'">AST Registration Form</button>
-        <button class="sidebar-button" onclick="window.location.href='link5.html'">Motivational Reels / Video Lecture</button>
+        <button class="sidebar-button" onclick="window.location.href='https://academeforge.github.io/AST'">AST Registration Form</button>
+        <button class="sidebar-button" onclick="window.location.href='https://academeforge.github.io/ShortsAF'">Motivational Reels / Video Lecture</button>
         <button class="sidebar-button" onclick="window.location.href='link6.html'">Frequently Asked Questions</button>
         <button class="sidebar-button" onclick="window.location.href='https://academeforge.github.io/AFCode/'">Back Button</button>
     </div>
