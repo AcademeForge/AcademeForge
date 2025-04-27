@@ -1,13 +1,7 @@
 <html lang="en">
 <head>
 <meta name="google-site-verification" content="F1L0xfSoJ09Jp0SjvlmTnzkWK_fuYyhBw36QvRdDGwM" />
-<!-- Moving Banner -->
-<div class="banner-container">
-    <marquee behavior="scroll" direction="left">
-        Stay Tuned For more updates 
-    <a href="https://t.me/AcademeForge" target="_blank" style="color: #ff4081; text-decoration: underline;">Join our Telegram group</a>
-🌟
-    </marquee>
+
 
 </div>
 <!-- Logo -->
@@ -39,27 +33,7 @@
 
 <!-- CSS for styling the banner -->
 <style>
-    .banner-container {
-        background-color: #ffcc00; /* Background color */
-        padding: 10px;
-        color: #000; /* Text color */
-        font-size: 16px;
-        font-weight: bold;
-        text-align: center;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 9999;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Shadow effect */
-    }
-
-    marquee {
-        white-space: nowrap;
-        overflow: hidden;
-        display: inline-block;
-    }
-</style>
+    
 <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
          <title>AcademeForge</title>
