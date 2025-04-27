@@ -12,6 +12,7 @@
 </div>
 
 <style>
+
     /* Logo Styling */
     .logo-container {
         position: fixed;
@@ -33,7 +34,27 @@
 
 <!-- CSS for styling the banner -->
 <style>
-    
+    .banner-container {
+        background-color: #ffcc00; /* Background color */
+        padding: 10px;
+        color: #000; /* Text color */
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 9999;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Shadow effect */
+    }
+
+    marquee {
+        white-space: nowrap;
+        overflow: hidden;
+        display: inline-block;
+    }
+</style>
 <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
          <title>AcademeForge</title>
