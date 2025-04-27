@@ -671,6 +671,7 @@ window.onload = () => {
     }
 </script>
 
+
 <!-- Chatbox Button -->
 <button id="chatbotButton" onclick="toggleChatbot()" style="
     position: fixed;
@@ -701,4 +702,50 @@ window.onload = () => {
     <div style="background-color: #6200ea; padding: 10px; color: white; text-align: center; border-radius: 10px 10px 0 0;">
         📖 AcademeForge Assistant
     </div>
-    <div id="cha
+    <div id="chatbotMessages" style="padding: 10px; height: 200px; overflow-y: auto; color: white;"></div>
+    <input id="chatbotInput" type="text" placeholder="Ask something..." onkeypress="handleChat(event)" style="
+        width: 100%;
+        padding: 8px;
+        border: none;
+        border-radius: 0 0 10px 10px;
+        background-color: #333;
+        color: white;
+    ">
+</div>
+
+<!-- Chatbot Script -->
+<script>
+    function toggleChatbot() {
+        var chatbox = document.getElementById('chatbotContainer');
+        chatbox.style.display = (chatbox.style.display === 'none') ? 'block' : 'none';
+    }
+
+    function handleChat(event) {
+        if (event.key === 'Enter') {
+            var input = document.getElementById('chatbotInput').value.toLowerCase();
+            var chatbox = document.getElementById('chatbotMessages');
+
+            var responses = {
+                "notes": "You can find notes in the study material section of your class.",
+                "timetable": "The timetable is available under the 'Timetable' TG group, try asking in TG chat group.",
+                "ast": "AST (AcademeForge Scholars Test) is an exam for students from Class 1 to 10. Visit the WordPress website for details!",
+                "extra study material": "Extra study materials are available in the 'Extra Material' website.",
+                "about us": "AcademeForge is an educational platform founded by Devraj Kumar and co-founded by Aadi & Mandeep.",
+                "hello": "Hello! How can I assist you today?",
+                "hi": "Hi there! Need help?",
+                "bye": "Goodbye! Happy studying!"
+            };
+
+            var response = responses[input] || "I'm a small chatbox created by AcademeForge. I can only answer specific questions. Try asking about: Notes, Timetable, AST, Extra Study Material, or About Us";
+            chatbox.innerHTML += "<p><strong>You:</strong> " + input + "</p>";
+            chatbox.innerHTML += "<p><strong>Bot:</strong> " + response + "</p>";
+
+            document.getElementById('chatbotInput').value = "";
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+    }
+
+</script>
+
+</body>
+</html>
