@@ -188,7 +188,7 @@
 
     /* Back Button Style */
         #backButton {
-            background-color: #f44336;
+            background-color: #292929;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -199,7 +199,7 @@
         }
 
         #backButton:hover {
-            background-color: #d32f2f;
+            background-color: #00e5ff;
         }
 
         /* Container Styles */
