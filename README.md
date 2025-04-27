@@ -120,7 +120,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page with Sidebar</title>
+    <title>Class Selection Page with Sidebar</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -251,7 +251,7 @@
         }
     </style>
 </head>
-<body class="login-page">
+<body class="Class Selection Page">
     <!-- Hamburger Menu Icon -->
     <div id="menuIcon" onclick="toggleSidebar()">&#9776;</div>
 
