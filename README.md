@@ -258,13 +258,13 @@
     <!-- Sidebar -->
     <div id="sidebar">
         <h2>Menu</h2>
-        <button class="sidebar-button" onclick="window.location.href='https://academeforge.pages.dev/'">Notes</button>
+        <button class="sidebar-button" onclick="window.location.href='https://academeforge.github.io/AcademeForge-Notes/'">Notes:9-12</button>
         <button class="sidebar-button" onclick="window.location.href='https://academeforge.github.io/TimeTable/'">Time Table</button>
         <button class="sidebar-button" onclick="window.location.href='http://academeforge.wordpress.com/'">About AST</button>
         <button class="sidebar-button" onclick="window.location.href='https://academeforge.github.io/AST'">AST Registration Form</button>
-        <button class="sidebar-button" onclick="window.location.href='https://academeforge.github.io/ForgeFlix/'">Motivational Reels / Video Lecture</button>
+        <button class="sidebar-button" onclick="window.location.href='https://academeforge.github.io/ForgeFlix/'">ForgeFlix</button>
         <button class="sidebar-button" onclick="window.location.href='https://academeforge.github.io/FAQ'">Frequently Asked Questions</button>
-        <button class="sidebar-button" onclick="window.location.href='https://academeforge.github.io/AFcode/'">Back Button</button>
+        <button class="sidebar-button" onclick="window.location.href='https://academeforge.github.io/AcademeForge/'">Back Button</button>
     </div>
 
     <!-- Login Form -->
