@@ -168,12 +168,12 @@
             width: 100%;
             padding: 15px;
             margin: 10px 0;
-            background-color: #4CAF50;
+            background-color: #FF0000;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            text-align: left;
+            text-align: right;
             font-size: 18px;
         }
 
