@@ -173,7 +173,7 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            text-align: right;
+            text-align: leftt;
             font-size: 18px;
         }
 
