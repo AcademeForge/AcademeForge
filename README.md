@@ -253,7 +253,7 @@
 </head>
 <body class="Class Selection Page">
     <!-- Hamburger Menu Icon -->
-    <div id="menuIcon" onclick="toggleSidebar()">&#9776;</div>
+    <div id="menuIcon" onclick="toggleSidebar()">&#FF0000;</div>
 
     <!-- Sidebar -->
     <div id="sidebar">
