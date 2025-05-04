@@ -117,6 +117,7 @@
 <button class="back-button" id="backButton" onclick="goBack()">Back</button>
 
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -131,7 +132,7 @@
             flex-direction: column;
         }
 
-        /* Header for Hamburger Icon */
+        /* Hamburger Icon */
         #menuIcon {
             font-size: 30px;
             color: white;
@@ -152,10 +153,10 @@
             padding: 20px;
             position: fixed;
             top: 0;
-            left: -250px; /* Initially hide sidebar */
+            left: -250px;
             height: 100%;
-            transition: left 0.3s ease;
-            z-index: 100; /* Higher z-index to overlap the marquee */
+            transition: left 0.15s ease-in-out;
+            z-index: 100;
         }
 
         #sidebar h2 {
@@ -163,51 +164,30 @@
             margin-top: 20px;
         }
 
-        /* Button Styles */
+        /* Modern Button Styles */
         .sidebar-button {
             width: 100%;
             padding: 15px;
             margin: 10px 0;
-            background-color: #FF0000;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
-            text-align: leftt;
             font-size: 18px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s ease, transform 0.2s ease;
         }
 
         .sidebar-button:hover {
-            background-color: #45a049;
+            background: linear-gradient(135deg, #ff6a88, #ff99ac);
+            transform: scale(1.02);
         }
 
-        /* Sidebar Style for Login Page */
-        body.login-page #sidebar {
-            display: block;
-        }
-
-    /* Back Button Style */
-        #backButton {
-            background-color: #292929;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            margin: 10px;
-            text-align: center;
-            font-size: 16px;
-        }
-
-        #backButton:hover {
-            background-color: #00e5ff;
-        }
-
-        /* Container Styles */
+        /* Login Container */
         #loginContainer {
-            margin: 20px;
+            margin: 20px auto;
             max-width: 400px;
-            margin-top: 50px;
-            transition: margin-left 0.3s ease; /* Adjust form position when sidebar appears */
         }
 
         #loginContainer h2 {
@@ -239,10 +219,9 @@
         marquee {
             font-size: 18px;
             font-weight: bold;
-            z-index: 10; /* Lower z-index to be behind the sidebar */
+            z-index: 10;
         }
 
-        /* Footer text */
         .footer {
             margin-top: 30px;
             font-size: 14px;
@@ -252,19 +231,20 @@
     </style>
 </head>
 <body class="Class Selection Page">
+
     <!-- Hamburger Menu Icon -->
     <div id="menuIcon" onclick="toggleSidebar()">&#9776;</div>
 
     <!-- Sidebar -->
     <div id="sidebar">
         <h2>Menu</h2>
-        <button class="sidebar-button" onclick="window.location.href='https://academeforge.github.io/AcademeForge-Notes/'">Notes:9-12</button>
-        <button class="sidebar-button" onclick="window.location.href='https://academeforge.github.io/TimeTable/'">Time Table</button>
-        <button class="sidebar-button" onclick="window.location.href='http://academeforge.wordpress.com/'">About AST</button>
-        <button class="sidebar-button" onclick="window.location.href='https://academeforge.github.io/AST'">AST Registration Form</button>
-        <button class="sidebar-button" onclick="window.location.href='https://academeforge.github.io/ForgeFlix/'">ForgeFlix</button>
-        <button class="sidebar-button" onclick="window.location.href='https://academeforge.github.io/FAQ'">Frequently Asked Questions</button>
-        <button class="sidebar-button" onclick="window.location.href='https://academeforge.github.io/AcademeForge/'">Back Button</button>
+        <button class="sidebar-button" onclick="closeSidebar(); window.location.href='https://academeforge.github.io/AcademeForge-Notes/'">Notes:9-12</button>
+        <button class="sidebar-button" onclick="closeSidebar(); window.location.href='https://academeforge.github.io/TimeTable/'">Time Table</button>
+        <button class="sidebar-button" onclick="closeSidebar(); window.location.href='http://academeforge.wordpress.com/'">About AST</button>
+        <button class="sidebar-button" onclick="closeSidebar(); window.location.href='https://academeforge.github.io/AST'">AST Registration Form</button>
+        <button class="sidebar-button" onclick="closeSidebar(); window.location.href='https://academeforge.github.io/ForgeFlix/'">ForgeFlix</button>
+        <button class="sidebar-button" onclick="closeSidebar(); window.location.href='https://academeforge.github.io/FAQ'">Frequently Asked Questions</button>
+        <button class="sidebar-button" onclick="goToLogin()">Back to Login</button>
     </div>
 
     <!-- Login Form -->
@@ -282,34 +262,32 @@
     <div class="footer">Powered by AcademeForge</div>
 
     <script>
-        // Function to toggle the sidebar visibility
+        // Toggle Sidebar
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
-            const loginContainer = document.getElementById('loginContainer');
-            
-            // Toggle the sidebar's left position
             if (sidebar.style.left === '-250px') {
                 sidebar.style.left = '0';
-                loginContainer.style.marginLeft = '250px'; // Adjust the login form when sidebar appears
             } else {
                 sidebar.style.left = '-250px';
-                loginContainer.style.marginLeft = '20px'; // Reset the margin when sidebar is hidden
             }
         }
 
-function goBack() {
-    if (window.history.length > 1) {
-        window.history.back();
-    } else {
-        // If there's no history, redirect to the specified URL
-        window.location.href = 'https://academeforge.github.io/AcademeForge/';
-    }
-}
-        
+        // Close Sidebar
+        function closeSidebar() {
+            document.getElementById('sidebar').style.left = '-250px';
+        }
+
+        // Go Back to Login Form
+        function goToLogin() {
+            closeSidebar();
+            document.getElementById('loginContainer').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function login() {
+            alert("Login button clicked (you can replace this with real logic).");
+        }
     </script>
 </body>
-
-
 
 
 <!-- Class Selection Page -->
