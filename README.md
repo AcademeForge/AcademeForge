@@ -120,17 +120,18 @@
             right: 20px;
             z-index: 100;
         }
+
         /* Sidebar Styles */
 #sidebar {
-    width: 250px;
+    width: 100%; /* Set to 100% to cover full screen width */
+    height: 100vh; /* Full height of the viewport */
     background-color: #333;
     color: white;
     padding: 20px;
     position: fixed;
     top: 0;
-    right: -250px; /* Initially hidden on the right */
-    height: 100%; /* Full viewport height */
-    transition: right 0.15s ease-in-out; /* Transition for right property */
+    right: -100%; /* Initially hidden off-screen on the right */
+    transition: right 0.3s ease-in-out; /* Transition for the right property */
     z-index: 100;
 }
 
