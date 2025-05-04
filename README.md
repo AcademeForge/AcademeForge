@@ -117,7 +117,7 @@
             cursor: pointer;
             position: absolute;
             top: 20px;
-            left: 20px;
+            right: 20px;
             z-index: 100;
         }
 
@@ -129,7 +129,7 @@
             padding: 20px;
             position: fixed;
             top: 0;
-            left: -250px;
+            right: -250px;
             height: 100%;
             transition: left 0.15s ease-in-out;
             z-index: 100;
