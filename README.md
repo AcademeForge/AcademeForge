@@ -214,12 +214,13 @@
     <!-- Sidebar -->
     <div id="sidebar">
         <h2>Menu</h2>
-        <button class="sidebar-button" onclick="closeSidebar(); window.location.href='https://academeforge.github.io/AcademeForge-Notes/'">Notes:9-12</button>
+        <button class="sidebar-button" onclick="closeSidebar(); window.location.href='https://academeforge.github.io/AcademeForge-Notes/'">Notes:1-8</button>
         <button class="sidebar-button" onclick="closeSidebar(); window.location.href='https://academeforge.github.io/TimeTable/'">Time Table</button>
         <button class="sidebar-button" onclick="closeSidebar(); window.location.href='http://academeforge.wordpress.com/'">About AST</button>
         <button class="sidebar-button" onclick="closeSidebar(); window.location.href='https://academeforge.github.io/AST'">AST Registration Form</button>
         <button class="sidebar-button" onclick="closeSidebar(); window.location.href='https://academeforge.github.io/ForgeFlix/'">ForgeFlix</button>
         <button class="sidebar-button" onclick="closeSidebar(); window.location.href='https://academeforge.github.io/FAQ'">Frequently Asked Questions</button>
+<button class="sidebar-button" onclick="closeSidebar(); window.location.href='http://academeforge.wordpress.com/'">Social profiles</button>
 
 <div style="flex-grow: 1;"></div>
         <button class="sidebar-button" onclick="goToLogin()">Back to Login</button>
