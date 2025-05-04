@@ -233,7 +233,7 @@
         <h2>LOGIN</h2>
         <input type="text" id="username" placeholder="username : Auto-filled" />
         <input type="password" id="password" placeholder="Password : Pre-filled" />
-        <button onclick="login()">Sign In</button>
+        <button onclick="login()">Continue As Guest</button>
     </div>
 
     <!-- Footer -->
