@@ -244,6 +244,8 @@
         <button class="sidebar-button" onclick="closeSidebar(); window.location.href='https://academeforge.github.io/AST'">AST Registration Form</button>
         <button class="sidebar-button" onclick="closeSidebar(); window.location.href='https://academeforge.github.io/ForgeFlix/'">ForgeFlix</button>
         <button class="sidebar-button" onclick="closeSidebar(); window.location.href='https://academeforge.github.io/FAQ'">Frequently Asked Questions</button>
+
+<div style="flex-grow: 1;"></div>
         <button class="sidebar-button" onclick="goToLogin()">Back to Login</button>
     </div>
 
