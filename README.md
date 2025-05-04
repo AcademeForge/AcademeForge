@@ -120,26 +120,25 @@
             right: 20px;
             z-index: 100;
         }
-
         /* Sidebar Styles */
-        #sidebar {
-            width: 250px;
-            background-color: #333;
-            color: white;
-            padding: 20px;
-            position: fixed;
-            top: 0;
-            right: -250px;
-            height: 100%;
-            transition: left 0.15s ease-in-out;
-            z-index: 100;
-        }
+#sidebar {
+    width: 250px;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    right: -250px; /* Initially hidden on the right */
+    height: 100%; /* Full viewport height */
+    transition: right 0.15s ease-in-out; /* Transition for right property */
+    z-index: 100;
+}
 
-        #sidebar h2 {
-            text-align: center;
-            margin-top: 20px;
-        }
-
+#sidebar h2 {
+    text-align: center;
+    margin-top: 20px;
+}
+        
         /* Modern Button Styles */
         .sidebar-button {
             width: 100%;
