@@ -593,7 +593,12 @@ window.onload = () => {
                 { keywords: ["timetable", "time table", "schedule"], response: "The timetable is available here: #. Make sure to check your class group on Telegram too!" },
                 { keywords: ["ast", "exam", "test"], response: "AST is the AcademeForge Scholars Test for Classes 1–10. Visit the official page for more details: #" },
                 { keywords: ["extra", "material", "resources"], response: "Extra study materials are available here: # in the 'Extra Material' section." },
-                { keywords: ["about", "founder", "who is", "what is"], response: "AcademeForge is an educational platform founded by Devraj Kumar and co-founded by Aadi & Mandeep." },
+                { keywords: ["about", "founder", "who is", "what is", "Academeforge"], response: "AcademeForge is an educational platform founded by Devraj Kumar and co-founded by Aadi & Mandeep." },
+                { keywords: ["about Academeforge", "Academeforge scholars test", "what is", "what is AF", "AF"], response: "AcademeForge - Empowering Students for Academic Success
+
+Welcome to AcademeForge, your one-stop destination for high-quality educational resources tailored for students in Classes 9-12. At AcademeForge, we are committed to providing innovative learning tools that help students excel in their studies and perform exceptionally in competitive exams.
+
+Our flagship product, the AcademeForge Scholars Test (AST), offers a unique and comprehensive testing experience for students across India. Our specially designed question booklets and study materials are curated to support students in mastering their subjects, with a focus on Science, Math, English, Social Studies, and Hindi." },
                 { keywords: ["class", "join", "enroll"], response: "You can join classes through the AcademeForge portal. Registration link: #" },
                 { keywords: ["scholarship"], response: "AST provides scholarship up to ₹5000 to the top rankers. Learn more: #" },
                 { keywords: ["certificate"], response: "Certificates are provided to all Round 2 and Round 3 participants of AST." },
