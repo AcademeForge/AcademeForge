@@ -221,6 +221,7 @@
         <button class="sidebar-button" onclick="closeSidebar(); window.location.href='https://academeforge.github.io/ForgeFlix/'">ForgeFlix</button>
         <button class="sidebar-button" onclick="closeSidebar(); window.location.href='https://academeforge.github.io/FAQ'">Frequently Asked Questions</button>
 <button class="sidebar-button" onclick="closeSidebar(); window.location.href='https://academeforge.github.io/AFLinks/'">Social profiles</button>
+<button class="sidebar-button" onclick="closeSidebar(); window.location.href='https://academeforge.github.io/ASTsampleQuestions/'">Free AST Sample Questions</button>
 
 <div style="flex-grow: 1;"></div>
         <button class="sidebar-button" onclick="goToLogin()">Back to Login</button>
