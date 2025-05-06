@@ -127,7 +127,7 @@
     background-color: #333;
     color: white;
     padding: 20px;
-    position: scroll;
+    position: fixed;
     top: 0;
     right: -250px; /* Initially hidden on the right */
     height: 100%; /* Full viewport height */
