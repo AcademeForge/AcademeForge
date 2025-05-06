@@ -634,10 +634,6 @@ window.onload = () => {
     }
 </script>
 
-</div>
-
-</script>
-
 
 <!-- Flashcard Button -->
 <button id="flashcardButton" class="option" onclick="openFlashcardPopup()" style="background-color: #3498db; color: white; width: 90%; margin-top: 20px;">
