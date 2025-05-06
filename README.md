@@ -593,7 +593,7 @@ window.onload = () => {
                 { keywords: ["timetable", "time table", "schedule"], response: "The timetable is available here: https://academeforge.github.io/TimeTable/. Make sure to check your class group on Telegram too!" },
                 { keywords: ["ast", "exam", "test"], response: "AST is the AcademeForge Scholars Test for Classes 1–10. Visit the official page for more details: http://academeforge.wordpress.com/" },
                 { keywords: ["extra", "material", "resources"], response: "Extra study materials are available here: # in the 'Extra Material' section." },
-                { keywords: ["about", "founder", "who is", "what is", "Academeforge"], response: "AcademeForge is an educational platform founded by Devraj Kumar and co-founded by Aadi & Mandeep." }, 
+                { keywords: ["about", "founder", "who is", "what is", "academeforge"], response: "AcademeForge is an educational platform founded by Devraj Kumar and co-founded by Aadi & Mandeep." }, 
                 { keywords: ["class", "join", "enroll"], response: "You can join classes through the AcademeForge portal. Registration link: #" },
                 { keywords: ["scholarship"], response: "AST provides scholarship up to ₹5000 to the top rankers. Learn more: #" },
                 { keywords: ["certificate"], response: "Certificates are provided to all Round 2 and Round 3 participants of AST." },
