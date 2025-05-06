@@ -589,9 +589,9 @@ window.onload = () => {
             var chatbox = document.getElementById('chatbotMessages');
 
             const keywordResponses = [
-                { keywords: ["notes", "pdf"], response: "You can download notes from the Study Material section. Link: #" },
-                { keywords: ["timetable", "time table", "schedule"], response: "The timetable is available here: #. Make sure to check your class group on Telegram too!" },
-                { keywords: ["ast", "exam", "test"], response: "AST is the AcademeForge Scholars Test for Classes 1–10. Visit the official page for more details: #" },
+                { keywords: ["notes", "pdf"], response: "You can download notes from the Study Material section. Link: https://academeforge.github.io/Academeforge/" },
+                { keywords: ["timetable", "time table", "schedule"], response: "The timetable is available here: https://academeforge.github.io/TimeTable/. Make sure to check your class group on Telegram too!" },
+                { keywords: ["ast", "exam", "test"], response: "AST is the AcademeForge Scholars Test for Classes 1–10. Visit the official page for more details: http://academeforge.wordpress.com/" },
                 { keywords: ["extra", "material", "resources"], response: "Extra study materials are available here: # in the 'Extra Material' section." },
                 { keywords: ["about", "founder", "who is", "what is", "Academeforge"], response: "AcademeForge is an educational platform founded by Devraj Kumar and co-founded by Aadi & Mandeep." },
                 { keywords: ["about Academeforge", "Academeforge scholars test", "what is", "what is AF", "AF"], response: "AcademeForge - Empowering Students for Academic Success
@@ -608,7 +608,7 @@ Our flagship product, the AcademeForge Scholars Test (AST), offers a unique and 
                 { keywords: ["register", "how to register"], response: "You can register for AST from our official form here: #" },
                 { keywords: ["price", "fee", "cost"], response: "AST fees are affordable: ₹10 for Round 1, ₹40 for Round 2. Round 3 is free." },
                 { keywords: ["round 1"], response: "Round 1 has a ₹10 fee and includes a digital certificate. Top students move to Round 2." },
-                { keywords: ["round 2"], response: "Round 2 includes an offline certificate and costs ₹40. Social media shoutouts too!" },
+                { keywords: ["round 2", "ast round 2"], response: "Round 2 includes an offline certificate and costs ₹40. Social media shoutouts too!" },
                 { keywords: ["round 3"], response: "Round 3 is free and gives medals + scholarship of ₹5000 to top 3 rankers." },
                 { keywords: ["telegram", "group"], response: "Join our Telegram group for daily updates and support: #" },
                 { keywords: ["academy", "coaching"], response: "We currently provide support materials and quizzes. Coaching classes will be announced soon." },
