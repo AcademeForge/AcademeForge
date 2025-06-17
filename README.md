@@ -2,7 +2,17 @@
 <head>
 <meta name="google-site-verification" content="F1L0xfSoJ09Jp0SjvlmTnzkWK_fuYyhBw36QvRdDGwM" />
 
+<script>
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+      const theme = document.body.classList.contains('dark') ? 'dark' : 'light';
+      localStorage.setItem('theme', theme);
+    }window.onload = () => {
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') document.body.classList.add('dark');
+};
 
+  </script>
 <!-- Your existing login form here -->
 <div class="login-container">
     <!-- Login form content -->
