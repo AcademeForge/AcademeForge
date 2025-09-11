@@ -171,10 +171,10 @@
       <div class="typing" id="typing" aria-live="polite"></div>
 
       <div class="countdown" aria-hidden="false">
-        <div class="count-pill" id="pill-days">00d</div>
-        <div class="count-pill" id="pill-hours">00h</div>
-        <div class="count-pill" id="pill-mins">00m</div>
-        <div class="count-pill" id="pill-secs">00s</div>
+        <div class="count-pill" id="pill-days">00s</div>
+        <div class="count-pill" id="pill-hours">00o</div>
+        <div class="count-pill" id="pill-mins">00o</div>
+        <div class="count-pill" id="pill-secs">00n</div>
       </div>
 
       <div class="muted-small">Get early access, resources and launch updates directly through our social handles.</div>
@@ -257,9 +257,9 @@
 
     /* ===================== Countdown ===================== */
     (function countdown(){
-      // set your target date here (example: 97 days ahead)
+      // set your target date here (example: 0 days ahead)
       const target = new Date();
-      target.setDate(target.getDate() + 97);
+      target.setDate(target.getDate() + 0);
 
       function update(){
         const now = Date.now();
