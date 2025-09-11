@@ -220,8 +220,8 @@
 
           <div class="socials" aria-label="social links">
             <span class="card-muted">Or join us on</span>
-            <a href="#" aria-label="Telegram">Telegram</a>
-            <a href="#" aria-label="Instagram">Instagram</a>
+            <a href="https://t.me/+c1Ll3CiaGL9lOTA1" aria-label="Telegram">Telegram</a>
+            <a href="https://www.instagram.com/academeforge.in?igsh=MXc2eTlmenozNnN1Mg==" aria-label="Instagram">Instagram</a>
           </div>
         </div>
       </div>
