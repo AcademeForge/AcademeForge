@@ -200,7 +200,7 @@
 
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <div class="card-muted">Join waitlist for launch perks</div>
-            <div style="font-size:12px;color:var(--muted)">v0.9</div>
+            <div style="font-size:12px;color:var(--muted)">Aplha</div>
           </div>
         </div>
 
@@ -211,7 +211,7 @@
               <div class="card-title">Get Updates</div>
               <div class="card-muted">We’ll notify you when we go live</div>
             </div>
-            <div class="chip">v0.9</div>
+            <div class="chip">Alpha</div>
           </div>
 
           <div class="back-section">
