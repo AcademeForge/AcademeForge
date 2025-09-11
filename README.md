@@ -257,9 +257,9 @@
 
     /* ===================== Countdown ===================== */
     (function countdown(){
-      // set your target date here (example: 29 days ahead)
+      // set your target date here (example: 278 days ahead)
       const target = new Date();
-      target.setDate(target.getDate() + 29);
+      target.setDate(target.getDate() + 278);
 
       function update(){
         const now = Date.now();
