@@ -1,3 +1,4 @@
+
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -85,16 +86,6 @@
       letter-spacing:0.2px;
     }
 
-    .countdown {
-      margin-top:20px;
-      display:flex; gap:10px; align-items:center;
-    }
-    .count-pill {
-      background: rgba(255,255,255,0.04);
-      padding:10px 14px; border-radius:10px;
-      font-family:var(--mono); font-weight:700;
-      color:#e6eef8; min-width:62px; text-align:center;
-    }
     .muted-small { color:var(--muted); margin-top:10px; font-size:13px; }
 
     .card-wrap { perspective:1200px; display:flex; justify-content:center; }
@@ -161,12 +152,6 @@
 
       <div class="typing" id="typing" aria-live="polite"></div>
 
-      <div class="countdown" aria-hidden="false">
-        <div class="count-pill" id="pill-years">00y</div>
-        <div class="count-pill" id="pill-months">00m</div>
-        <div class="count-pill" id="pill-days">00d</div>
-      </div>
-
       <div class="muted-small">Get early access, resources and launch updates directly through our social handles.</div>
     </section>
 
@@ -180,15 +165,18 @@
             </div>
             <div class="chip">Beta</div>
           </div>
+
           <div style="flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;">
             <div class="af-mark" aria-hidden>AF</div>
             <div class="flip-hint">Click card to see more →</div>
           </div>
+
           <div style="display:flex;justify-content:space-between;align-items:center;">
             <div class="card-muted">Join waitlist for launch perks</div>
             <div style="font-size:12px;color:var(--muted)">v0.9</div>
           </div>
         </div>
+
         <div class="face back">
           <div style="display:flex;align-items:center;gap:12px;">
             <div>
@@ -197,136 +185,11 @@
             </div>
             <div class="chip">v0.9</div>
           </div>
+
           <div class="back-section">
             As a new and evolving platform, Academeforge is still refining the full scope, reliability, and recognition of its assessments and certifications to ensure the highest quality experience for our users.
           </div>
+
           <div class="socials" aria-label="social links">
             <span class="card-muted">Or join us on</span>
-            <a href="https://t.me/+c1Ll3CiaGL9lOTA1" aria-label="Telegram">Telegram</a>
-            <a href="https://www.instagram.com/academeforge.in?igsh=MXc2eTlmenozNnN1Mg==" aria-label="Instagram">Instagram</a>
-          </div>
-        </div>
-      </div>
-    </aside>
-  </main>
-
-  <script>
-    /* Typing animation */
-    (function typing(){
-      const el = document.getElementById('typing');
-      const items = [
-        'Preparing the classroom of the future...',
-        'Designing hands-on projects',
-        'Onboarding mentors & instructors',
-        'Curating career-ready curricula'
-      ];
-      let mi = 0, ti = 0, deleting = false;
-      function tick(){
-        const msg = items[mi];
-        if(!deleting){
-          ti++;
-          el.textContent = msg.slice(0, ti);
-          if(ti === msg.length){ deleting = true; setTimeout(tick, 900); return; }
-        } else {
-          ti--;
-          el.textContent = msg.slice(0, ti);
-          if(ti === 0){ deleting = false; mi = (mi+1) % items.length; }
-        }
-        setTimeout(tick, deleting ? 40 : (40 + Math.random()*40));
-      }
-      tick();
-    })();
-
-    /* Flip card */
-    (function flipCard(){
-      const card = document.getElementById('card');
-      function toggle(){
-        card.classList.toggle('is-flipped');
-        card.setAttribute('aria-pressed', card.classList.contains('is-flipped'));
-      }
-      card.addEventListener('click', (e)=> {
-        if(['A','BUTTON'].includes(e.target.tagName)) return;
-        toggle();
-      });
-      card.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
-    })();
-
-    /* Matrix effect */
-    (function matrix(){
-      const canvas = document.getElementById('matrix');
-      const ctx = canvas.getContext('2d');
-      let W = canvas.width = window.innerWidth;
-      let H = canvas.height = window.innerHeight;
-      const letters = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ<>/{}[]()=+-_*;:,.$%#@';
-      const chars = letters.split('');
-      const fontSize = 14;
-      let columns = Math.floor(W / fontSize);
-      const drops = new Array(columns).fill(0);
-      window.addEventListener('resize', () => {
-        W = canvas.width = window.innerWidth;
-        H = canvas.height = window.innerHeight;
-        columns = Math.floor(W / fontSize);
-        drops.length = 0;
-        for(let i=0;i<columns;i++) drops[i] = Math.floor(Math.random()*H/fontSize);
-      });
-      function draw() {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
-        ctx.fillRect(0,0,W,H);
-        ctx.font = fontSize + 'px monospace';
-        for (let i = 0; i < drops.length; i++) {
-          const text = chars[Math.floor(Math.random() * chars.length)];
-          const x = i * fontSize;
-          const y = drops[i] * fontSize;
-          ctx.fillStyle = '#b7ffcf';
-          ctx.fillText(text, x, y);
-          ctx.fillStyle = 'rgba(45,255,180,0.12)';
-          ctx.fillText(text, x, y - fontSize * 0.6);
-          ctx.fillStyle = 'rgba(124,92,255,0.03)';
-          ctx.fillText(text, x, y - fontSize * 1.4);
-          if (y > H && Math.random() > 0.975) drops[i] = 0;
-          drops[i]++;
-        }
-        const g = ctx.createRadialGradient(W*0.15, H*0.1, 0, W*0.15, H*0.1, W*0.8);
-        g.addColorStop(0, 'rgba(124,92,255,0.06)');
-        g.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = g;
-        ctx.fillRect(0,0,W,H);
-        requestAnimationFrame(draw);
-      }
-      for(let i=0;i<columns;i++) drops[i] = Math.floor(Math.random() * H / fontSize);
-      requestAnimationFrame(draw);
-    })();
-
-    /* Countdown in Years, Months, Days */
-    (function countdown() {
-      const target = new Date();
-      target.setFullYear(target.getFullYear() + 4); // 4 years
-      target.setMonth(target.getMonth() + 6); // +6 months => 4.6 years
-
-      function update() {
-        const now = new Date();
-        let diff = target - now;
-
-        const yearMs = 1000*60*60*24*365;
-        const monthMs = 1000*60*60*24*30;
-        const dayMs = 1000*60*60*24;
-
-        const years = Math.floor(diff / yearMs);
-        diff %= yearMs;
-
-        const months = Math.floor(diff / monthMs);
-        diff %= monthMs;
-
-        const days = Math.floor(diff / dayMs);
-
-        document.getElementById('pill-years').textContent = String(years).padStart(2,'0') + 'y';
-        document.getElementById('pill-months').textContent = String(months).padStart(2,'0') + 'm';
-        document.getElementById('pill-days').textContent = String(days).padStart(2,'0') + 'd';
-      }
-
-      update();
-      setInterval(update, 1000);
-    })();
-  </script>
-</body>
-</html>
+            <a href="
