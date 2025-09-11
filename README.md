@@ -6,6 +6,7 @@
   <title>AcademeForge — Coming Soon</title>
   <meta name="description" content="AcademeForge — modern education platform. Coming soon." />
   <style>
+    /* ---------- Base & variables ---------- */
     :root{
       --bg-1:#020617;
       --bg-2:#071029;
@@ -30,11 +31,13 @@
       padding:32px;
     }
 
+    /* ---------- Canvas (matrix) ---------- */
     canvas#matrix {
       position:fixed; inset:0; width:100%; height:100%; display:block; z-index:0;
       background: linear-gradient(180deg, rgba(3,7,18,0.35), rgba(2,6,20,0.55));
     }
 
+    /* ---------- Layout ---------- */
     .container{
       position:relative;
       z-index:2;
@@ -46,6 +49,7 @@
       align-items:center;
     }
 
+    /* ---------- Hero (left) ---------- */
     .hero {
       position:relative;
       border-radius:14px;
@@ -86,8 +90,19 @@
       letter-spacing:0.2px;
     }
 
+    .countdown {
+      margin-top:20px;
+      display:flex; gap:10px; align-items:center;
+    }
+    .count-pill {
+      background: rgba(255,255,255,0.04);
+      padding:10px 14px; border-radius:10px;
+      font-family:var(--mono); font-weight:700;
+      color:#e6eef8; min-width:62px; text-align:center;
+    }
     .muted-small { color:var(--muted); margin-top:10px; font-size:13px; }
 
+    /* ---------- Card (right) ---------- */
     .card-wrap { perspective:1200px; display:flex; justify-content:center; }
     .card {
       width:100%; max-width:420px; height:460px; transform-style:preserve-3d;
@@ -126,6 +141,7 @@
     .socials { margin-top:auto; display:flex; gap:10px; align-items:center; }
     .socials a { text-decoration:none; color:var(--muted); padding:8px 10px; border-radius:8px; background:rgba(255,255,255,0.02); }
 
+    /* ---------- small responsive ---------- */
     @media (max-width:980px){
       .container { grid-template-columns: 1fr; gap:18px; padding:0 10px; }
       .card { max-width: 520px; height:380px; margin:0 auto; }
@@ -135,9 +151,11 @@
   </style>
 </head>
 <body>
+  <!-- matrix canvas -->
   <canvas id="matrix"></canvas>
 
   <main class="container" role="main" aria-labelledby="title">
+    <!-- LEFT: Hero -->
     <section class="hero" aria-labelledby="title">
       <div class="brand">
         <div class="logo" aria-hidden>AF</div>
@@ -152,11 +170,20 @@
 
       <div class="typing" id="typing" aria-live="polite"></div>
 
+      <div class="countdown" aria-hidden="false">
+        <div class="count-pill" id="pill-days">00d</div>
+        <div class="count-pill" id="pill-hours">00h</div>
+        <div class="count-pill" id="pill-mins">00m</div>
+        <div class="count-pill" id="pill-secs">00s</div>
+      </div>
+
       <div class="muted-small">Get early access, resources and launch updates directly through our social handles.</div>
     </section>
 
+    <!-- RIGHT: Flip card -->
     <aside class="card-wrap" aria-hidden="false">
       <div class="card" id="card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip card to see updates">
+        <!-- front -->
         <div class="face front">
           <div style="display:flex;align-items:center;gap:10px;">
             <div>
@@ -177,6 +204,7 @@
           </div>
         </div>
 
+        <!-- back -->
         <div class="face back">
           <div style="display:flex;align-items:center;gap:12px;">
             <div>
@@ -192,4 +220,143 @@
 
           <div class="socials" aria-label="social links">
             <span class="card-muted">Or join us on</span>
-            <a href="
+            <a href="https://t.me/+c1Ll3CiaGL9lOTA1" aria-label="Telegram">Telegram</a>
+            <a href="https://www.instagram.com/academeforge.in?igsh=MXc2eTlmenozNnN1Mg==" aria-label="Instagram">Instagram</a>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    /* ===================== Typing text ===================== */
+    (function typing(){
+      const el = document.getElementById('typing');
+      const items = [
+        'Preparing the classroom of the future...',
+        'Designing hands-on projects',
+        'Onboarding mentors & instructors',
+        'Curating career-ready curricula'
+      ];
+      let mi = 0, ti = 0, deleting = false;
+      function tick(){
+        const msg = items[mi];
+        if(!deleting){
+          ti++;
+          el.textContent = msg.slice(0, ti);
+          if(ti === msg.length){ deleting = true; setTimeout(tick, 900); return; }
+        } else {
+          ti--;
+          el.textContent = msg.slice(0, ti);
+          if(ti === 0){ deleting = false; mi = (mi+1) % items.length; }
+        }
+        setTimeout(tick, deleting ? 40 : (40 + Math.random()*40));
+      }
+      tick();
+    })();
+
+    /* ===================== Countdown ===================== */
+    (function countdown(){
+      // set your target date here (example: 97 days ahead)
+      const target = new Date();
+      target.setDate(target.getDate() + 97);
+
+      function update(){
+        const now = Date.now();
+        let diff = Math.max(0, target - now);
+        const days = Math.floor(diff / (1000*60*60*24)); diff %= (1000*60*60*24);
+        const hours = Math.floor(diff / (1000*60*60)); diff %= (1000*60*60);
+        const mins = Math.floor(diff / (1000*60)); diff %= (1000*60);
+        const secs = Math.floor(diff / 1000);
+
+        document.getElementById('pill-days').textContent = String(days).padStart(2,'0') + 'd';
+        document.getElementById('pill-hours').textContent = String(hours).padStart(2,'0') + 'h';
+        document.getElementById('pill-mins').textContent = String(mins).padStart(2,'0') + 'm';
+        document.getElementById('pill-secs').textContent = String(secs).padStart(2,'0') + 's';
+      }
+      update();
+      setInterval(update, 1000);
+    })();
+
+    /* ===================== Flip card ===================== */
+    (function flipCard(){
+      const card = document.getElementById('card');
+      function toggle(){
+        card.classList.toggle('is-flipped');
+        card.setAttribute('aria-pressed', card.classList.contains('is-flipped'));
+      }
+      card.addEventListener('click', (e)=> {
+        if(['A','BUTTON'].includes(e.target.tagName)) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+    })();
+
+    /* ===================== Matrix rain (canvas) ===================== */
+    (function matrix(){
+      const canvas = document.getElementById('matrix');
+      const ctx = canvas.getContext('2d');
+      let W = canvas.width = window.innerWidth;
+      let H = canvas.height = window.innerHeight;
+
+      // Characters set - numbers + uppercase + some symbols
+      const letters = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ<>/{}[]()=+-_*;:,.$%#@';
+      const chars = letters.split('');
+      const fontSize = 14;
+      let columns = Math.floor(W / fontSize);
+      const drops = new Array(columns).fill(0);
+
+      // Resize handler
+      window.addEventListener('resize', () => {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+        columns = Math.floor(W / fontSize);
+        drops.length = 0;
+        for(let i=0;i<columns;i++) drops[i] = Math.floor(Math.random()*H/fontSize);
+      });
+
+      // subtle glow gradient on top-left/bottom-right
+      function draw() {
+        // translucent bg for tail effect
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
+        ctx.fillRect(0,0,W,H);
+
+        ctx.font = fontSize + 'px monospace';
+
+        for (let i = 0; i < drops.length; i++) {
+          const text = chars[Math.floor(Math.random() * chars.length)];
+          const x = i * fontSize;
+          const y = drops[i] * fontSize;
+
+          // leading char (bright)
+          ctx.fillStyle = '#b7ffcf';
+          ctx.fillText(text, x, y);
+
+          // trailing shadow / glow
+          ctx.fillStyle = 'rgba(45,255,180,0.12)';
+          ctx.fillText(text, x, y - fontSize * 0.6);
+          ctx.fillStyle = 'rgba(124,92,255,0.03)';
+          ctx.fillText(text, x, y - fontSize * 1.4);
+
+          // reset drop
+          if (y > H && Math.random() > 0.975) drops[i] = 0;
+          drops[i]++;
+        }
+
+        // subtle vignette glow
+        const g = ctx.createRadialGradient(W*0.15, H*0.1, 0, W*0.15, H*0.1, W*0.8);
+        g.addColorStop(0, 'rgba(124,92,255,0.06)');
+        g.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = g;
+        ctx.fillRect(0,0,W,H);
+
+        requestAnimationFrame(draw);
+      }
+
+      // init drops
+      for(let i=0;i<columns;i++) drops[i] = Math.floor(Math.random() * H / fontSize);
+      requestAnimationFrame(draw);
+    })();
+  </script>
+</body>
+</html>
