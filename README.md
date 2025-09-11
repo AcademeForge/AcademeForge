@@ -170,7 +170,13 @@
 
       <div class="typing" id="typing" aria-live="polite"></div>
 
-     
+      <div class="countdown" aria-hidden="false">
+        <div class="count-pill" id="pill-days">00d</div>
+        <div class="count-pill" id="pill-hours">00h</div>
+        <div class="count-pill" id="pill-mins">00m</div>
+        <div class="count-pill" id="pill-secs">00s</div>
+      </div>
+
       <div class="muted-small">Get early access, resources and launch updates directly through our social handles.</div>
     </section>
 
