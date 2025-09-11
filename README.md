@@ -300,8 +300,8 @@
     /* Countdown in Years, Months, Days */
     (function countdown() {
       const target = new Date();
-      target.setFullYear(target.getFullYear() + 5); // 5 years
-      target.setMonth(target.getMonth() + 6); // +6 months => 5.5 years
+      target.setFullYear(target.getFullYear() + 4); // 4 years
+      target.setMonth(target.getMonth() + 6); // +6 months => 4.6 years
 
       function update() {
         const now = new Date();
