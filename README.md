@@ -1,176 +1,362 @@
+
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>AcademeForge — Coming Soon</title>
   <meta name="description" content="AcademeForge — modern education platform. Coming soon." />
   <style>
+    /* ---------- Base & variables ---------- */
     :root{
-      --bg-1:#0b1220; --bg-2:#071029; --accent-1:#00f5a0; --accent-2:#7c5cff; --glass: rgba(255,255,255,0.04);
-      --mono: 'SFMono-Regular', ui-monospace, Menlo, Monaco, 'Roboto Mono', monospace;
+      --bg-1:#020617;
+      --bg-2:#071029;
+      --glass: rgba(255,255,255,0.04);
+      --muted: #97b0c8;
+      --accent-1: #00f5a0;
+      --accent-2: #7c5cff;
+      --neon: rgba(124,92,255,0.12);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace;
     }
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0}
     body{
-      margin:0; font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-      background: radial-gradient(1200px 600px at 10% 10%, rgba(124,92,255,0.06), transparent 6%),
-                  radial-gradient(800px 500px at 90% 90%, rgba(0,245,160,0.04), transparent 8%),
-                  linear-gradient(180deg,var(--bg-1),var(--bg-2));
-      color:#e6eef8; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-      display:flex;align-items:center;justify-content:center;padding:16px;
+      background: linear-gradient(180deg,var(--bg-1),var(--bg-2));
+      color:#e6eef8;
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:32px;
     }
 
-    /* Container */
-    .wrap{
+    /* ---------- Canvas (matrix) ---------- */
+    canvas#matrix {
+      position:fixed; inset:0; width:100%; height:100%; display:block; z-index:0;
+      background: linear-gradient(180deg, rgba(3,7,18,0.35), rgba(2,6,20,0.55));
+    }
+
+    /* ---------- Layout ---------- */
+    .container{
       position:relative;
+      z-index:2;
       width:100%;
-      max-width:600px;
+      max-width:1200px;
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:30px;
+      align-items:center;
     }
 
-    /* Hero box */
-    .hero{
-      padding:28px 20px;
-      border-radius:16px;
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      box-shadow: 0 10px 30px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
-      min-height:380px;
-      backdrop-filter: blur(6px);
+    /* ---------- Hero (left) ---------- */
+    .hero {
       position:relative;
+      border-radius:14px;
+      padding:34px;
+      min-height:480px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      box-shadow: 0 14px 50px rgba(2,6,23,0.7), inset 0 1px 0 rgba(255,255,255,0.02);
+      backdrop-filter: blur(6px);
       overflow:hidden;
     }
-
-    .brand{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-    .logo{
-      width:48px;height:48px;border-radius:12px;
-      background:linear-gradient(135deg,var(--accent-2),var(--accent-1));
-      display:grid;place-items:center;font-weight:800;color:#021018;font-size:16px;
-      box-shadow:0 4px 20px rgba(124,92,255,0.12);
+    .brand { display:flex; gap:14px; align-items:center; margin-bottom:14px; }
+    .logo {
+      width:64px; height:64px; border-radius:12px;
+      background: linear-gradient(135deg,var(--accent-2),var(--accent-1));
+      display:grid; place-items:center; color:#021018; font-weight:800; font-size:20px;
+      box-shadow: 0 8px 38px var(--neon);
     }
-    .brand h3{margin:0;font-size:18px}
-    .brand p{margin:0;color:#9fb1c9;font-size:12px}
+    .brand h3{margin:0;font-size:20px}
+    .brand p{margin:0;color:var(--muted);font-size:13px}
 
-    h1{font-size:32px;margin:6px 0 8px;line-height:1.1;text-align:left}
-    .glow{font-weight:800;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));
-      -webkit-background-clip:text;color:transparent;text-shadow:0 6px 20px rgba(124,92,255,0.08)}
-    .sub{color:#a8bacf;margin-top:6px;font-size:14px;line-height:1.4}
+    h1 {
+      font-size:48px; margin:6px 0 4px; line-height:1.02;
+      font-weight:800;
+    }
+    .glow {
+      background: linear-gradient(90deg,var(--accent-1),var(--accent-2));
+      -webkit-background-clip: text; color: transparent;
+      text-shadow: 0 12px 40px rgba(124,92,255,0.09);
+    }
+    .sub { color:var(--muted); margin-top:8px; font-size:16px; max-width:60ch; }
 
-    /* typing */
-    .typing{font-family:var(--mono);font-size:13px;color:#9fb1c9;margin-top:10px}
+    .typing {
+      font-family: var(--mono);
+      color:#9fb1c9;
+      margin-top:18px;
+      font-size:15px;
+      min-height:22px;
+      letter-spacing:0.2px;
+    }
 
-    /* countdown */
-    .count{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-    .count .seg{background:var(--glass);padding:6px 10px;border-radius:8px;font-family:var(--mono);font-size:13px;font-weight:700}
+    .countdown {
+      margin-top:20px;
+      display:flex; gap:10px; align-items:center;
+    }
+    .count-pill {
+      background: rgba(255,255,255,0.04);
+      padding:10px 14px; border-radius:10px;
+      font-family:var(--mono); font-weight:700;
+      color:#e6eef8; min-width:62px; text-align:center;
+    }
+    .muted-small { color:var(--muted); margin-top:10px; font-size:13px; }
 
-    .info{margin-top:12px;font-size:12px;color:#93a8bd;line-height:1.4}
+    /* ---------- Card (right) ---------- */
+    .card-wrap { perspective:1200px; display:flex; justify-content:center; }
+    .card {
+      width:100%; max-width:420px; height:460px; transform-style:preserve-3d;
+      transition: transform 0.85s cubic-bezier(.2,.9,.3,1);
+      position:relative;
+      cursor:pointer;
+    }
+    .card.is-flipped { transform: rotateY(180deg); }
 
-    /* Code rain background */
-    .code-rain{position:absolute;inset:0;pointer-events:none;opacity:0.18;font-family:var(--mono);font-size:10px;line-height:16px;color:#7fffd4}
-    .code-rain pre{position:absolute;white-space:nowrap}
+    .face {
+      position:absolute; inset:0; border-radius:14px;
+      padding:22px; display:flex; flex-direction:column;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      box-shadow: 0 18px 60px rgba(2,6,23,0.65);
+      backface-visibility:hidden; -webkit-backface-visibility:hidden;
+      overflow:hidden;
+    }
+    .face.back { transform: rotateY(180deg); }
 
-    /* particles */
-    .particle{position:absolute;border-radius:50%;filter:blur(6px);opacity:0.16}
+    .card-title { font-size:18px; font-weight:700; }
+    .card-muted { color:var(--muted); font-size:13px; margin-top:6px; }
 
-    /* Larger screens */
-    @media(min-width:768px){
-      h1{font-size:44px}
-      .sub{font-size:16px}
-      .typing{font-size:15px}
-      .count .seg{font-size:14px;padding:8px 12px}
-      .info{font-size:13px}
+    .af-mark {
+      margin-top:18px; display:grid; place-items:center;
+      font-size:84px; font-weight:900; line-height:1;
+      -webkit-background-clip:text; color:transparent;
+      background: linear-gradient(90deg,var(--accent-1),var(--accent-2));
+      text-shadow: 0 22px 80px rgba(124,92,255,0.08);
+    }
+    .flip-hint { margin-top:12px; color:var(--muted); font-size:13px; }
+
+    .chip { margin-left:auto; padding:6px 10px; border-radius:999px; background:var(--glass); color:#cfe7ff; font-size:12px; }
+
+    .back-section { margin-top:18px; color:#cfe7ff; font-size:14px; }
+
+    .socials { margin-top:auto; display:flex; gap:10px; align-items:center; }
+    .socials a { text-decoration:none; color:var(--muted); padding:8px 10px; border-radius:8px; background:rgba(255,255,255,0.02); }
+
+    /* ---------- small responsive ---------- */
+    @media (max-width:980px){
+      .container { grid-template-columns: 1fr; gap:18px; padding:0 10px; }
+      .card { max-width: 520px; height:380px; margin:0 auto; }
+      h1 { font-size:36px; }
+      .af-mark { font-size:64px; }
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <section class="hero">
+  <!-- matrix canvas -->
+  <canvas id="matrix"></canvas>
+
+  <main class="container" role="main" aria-labelledby="title">
+    <!-- LEFT: Hero -->
+    <section class="hero" aria-labelledby="title">
       <div class="brand">
-        <div class="logo">AF</div>
+        <div class="logo" aria-hidden>AF</div>
         <div>
-          <h3>AcademeForge</h3>
+          <h3 id="title">AcademeForge</h3>
           <p>Build. Learn. Launch. — Modern learning platform</p>
         </div>
       </div>
 
-      <h1><span class="glow">Coming</span> <span style="display:block">Soon</span></h1>
-      <div class="sub">A new space for builders and learners — courses, projects and mentorship.</div>
+      <h1><span class="glow">Coming</span> <span>Soon</span></h1>
+      <p class="sub">A new space for builders and learners — courses, projects and mentorship.</p>
 
-      <div class="typing" id="typing">Preparing the classroom of the future...</div>
+      <div class="typing" id="typing" aria-live="polite"></div>
 
-      <div class="count">
-        <div class="seg" id="cd-days">00d</div>
-        <div class="seg" id="cd-hours">00h</div>
-        <div class="seg" id="cd-mins">00m</div>
-        <div class="seg" id="cd-secs">00s</div>
+      <div class="countdown" aria-hidden="false">
+        <div class="count-pill" id="pill-days">00d</div>
+        <div class="count-pill" id="pill-hours">00h</div>
+        <div class="count-pill" id="pill-mins">00m</div>
+        <div class="count-pill" id="pill-secs">00s</div>
       </div>
 
-      <div class="info">Get early access, resources and launch updates directly in your inbox.</div>
-
-      <!-- subtle particles -->
-      <div class="particle" style="width:120px;height:120px;right:-30px;top:-30px;background:linear-gradient(135deg,var(--accent-2),var(--accent-1));opacity:0.07"></div>
-      <div class="particle" style="width:80px;height:80px;left:-20px;bottom:-20px;background:linear-gradient(135deg,#00f5a0,#7c5cff);opacity:0.06"></div>
-
-      <!-- code rain overlay -->
-      <div class="code-rain" aria-hidden></div>
+      <div class="muted-small">Get early access, resources and launch updates directly in your inbox.</div>
     </section>
-  </div>
+
+    <!-- RIGHT: Flip card -->
+    <aside class="card-wrap" aria-hidden="false">
+      <div class="card" id="card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip card to see updates">
+        <!-- front -->
+        <div class="face front">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div>
+              <div class="card-title">AcademeForge</div>
+              <div class="card-muted">Early access & pilot programs</div>
+            </div>
+            <div class="chip">Beta</div>
+          </div>
+
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;">
+            <div class="af-mark" aria-hidden>AF</div>
+            <div class="flip-hint">Click card to see more →</div>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="card-muted">Join waitlist for launch perks</div>
+            <div style="font-size:12px;color:var(--muted)">v0.9</div>
+          </div>
+        </div>
+
+        <!-- back -->
+        <div class="face back">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div>
+              <div class="card-title">Get Updates</div>
+              <div class="card-muted">We’ll notify you when we go live</div>
+            </div>
+            <div class="chip">Notify</div>
+          </div>
+
+          <div class="back-section">
+            Early features: curated courses, project labs, mentor sessions, micro-credentials and community projects.
+          </div>
+
+          <div class="socials" aria-label="social links">
+            <span class="card-muted">Or join us on</span>
+            <a href="#" aria-label="Twitter">Twitter</a>
+            <a href="#" aria-label="LinkedIn">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </main>
 
   <script>
-    /* Code rain */
-    const codeRain = document.querySelector('.code-rain');
-    const lines = 14;
-    const charset = '01<>\\/{}[]()=+-_*;:,.$%#@abcdefghijklmnopqrstuvwxyz0123456789';
-    function makePre(x, delay){
-      const pre = document.createElement('pre');
-      pre.style.left = x + '%';
-      pre.style.top = Math.random()*14 + '%';
-      pre.style.opacity = 0.9;
-      pre.style.transform = 'translateY(-10%)';
-      pre.style.animation = `fall ${8 + Math.random()*6}s linear ${delay}s infinite`;
-      pre.textContent = Array.from({length: 30}, ()=> charset.charAt(Math.floor(Math.random()*charset.length))).join('');
-      return pre;
-    }
-    for(let i=0;i<lines;i++){
-      const pre = makePre((i/(lines-1))*100, Math.random()*4);
-      codeRain.appendChild(pre);
-    }
-    setInterval(()=>{
-      document.querySelectorAll('.code-rain pre').forEach(pre=>{
-        if(Math.random() > 0.6) pre.textContent = Array.from({length: 20 + Math.floor(Math.random()*20)}, ()=> charset.charAt(Math.floor(Math.random()*charset.length))).join('');
-      })
-    }, 2200);
-    const style = document.createElement('style');
-    style.textContent = `@keyframes fall{0%{transform:translateY(-10%);opacity:0}10%{opacity:0.5}50%{opacity:0.9}100%{transform:translateY(120%);opacity:0}}`;
-    document.head.appendChild(style);
+    /* ===================== Typing text ===================== */
+    (function typing(){
+      const el = document.getElementById('typing');
+      const items = [
+        'Preparing the classroom of the future...',
+        'Designing hands-on projects',
+        'Onboarding mentors & instructors',
+        'Curating career-ready curricula'
+      ];
+      let mi = 0, ti = 0, deleting = false;
+      function tick(){
+        const msg = items[mi];
+        if(!deleting){
+          ti++;
+          el.textContent = msg.slice(0, ti);
+          if(ti === msg.length){ deleting = true; setTimeout(tick, 900); return; }
+        } else {
+          ti--;
+          el.textContent = msg.slice(0, ti);
+          if(ti === 0){ deleting = false; mi = (mi+1) % items.length; }
+        }
+        setTimeout(tick, deleting ? 40 : (40 + Math.random()*40));
+      }
+      tick();
+    })();
 
-    /* Typing */
-    const typingEl = document.getElementById('typing');
-    const messages = ['Preparing the classroom of the future...', 'Designing hands-on projects', 'Onboarding mentors & instructors', 'Curating career-ready curricula'];
-    let mi=0, ti=0;
-    function typeLoop(){
-      const msg = messages[mi];
-      typingEl.textContent = msg.slice(0, ti);
-      ti++;
-      if(ti > msg.length){
-        setTimeout(()=>{ti=0;mi=(mi+1)%messages.length;typeLoop();},1200);
-      } else setTimeout(typeLoop, 50 + Math.random()*40);
-    }
-    typeLoop();
+    /* ===================== Countdown ===================== */
+    (function countdown(){
+      // set your target date here (example: 21 days ahead)
+      const target = new Date();
+      target.setDate(target.getDate() + 21);
 
-    /* Countdown */
-    const target = new Date(); target.setDate(target.getDate()+18);
-    function updateCountdown(){
-      const now = new Date();
-      const diff = Math.max(0, target - now);
-      const d = Math.floor(diff / (1000*60*60*24));
-      const h = Math.floor(diff / (1000*60*60) % 24);
-      const m = Math.floor(diff / (1000*60) % 60);
-      const s = Math.floor(diff / 1000 % 60);
-      document.getElementById('cd-days').textContent = String(d).padStart(2,'0')+'d';
-      document.getElementById('cd-hours').textContent = String(h).padStart(2,'0')+'h';
-      document.getElementById('cd-mins').textContent = String(m).padStart(2,'0')+'m';
-      document.getElementById('cd-secs').textContent = String(s).padStart(2,'0')+'s';
-    }
-    setInterval(updateCountdown,1000);updateCountdown();
+      function update(){
+        const now = Date.now();
+        let diff = Math.max(0, target - now);
+        const days = Math.floor(diff / (1000*60*60*24)); diff %= (1000*60*60*24);
+        const hours = Math.floor(diff / (1000*60*60)); diff %= (1000*60*60);
+        const mins = Math.floor(diff / (1000*60)); diff %= (1000*60);
+        const secs = Math.floor(diff / 1000);
+
+        document.getElementById('pill-days').textContent = String(days).padStart(2,'0') + 'd';
+        document.getElementById('pill-hours').textContent = String(hours).padStart(2,'0') + 'h';
+        document.getElementById('pill-mins').textContent = String(mins).padStart(2,'0') + 'm';
+        document.getElementById('pill-secs').textContent = String(secs).padStart(2,'0') + 's';
+      }
+      update();
+      setInterval(update, 1000);
+    })();
+
+    /* ===================== Flip card ===================== */
+    (function flipCard(){
+      const card = document.getElementById('card');
+      function toggle(){
+        card.classList.toggle('is-flipped');
+        card.setAttribute('aria-pressed', card.classList.contains('is-flipped'));
+      }
+      card.addEventListener('click', (e)=> {
+        if(['A','BUTTON'].includes(e.target.tagName)) return;
+        toggle();
+      });
+      card.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+    })();
+
+    /* ===================== Matrix rain (canvas) ===================== */
+    (function matrix(){
+      const canvas = document.getElementById('matrix');
+      const ctx = canvas.getContext('2d');
+      let W = canvas.width = window.innerWidth;
+      let H = canvas.height = window.innerHeight;
+
+      // Characters set - numbers + uppercase + some symbols
+      const letters = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ<>/{}[]()=+-_*;:,.$%#@';
+      const chars = letters.split('');
+      const fontSize = 14;
+      let columns = Math.floor(W / fontSize);
+      const drops = new Array(columns).fill(0);
+
+      // Resize handler
+      window.addEventListener('resize', () => {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+        columns = Math.floor(W / fontSize);
+        drops.length = 0;
+        for(let i=0;i<columns;i++) drops[i] = Math.floor(Math.random()*H/fontSize);
+      });
+
+      // subtle glow gradient on top-left/bottom-right
+      function draw() {
+        // translucent bg for tail effect
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
+        ctx.fillRect(0,0,W,H);
+
+        ctx.font = fontSize + 'px monospace';
+
+        for (let i = 0; i < drops.length; i++) {
+          const text = chars[Math.floor(Math.random() * chars.length)];
+          const x = i * fontSize;
+          const y = drops[i] * fontSize;
+
+          // leading char (bright)
+          ctx.fillStyle = '#b7ffcf';
+          ctx.fillText(text, x, y);
+
+          // trailing shadow / glow
+          ctx.fillStyle = 'rgba(45,255,180,0.12)';
+          ctx.fillText(text, x, y - fontSize * 0.6);
+          ctx.fillStyle = 'rgba(124,92,255,0.03)';
+          ctx.fillText(text, x, y - fontSize * 1.4);
+
+          // reset drop
+          if (y > H && Math.random() > 0.975) drops[i] = 0;
+          drops[i]++;
+        }
+
+        // subtle vignette glow
+        const g = ctx.createRadialGradient(W*0.15, H*0.1, 0, W*0.15, H*0.1, W*0.8);
+        g.addColorStop(0, 'rgba(124,92,255,0.06)');
+        g.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = g;
+        ctx.fillRect(0,0,W,H);
+
+        requestAnimationFrame(draw);
+      }
+
+      // init drops
+      for(let i=0;i<columns;i++) drops[i] = Math.floor(Math.random() * H / fontSize);
+      requestAnimationFrame(draw);
+    })();
   </script>
 </body>
 </html>
