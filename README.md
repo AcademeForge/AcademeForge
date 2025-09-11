@@ -211,17 +211,17 @@
               <div class="card-title">Get Updates</div>
               <div class="card-muted">We’ll notify you when we go live</div>
             </div>
-            <div class="chip">Notify</div>
+            <div class="chip">v0.9</div>
           </div>
 
           <div class="back-section">
-            Early features: curated courses, project labs, mentor sessions, micro-credentials and community projects.
+            As a new and evolving platform, Academeforge is still refining the full scope, reliability, and recognition of its assessments and certifications to ensure the highest quality experience for our users.
           </div>
 
           <div class="socials" aria-label="social links">
             <span class="card-muted">Or join us on</span>
-            <a href="#" aria-label="Twitter">Twitter</a>
-            <a href="#" aria-label="LinkedIn">LinkedIn</a>
+            <a href="#" aria-label="Telegram">Telegram</a>
+            <a href="#" aria-label="Instagram">Instagram</a>
           </div>
         </div>
       </div>
