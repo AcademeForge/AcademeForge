@@ -177,7 +177,7 @@
         <div class="count-pill" id="pill-secs">00s</div>
       </div>
 
-      <div class="muted-small">Get early access, resources and launch updates directly in your inbox.</div>
+      <div class="muted-small">Get early access, resources and launch updates directly through our social handles.</div>
     </section>
 
     <!-- RIGHT: Flip card -->
