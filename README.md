@@ -1,4 +1,3 @@
-
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -23,7 +22,7 @@
     }
 
     /* Container */
-    .wrap{position:relative;max-width:1100px;width:100%;display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:center}
+    .wrap{position:relative;max-width:800px;width:100%;}
 
     /* Left hero */
     .hero{
@@ -32,9 +31,7 @@
       min-height:420px;backdrop-filter: blur(6px);position:relative;overflow:hidden;
     }
 
-    .brand{
-      display:flex;align-items:center;gap:14px;margin-bottom:18px
-    }
+    .brand{display:flex;align-items:center;gap:14px;margin-bottom:18px}
     .logo{
       width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent-2),var(--accent-1));
       display:grid;place-items:center;font-weight:800;color:#021018;font-size:18px;box-shadow:0 6px 30px rgba(124,92,255,0.12);
@@ -43,53 +40,24 @@
     .brand p{margin:0;color:#9fb1c9;font-size:13px}
 
     h1{font-size:44px;margin:6px 0 8px;line-height:1.02}
-    .accent{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));-webkit-background-clip:text;color:transparent}
+    .glow{font-weight:800;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));-webkit-background-clip:text;color:transparent;text-shadow:0 10px 40px rgba(124,92,255,0.08)}
     .sub{color:#a8bacf;margin-top:8px;font-size:16px}
 
     /* Code rain background */
     .code-rain{position:absolute;inset:0;pointer-events:none;opacity:0.18;font-family:var(--mono);font-size:12px;line-height:20px;color:#7fffd4}
     .code-rain pre{position:absolute;white-space:nowrap}
 
-    /* Flip card */
-    .card-wrap{perspective:1200px}
-    .card{width:100%;max-width:420px;height:420px;margin:0 auto;transform-style:preserve-3d;transition:transform 0.9s cubic-bezier(.2,.9,.3,1);position:relative}
-    .card.is-flipped{transform:rotateY(180deg)}
-    .side{position:absolute;inset:0;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter:blur(6px);box-shadow:0 12px 40px rgba(2,6,23,0.6);padding:26px;display:flex;flex-direction:column}
-    .side.back{transform:rotateY(180deg)}
-    .card .title{font-size:20px;font-weight:700}
-    .muted{color:#9fb1c9;font-size:13px}
-
-    /* Animated headline */
-    .glow{font-weight:800;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));-webkit-background-clip:text;color:transparent;text-shadow:0 10px 40px rgba(124,92,255,0.08)}
+    /* typing */
     .typing{font-family:var(--mono);font-size:16px;color:#9fb1c9;margin-top:10px}
-
-    /* form */
-    .field{display:flex;gap:10px;margin-top:auto}
-    input[type=email]{flex:1;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#e6eef8;font-size:14px}
-    button.cta{padding:10px 14px;border-radius:10px;border:none;background:linear-gradient(90deg,var(--accent-2),var(--accent-1));color:#021018;font-weight:700;cursor:pointer}
-
-    .info{margin-top:12px;font-size:13px;color:#93a8bd}
-
-    /* small utility */
-    .row{display:flex;gap:10px;align-items:center}
-    .chip{padding:6px 10px;border-radius:999px;background:var(--glass);font-size:12px;color:#bcd3e6}
-
-    /* footer for card */
-    .footer{display:flex;gap:10px;align-items:center;margin-top:14px}
-
-    /* particles */
-    .particle{position:absolute;border-radius:50%;filter:blur(6px);opacity:0.16}
-
-    /* responsive */
-    @media(max-width:980px){.wrap{grid-template-columns:1fr;gap:18px}.card{max-width:520px;height:380px}.hero{min-height:380px}}
-
-    /* micro interactions */
-    .flip-hint{font-size:12px;color:#8ea8c7;margin-top:10px}
 
     /* countdown */
     .count{display:flex;gap:8px;margin-top:14px}
     .count .seg{background:var(--glass);padding:8px 12px;border-radius:8px;font-family:var(--mono);font-weight:700}
 
+    .info{margin-top:12px;font-size:13px;color:#93a8bd}
+
+    /* particles */
+    .particle{position:absolute;border-radius:50%;filter:blur(6px);opacity:0.16}
   </style>
 </head>
 <body>
@@ -123,76 +91,15 @@
       <div class="particle" style="width:90px;height:90px;left:-20px;bottom:-20px;background:linear-gradient(135deg,#00f5a0,#7c5cff);opacity:0.06"></div>
 
       <!-- code rain overlay -->
-      <div class="code-rain" aria-hidden>
-        <!-- JS will inject multiple pre blocks here -->
-      </div>
-
+      <div class="code-rain" aria-hidden></div>
     </section>
-
-    <!-- RIGHT: Flip Card -->
-    <aside class="card-wrap">
-      <div class="card" id="card">
-        <!-- FRONT -->
-        <div class="side front">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div>
-              <div class="title">AcademeForge</div>
-              <div class="muted">Early access & pilot programs</div>
-            </div>
-            <div class="chip">Beta</div>
-          </div>
-
-          <div style="flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column">
-            <div style="font-size:72px;font-weight:800;color:transparent;-webkit-background-clip:text;background:linear-gradient(90deg,var(--accent-1),var(--accent-2));line-height:1">AF</div>
-            <div class="flip-hint">Click card to see more →</div>
-          </div>
-
-          <div style="display:flex;gap:10px;justify-content:space-between;align-items:center">
-            <div class="muted">Join waitlist for launch perks</div>
-            <div class="row">
-              <div style="font-size:12px;color:#8ea8c7">v0.9</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- BACK -->
-        <div class="side back">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div>
-              <div class="title">Get Updates</div>
-              <div class="muted">We’ll notify you when we go live</div>
-            </div>
-            <div class="chip">Notify</div>
-          </div>
-
-          <div style="margin-top:18px;font-size:14px;color:#cfe7ff">Early features: curated courses, project labs, mentor sessions, micro-credentials and community projects.</div>
-
-          <form id="notify-form" style="margin-top:18px;display:flex;flex-direction:column;gap:10px" onsubmit="handleForm(event)">
-            <input type="email" id="email" placeholder="your@email.com" required />
-            <div style="display:flex;gap:8px">
-              <button class="cta" type="submit">Notify me</button>
-              <button type="button" onclick="flipCard()" style="padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:#d6ecff">Back</button>
-            </div>
-          </form>
-
-          <div class="footer">
-            <div class="muted">Or join us on</div>
-            <div style="display:flex;gap:8px">
-              <a href="#" class="chip">Twitter</a>
-              <a href="#" class="chip">LinkedIn</a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </aside>
   </div>
 
   <script>
     /* ----------------- Code rain generation ----------------- */
     const codeRain = document.querySelector('.code-rain');
-    const lines = 18; // number of columns
-    const charset = '01<>\/{}[]()=+-_*;:,.$%#@abcdefghijklmnopqrstuvwxyz0123456789';
+    const lines = 18;
+    const charset = '01<>\\/{}[]()=+-_*;:,.$%#@abcdefghijklmnopqrstuvwxyz0123456789';
 
     function makePre(x, delay){
       const pre = document.createElement('pre');
@@ -210,14 +117,12 @@
       codeRain.appendChild(pre);
     }
 
-    // update rain occasionally to vary characters
     setInterval(()=>{
       document.querySelectorAll('.code-rain pre').forEach(pre=>{
         if(Math.random() > 0.6) pre.textContent = Array.from({length: 30 + Math.floor(Math.random()*30)}, ()=> charset.charAt(Math.floor(Math.random()*charset.length))).join('');
       })
     }, 2200);
 
-    // fall keyframes (dynamically because we used random durations)
     const style = document.createElement('style');
     style.textContent = `@keyframes fall{0%{transform:translateY(-10%);opacity:0}10%{opacity:0.5}50%{opacity:0.9}100%{transform:translateY(120%);opacity:0}}`;
     document.head.appendChild(style);
@@ -237,9 +142,7 @@
     typeLoop();
 
     /* ----------------- Countdown ----------------- */
-    // Example: set a target date (you can change exact date here)
-    const target = new Date(); target.setDate(target.getDate()+18); // 18 days from now
-
+    const target = new Date(); target.setDate(target.getDate()+18);
     function updateCountdown(){
       const now = new Date();
       const diff = Math.max(0, target - now);
@@ -253,56 +156,6 @@
       document.getElementById('cd-secs').textContent = String(s).padStart(2,'0')+'s';
     }
     setInterval(updateCountdown,1000);updateCountdown();
-
-    /* ----------------- Flip card logic ----------------- */
-    const card = document.getElementById('card');
-    function flipCard(){ card.classList.toggle('is-flipped'); }
-    card.addEventListener('click', (e)=>{
-      // only flip when clicking center area, not buttons/links
-      if(e.target.tagName.toLowerCase() === 'button' || e.target.tagName.toLowerCase()==='a' || e.target.tagName.toLowerCase()==='input') return;
-      flipCard();
-    });
-
-    /* ----------------- Form handling (placeholder) ----------------- */
-    function handleForm(e){
-      e.preventDefault();
-      const em = document.getElementById('email');
-      if(!em.value) return alert('Please enter email');
-      // demo success
-      em.value = '';
-      alert('Thanks — we\'ll notify you at the provided email (demo).');
-    }
-
-    /* ----------------- Accessibility: keyboard flip ----------------- */
-    document.addEventListener('keydown', (e)=>{ if(e.key==='Enter' && document.activeElement === document.body) flipCard(); });
-
-// background matrix effect
-    const c=document.getElementById("matrix"),ctx=c.getContext("2d");
-    c.height=window.innerHeight;
-    c.width=window.innerWidth;
-    const letters="01ABCDEFGHIJKLMNOPQRSTUVWXYZअआइईउऊएऐओऔकखगघचछजझटठडढतथदधनपफबभमयरलवशषसह";
-    const matrix=letters.split("");
-    const font_size=14;
-    const columns=c.width/font_size;
-    const drops=[];
-    for(let x=0;x<columns;x++) drops[x]=1;
-    function draw(){
-      ctx.fillStyle="rgba(0,0,0,0.05)";
-      ctx.fillRect(0,0,c.width,c.height);
-      ctx.fillStyle="#0f0";
-      ctx.font=font_size+"px monospace";
-      for(let i=0;i<drops.length;i++){
-        const text=matrix[Math.floor(Math.random()*matrix.length)];
-        ctx.fillText(text,i*font_size,drops[i]*font_size);
-        if(drops[i]*font_size>c.height&&Math.random()>0.975) drops[i]=0;
-        drops[i]++;
-      }
-    }
-    setInterval(draw,33);
-
   </script>
 </body>
 </html>
-
-
-
