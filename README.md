@@ -1,7 +1,7 @@
 <html lang="hi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AcademeForge - Coming Soon</title>
   <style>
     * {margin:0;padding:0;box-sizing:border-box;}
@@ -15,10 +15,9 @@
       overflow:hidden;
       color:#fff;
     }
-    /* background code rain */
     canvas {position:absolute;top:0;left:0;width:100%;height:100%;z-index:-1;}.card {
-  width:340px;
-  height:460px;
+  width:360px;
+  height:500px;
   perspective:1000px;
 }
 .card-inner {
@@ -35,7 +34,7 @@
   width:100%;
   height:100%;
   backface-visibility:hidden;
-  border-radius:16px;
+  border-radius:18px;
   display:flex;
   flex-direction:column;
   justify-content:center;
@@ -43,20 +42,20 @@
   padding:20px;
 }
 .card-front {
-  background:rgba(20,20,20,0.9);
+  background:rgba(20,20,20,0.85);
   box-shadow:0 0 20px rgba(0,255,128,0.4);
   text-align:center;
 }
 .card-front h1 {
-  font-size:2rem;
+  font-size:2.2rem;
   margin-bottom:10px;
   color:#0ff;
 }
-.card-front h2 {font-size:1.3rem;color:#0f0;}
+.card-front h2 {font-size:1.4rem;color:#0f0;}
 .card-front p {margin-top:10px;color:#ccc;}
 
 .card-back {
-  background:rgba(15,15,15,0.95);
+  background:rgba(15,15,15,0.9);
   box-shadow:0 0 20px rgba(0,200,255,0.4);
   transform:rotateY(180deg);
   text-align:center;
@@ -82,7 +81,10 @@ button {
   color:#fff;
   font-weight:600;
   cursor:pointer;
+  transition:transform .2s;
 }
+button:hover {transform:scale(1.05)}
+
 .links a {
   display:block;
   margin:6px 0;
@@ -114,38 +116,38 @@ button {
         <h2>जल्द ही आ रहा है 🚀</h2>
         <p>शिक्षा और तकनीक का संगम</p>
         <p style="margin-top:20px;color:#0ff;font-size:0.85rem;">(फ्लिप करने के लिए क्लिक करें)</p>
-      </div><!-- Back in Hindi (updates section) -->
+      </div><!-- Back in English -->
   <div class="card-back">
     <h1>AcademeForge — Coming Soon</h1>
     <p>We are building the future of learning and innovation.</p>
 
-    <h3 style="color:#0f9;margin-bottom:10px;">अपडेट प्राप्त करें</h3>
+    <h3 style="color:#0f9;margin-bottom:10px;">Get Updates</h3>
     <form onsubmit="event.preventDefault()">
-      <input type="email" placeholder="अपना ईमेल दर्ज करें" required />
-      <button type="submit">मुझे सूचित करें</button>
+      <input type="email" placeholder="Enter your email" required />
+      <button type="submit">Notify me</button>
     </form>
 
     <div class="links">
-      <a href="#">LinkedIn पर हमसे जुड़ें</a>
-      <a href="#">Twitter पर हमारा अनुसरण करें</a>
+      <a href="#">Join us on LinkedIn</a>
+      <a href="#">Follow us on Twitter</a>
     </div>
 
     <div class="countdown">
       <div>
         <div class="time-box" id="days">00</div>
-        <div class="label">दिन</div>
+        <div class="label">Days</div>
       </div>
       <div>
         <div class="time-box" id="hours">00</div>
-        <div class="label">घंटे</div>
+        <div class="label">Hours</div>
       </div>
       <div>
         <div class="time-box" id="minutes">00</div>
-        <div class="label">मिनट</div>
+        <div class="label">Minutes</div>
       </div>
       <div>
         <div class="time-box" id="seconds">00</div>
-        <div class="label">सेकंड</div>
+        <div class="label">Seconds</div>
       </div>
     </div>
   </div>
