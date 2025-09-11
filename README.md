@@ -1,191 +1,213 @@
-import React from "react"; import { motion } from "framer-motion"; import { Mail } from "lucide-react";
-
-// Usage: Drop this file into a React + Tailwind project (e.g. create-react-app + Tailwind). // Dependencies: framer-motion, lucide-react, tailwindcss. // Install: npm i framer-motion lucide-react
-
-export default function ComingSoon() { return ( <div className="min-h-screen w-full bg-gradient-to-b from-gray-900 via-black to-gray-900 flex items-center justify-center overflow-hidden relative text-white"> {/* animated soft-glow radial gradients */} <div className="absolute inset-0 pointer-events-none"> <div className="absolute -left-40 -top-40 w-96 h-96 rounded-full opacity-30 blur-3xl bg-purple-500 animate-blob" /> <div className="absolute -right-40 -bottom-40 w-96 h-96 rounded-full opacity-30 blur-3xl bg-emerald-400 animate-blob animation-delay-2000" /> </div>
-
-{/* subtle star field */}
-  <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
-    <defs>
-      <radialGradient id="g1" cx="50%" cy="50%">
-        <stop offset="0%" stopColor="#fff" stopOpacity="0.9" />
-        <stop offset="100%" stopColor="#fff" stopOpacity="0" />
-      </radialGradient>
-    </defs>
-    {/* generate decorative dots */}
-    {Array.from({ length: 40 }).map((_, i) => {
-      const x = Math.random() * 100;
-      const y = Math.random() * 100;
-      const r = Math.random() * 1.6 + 0.2;
-      const op = Math.random() * 0.7 + 0.1;
-      return <circle key={i} cx={`${x}%`} cy={`${y}%`} r={r} fill={`url(#g1)`} opacity={op} />;
-    })}
-  </svg>
-
-  <div className="relative z-10 max-w-3xl w-full px-6 py-12 text-center">
-    <motion.h1
-      initial={{ opacity: 0, y: -20, scale: 0.97 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.9, ease: "easeOut" }}
-      className="text-6xl md:text-8xl font-extrabold tracking-tight mb-4 leading-none"
-    >
-      <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-indigo-400 to-cyan-300 drop-shadow-[0_8px_40px_rgba(99,102,241,0.12)] neon-glow">
-        Coming
-      </span>
-      <span className="block text-4xl md:text-6xl font-semibold mt-2">soon</span>
-    </motion.h1>
-
-    <motion.p
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 0.6, duration: 0.8 }}
-      className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-8"
-    >
-      We're putting the finishing touches on something awesome. Sign up and we'll let you know when we launch.
-    </motion.p>
-
-    {/* animated progress dots */}
-    <div className="flex items-center justify-center gap-3 mb-8">
-      {Array.from({ length: 6 }).map((_, i) => (
-        <motion.span
-          key={i}
-          animate={{ y: [0, -14, 0] }}
-          transition={{ repeat: Infinity, duration: 1.2, delay: i * 0.12 }}
-          className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-gradient-to-r from-pink-500 to-indigo-500 shadow-lg"
-        />
-      ))}
-    </div>
-
-    {/* subscription form */}
-    <motion.form
-      onSubmit={(e) => e.preventDefault()}
-      initial={{ opacity: 0, y: 18 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 1.0, duration: 0.6 }}
-      className="mx-auto max-w-lg w-full flex flex-col sm:flex-row gap-3"
-    >
-      <div className="flex-1 relative">
-        <input
-          aria-label="Email address"
-          type="email"
-          required
-          placeholder="Enter your email"
-          className="w-full rounded-lg py-3 px-4 bg-white/6 backdrop-blur-sm placeholder:text-gray-300 outline-none ring-1 ring-white/10 focus:ring-2 focus:ring-indigo-400 transition"
-        />
-        <div className="absolute right-3 top-3 text-white/70 hidden sm:block">
-          <Mail size={18} />
-        </div>
-      </div>
-
-      <button
-        type="submit"
-        className="inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 bg-gradient-to-r from-indigo-500 to-emerald-400 font-semibold shadow-2xl hover:scale-[1.02] active:scale-95 transition"
-      >
-        Notify me
-      </button>
-    </motion.form>
-
-    {/* countdown chips (purely decorative) */}
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 1.2 }}
-      className="mt-10 flex items-center justify-center gap-4"
-    >
-      {[
-        ["12", "Days"],
-        ["08", "Hours"],
-        ["32", "Minutes"],
-        ["45", "Seconds"],
-      ].map(([num, label], idx) => (
-        <div key={idx} className="text-center">
-          <div className="px-4 py-3 rounded-xl bg-white/6 ring-1 ring-white/8 backdrop-blur-sm font-mono text-2xl md:text-3xl font-semibold">{num}</div>
-          <div className="mt-2 text-xs text-gray-400 uppercase">{label}</div>
-        </div>
-      ))}
-    </motion.div>
-  </div>
-
-  {/* footer-ish subtle message */}
-  <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 0.8 }}
-    transition={{ delay: 1.6 }}
-    className="absolute bottom-6 w-full text-center text-xs text-gray-500"
-  >
-    Built with care — launch date coming soon.
-  </motion.div>
-
-  {/* small animated sparkles using absolutely positioned elements */}
-  <div className="absolute inset-0 pointer-events-none">
-    {Array.from({ length: 12 }).map((_, i) => {
-      const left = Math.random() * 100;
-      const top = Math.random() * 100;
-      const dur = 4 + Math.random() * 6;
-      const size = Math.random() * 6 + 2;
-      return (
-        <motion.div
-          key={i}
-          animate={{ opacity: [0, 1, 0], scale: [0.6, 1, 0.6], rotate: [0, 45, 0] }}
-          transition={{ repeat: Infinity, duration: dur, delay: i * 0.3 }}
-          style={{ left: `${left}%`, top: `${top}%` }}
-          className="absolute bg-white/90 rounded-full"
-          aria-hidden
-        />
-      );
-    })}
-  </div>
-
-  {/* extra style tag so this component is drop-in without additional CSS files */}
-  <style jsx>{`
-    .neon-glow {
-      text-shadow: 0 6px 30px rgba(99,102,241,0.18), 0 2px 8px rgba(99,102,241,0.15);
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coming Soon</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-
-    /* blob animation */
-    @keyframes blob {
-      0% {
-        transform: translate(0px, 0px) scale(1);
-      }
-      33% {
-        transform: translate(30px, -20px) scale(1.05);
-      }
-      66% {
-        transform: translate(-20px, 30px) scale(0.95);
-      }
-      100% {
-        transform: translate(0px, 0px) scale(1);
-      }
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(to bottom, #111827, #000000, #111827);
+      font-family: Arial, sans-serif;
+      color: #fff;
+      overflow: hidden;
+      text-align: center;
     }
-
-    .animate-blob {
-      animation: blob 9s infinite;
+    h1 {
+      font-size: 4rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, #ec4899, #6366f1, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 6px 30px rgba(99,102,241,0.3);
     }
-
-    .animation-delay-2000 {
-      animation-delay: 2s;
+    h2 {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-top: 10px;
     }
-
-    /* subtle backdrop blur for supporting browsers */
-    input::-webkit-input-placeholder {
-      color: rgba(229,231,235,0.6);
+    p {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: #d1d5db;
     }
-
-    /* sparkles size */
-    .absolute > div[aria-hidden] {
-      width: 6px;
-      height: 6px;
-      filter: blur(0.6px);
+    .dots {
+      margin: 30px 0;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
     }
-
-    /* responsive tweaks */
-    @media (max-width: 640px) {
-      .neon-glow {
-        text-shadow: 0 6px 24px rgba(99,102,241,0.14);
-      }
+    .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: linear-gradient(90deg, #ec4899, #6366f1);
+      box-shadow: 0 0 10px rgba(99,102,241,0.7);
+      animation: bounce 1.2s infinite;
     }
-  `}</style>
+    .dot:nth-child(2) { animation-delay: 0.12s; }
+    .dot:nth-child(3) { animation-delay: 0.24s; }
+    .dot:nth-child(4) { animation-delay: 0.36s; }
+    .dot:nth-child(5) { animation-delay: 0.48s; }
+    .dot:nth-child(6) { animation-delay: 0.60s; }@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+input[type="email"] {
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  min-width: 240px;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+}
+input::placeholder {
+  color: #9ca3af;
+}
+button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #6366f1, #10b981);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+button:hover { transform: scale(1.05); }
+button:active { transform: scale(0.95); }
+
+.countdown {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.time-box {
+  background: rgba(255,255,255,0.06);
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-family: monospace;
+  font-size: 1.5rem;
+  font-weight: 600;
+  backdrop-filter: blur(6px);
+}
+.label {
+  margin-top: 8px;
+  font-size: 0.7rem;
+  color: #9ca3af;
+  text-transform: uppercase;
+}
+footer {
+  position: absolute;
+  bottom: 12px;
+  width: 100%;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+/* floating sparkles */
+.sparkle {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  opacity: 0;
+  animation: sparkle 6s infinite;
+}
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0.6) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(45deg); }
+}
+
+  </style>
+</head>
+<body>
+  <div>
+    <h1>Coming</h1>
+    <h2>soon</h2>
+    <p>We're working hard on something amazing. Stay tuned!</p><div class="dots">
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
 </div>
 
-); }
+<form onsubmit="event.preventDefault()">
+  <input type="email" placeholder="Enter your email" required />
+  <button type="submit">Notify me</button>
+</form>
 
+<div class="countdown">
+  <div>
+    <div class="time-box" id="days">00</div>
+    <div class="label">Days</div>
+  </div>
+  <div>
+    <div class="time-box" id="hours">00</div>
+    <div class="label">Hours</div>
+  </div>
+  <div>
+    <div class="time-box" id="minutes">00</div>
+    <div class="label">Minutes</div>
+  </div>
+  <div>
+    <div class="time-box" id="seconds">00</div>
+    <div class="label">Seconds</div>
+  </div>
+</div>
+
+  </div>  <footer>
+    Built with ❤️ — Launching soon
+  </footer>  <script>
+    // countdown (example target date: 30 days later)
+    const targetDate = new Date();
+    targetDate.setDate(targetDate.getDate() + 30);
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("days").textContent = days;
+      document.getElementById("hours").textContent = hours;
+      document.getElementById("minutes").textContent = minutes;
+      document.getElementById("seconds").textContent = seconds;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // add sparkles randomly
+    for (let i = 0; i < 15; i++) {
+      const s = document.createElement("div");
+      s.classList.add("sparkle");
+      s.style.width = s.style.height = Math.random() * 6 + 3 + "px";
+      s.style.left = Math.random() * 100 + "%";
+      s.style.top = Math.random() * 100 + "%";
+      s.style.animationDuration = 4 + Math.random() * 6 + "s";
+      s.style.animationDelay = Math.random() * 5 + "s";
+      document.body.appendChild(s);
+    }
+  </script></body>
+</html>
