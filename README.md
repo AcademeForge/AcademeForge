@@ -153,7 +153,6 @@
           <div class="mt-6 flex items-center justify-between text-[--muted]">
             <div>Visual preview only</div>
             <div class="text-xs">v0.9</div>
-<p class="mt-4 text-[--muted] max-w-xs">Be the first to know when we launch! Follow us on Social platforms:</p>
           </div>
         </div>
 
