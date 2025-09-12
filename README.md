@@ -3,410 +3,351 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <title>AcademeForge — Coming Soon</title>
-<meta name="description" content="AcademeForge — Build. Learn. Launch. Modern learning platform — Coming Soon" />
+<meta name="description" content="AcademeForge — Build. Learn. Launch. Futuristic coming soon." />
 <style>
-  /* =================== Variables & Base =================== */
+  /* ========================= Variables & base ========================= */
   :root{
-    --bg-1:#020617;
-    --bg-2:#071029;
-    --glass: rgba(255,255,255,0.04);
-    --muted: #9bb6cc;
-    --accent-1: #00f5a0;
-    --accent-2: #7c5cff;
-    --accent-3: #00d4ff;
-    --neon: rgba(124,92,255,0.12);
-    --glass-2: rgba(255,255,255,0.02);
+    --bg-1: #020617;
+    --bg-2: #071029;
+    --muted: #98b6d0;
+    --accent-a: #00f5a0;
+    --accent-b: #7c5cff;
+    --accent-c: #00d4ff;
+    --glass: rgba(255,255,255,0.03);
+    --card-bg: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
     --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace;
-    --ease-spring: cubic-bezier(.18,.96,.35,1);
-    --max-width: 1200px;
+    --ease: cubic-bezier(.16,.9,.3,1);
+    --maxw: 1280px;
   }
   *{box-sizing:border-box}
-  html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;color:#e6eef8;-webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;color:#e9f5ff; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
   body{
-    background: linear-gradient(180deg,var(--bg-1),var(--bg-2));
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(124,92,255,0.06), transparent 10%),
+                radial-gradient(900px 500px at 90% 90%, rgba(0,245,160,0.03), transparent 8%),
+                linear-gradient(180deg,var(--bg-1),var(--bg-2));
     display:flex; align-items:center; justify-content:center;
     padding:28px; overflow-x:hidden;
   }
   a{color:inherit}
+  /* reduce motion toggle visible for testing */
+  .reduced *{ transition:none !important; animation:none !important; }
 
-  /* =================== Stage & layout =================== */
+  /* ========================= Stage: grid layout ========================= */
   .stage {
-    position:relative; z-index:2;
-    width:100%; max-width:var(--max-width);
-    display:grid; gap:28px;
-    grid-template-columns: 1fr 460px;
-    align-items:start; padding:36px; border-radius:16px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    box-shadow: 0 30px 120px rgba(2,6,23,0.7), inset 0 1px 0 rgba(255,255,255,0.02);
+    width:100%; max-width:var(--maxw); z-index:2; position:relative;
+    display:grid; grid-template-columns: 1fr 460px; gap:28px; align-items:start;
+    padding:34px; border-radius:16px; background: var(--card-bg);
+    box-shadow: 0 30px 120px rgba(1,6,20,0.72), inset 0 1px 0 rgba(255,255,255,0.02);
     backdrop-filter: blur(8px);
     overflow:visible;
   }
 
-  /* Left hero */
-  .hero {
-    position:relative; padding:28px 28px 24px 28px; min-height:520px; display:flex; flex-direction:column;
-  }
+  /* ========================= Left hero ========================= */
+  .hero{ position:relative; padding:22px 22px 28px 22px; min-height:520px; display:flex; flex-direction:column; gap:14px; }
+  .brand { display:flex; gap:12px; align-items:center; }
+  .logo{ width:64px; height:64px; border-radius:14px; display:grid; place-items:center; font-weight:900; font-size:20px;
+    background: linear-gradient(135deg,var(--accent-b),var(--accent-a)); color:#021018; box-shadow: 0 14px 60px rgba(124,92,255,0.12); }
+  .brand h3{ margin:0; font-size:18px; }
+  .brand p{ margin:0; color:var(--muted); font-size:13px; }
 
-  .brand {
-    display:flex; gap:14px; align-items:center; margin-bottom:8px;
-  }
-  .logo {
-    width:64px; height:64px; border-radius:14px; display:grid; place-items:center;
-    font-weight:800; font-size:22px; color:#021018;
-    background: linear-gradient(135deg,var(--accent-2),var(--accent-1));
-    box-shadow: 0 12px 58px rgba(124,92,255,0.12);
-  }
-  .brand h3 { margin:0; font-size:18px; letter-spacing:0.2px; }
-  .brand p { margin:0; color:var(--muted); font-size:13px; }
+  .headline{ display:flex; gap:10px; align-items:baseline; flex-wrap:wrap; margin-top:6px; }
+  .headline h1{ margin:0; font-size:68px; line-height:0.9; font-weight:900; letter-spacing:-1px; }
+  .headline .soon{ font-size:36px; font-weight:700; color:#dfffee; opacity:0.95; margin-left:6px; }
 
-  .headline {
-    margin-top:12px; display:flex; gap:12px; align-items:baseline; flex-wrap:wrap;
-  }
-  .headline h1 { margin:0; font-size:64px; line-height:0.95; font-weight:900; letter-spacing:-1px; }
+  /* animated gradient mask for 'Coming' */
   .glow {
-    background: linear-gradient(90deg,var(--accent-1),var(--accent-2));
-    -webkit-background-clip:text;color:transparent;
-    text-shadow:0 28px 100px rgba(124,92,255,0.08);
-    display:inline-block;
+    display:inline-block; color:transparent; -webkit-background-clip:text; background-clip:text;
+    background-image: linear-gradient(90deg, var(--accent-a), var(--accent-b), var(--accent-c));
+    background-size: 300% 100%; animation: gradientShift 6s linear infinite;
+    text-shadow: 0 36px 120px rgba(124,92,255,0.08);
   }
-  .headline small {
-    display:block; font-weight:700; font-size:34px; color:#dfffee; opacity:0.9;
-  }
+  @keyframes gradientShift { from{background-position:0% 50%} to{background-position:100% 50%} }
 
-  .sub { margin-top:12px; color:var(--muted); font-size:16px; max-width:62ch; }
+  .sub { color:var(--muted); font-size:16px; max-width:64ch; margin-top:6px; }
 
-  /* Typing / multi-anim */
-  .typing-wrap { margin-top:20px; display:flex; gap:18px; align-items:center; flex-wrap:wrap; }
-  .typing {
-    font-family:var(--mono); color:#9fb1c9; font-size:16px; min-height:22px; letter-spacing:0.2px;
-    background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
-    padding:10px 14px; border-radius:10px;
-    box-shadow: 0 6px 26px rgba(2,6,23,0.35);
-  }
-  .badge {
-    font-family:var(--mono); font-weight:700; padding:8px 12px; border-radius:999px; background:linear-gradient(90deg, rgba(0,0,0,0.18), rgba(255,255,255,0.01));
-    color:var(--muted); font-size:13px;
-  }
+  /* typewriter + accent badges */
+  .meta { display:flex; gap:14px; align-items:center; margin-top:14px; flex-wrap:wrap; }
+  .typing { font-family:var(--mono); font-size:16px; color:#a8c6da; min-height:22px; background:rgba(255,255,255,0.02); padding:10px 14px; border-radius:10px; box-shadow: 0 8px 40px rgba(2,6,23,0.36); }
+  .beta-chip { font-weight:800; padding:8px 12px; border-radius:999px; background: linear-gradient(90deg,var(--accent-a),var(--accent-b)); color:#021018; box-shadow:0 18px 64px rgba(124,92,255,0.12); }
 
-  /* Countdown */
-  .countdown { margin-top:20px; display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
-  .pill { background: rgba(255,255,255,0.04); padding:10px 14px; border-radius:12px; font-family:var(--mono); font-weight:800; color:#e6eef8; min-width:64px; text-align:center; box-shadow: 0 8px 30px rgba(3,7,20,0.5); }
-  .muted-small { color:var(--muted); margin-top:12px; font-size:13px; }
+  /* countdown pills (decorative) */
+  .count { display:flex; gap:10px; margin-top:20px; flex-wrap:wrap; }
+  .pill { background:rgba(255,255,255,0.03); padding:10px 14px; border-radius:12px; font-family:var(--mono); font-weight:800; color:#e6f6ef; min-width:64px; text-align:center; box-shadow: 0 10px 36px rgba(2,6,23,0.45); }
 
-  /* Right column (card + actions) */
-  .side {
-    display:flex; flex-direction:column; gap:18px; align-items:stretch; justify-content:flex-start;
-    perspective:1400px;
-  }
+  /* quote */
+  blockquote{ margin-top:22px; margin-bottom:0; padding-left:14px; border-left:3px solid rgba(124,92,255,0.12); color:#cfe7ff; font-size:14px; max-width:70ch; }
 
-  /* Floating background decorations */
-  .deco {
-    position:absolute; inset:0; pointer-events:none; z-index:1;
-  }
-  .deco svg { width:100%; height:100%; opacity:0.08; }
+  /* ========================= Right: card & visuals ========================= */
+  .side{ display:flex; flex-direction:column; gap:12px; align-items:stretch; justify-content:flex-start; perspective:1400px; min-height:520px; }
 
-  /* Card (3D) */
-  .card-wrap { display:flex; align-items:center; justify-content:center; height:100%; }
-  .card {
-    width:100%; max-width:420px; min-height:520px; height:auto; position:relative; transform-style:preserve-3d;
-    transition: transform 0.9s var(--ease-spring); cursor:pointer; border-radius:16px;
-  }
-  .card.is-flipped { transform: rotateY(180deg); }
+  /* decorative SVG translucent shapes + starfield canvas overlay */
+  .decor { position:absolute; inset:0; pointer-events:none; z-index:0; filter: blur(14px); opacity:0.9; mix-blend-mode:screen; }
 
-  .face {
-    position:absolute; inset:0; border-radius:16px; padding:22px; display:flex; flex-direction:column;
-    backface-visibility:hidden; -webkit-backface-visibility:hidden;
-    box-shadow: 0 20px 80px rgba(2,6,23,0.6); background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    overflow:hidden;
-  }
-  .face.back { transform: rotateY(180deg); }
+  /* 3D card */
+  .card-wrap{ display:flex; align-items:center; justify-content:center; height:100%; z-index:3; }
+  .card{ width:100%; max-width:460px; min-height:520px; border-radius:16px; transform-style:preserve-3d; transition: transform .9s var(--ease); cursor:pointer; position:relative; }
+  .card:focus{ outline: 3px solid rgba(124,92,255,0.18); outline-offset:8px; }
+  .card.is-flipped{ transform: rotateY(180deg); }
 
-  .card-head { display:flex; gap:10px; align-items:center; }
-  .chip {
-    margin-left:auto; padding:8px 12px; border-radius:999px; font-weight:800; letter-spacing:0.6px;
-    background:linear-gradient(90deg,var(--accent-1),var(--accent-2)); color:#021018;
-    box-shadow: 0 18px 64px rgba(124,92,255,0.12);
-  }
+  .face{ position:absolute; inset:0; border-radius:16px; padding:22px; background:var(--card-bg); box-shadow:0 30px 120px rgba(1,6,20,0.6); backface-visibility:hidden; -webkit-backface-visibility:hidden; display:flex; flex-direction:column; overflow:hidden; }
+  .face.back{ transform: rotateY(180deg); }
 
-  .af-mark { margin-top:18px; display:grid; place-items:center; font-size:96px; font-weight:900; line-height:1; background:linear-gradient(90deg,var(--accent-1),var(--accent-2)); -webkit-background-clip:text; color:transparent; text-shadow: 0 36px 120px rgba(124,92,255,0.08); }
-  .flip-hint { margin-top:12px; color:var(--muted); font-size:13px; text-align:center; }
+  .card-head{ display:flex; align-items:center; gap:10px; }
+  .af-logo{ font-size:92px; font-weight:900; -webkit-background-clip:text; color:transparent; background-image: linear-gradient(90deg,var(--accent-a),var(--accent-b)); text-shadow:0 36px 120px rgba(124,92,255,0.08); display:grid; place-items:center; margin-top:18px; animation: floaty 6s ease-in-out infinite; }
+  @keyframes floaty { 0%{transform:translateY(0)}50%{transform:translateY(-10px)}100%{transform:translateY(0)} }
 
-  .back-section { margin-top:18px; color:#cfe7ff; font-size:14px; line-height:1.45; flex:1; overflow:auto; }
+  .front-mid{ flex:1; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:10px; text-align:center; }
+  .front-foot{ display:flex; justify-content:space-between; align-items:center; margin-top:12px; }
 
-  .socials { margin-top:16px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
-  .socials a { text-decoration:none; color:var(--muted); padding:8px 12px; border-radius:10px; background:rgba(255,255,255,0.02); font-size:13px; }
+  .back-text{ color:#cfe7ff; font-size:14px; line-height:1.45; margin-top:12px; flex:1; overflow:auto; }
+  .back-list{ margin-top:12px; color:var(--muted); font-size:13px; }
 
-  /* CTA Row */
-  .cta-row { display:flex; gap:12px; align-items:center; margin-top:8px; }
-  .btn {
-    padding:12px 18px; border-radius:12px; font-weight:700; cursor:pointer; border:0;
-    background: linear-gradient(90deg,var(--accent-1),var(--accent-2)); color:#021018; box-shadow: 0 12px 44px rgba(124,92,255,0.12);
-  }
-  .btn.ghost { background:transparent; border:1px solid rgba(255,255,255,0.04); color:var(--muted); box-shadow:none; }
+  .socials { display:flex; gap:10px; align-items:center; margin-top:18px; flex-wrap:wrap; }
+  .socials a { text-decoration:none; color:var(--muted); background:rgba(255,255,255,0.02); padding:8px 12px; border-radius:10px; }
 
-  /* modal */
-  .modal {
-    position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:100;
-    background:linear-gradient(rgba(1,3,8,0.6), rgba(1,3,8,0.6)); visibility:hidden; opacity:0; transition:opacity .25s ease, visibility .25s ease;
-  }
-  .modal.open { visibility:visible; opacity:1; }
-  .modal-panel { width:clamp(320px, 42vw, 560px); background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); padding:20px; border-radius:12px; box-shadow: 0 30px 140px rgba(2,6,23,0.8); }
+  /* pronounced hover neon on desktop */
+  .card:hover .af-logo{ transform: translateY(-6px) scale(1.008); filter: drop-shadow(0 40px 120px rgba(124,92,255,0.12)); }
+  .card:hover{ transform: perspective(1400px) rotateY(6deg) translateY(-6px); }
 
-  /* subtle performance toggle class for mobile */
-  .reduced-anim * { transition:none !important; animation:none !important; }
+  /* ========================= Particles / starfield canvas ========================= */
+  .bg-canvas { position:fixed; inset:0; z-index:0; pointer-events:none; }
 
-  /* =================== Responsiveness =================== */
+  /* ========================= Footer socials (page-level) ========================= */
+  .page-socials { margin-top:18px; display:flex; gap:12px; justify-content:center; align-items:center; width:100%; padding:14px 0; color:var(--muted); font-size:14px; }
+
+  /* ========================= Responsiveness ========================= */
   @media (max-width:1100px){
-    .stage { grid-template-columns: 1fr 380px; padding:24px; gap:20px; }
-    .card { max-width:380px; min-height:460px; }
-    .headline h1 { font-size:48px; }
-    .af-mark { font-size:78px; }
+    .stage{ grid-template-columns: 1fr 380px; gap:20px; padding:24px; }
+    .headline h1{ font-size:54px; }
+    .af-logo{ font-size:78px; }
+    .card{ max-width:380px; min-height:460px; }
   }
   @media (max-width:900px){
-    .stage { grid-template-columns: 1fr; padding:18px; gap:16px; }
-    .hero { min-height:auto; padding:18px; }
-    .card { max-width:640px; min-height:380px; margin:0 auto; position:relative; transform:none !important; }
-    .card.is-flipped { transform:none; } /* disable flip transform on small devices; still toggle content via class */
-    .face { position:relative; transform:none; backface-visibility:visible; }
-    .af-mark { font-size:64px; }
-    .headline h1 { font-size:42px; }
+    .stage{ grid-template-columns: 1fr; padding:18px; gap:16px; }
+    .side{ min-height:auto; }
+    .card{ max-width:100%; min-height:380px; transform:none !important; }
+    /* disable 3D rotate on small screens, use visibility toggle */
+    .card.is-flipped{ transform:none; }
+    .face{ position:relative; transform:none; backface-visibility:visible; }
+    .af-logo{ font-size:64px; }
+    .headline h1{ font-size:42px; }
+    .meta{ gap:10px; }
   }
   @media (max-width:560px){
-    body{padding:14px}
-    .stage{padding:14px;gap:12px}
-    .headline h1{font-size:36px}
-    .af-mark{font-size:48px}
-    .typing{font-size:14px;padding:8px 10px}
-    .pill{min-width:48px;padding:8px 10px}
-    .logo{width:56px;height:56px;font-size:18px}
-    .card{min-height:auto}
-    .muted-small{font-size:12px}
+    body{ padding:12px; }
+    .headline h1{ font-size:36px; }
+    .af-logo{ font-size:48px; }
+    .typing{ font-size:14px; padding:8px 10px; }
+    .pill{ min-width:48px; padding:8px 10px; }
   }
 
-  /* =================== Micro animations =================== */
-  @keyframes floaty {
-    0% { transform:translateY(0px) }
-    50% { transform:translateY(-8px) }
-    100% { transform:translateY(0px) }
+  /* ========================= Micro animations ========================= */
+  @keyframes flicker {
+    0%{ opacity:1 } 50%{ opacity:0.88 } 100%{ opacity:1 }
   }
-  .af-mark { animation: floaty 6s ease-in-out infinite; }
+  .muted{ color:var(--muted); }
 
-  @keyframes pop {
-    0% { transform:scale(.98); opacity:0 }
-    60% { transform:scale(1.02); opacity:1 }
-    100%{ transform:scale(1); opacity:1 }
+  /* prefer reduced motion support */
+  @media (prefers-reduced-motion: reduce){
+    .card, .af-logo, .glow, .typing { animation: none !important; transition: none !important; transform: none !important; }
   }
-  .card { animation: pop .6s ease both; }
-
-  /* accessible focus */
-  .card:focus { outline: 3px solid rgba(124,92,255,0.18); outline-offset:6px; }
-
-  /* small helper */
-  .muted { color:var(--muted) }
 </style>
 </head>
 <body>
-  <!-- Background layers: Matrix Canvas + Particles -->
-  <canvas id="matrix" style="position:fixed;inset:0;width:100%;height:100%;z-index:0;"></canvas>
+  <!-- starfield + particle canvas (background) -->
+  <canvas id="bgCanvas" class="bg-canvas" aria-hidden="true"></canvas>
 
-  <!-- decorative svg shapes -->
-  <div class="deco" aria-hidden="true" style="z-index:0;">
+  <!-- subtle decorative SVG -->
+  <div class="decor" aria-hidden="true">
     <svg viewBox="0 0 1200 600" preserveAspectRatio="none">
       <defs>
-        <linearGradient id="g1" x1="0" x2="1">
-          <stop offset="0" stop-color="#7c5cff" stop-opacity="0.6"/>
-          <stop offset="1" stop-color="#00f5a0" stop-opacity="0.6"/>
+        <linearGradient id="gA" x1="0" x2="1">
+          <stop offset="0" stop-color="#7c5cff" stop-opacity="0.14"/>
+          <stop offset="1" stop-color="#00f5a0" stop-opacity="0.12"/>
         </linearGradient>
       </defs>
-      <path d="M0,120 C220,260 420,40 720,140 C920,210 1000,340 1200,260 L1200,600 L0,600 Z" fill="url(#g1)"></path>
+      <path d="M0,120 C220,260 420,40 720,140 C920,210 1000,340 1200,260 L1200,600 L0,600 Z" fill="url(#gA)"></path>
     </svg>
   </div>
 
   <main class="stage" role="main" aria-labelledby="title">
-    <!-- LEFT - HERO -->
+    <!-- LEFT: Hero -->
     <section class="hero" aria-labelledby="title">
       <div class="brand">
         <div class="logo" aria-hidden>AF</div>
         <div>
           <h3 id="title">AcademeForge</h3>
-          <p>Build. Learn. Launch. — Modern learning platform</p>
+          <p class="muted">Build. Learn. Launch. — Modern learning platform</p>
         </div>
       </div>
 
       <div class="headline" role="heading" aria-level="1">
         <h1><span class="glow">Coming</span></h1>
-        <small>Soon</small>
+        <div class="soon">Soon</div>
       </div>
 
       <p class="sub">A new space for builders and learners — courses, projects and mentorship.</p>
 
-      <div class="typing-wrap" aria-live="polite">
+      <div class="meta" aria-live="polite">
         <div class="typing" id="typing">Preparing the classroom of the future...</div>
-        <div class="badge">Beta</div>
+        <div class="beta-chip" aria-hidden>Beta</div>
       </div>
 
-      <div class="countdown" aria-hidden="false" aria-label="Countdown to launch">
+      <div class="count" aria-hidden="true">
         <div class="pill" id="pill-days">00d</div>
         <div class="pill" id="pill-hours">00h</div>
         <div class="pill" id="pill-mins">00m</div>
         <div class="pill" id="pill-secs">00s</div>
       </div>
 
-      <p class="muted-small">Get early access, resources and launch updates directly through our social handles below or join the beta.</p>
-
-      <!-- CTA -->
-      <div style="margin-top:18px; display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
-        <button class="btn" id="open-beta" aria-haspopup="dialog">Join Beta — Get Early Access</button>
-        <button class="btn ghost" id="open-demo">See Demo (preview)</button>
-      </div>
-
-      <!-- testimonial / quote block -->
-      <blockquote style="margin-top:22px; border-left:3px solid rgba(124,92,255,0.12); padding-left:14px; color:#cfe7ff; font-size:14px; max-width:70ch;">
+      <blockquote>
         "As a new and evolving platform, Academeforge is still refining the full scope, reliability, and recognition of its assessments and certifications to ensure the highest quality experience for our users."
       </blockquote>
     </section>
 
-    <!-- RIGHT - CARD -->
+    <!-- RIGHT: visuals + card -->
     <aside class="side" aria-hidden="false">
       <div class="card-wrap">
         <div class="card" id="card" role="button" tabindex="0" aria-pressed="false" aria-label="Flip card to view details">
           <!-- FRONT -->
-          <div class="face front" aria-hidden="false">
+          <div class="face front" id="front-face" aria-hidden="false">
             <div class="card-head">
               <div>
-                <div style="font-weight:800;font-size:18px;">AcademeForge</div>
-                <div style="color:var(--muted);font-size:13px;margin-top:6px;">Early access & pilot programs</div>
+                <div style="font-weight:900;font-size:18px">AcademeForge</div>
+                <div class="muted" style="font-size:13px;margin-top:6px">Early access & pilot programs</div>
               </div>
-              <div class="chip" aria-hidden>Beta</div>
+              <div class="beta-chip" aria-hidden>Beta</div>
             </div>
 
-            <div style="flex:1; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
-              <div class="af-mark" aria-hidden>AF</div>
-              <div style="max-width:300px; color:var(--muted); margin-top:8px;">Designing hands-on projects, onboarding mentors, curating career-ready curricula.</div>
-              <div class="flip-hint">Click or press Enter to flip →</div>
+            <div class="front-mid">
+              <div class="af-logo" aria-hidden>AF</div>
+              <div class="muted" style="max-width:300px;">Designing hands-on projects · Onboarding mentors · Curating career-ready curricula</div>
+              <div style="margin-top:8px;color:var(--muted);font-size:13px">Click / Tap / Press Enter to flip →</div>
             </div>
 
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <div style="color:var(--muted); font-size:13px;">Join waitlist for launch perks</div>
+            <div class="front-foot">
+              <div class="muted">Join waitlist (coming soon)</div>
               <div style="font-size:12px;color:var(--muted)">v0.9</div>
             </div>
           </div>
 
           <!-- BACK -->
-          <div class="face back" aria-hidden="true">
-            <div style="display:flex; gap:12px; align-items:center;">
+          <div class="face back" id="back-face" aria-hidden="true">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
               <div>
-                <div style="font-weight:800;font-size:18px;">Get Updates</div>
-                <div style="color:var(--muted); font-size:13px; margin-top:6px;">We’ll notify you when we go live</div>
+                <div style="font-weight:900;font-size:18px">Get Updates</div>
+                <div class="muted" style="font-size:13px;margin-top:6px">We’ll notify when platform evolves</div>
               </div>
-              <div class="chip">v0.9</div>
+              <div class="beta-chip" aria-hidden>v0.9</div>
             </div>
 
-            <div class="back-section" id="back-text">
+            <div class="back-text">
               As a new and evolving platform, Academeforge is still refining the full scope, reliability, and recognition of its assessments and certifications to ensure the highest quality experience for our users.
-              <ul style="margin-top:12px; color:var(--muted); font-size:13px;">
-                <li>Hands-on project tracks</li>
-                <li>Mentor-led cohorts</li>
-                <li>Industry-aligned assessments</li>
-              </ul>
+              <div class="back-list">
+                • Hands-on project tracks<br>
+                • Mentor-led cohorts<br>
+                • Industry-aligned evaluation
+              </div>
             </div>
 
             <div class="socials" aria-label="social links">
-              <span class="muted">Or join us on</span>
-              <a href="https://t.me/+c1Ll3CiaGL9lOTA1" target="_blank" rel="noopener" aria-label="Telegram">Telegram</a>
-              <a href="https://www.instagram.com/academeforge.in" target="_blank" rel="noopener" aria-label="Instagram">Instagram</a>
-            </div>
-
-            <div style="margin-top:14px; display:flex; gap:10px;">
-              <button class="btn" id="open-beta-2">Join Beta</button>
-              <button class="btn ghost" id="close-card">Close</button>
+              <div class="muted">Or follow us for updates</div>
+              <a href="https://t.me/+c1Ll3CiaGL9lOTA1" target="_blank" rel="noopener">Telegram</a>
+              <a href="https://www.instagram.com/academeforge.in" target="_blank" rel="noopener">Instagram</a>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- small hint / version -->
-      <div style="margin-top:6px; color:var(--muted); font-size:13px; text-align:center;">High-graphic preview — optimized for laptop & mobile</div>
+      <div style="text-align:center;color:var(--muted);font-size:13px;margin-top:6px;">Ultra-futuristic preview — optimized for laptop & mobile</div>
     </aside>
   </main>
 
-  <!-- modal -->
-  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="modal-panel" role="document">
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <div style="font-weight:800;font-size:18px;">Join AcademeForge Beta</div>
-        <button id="close-modal" aria-label="Close modal" style="background:transparent;border:0;color:var(--muted);cursor:pointer;">✕</button>
-      </div>
-
-      <p style="color:var(--muted); margin-top:8px;">Enter email to request early access. We'll reach out with next steps.</p>
-      <form id="beta-form" style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
-        <input type="email" id="email" placeholder="you@domain.com" required style="flex:1; min-width:220px; padding:10px 12px; border-radius:10px; border:0; background:rgba(255,255,255,0.02); color:#e6eef8;" />
-        <button class="btn" type="submit">Request Access</button>
-      </form>
-
-      <p id="form-msg" style="color:var(--muted); margin-top:10px; font-size:13px;"></p>
-    </div>
+  <!-- final page-level socials only -->
+  <div class="page-socials" aria-hidden="false">
+    <div class="muted">Follow for launch updates:</div>
+    <a href="https://t.me/+c1Ll3CiaGL9lOTA1" target="_blank" rel="noopener">Telegram</a>
+    <a href="https://www.instagram.com/academeforge.in" target="_blank" rel="noopener">Instagram</a>
   </div>
 
 <script>
-/* ================= Matrix background (reduced on mobile) ================= */
-(function matrix(){
-  const canvas = document.getElementById('matrix');
+/* ========================= Background starfield + particle trails ========================= */
+(function background(){
+  const canvas = document.getElementById('bgCanvas');
   const ctx = canvas.getContext('2d');
-  let W = canvas.width = window.innerWidth;
-  let H = canvas.height = window.innerHeight;
-  const fontSize = Math.max(12, Math.round(Math.min(W, H) / 80));
-  const letters = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ<>/{}[]()=+-_*;:,.$%#@';
-  const chars = letters.split('');
-  let columns = Math.floor(W / fontSize);
-  let drops = new Array(columns).fill(0);
-  function resize(){
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-    const newFont = Math.max(12, Math.round(Math.min(W, H) / 80));
-    columns = Math.floor(W / newFont);
-    drops = new Array(columns).fill(0).map(()=>Math.floor(Math.random()*H/newFont));
+  let W = canvas.width = innerWidth;
+  let H = canvas.height = innerHeight;
+
+  // particles
+  const stars = [];
+  const numStars = Math.max(60, Math.floor((W*H)/80000)); // scale with screen
+  for(let i=0;i<numStars;i++){
+    stars.push({
+      x: Math.random()*W,
+      y: Math.random()*H,
+      r: Math.random()*1.8 + 0.3,
+      a: Math.random()*0.9 + 0.1,
+      vx: (Math.random()-0.5)*0.05,
+      vy: (Math.random()-0.5)*0.05
+    });
   }
-  window.addEventListener('resize', resize);
 
-  // on small screens reduce intensity
-  const reduce = window.matchMedia('(max-width:900px)').matches;
+  const trails = []; // moving drift particles
+  function resize(){
+    W = canvas.width = innerWidth;
+    H = canvas.height = innerHeight;
+  }
+  addEventListener('resize', resize);
 
-  for(let i=0;i<columns;i++) drops[i] = Math.floor(Math.random()*H/fontSize);
+  // perf heuristic: reduce on small or low-memory devices
+  const reduce = window.matchMedia('(max-width:900px)').matches || (navigator.deviceMemory && navigator.deviceMemory < 1.5);
 
   function draw(){
-    ctx.fillStyle = reduce ? 'rgba(0,0,0,0.12)' : 'rgba(0,0,0,0.06)';
-    ctx.fillRect(0,0,W,H);
-    ctx.font = fontSize + 'px monospace';
-    for(let i=0;i<drops.length;i++){
-      const text = chars[Math.floor(Math.random()*chars.length)];
-      const x = i * fontSize;
-      const y = drops[i] * fontSize;
-      // leading char
-      ctx.fillStyle = reduce ? '#8ff7d0' : '#b7ffcf';
-      ctx.fillText(text, x, y);
-      // small trailing ghost for depth
-      if(!reduce){
-        ctx.fillStyle = 'rgba(45,255,180,0.12)';
-        ctx.fillText(text, x, y - fontSize * 0.6);
-        ctx.fillStyle = 'rgba(124,92,255,0.03)';
-        ctx.fillText(text, x, y - fontSize * 1.4);
-      }
-      if (y > H && Math.random() > 0.985) drops[i] = 0;
-      drops[i]++;
-    }
-    // vignette
-    const g = ctx.createRadialGradient(W*0.15, H*0.1, 0, W*0.15, H*0.1, W*0.8);
-    g.addColorStop(0, 'rgba(124,92,255,0.06)');
-    g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.clearRect(0,0,W,H);
+    // subtle gradient overlay
+    const g = ctx.createLinearGradient(0,0,W,H);
+    g.addColorStop(0, 'rgba(4,10,20,0.18)');
+    g.addColorStop(1, 'rgba(0,0,0,0.24)');
     ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+
+    // stars
+    for(let s of stars){
+      s.x += s.vx; s.y += s.vy;
+      if(s.x < -10) s.x = W + 10;
+      if(s.x > W + 10) s.x = -10;
+      if(s.y < -10) s.y = H + 10;
+      if(s.y > H + 10) s.y = -10;
+      ctx.beginPath();
+      ctx.globalAlpha = s.a;
+      ctx.fillStyle = '#eafdf2';
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+
+    // create moving small trails near cursor occasionally
+    if(!reduce && Math.random() > 0.96) {
+      trails.push({ x: Math.random()*W, y: Math.random()*H, vx: (Math.random()-0.5)*2, vy: (Math.random()-0.3)*2, life: 120, size: Math.random()*2+1 });
+    }
+    // draw trails
+    for(let i = trails.length-1; i>=0; i--){
+      const t = trails[i];
+      t.x += t.vx; t.y += t.vy; t.life--;
+      ctx.beginPath();
+      ctx.globalAlpha = Math.max(0, t.life/120);
+      ctx.fillStyle = 'rgba(124,92,255,0.6)';
+      ctx.arc(t.x, t.y, t.size, 0, Math.PI*2);
+      ctx.fill();
+      if(t.life<=0) trails.splice(i,1);
+    }
+    ctx.globalAlpha = 1;
     requestAnimationFrame(draw);
   }
   requestAnimationFrame(draw);
 })();
 
-/* ================= Typing multi-line (type + fade loop) ================= */
-(function typer(){
+/* ========================= Typewriter (stronger effect) ========================= */
+(function typewriter(){
   const el = document.getElementById('typing');
   const lines = [
     'Preparing the classroom of the future...',
@@ -414,51 +355,90 @@
     'Onboarding mentors & instructors',
     'Curating career-ready curricula'
   ];
-  let index = 0;
-  let char = 0;
-  let deleting = false;
-  let pause = 1000;
+  let li = 0, ci = 0, deleting = false;
+  const typeSpeed = 26, deleteSpeed = 20, pause = 900;
 
   function tick(){
-    const current = lines[index];
+    const line = lines[li];
     if(!deleting){
-      char++;
-      el.textContent = current.slice(0,char);
-      if(char === current.length){
-        deleting = true;
-        setTimeout(tick, pause);
-        return;
-      }
+      ci++;
+      el.textContent = line.slice(0,ci);
+      if(ci === line.length){ deleting = true; setTimeout(tick, pause); return; }
     } else {
-      char--;
-      el.textContent = current.slice(0,char);
-      if(char === 0){
-        deleting = false;
-        index = (index+1) % lines.length;
-      }
+      ci--;
+      el.textContent = line.slice(0,ci);
+      if(ci === 0){ deleting = false; li = (li+1)%lines.length; }
     }
-    setTimeout(tick, deleting ? 28 : (28 + Math.random()*30));
+    setTimeout(tick, deleting ? deleteSpeed : typeSpeed + Math.random()*28);
   }
   tick();
 })();
 
-/* ================= Countdown ================= */
+/* ========================= Countdown (decorative) ========================= */
 (function countdown(){
-  const daysEl = document.getElementById('pill-days');
-  const hoursEl = document.getElementById('pill-hours');
-  const minsEl = document.getElementById('pill-mins');
-  const secsEl = document.getElementById('pill-secs');
-
-  // target set to 97 days from now (can be replaced by a specific date)
-  const target = new Date();
-  target.setDate(target.getDate() + 97);
-
-  function update(){
-    const now = Date.now();
-    let diff = Math.max(0, target - now);
+  const d = document.getElementById('pill-days');
+  const h = document.getElementById('pill-hours');
+  const m = document.getElementById('pill-mins');
+  const s = document.getElementById('pill-secs');
+  const target = new Date(); target.setDate(target.getDate() + 97);
+  function upd(){
+    const now = Date.now(); let diff = Math.max(0, target - now);
     const days = Math.floor(diff / (1000*60*60*24)); diff %= (1000*60*60*24);
     const hours = Math.floor(diff / (1000*60*60)); diff %= (1000*60*60);
     const mins = Math.floor(diff / (1000*60)); diff %= (1000*60);
     const secs = Math.floor(diff / 1000);
+    d.textContent = String(days).padStart(2,'0')+'d';
+    h.textContent = String(hours).padStart(2,'0')+'h';
+    m.textContent = String(mins).padStart(2,'0')+'m';
+    s.textContent = String(secs).padStart(2,'0')+'s';
+  }
+  upd(); setInterval(upd,1000);
+})();
 
-    daysEl.textContent = St
+/* ========================= Card flip (desktop 3D, mobile toggle) ========================= */
+(function flipCard(){
+  const card = document.getElementById('card');
+  const front = document.getElementById('front-face');
+  const back = document.getElementById('back-face');
+
+  function setFlipped(state){
+    const small = window.matchMedia('(max-width:900px)').matches;
+    if(small){
+      // mobile: toggle display instead of 3D rotate
+      front.style.display = state ? 'none' : 'flex';
+      back.style.display = state ? 'flex' : 'none';
+      card.classList.toggle('is-flipped', state);
+      card.setAttribute('aria-pressed', String(state));
+      return;
+    }
+    card.classList.toggle('is-flipped', state);
+    front.setAttribute('aria-hidden', String(state));
+    back.setAttribute('aria-hidden', String(!state));
+    card.setAttribute('aria-pressed', String(state));
+  }
+
+  // initialize faces visibility for small screens
+  if(window.matchMedia('(max-width:900px)').matches){
+    setFlipped(false);
+  } else {
+    // ensure both faces present for 3D effect
+    front.style.display = 'flex';
+    back.style.display = 'flex';
+  }
+
+  card.addEventListener('click', (e) => {
+    if(['A','BUTTON','INPUT'].includes(e.target.tagName)) return;
+    setFlipped(!card.classList.contains('is-flipped'));
+  });
+
+  card.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); setFlipped(!card.classList.contains('is-flipped')); }
+    if(e.key === 'Escape'){ setFlipped(false); }
+  });
+
+  // when resizing, reset to appropriate mode
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(()=> {
+      if(window.matchMedia('(max-wid
