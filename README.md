@@ -87,8 +87,8 @@
 
       <div class="mt-8">
         <div class="flex items-end gap-4 flex-wrap">
-          <h1 class="grad-anim text-5xl lg:text-6xl font-extrabold leading-tight">Coming</h1>
-          <div class="text-3xl lg:text-4xl font-bold text-slate-200">Soon</div>
+          <h1 class="grad-anim text-5xl lg:text-6xl font-extrabold leading-tight">Coming Soon</h1>
+          <div 
         </div>
 
         <p class="mt-4 text-[--muted] max-w-3xl">A new space for builders and learners — courses, projects and mentorship.</p>
