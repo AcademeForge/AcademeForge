@@ -169,11 +169,6 @@
               <li><strong>Project-first learning</strong> — real deliverables for portfolios.</li>
               <li><strong>Mentor-led cohorts</strong> for hands-on guidance.</li>
               <li><strong>Applied assessment</strong> tied to practical outcomes.</li>
-<li><strong>Mentor-led cohorts</strong> for hands-on guidance.</li>
-<li><strong>Mentor-led cohorts</strong> for hands-on guidance.</li>
-<li><strong>Mentor-led cohorts</strong> for hands-on guidance.</li>
-<li><strong>Mentor-led cohorts</strong> for hands-on guidance.</li>
-<li><strong>Mentor-led cohorts</strong> for hands-on guidance.</li>
             </ul>
           </div>
 
