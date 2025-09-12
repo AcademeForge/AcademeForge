@@ -88,7 +88,7 @@
       <div class="mt-8">
         <div class="flex items-end gap-4 flex-wrap">
           <h1 class="grad-anim text-5xl lg:text-6xl font-extrabold leading-tight">Coming Soon</h1>
-         
+          
         </div>
 
         <p class="mt-4 text-[--muted] max-w-3xl">A new space for builders and learners — courses, projects and mentorship.</p>
@@ -105,17 +105,8 @@
           <div class="h-2 w-2 rounded-full bg-[#b2ffd8] opacity-60 animate-pulse delay-200"></div>
           <div class="h-2 w-2 rounded-full bg-[#a9b6ff] opacity-60 animate-pulse delay-400"></div>
           <div class="h-2 w-2 rounded-full bg-[#ffb5f0] opacity-50 animate-pulse delay-600"></div>
-        
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    @keyframes bounce-dot {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-    .animate-bounce-dot {
-      animation: bounce-dot 0.8s infinite;
-    }
- 
+        </div>
+
         <!-- countdown (decorative only) -->
         <div class="mt-8 grid grid-cols-4 gap-4 w-full max-w-md">
           <div class="bg-[rgba(255,255,255,0.03)] rounded-xl p-4 text-center">
