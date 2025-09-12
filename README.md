@@ -173,8 +173,8 @@
           </div>
 
           <div class="mt-6 flex justify-center gap-3">
-  <a href="https://t.me/YourTelegramHandle" class="px-4 py-2 rounded-md bg-[rgba(255,255,255,0.02)] text-[--muted]">Telegram</a>
-  <a href="https://www.instagram.com/YourInstagramHandle" class="px-4 py-2 rounded-md bg-[rgba(255,255,255,0.02)] text-[--muted]">Instagram</a>
+  <a href="https://youtube.com/@academeforgepro?si=HPpTU2rTNPlLnXfG" class="px-4 py-2 rounded-md bg-[rgba(255,255,255,0.02)] text-[--muted]">YouTube</a>
+  <a href="https://academeforge.wordpress.com/" class="px-4 py-2 rounded-md bg-[rgba(255,255,255,0.02)] text-[--muted]">About AST</a>
 </div>
           <div class="mt-6 text-center text-[--muted] text-sm">Press Esc to flip back</div>
         </div>
