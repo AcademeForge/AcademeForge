@@ -146,7 +146,7 @@
 
           <div class="flex-1 flex flex-col items-center justify-center text-center mt-6">
             <div class="text-7xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#06f5a0] to-[#7c5cff] drop-shadow-[0_30px_100px_rgba(124,92,255,0.07)]">AF</div>
-            <p class="mt-4 text-[--muted] max-w-xs">Designing hands-on projects, onboarding mentors, and curating career-ready curricula.</p>
+            <p class="mt-4 text-[--muted] max-w-xs">Academeforge is coming stronger than ever—bringing real projects, mentor guidance, and industry-ready skills to help students learn, grow, and succeed.</p>
             <div class="mt-4 text-[--muted] text-sm">Click / tap / press Enter to flip →</div>
           </div>
 
