@@ -173,10 +173,9 @@
           </div>
 
           <div class="mt-6 flex justify-center gap-3">
-            <a class="px-4 py-2 rounded-md bg-[rgba(255,255,255,0.02)] text-[--muted]">Telegram</a>
-            <a class="px-4 py-2 rounded-md bg-[rgba(255,255,255,0.02)] text-[--muted]">Instagram</a>
-          </div>
-
+  <a href="https://t.me/YourTelegramHandle" class="px-4 py-2 rounded-md bg-[rgba(255,255,255,0.02)] text-[--muted]">Telegram</a>
+  <a href="https://www.instagram.com/YourInstagramHandle" class="px-4 py-2 rounded-md bg-[rgba(255,255,255,0.02)] text-[--muted]">Instagram</a>
+</div>
           <div class="mt-6 text-center text-[--muted] text-sm">Press Esc to flip back</div>
         </div>
       </div>
