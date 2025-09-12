@@ -129,7 +129,7 @@
 
         <!-- quote -->
         <blockquote class="mt-6 border-l-2 border-slate-700 pl-4 text-slate-200">
-          "As a new and evolving platform, AcademeForge is refining the scope and reliability of its assessments and certifications to ensure the highest quality experience."
+          Academeforge is still fine-tuning its assessments and certifications to ensure they are credible, reliable, and truly valuable before our full launch.
         </blockquote>
       </div>
     </section>
@@ -153,6 +153,7 @@
           <div class="mt-6 flex items-center justify-between text-[--muted]">
             <div>Visual preview only</div>
             <div class="text-xs">v0.9</div>
+<p class="mt-4 text-[--muted] max-w-xs">Be the first to know when we launch! Follow us on Social platforms:</p>
           </div>
         </div>
 
