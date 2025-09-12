@@ -2,7 +2,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AcademeForge — Coming-Soon</title>
+  <title>AcademeForge — Coming Soon</title>
   <meta name="description" content="AcademeForge — modern learning platform. Coming soon." />
   <!-- Tailwind Play CDN (good for prototypes) -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -88,7 +88,7 @@
       <div class="mt-8">
         <div class="flex items-end gap-4 flex-wrap">
           <h1 class="grad-anim text-5xl lg:text-6xl font-extrabold leading-tight">Coming Soon</h1>
-          <div 
+         
         </div>
 
         <p class="mt-4 text-[--muted] max-w-3xl">A new space for builders and learners — courses, projects and mentorship.</p>
