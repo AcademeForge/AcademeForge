@@ -106,7 +106,6 @@
           <div class="h-2 w-2 rounded-full bg-[#a9b6ff] opacity-60 animate-pulse delay-400"></div>
           <div class="h-2 w-2 rounded-full bg-[#ffb5f0] opacity-50 animate-pulse delay-600"></div>
         
-  <title>Bouncing Dots</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @keyframes bounce-dot {
@@ -126,8 +125,6 @@
     <div class="h-3 w-3 rounded-full bg-[#a9b6ff] animate-bounce-dot" style="animation-delay:0.4s"></div>
     <div class="h-3 w-3 rounded-full bg-[#ffb5f0] animate-bounce-dot" style="animation-delay:0.6s"></div>
   </div>
-</body>
-</html>
         <!-- countdown (decorative only) -->
         <div class="mt-8 grid grid-cols-4 gap-4 w-full max-w-md">
           <div class="bg-[rgba(255,255,255,0.03)] rounded-xl p-4 text-center">
