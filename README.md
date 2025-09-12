@@ -1,4 +1,3 @@
-<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -221,7 +220,7 @@
     (function(){
       // set target days ahead or specific date
       const target = new Date();
-      target.setDate(target.getDate() + 29); // example value
+      target.setDate(target.getDate() + 00); // example value
       const elDays = document.getElementById('days'), elHours = document.getElementById('hours'), elMinutes = document.getElementById('minutes'), elSeconds = document.getElementById('seconds');
       function update(){
         const now = Date.now();
