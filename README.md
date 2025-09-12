@@ -115,16 +115,7 @@
     .animate-bounce-dot {
       animation: bounce-dot 0.8s infinite;
     }
-  </style>
-</head>
-<body class="flex items-center justify-center h-screen bg-gray-900">
-  <!-- Decorative Bouncing Dots -->
-  <div class="flex items-center gap-3">
-    <div class="h-3 w-3 rounded-full bg-[#caa0ff] animate-bounce-dot" style="animation-delay:0s"></div>
-    <div class="h-3 w-3 rounded-full bg-[#b2ffd8] animate-bounce-dot" style="animation-delay:0.2s"></div>
-    <div class="h-3 w-3 rounded-full bg-[#a9b6ff] animate-bounce-dot" style="animation-delay:0.4s"></div>
-    <div class="h-3 w-3 rounded-full bg-[#ffb5f0] animate-bounce-dot" style="animation-delay:0.6s"></div>
-  </div>
+ 
         <!-- countdown (decorative only) -->
         <div class="mt-8 grid grid-cols-4 gap-4 w-full max-w-md">
           <div class="bg-[rgba(255,255,255,0.03)] rounded-xl p-4 text-center">
