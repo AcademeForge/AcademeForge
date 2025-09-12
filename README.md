@@ -170,6 +170,11 @@
               <li><strong>Project-first learning</strong> — real deliverables for portfolios.</li>
               <li><strong>Mentor-led cohorts</strong> for hands-on guidance.</li>
               <li><strong>Applied assessment</strong> tied to practical outcomes.</li>
+<li><strong>Mentor-led cohorts</strong> for hands-on guidance.</li>
+<li><strong>Mentor-led cohorts</strong> for hands-on guidance.</li>
+<li><strong>Mentor-led cohorts</strong> for hands-on guidance.</li>
+<li><strong>Mentor-led cohorts</strong> for hands-on guidance.</li>
+<li><strong>Mentor-led cohorts</strong> for hands-on guidance.</li>
             </ul>
           </div>
 
@@ -221,7 +226,7 @@
     (function(){
       // set target days ahead or specific date
       const target = new Date();
-      target.setDate(target.getDate() + 29); // example value
+      target.setDate(target.getDate() + 00); // example value
       const elDays = document.getElementById('days'), elHours = document.getElementById('hours'), elMinutes = document.getElementById('minutes'), elSeconds = document.getElementById('seconds');
       function update(){
         const now = Date.now();
