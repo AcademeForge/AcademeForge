@@ -197,13 +197,13 @@ details p{
 }
 
 .logo img{
-  height: 36px;        /* mobile ke liye perfect */
+  height: 90px;        /* mobile ke liye perfect */
   width: auto;
   display: block;
 }
 
 @media (min-width: 768px){
   .logo img{
-    height: 42px;
+    height: 90px;
   }
 }
