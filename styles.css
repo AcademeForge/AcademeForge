@@ -212,5 +212,5 @@ details p{
 
 /* Fix: FAQ / AST boxes inconsistent spacing */
 .faq-grid{
-  gap: 20px;
+  gap: 10px;
 }
