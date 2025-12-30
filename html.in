@@ -1,4 +1,3 @@
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,49 +10,94 @@
         <h1>AcademeForge</h1>
         <nav>
             <ul>
-                <li><a href="#about">About Us</a></li>
+                <li><a href="#about">About</a></li>
                 <li><a href="#ast">AST</a></li>
-                <li><a href="#courses">Courses</a></li>
-                <li><a href="#blog">Blog</a></li>
-                <li><a href="#contact">Contact Us</a></li>
+                <li><a href="#courses">Programs</a></li>
+                <li><a href="#blog">Learning</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
+        <!-- HERO SECTION -->
         <section class="hero">
-            <h2>Empowering India's Future, One Scholar at a Time</h2>
+            <h2>Building Skills, Thinking & Direction — Beyond School Education</h2>
+            <p>
+                AcademeForge is a learning initiative focused on real-world skills,
+                self-growth, and practical learning that traditional education often misses.
+            </p>
             <div class="cta-buttons">
-                <a href="#register" class="cta">Register for AST</a>
-                <a href="#telegram" class="cta">Join Telegram</a>
-                <a href="#download" class="cta">Download App</a>
-                <a href="#youtube" class="cta">Watch on YouTube</a>
+                <a href="#ast" class="cta">Explore AST</a>
+                <a href="#telegram" class="cta">Join Learning Community</a>
+                <a href="#youtube" class="cta">Learn on YouTube</a>
             </div>
         </section>
 
-        <section class="video">
+        <!-- ABOUT / VIDEO -->
+        <section class="video" id="about">
             <h3>What is AcademeForge?</h3>
+            <p>
+                AcademeForge started as an idea in 2024 and is now being rebuilt with clarity.
+                Our goal is simple: help learners develop skills, discipline, and practical
+                understanding to grow in the digital world.
+            </p>
+            <p>
+                We do not teach school syllabus. We focus on how to learn, how to build,
+                and how to apply knowledge in real life.
+            </p>
             <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
         </section>
 
-        <section class="live-stats">
-            <h3>Live Stats</h3>
-            <p>Students Enrolled: <span id="students-enrolled">1000</span></p>
-            <p>Cities Covered: <span id="cities-covered">50</span></p>
-            <p>Scholarships Distributed: <span id="scholarships-distributed">200</span></p>
+        <!-- AST SECTION -->
+        <section class="ast" id="ast">
+            <h3>AcademeForge Scholars Test (AST)</h3>
+            <p>
+                The AcademeForge Scholars Test (AST) is an initiative designed to assess
+                a learner’s readiness in logic, awareness, and problem-solving.
+            </p>
+            <p>
+                AST is not a traditional exam. It is meant to identify learners who are
+                ready for deeper challenges, advanced learning paths, and future opportunities
+                within AcademeForge.
+            </p>
+            <p>
+                AST will be conducted in future phases as AcademeForge continues to evolve.
+            </p>
         </section>
 
-        <section class="success-stories">
-            <h3>Success Stories</h3>
-            <div class="testimonials">
-                <p>"AcademeForge changed my life!" - Student A</p>
-                <p>"I achieved my dreams with their help!" - Student B</p>
-            </div>
+        <!-- PROGRAMS -->
+        <section class="courses" id="courses">
+            <h3>What We Focus On</h3>
+            <ul>
+                <li>Digital & Creative Skills (Editing, Design, Content)</li>
+                <li>Technical & Logical Thinking (Coding Basics, Problem Solving)</li>
+                <li>Freelancing & Online Work Awareness</li>
+                <li>Learning Systems, Focus & Self-Discipline</li>
+            </ul>
+            <p>
+                All programs are designed to be short, practical, and output-focused.
+                Learning happens by doing, not by memorizing.
+            </p>
+        </section>
+
+        <!-- JOURNEY / TRANSPARENCY -->
+        <section class="journey">
+            <h3>Our Journey</h3>
+            <p>
+                AcademeForge is currently in a rebuild phase. This phase is focused on
+                mastering skills, refining the learning model, and creating meaningful
+                content before a full public relaunch.
+            </p>
+            <p>
+                Growth may be invisible right now — but the foundation is being built
+                with honesty and intention.
+            </p>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2023 AcademeForge. All rights reserved.</p>
+        <p>&copy; 2026 AcademeForge. Rebuilt with clarity and purpose.</p>
     </footer>
 
     <script src="script.js"></script>
