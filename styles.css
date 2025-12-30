@@ -1,12 +1,11 @@
-
-/* styles.css — FINAL STABLE THEME (NO SYSTEM DARK MODE, NO SPACING BUGS) */
+/* styles.css — FINAL LOCKED VERSION */
 
 :root{
   --maxw: 1000px;
 
   /* Brand colors */
   --accent: #28c76f;        /* green highlight */
-  --violet: #b8962e;        /* description violet */
+  --violet: #7c3aed;        /* description violet */
 
   /* Fixed dark theme */
   --bg: #0e1726;
@@ -91,7 +90,7 @@ nav a{text-decoration:none}
 /* HERO */
 .hero{
   display:flex;
-  gap:15px;
+  gap:24px;
   align-items:center;
   padding:48px 20px;
 }
@@ -120,11 +119,11 @@ nav a{text-decoration:none}
 .grid-3{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:15px;          /* ONLY spacing system */
-  margin-top:28px;
+  gap:15px;            /* ✅ EXACT 15px GAP */
+  margin-top:15px;
 }
 
-/* WHITE CARDS */
+/* WHITE CARDS — NO MARGINS */
 .problems article,
 .how .grid-3 > div,
 .steps li{
@@ -154,7 +153,7 @@ nav a{text-decoration:none}
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
   gap:15px;
-  margin-top:28px;
+  margin-top:15px;
 }
 
 /* FAQ SUMMARY = CARD */
@@ -167,7 +166,7 @@ details summary{
   color:#0e1726;
 }
 
-/* FAQ CONTENT (INSIDE, NOT A CARD) */
+/* FAQ CONTENT = INSIDE (NOT A CARD) */
 details p{
   padding:14px 16px;
   color:#0e1726;
@@ -180,7 +179,7 @@ details p{
 .site-footer{
   background:var(--bg);
   padding:24px 0;
-  margin-top:48px;
+  margin-top:40px;
   border-top:1px solid rgba(255,255,255,0.15);
   text-align:center;
   color:var(--muted);
@@ -195,17 +194,4 @@ details p{
   .hero-image img{
     max-width:320px;
   }
-}
-
-/* ===== SPACING HOTFIX (ADD ONLY) ===== */
-
-/* Prevent random browser margins causing uneven gaps */
-.grid-3 > *,
-.faq-grid > *{
-  margin: 0;
-}
-
-/* Fix: How Learning Works cards were too close */
-.how .grid-3{
-  gap: 32px;
 }
