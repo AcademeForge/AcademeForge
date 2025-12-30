@@ -91,7 +91,7 @@ nav a{text-decoration:none}
 /* HERO */
 .hero{
   display:flex;
-  gap:32px;
+  gap:15px;
   align-items:center;
   padding:48px 20px;
 }
@@ -208,9 +208,4 @@ details p{
 /* Fix: How Learning Works cards were too close */
 .how .grid-3{
   gap: 32px;
-}
-
-/* Fix: FAQ / AST boxes inconsistent spacing */
-.faq-grid{
-  gap: 10px;
 }
