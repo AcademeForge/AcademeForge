@@ -195,16 +195,3 @@ details p{
     max-width:320px;
   }
 }
-
-.logo img{
-  height: 36px;        /* mobile ke liye perfect */
-  max-width: 180px;
-  display: flex;
-  align-items: center;
-}
-
-@media (min-width: 768px){
-  .logo img{
-    height: 36px;
-  }
-}
