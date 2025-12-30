@@ -120,7 +120,7 @@ nav a{text-decoration:none}
 .grid-3{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:28px;          /* ONLY spacing system */
+  gap:15px;          /* ONLY spacing system */
   margin-top:28px;
 }
 
@@ -153,7 +153,7 @@ nav a{text-decoration:none}
 .faq-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:24px;
+  gap:15px;
   margin-top:28px;
 }
 
