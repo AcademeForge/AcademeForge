@@ -242,3 +242,8 @@ details p{
     max-width:320px;
   }
 }
+
+/* Make all section headings blue */
+section h3{
+  color: #3b82f6; /* blue */
+}
