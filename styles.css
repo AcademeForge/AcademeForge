@@ -10,58 +10,6 @@
   --bg: #ffffff;
 }
 
-/* DARK MODE (TEXT ONLY, NO CARD BG CHANGE) */
-@media (prefers-color-scheme: dark) {
-  :root{
-    --bg: #0e1726;
-    --text: #ffffff;
-    --muted: #d1d5db;
-    --accent: #28c76f;
-  }
-
-  body{
-    background: var(--bg);
-    color: var(--text);
-  }
-
-  .site-header{
-    background:#0e1726;
-    border-bottom:1px solid #333;
-  }
-
-  .logo,
-  nav a,
-  .btn{
-    color: #ffffff;
-  }
-
-  /* Headings on dark background */
-  .hero-text h2,
-  section h3{
-    color:#ffffff;
-  }
-
-  /* Paragraphs on dark background */
-  .hero-text p,
-  section p{
-    color:#d1d5db;
-  }
-
-  /* Cards stay white, text turns dark */
-  .problems article,
-  .how .grid-3 > div,
-  .steps li,
-  details summary,
-  details p{
-    color:#0e1726;
-  }
-
-  .site-footer{
-    background:#0e1726;
-    color:#a1a1aa;
-    border-top:1px solid #333;
-  }
-}
 
 /* BASE STYLES */
 *{
