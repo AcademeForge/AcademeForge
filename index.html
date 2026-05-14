@@ -142,7 +142,9 @@
       <a href="#contact" class="hover:text-red-700">Contact</a>
     </nav>
 
-    <a href="academeforge.apk" download class="bg-red-700 hover:bg-red-800 text-white px-5 py-3 rounded-xl font-semibold transition-all hover:scale-105 inline-block">
+<a href="javascript:void(0)"
+   onclick="downloadAcademeForgeApk()"
+   class="bg-red-700 hover:bg-red-800 text-white px-5 py-3 rounded-xl font-semibold transition-all hover:scale-105 inline-block">
   Install APP
 </a>
 
@@ -979,11 +981,59 @@ class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-ce
   © 2026 AcademeForge. All Rights Reserved.
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
+  const SUPABASE_URL = "https://afooyyydhlwngzssgqih.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFmb295eXlkaGx3bmd6c3NncWloIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NDQxMjgsImV4cCI6MjA5NDIyMDEyOH0.KG0XO0oP_2MpewHoIwTtbrKg5FkyOYRUtVzLH1MSJiE";
+
+  const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  
+  const APK_DOWNLOAD_URL = "academeforge.apk";
+
+  function getWebsiteDeviceId() {
+    let deviceId = localStorage.getItem("websiteDeviceId");
+
+    if (!deviceId) {
+      deviceId =
+        "web_" +
+        Date.now() +
+        "_" +
+        Math.random().toString(36).slice(2, 12);
+
+      localStorage.setItem("websiteDeviceId", deviceId);
+    }
+
+    return deviceId;
+  }
+
+  async function downloadAcademeForgeApk() {
+    const deviceId = getWebsiteDeviceId();
+
+    try {
+      await db
+        .from("apk_downloads")
+        .insert([{
+          device_id: deviceId,
+          user_agent: navigator.userAgent || "",
+          page_url: window.location.href,
+          download_source: "main_website"
+        }]);
+    } catch (err) {
+      console.log("APK download tracking error:", err);
+    }
+
+    const link = document.createElement("a");
+    link.href = APK_DOWNLOAD_URL;
+    link.download = "academeforge.apk";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 
   // FAQ
-  document.querySelectorAll(".faq").forEach((faq)=>{
-    faq.addEventListener("click",()=>{
+  document.querySelectorAll(".faq").forEach((faq) => {
+    faq.addEventListener("click", () => {
       faq.classList.toggle("active");
     });
   });
