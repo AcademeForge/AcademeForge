@@ -988,10 +988,10 @@ class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-ce
 
 <script>
   const SUPABASE_URL = "https://afooyyydhlwngzssgqih.supabase.co";
-  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFmb295eXlkaGx3bmd6c3NncWloIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NDQxMjgsImV4cCI6MjA5NDIyMDEyOH0.KG0XO0oP_2MpewHoIwTtbrKg5FkyOYRUtVzLH1MSJiE";
+  const SUPABASE_ANON_KEY = "YOUR_ANON_KEY_HERE";
 
   const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  
+
   const APK_DOWNLOAD_URL = "academeforge.apk";
 
   function getWebsiteDeviceId() {
@@ -1022,6 +1022,9 @@ class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-ce
           page_url: window.location.href,
           download_source: "main_website"
         }]);
+
+      await loadApkDownloadCount();
+
     } catch (err) {
       console.log("APK download tracking error:", err);
     }
@@ -1033,95 +1036,83 @@ class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-ce
     link.click();
     document.body.removeChild(link);
   }
-async function loadApkDownloadCount() {
-  const countBox = document.getElementById("apkDownloadCount");
-  if (!countBox) return;
 
-  const { count, error } = await db
-    .from("apk_downloads")
-    .select("*", { count: "exact", head: true });
+  async function loadApkDownloadCount() {
+    const countBox = document.getElementById("apkDownloadCount");
+    if (!countBox) return;
 
-  if (error) {
-    console.log("Download count error:", error);
-    countBox.textContent = "0+";
-    return;
+    const { count, error } = await db
+      .from("apk_downloads")
+      .select("*", { count: "exact", head: true });
+
+    if (error) {
+      console.log("Download count error:", error);
+      countBox.textContent = "0+";
+      return;
+    }
+
+    countBox.textContent = (count || 0) + "+";
   }
 
-  countBox.textContent = (count || 0) + "+";
-}
+  async function trackWebsiteVisit() {
+    const deviceId = getWebsiteDeviceId();
 
-  document.addEventListener("DOMContentLoaded", function() {
-  trackWebsiteVisit();
-  loadApkDownloadCount();
-  loadUniqueVisitorCount();
-  loadWebsiteVisitCount();
-});
-  
-  function getWebsiteDeviceId() {
-  let deviceId = localStorage.getItem("websiteDeviceId");
-
-  if (!deviceId) {
-    deviceId =
-      "web_" +
-      Date.now() +
-      "_" +
-      Math.random().toString(36).slice(2, 12);
-
-    localStorage.setItem("websiteDeviceId", deviceId);
+    try {
+      await db
+        .from("website_visits")
+        .insert([{
+          device_id: deviceId,
+          page_url: window.location.href,
+          user_agent: navigator.userAgent || ""
+        }]);
+    } catch (err) {
+      console.log("Website visit tracking error:", err);
+    }
   }
 
-  return deviceId;
-}
-
-async function trackWebsiteVisit() {
-  const deviceId = getWebsiteDeviceId();
-
-  try {
-    await db
-      .from("website_visits")
-      .insert([{
-        device_id: deviceId,
-        page_url: window.location.href,
-        user_agent: navigator.userAgent || ""
-      }]);
-  } catch (err) {
-    console.log("Website visit tracking error:", err);
-  }
-}
   async function loadWebsiteVisitCount() {
-  const countBox = document.getElementById("websiteVisitCount");
-  if (!countBox) return;
+    const countBox = document.getElementById("websiteVisitCount");
+    if (!countBox) return;
 
-  const { count, error } = await db
-    .from("website_visits")
-    .select("*", { count: "exact", head: true });
+    const { count, error } = await db
+      .from("website_visits")
+      .select("*", { count: "exact", head: true });
 
-  if (error) {
-    console.log("Website visit count error:", error);
-    countBox.textContent = "0+";
-    return;
+    if (error) {
+      console.log("Website visit count error:", error);
+      countBox.textContent = "0+";
+      return;
+    }
+
+    countBox.textContent = (count || 0) + "+";
   }
-
-  countBox.textContent = (count || 0) + "+";
-}
 
   async function loadUniqueVisitorCount() {
-  const countBox = document.getElementById("uniqueVisitorCount");
-  if (!countBox) return;
+    const countBox = document.getElementById("uniqueVisitorCount");
+    if (!countBox) return;
 
-  const { data, error } = await db
-    .from("website_visits")
-    .select("device_id");
+    const { data, error } = await db
+      .from("website_visits")
+      .select("device_id");
 
-  if (error) {
-    console.log("Unique visitor count error:", error);
-    countBox.textContent = "0+";
-    return;
+    if (error) {
+      console.log("Unique visitor count error:", error);
+      countBox.textContent = "0+";
+      return;
+    }
+
+    const uniqueDevices = new Set((data || []).map(row => row.device_id)).size;
+    countBox.textContent = uniqueDevices + "+";
   }
 
-  const uniqueDevices = new Set((data || []).map(row => row.device_id)).size;
-  countBox.textContent = uniqueDevices + "+";
-}
+  document.addEventListener("DOMContentLoaded", async function() {
+    await trackWebsiteVisit();
+
+    await loadApkDownloadCount();
+    await loadUniqueVisitorCount();
+    await loadWebsiteVisitCount();
+  });
+
   // FAQ
   document.querySelectorAll(".faq").forEach((faq) => {
     faq.addEventListener("click", () => {
