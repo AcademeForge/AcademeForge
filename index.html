@@ -109,6 +109,9 @@
   </div>
 
   <div class="flex gap-4 md:gap-5">
+    <span class="hover:text-red-400">
+  Unique Visitors: <strong id="uniqueVisitorCount">0+</strong>
+</span>
     <a href="https://www.instagram.com/academeforge.in?igsh=MXc2eTlmenozNnN1Mg==" class="hover:text-red-400">Instagram</a>
     <a href="https://youtube.com/@academeforgepro?si=3jOxYewYdb0NNXSG" class="hover:text-red-400">Youtube</a>
     <a href="https://t.me/+46ubatq-EV0wNjY1" class="hover:text-red-400">Telegram</a>
@@ -239,10 +242,10 @@ class="border border-white hover:bg-white hover:text-black px-7 py-4 rounded-2xl
       <p class="text-gray-600">Founded</p>
     </div>
 
-    <div class="bg-white p-8 rounded-3xl shadow-xl hover-up hover:shadow-2xl text-center">
-      <h2 class="text-5xl font-extrabold text-red-700 mb-3">4+</h2>
-      <p class="text-gray-600">Core Team Members</p>
-    </div>
+ <div class="bg-white p-8 rounded-3xl shadow-xl hover-up hover:shadow-2xl text-center">
+  <h2 id="websiteVisitCount" class="text-5xl font-extrabold text-red-700 mb-3">0+</h2>
+  <p class="text-gray-600">Website Visits</p>
+</div>
     
 <div class="bg-white p-8 rounded-3xl shadow-xl hover-up hover:shadow-2xl text-center">
   <h2 id="apkDownloadCount" class="text-5xl font-extrabold text-red-700 mb-3">0+</h2>
@@ -1047,10 +1050,78 @@ async function loadApkDownloadCount() {
   countBox.textContent = (count || 0) + "+";
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener("DOMContentLoaded", function() {
+  trackWebsiteVisit();
   loadApkDownloadCount();
+  loadUniqueVisitorCount();
+  loadWebsiteVisitCount();
 });
   
+  function getWebsiteDeviceId() {
+  let deviceId = localStorage.getItem("websiteDeviceId");
+
+  if (!deviceId) {
+    deviceId =
+      "web_" +
+      Date.now() +
+      "_" +
+      Math.random().toString(36).slice(2, 12);
+
+    localStorage.setItem("websiteDeviceId", deviceId);
+  }
+
+  return deviceId;
+}
+
+async function trackWebsiteVisit() {
+  const deviceId = getWebsiteDeviceId();
+
+  try {
+    await db
+      .from("website_visits")
+      .insert([{
+        device_id: deviceId,
+        page_url: window.location.href,
+        user_agent: navigator.userAgent || ""
+      }]);
+  } catch (err) {
+    console.log("Website visit tracking error:", err);
+  }
+}
+  async function loadWebsiteVisitCount() {
+  const countBox = document.getElementById("websiteVisitCount");
+  if (!countBox) return;
+
+  const { count, error } = await db
+    .from("website_visits")
+    .select("*", { count: "exact", head: true });
+
+  if (error) {
+    console.log("Website visit count error:", error);
+    countBox.textContent = "0+";
+    return;
+  }
+
+  countBox.textContent = (count || 0) + "+";
+}
+
+  async function loadUniqueVisitorCount() {
+  const countBox = document.getElementById("uniqueVisitorCount");
+  if (!countBox) return;
+
+  const { data, error } = await db
+    .from("website_visits")
+    .select("device_id");
+
+  if (error) {
+    console.log("Unique visitor count error:", error);
+    countBox.textContent = "0+";
+    return;
+  }
+
+  const uniqueDevices = new Set((data || []).map(row => row.device_id)).size;
+  countBox.textContent = uniqueDevices + "+";
+}
   // FAQ
   document.querySelectorAll(".faq").forEach((faq) => {
     faq.addEventListener("click", () => {
