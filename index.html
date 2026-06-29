@@ -21,17 +21,33 @@
   <meta property="og:title" content="AcademeForge — India's All-in-One Learning Ecosystem" />
   <meta property="og:description" content="Text-based courses with instant certificates, video programs, AI mentor, gamified quizzes with XP &amp; leaderboards, community, and free productivity tools for Indian students." />
   <meta property="og:url" content="https://academeforge.in/" />
-  <meta property="og:image" content="https://academeforge.in/IMG/AF%20LOGO%203.png" />
+  <meta property="og:image" content="https://academeforge.in/IMG/og-image.webp" />
+  <meta property="og:image:type" content="image/webp" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="AcademeForge — India's All-in-One Learning Ecosystem" />
   <meta property="og:locale" content="en_IN" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@academeforge" />
   <meta name="twitter:title" content="AcademeForge — India's All-in-One Learning Ecosystem" />
   <meta name="twitter:description" content="Courses with instant certificates, AI mentor, gamified quizzes, community, and free tools for Indian students." />
-  <meta name="twitter:image" content="https://academeforge.in/IMG/AF%20LOGO%203.png" />
+  <meta name="twitter:image" content="https://academeforge.in/IMG/og-image.webp" />
+  <meta name="twitter:image:alt" content="AcademeForge — India's All-in-One Learning Ecosystem" />
+
+  <!-- PWA & platform meta -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="AcademeForge" />
+  <link rel="apple-touch-icon" href="/IMG/icon-192.png" />
+  <meta name="msapplication-TileColor" content="#f97316" />
+  <meta name="msapplication-TileImage" content="/IMG/icon-192.png" />
+  <meta name="application-name" content="AcademeForge" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" type="image/png" href="/IMG/icon-192.png" />
   <link rel="icon" type="image/jpeg" href="/IMG/AF%20LOGO%202.jpeg" />
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Manrope:wght@600;700;800&display=swap"
@@ -104,6 +120,104 @@
     "applicationCategory": "EducationApplication",
     "description": "AcademeForge's student app — Explore courses, LearnSpace video programs, AF ProGuide AI mentor, AF Test Arena quizzes, Learning Heatmap, Community, and more.",
     "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"}
+  }
+  </script>
+
+  <!-- Organization schema — strengthens business identity alongside EducationalOrganization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "AcademeForge",
+    "alternateName": "AF NEXUS",
+    "url": "https://academeforge.in/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://academeforge.in/IMG/AF%20LOGO%203.png",
+      "width": 512,
+      "height": 512
+    },
+    "description": "AcademeForge is India's all-in-one learning ecosystem — Explore text-based courses with instant certificates, LearnSpace video programs, AF ProGuide AI mentor, AF Test Arena gamified quizzes, student Community, and free companion apps Timezy, Zenopulsky, and Capacity.",
+    "email": "academeforge@gmail.com",
+    "foundingDate": "2024",
+    "founder": {
+      "@type": "Person",
+      "name": "Devraj Kumar",
+      "jobTitle": "Founder",
+      "worksFor": {"@type": "Organization", "name": "AcademeForge"}
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Patna",
+      "addressRegion": "Bihar",
+      "addressCountry": "IN"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "email": "academeforge@gmail.com",
+      "availableLanguage": ["English", "Hindi"]
+    },
+    "sameAs": [
+      "https://www.linkedin.com/company/academeforge/",
+      "https://www.instagram.com/academeforge.in",
+      "https://youtube.com/@academeforgepro",
+      "https://t.me/+46ubatq-EV0wNjY1"
+    ]
+  }
+  </script>
+
+  <!-- WebPage schema — describes this specific homepage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "AcademeForge — India's All-in-One Learning Ecosystem",
+    "url": "https://academeforge.in/",
+    "description": "AcademeForge combines text-based Explore courses with instant certificates, LearnSpace video programs, AF ProGuide AI mentor, gamified AF Test Arena quizzes with XP and leaderboards, student Community, and free apps Timezy, Zenopulsky, and Capacity — built for Indian students.",
+    "inLanguage": "en-IN",
+    "isPartOf": {"@type": "WebSite", "name": "AcademeForge", "url": "https://academeforge.in/"},
+    "about": {"@type": "EducationalOrganization", "name": "AcademeForge", "url": "https://academeforge.in/"},
+    "publisher": {"@type": "Organization", "name": "AcademeForge", "url": "https://academeforge.in/"},
+    "datePublished": "2024-01-01",
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://academeforge.in/"}
+      ]
+    }
+  }
+  </script>
+
+  <!-- BreadcrumbList schema — covers main site sections for Google rich results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Home",          "item": "https://academeforge.in/"},
+      {"@type": "ListItem", "position": 2, "name": "Explore Courses","item": "https://academeforge.in/#explore"},
+      {"@type": "ListItem", "position": 3, "name": "LearnSpace",    "item": "https://academeforge.in/#learnspace"},
+      {"@type": "ListItem", "position": 4, "name": "AF ProGuide AI","item": "https://academeforge.in/#proguide"},
+      {"@type": "ListItem", "position": 5, "name": "AF Test Arena", "item": "https://academeforge.in/#testarena"},
+      {"@type": "ListItem", "position": 6, "name": "Community",     "item": "https://academeforge.in/#community"},
+      {"@type": "ListItem", "position": 7, "name": "Apps",          "item": "https://academeforge.in/#apps"},
+      {"@type": "ListItem", "position": 8, "name": "Contact",       "item": "https://academeforge.in/#contact"}
+    ]
+  }
+  </script>
+
+  <!-- Speakable schema — voice assistant / Google Assistant compatibility -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "AcademeForge Homepage",
+    "url": "https://academeforge.in/",
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": [".hero-title", ".hero-text", ".section-title", ".section-text"]
+    }
   }
   </script>
 </head>
@@ -942,5 +1056,12 @@
   </div>
 
   <script src="script.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/sw.js").catch(() => {});
+      });
+    }
+  </script>
 </body>
 </html>
