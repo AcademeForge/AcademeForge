@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- Homepage -->
+  <url>
+    <loc>https://academeforge.in/</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://academeforge.in/IMG/og-image.webp</image:loc>
+      <image:title>AcademeForge — India's All-in-One Learning Ecosystem</image:title>
+    </image:image>
+  </url>
+
+  <!-- Explore Courses section -->
+  <url>
+    <loc>https://academeforge.in/#explore</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- LearnSpace section -->
+  <url>
+    <loc>https://academeforge.in/#learnspace</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- AF ProGuide AI section -->
+  <url>
+    <loc>https://academeforge.in/#proguide</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- AF Test Arena section -->
+  <url>
+    <loc>https://academeforge.in/#testarena</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Community section -->
+  <url>
+    <loc>https://academeforge.in/#community</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- Companion Apps section -->
+  <url>
+    <loc>https://academeforge.in/#apps</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- About / Founder section -->
+  <url>
+    <loc>https://academeforge.in/#about</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- FAQ section -->
+  <url>
+    <loc>https://academeforge.in/#faq</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Contact section -->
+  <url>
+    <loc>https://academeforge.in/#contact</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Verify Certificate -->
+  <url>
+    <loc>https://academeforge.in/verify-Certificate/</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Join Team -->
+  <url>
+    <loc>https://academeforge.in/join-team/</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Workplace Policy -->
+  <url>
+    <loc>https://academeforge.in/WorkplacePolicy/</loc>
+    <lastmod>2025-06-29</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+</urlset>
