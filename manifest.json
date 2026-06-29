@@ -1,0 +1,59 @@
+{
+  "name": "AcademeForge",
+  "short_name": "AcademeForge",
+  "description": "India's all-in-one learning ecosystem — Explore courses, LearnSpace videos, AF ProGuide AI mentor, AF Test Arena, Community, and free apps.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#f97316",
+  "background_color": "#f8fafc",
+  "lang": "en-IN",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {
+      "src": "/IMG/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/IMG/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/IMG/AFhome.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "AcademeForge Homepage"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Student Portal",
+      "short_name": "Portal",
+      "description": "Access your student dashboard",
+      "url": "/student-app-preview/",
+      "icons": [{"src": "/IMG/icon-192.png", "sizes": "192x192"}]
+    },
+    {
+      "name": "Explore Courses",
+      "short_name": "Courses",
+      "description": "Browse text-based courses with instant certificates",
+      "url": "/#explore",
+      "icons": [{"src": "/IMG/icon-192.png", "sizes": "192x192"}]
+    },
+    {
+      "name": "AF ProGuide AI",
+      "short_name": "AI Mentor",
+      "description": "Chat with your AI student mentor",
+      "url": "/AI/index.html",
+      "icons": [{"src": "/IMG/icon-192.png", "sizes": "192x192"}]
+    }
+  ]
+}
