@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME = "academeforge-v1";
+const CACHE_NAME = "academeforge-v2";
 const CACHE_URLS = [
   "/",
   "/index.html",
