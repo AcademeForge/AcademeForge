@@ -1,13 +1,14 @@
 "use strict";
 
 /* ============================================================
-   AcademeForge — Main Script (Improved)
+   AcademeForge — Main Script (Improved + Friendly Form Errors)
    - All AI buttons open ai.academeforge.in in new tab
    - AST portal: ast.academeforge.in (new tab)
    - Zenopulsky portal: zenopulsky.academeforge.in (new tab)
    - Mobile menu fix: overlay + full-height drawer
    - Header stays sticky — no scroll-hide logic
    - Suggestion & Help forms → Supabase
+   - NEW: client-side validation + human-readable error messages
    ============================================================ */
 
 /* ── Constants ── */
@@ -15,7 +16,7 @@ const SUPABASE_URL    = "https://afooyyydhlwngzssgqih.supabase.co";
 const SUPABASE_ANON   = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFmb295eXlkaGx3bmd6c3NncWloIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NDQxMjgsImV4cCI6MjA5NDIyMDEyOH0.KG0XO0oP_2MpewHoIwTtbrKg5FkyOYRUtVzLH1MSJiE";
 const ANALYTICS_EP    = `${SUPABASE_URL}/functions/v1/academeforge-analytics`;
 const FORMS_EP        = `${SUPABASE_URL}/functions/v1/af-website-forms`;
-const APK_URL         = "/IMG/af-v3.apk";
+const APK_URL          = "/IMG/af-v3.apk";
 const ANALYTICS_KEY   = "academeforge_analytics_cache_v4";
 const DEVICE_ID_KEY   = "academeforge_device_id_v4";
 const THEME_KEY       = "academeforge_theme_v1";
@@ -292,24 +293,63 @@ async function downloadApk() {
   } catch(e) { window.location.href = APK_URL; }
 }
 
-/* ── Supabase form submission ── */
-async function submitToSupabase(table, data) {
-  const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "apikey":        SUPABASE_ANON,
-      "Authorization": `Bearer ${SUPABASE_ANON}`,
-      "Prefer":        "return=minimal"
-    },
-    body: JSON.stringify(data)
-  });
-  if (!response.ok) {
-    let errMsg = "Submission failed. Please try again.";
-    try { const err = await response.json(); errMsg = err?.message || errMsg; } catch {}
-    throw new Error(errMsg);
+/* ============================================================
+   FORM VALIDATION + FRIENDLY ERROR HANDLING
+   ============================================================ */
+
+/* ── Field rules (mirrors the DB CHECK constraints exactly) ── */
+const FIELD_RULES = {
+  subject:    { label: "Subject / Title",  min: 3,  max: 200  },
+  suggestion: { label: "Suggestion",       min: 10, max: 3000 },
+  message:    { label: "Message",          min: 10, max: 2000 },
+  name:       { label: "Name",             min: 0,  max: 100  },
+  email:      { label: "Email",            min: 0,  max: 200  },
+};
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+/**
+ * Converts a raw Postgres/PostgREST error message into a clear,
+ * professional, user-facing message. Never shows raw constraint
+ * names or SQL internals to the visitor.
+ */
+function friendlyErrorMessage(rawMessage) {
+  const msg = String(rawMessage || "");
+
+  // e.g. `violates check constraint "af_suggestions_subject_check"`
+  const checkMatch = msg.match(/violates check constraint "[a-z_]+_([a-z]+)_check"/i);
+  if (checkMatch) {
+    const field = checkMatch[1];
+    const rule  = FIELD_RULES[field];
+    if (rule && rule.min > 0) {
+      return `${rule.label} must be at least ${rule.min} characters long. Please add a bit more detail and try again.`;
+    }
+    if (rule) {
+      return `${rule.label} doesn't meet the required format. Please review it and try again.`;
+    }
+    return "One of the fields you entered doesn't meet the required format. Please review your entries and try again.";
   }
-  return true;
+
+  if (/violates not-null constraint/i.test(msg)) {
+    return "Please fill in all required fields before submitting.";
+  }
+
+  if (/invalid input value for enum|invalid input syntax/i.test(msg)) {
+    return "Please choose a valid option from the list provided.";
+  }
+
+  if (/duplicate key value/i.test(msg)) {
+    return "It looks like this has already been submitted. Thank you!";
+  }
+
+  if (!msg || /failed to fetch|networkerror|load failed/i.test(msg)) {
+    return "We couldn't reach the server. Please check your internet connection and try again.";
+  }
+
+  // Generic, safe fallback — never leak raw DB/server internals
+  return "We couldn't process your submission. Please double-check the fields and try again, or email academeforge@gmail.com for help.";
 }
 
 /* ── Form status helpers ── */
@@ -326,6 +366,26 @@ function setButtonLoading(btn, loading) {
   if (label) label.textContent = loading ? "Submitting…" : btn.dataset.defaultLabel;
 }
 
+/* ── Supabase form submission ── */
+async function submitToSupabase(table, data) {
+  const response = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "apikey":        SUPABASE_ANON,
+      "Authorization": `Bearer ${SUPABASE_ANON}`,
+      "Prefer":        "return=minimal"
+    },
+    body: JSON.stringify(data)
+  });
+  if (!response.ok) {
+    let rawMsg = "Submission failed.";
+    try { const err = await response.json(); rawMsg = err?.message || rawMsg; } catch {}
+    throw new Error(rawMsg); // translated to a friendly message by the caller
+  }
+  return true;
+}
+
 /* ── Help Form ── */
 function initHelpForm() {
   const form      = byId("helpForm");
@@ -338,12 +398,34 @@ function initHelpForm() {
     e.preventDefault();
     if (!form.checkValidity()) { form.reportValidity(); return; }
 
+    const name    = form.helpName.value.trim();
+    const email   = form.helpEmail.value.trim();
+    const subject = form.helpSubject.value.trim();
+    const message = form.helpMessage.value.trim();
+
+    /* ── Client-side pre-validation (mirrors DB constraints) ── */
+    if (!email || !isValidEmail(email)) {
+      setFormStatus(statusEl, "error", "Please enter a valid email address so we can respond to you.");
+      form.helpEmail.focus();
+      return;
+    }
+    if (subject.length < FIELD_RULES.subject.min) {
+      setFormStatus(statusEl, "error", `Subject must be at least ${FIELD_RULES.subject.min} characters long.`);
+      form.helpSubject.focus();
+      return;
+    }
+    if (message.length < FIELD_RULES.message.min) {
+      setFormStatus(statusEl, "error", `Message must be at least ${FIELD_RULES.message.min} characters long — please describe your issue in a bit more detail.`);
+      form.helpMessage.focus();
+      return;
+    }
+
     const data = {
-      name:    form.helpName.value.trim() || null,
-      email:   form.helpEmail.value.trim(),
+      name:    name || null,
+      email,
       type:    form.helpType.value,
-      subject: form.helpSubject.value.trim(),
-      message: form.helpMessage.value.trim(),
+      subject,
+      message,
       page:    location.href,
       device_id: getDeviceId()
     };
@@ -356,7 +438,7 @@ function initHelpForm() {
       setFormStatus(statusEl, "success", "Thank you! Your help request has been submitted. We'll respond within 24–48 working hours.");
       form.reset();
     } catch(err) {
-      setFormStatus(statusEl, "error", err.message || "Something went wrong. Please try emailing academeforge@gmail.com directly.");
+      setFormStatus(statusEl, "error", friendlyErrorMessage(err.message));
     } finally {
       setButtonLoading(submitBtn, false);
     }
@@ -375,12 +457,34 @@ function initSuggestForm() {
     e.preventDefault();
     if (!form.checkValidity()) { form.reportValidity(); return; }
 
+    const name       = form.suggestName.value.trim();
+    const email      = form.suggestEmail.value.trim();
+    const subject    = form.suggestSubject.value.trim();
+    const suggestion = form.suggestText.value.trim();
+
+    /* ── Client-side pre-validation (mirrors DB constraints) ── */
+    if (email && !isValidEmail(email)) {
+      setFormStatus(statusEl, "error", "That email address doesn't look valid. Please check it or leave it blank.");
+      form.suggestEmail.focus();
+      return;
+    }
+    if (subject.length < FIELD_RULES.subject.min) {
+      setFormStatus(statusEl, "error", `Suggestion Title must be at least ${FIELD_RULES.subject.min} characters long.`);
+      form.suggestSubject.focus();
+      return;
+    }
+    if (suggestion.length < FIELD_RULES.suggestion.min) {
+      setFormStatus(statusEl, "error", `Your Suggestion must be at least ${FIELD_RULES.suggestion.min} characters long — please add a bit more detail.`);
+      form.suggestText.focus();
+      return;
+    }
+
     const data = {
-      name:       form.suggestName.value.trim() || null,
-      email:      form.suggestEmail.value.trim() || null,
+      name:       name || null,
+      email:      email || null,
       category:   form.suggestCategory.value,
-      subject:    form.suggestSubject.value.trim(),
-      suggestion: form.suggestText.value.trim(),
+      subject,
+      suggestion,
       page:       location.href,
       device_id:  getDeviceId()
     };
@@ -393,7 +497,7 @@ function initSuggestForm() {
       setFormStatus(statusEl, "success", "Thank you! Your suggestion has been received. We genuinely read every submission.");
       form.reset();
     } catch(err) {
-      setFormStatus(statusEl, "error", err.message || "Something went wrong. Please try emailing academeforge@gmail.com directly.");
+      setFormStatus(statusEl, "error", friendlyErrorMessage(err.message));
     } finally {
       setButtonLoading(submitBtn, false);
     }
