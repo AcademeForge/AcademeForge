@@ -1852,6 +1852,13 @@
     display:none !important;
   }
 }
+    .brand-logo {
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
   </style>
 </head>
 
@@ -1871,16 +1878,16 @@
     </div>
   </div>
 
-  <header class="header">
-    <div class="cw header-inner">
-      <a class="brand" href="../index.html" aria-label="AcademeForge Home">
-        <span class="logo">AF</span>
-        <span class="brand-copy">
-          <span class="brand-name">AcademeForge</span>
-          <span class="brand-sub">Student App</span>
-        </span>
-      </a>
-
+<header class="header">
+  <div class="cw header-inner">
+    <a class="brand" href="../index.html" aria-label="AcademeForge Home">
+      <img src="../IMG/logo.png" alt="AcademeForge Logo" class="brand-logo">
+      <span class="brand-copy">
+        <span class="brand-name">AcademeForge</span>
+        <span class="brand-sub">Student App</span>
+      </span>
+    </a>
+    
       <nav class="nav" aria-label="Primary navigation">
         <a href="../index.html">Home</a>
         <a href="../index.html#programs">Programs</a>
