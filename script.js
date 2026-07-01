@@ -1,16 +1,5 @@
 "use strict";
 
-/* ============================================================
-   AcademeForge — Main Script (Improved + Friendly Form Errors)
-   - All AI buttons open ai.academeforge.in in new tab
-   - AST portal: ast.academeforge.in (new tab)
-   - Zenopulsky portal: zenopulsky.academeforge.in (new tab)
-   - Mobile menu fix: overlay + full-height drawer
-   - Header stays sticky — no scroll-hide logic
-   - Suggestion & Help forms → Supabase
-   - NEW: client-side validation + human-readable error messages
-   ============================================================ */
-
 /* ── Constants ── */
 const SUPABASE_URL    = "https://afooyyydhlwngzssgqih.supabase.co";
 const SUPABASE_ANON   = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFmb295eXlkaGx3bmd6c3NncWloIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NDQxMjgsImV4cCI6MjA5NDIyMDEyOH0.KG0XO0oP_2MpewHoIwTtbrKg5FkyOYRUtVzLH1MSJiE";
