@@ -54,6 +54,48 @@
     rel="stylesheet"
   />
   <link rel="stylesheet" href="/assets/css/style.css?v=3.0" />
+  <style>
+    @keyframes marquee-infinite {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .marquee-track {
+      display: flex;
+      gap: 72px;
+      width: max-content;
+      animation: marquee-infinite 18s linear infinite;
+      align-items: center;
+    }
+    .marquee-track img {
+      height: 56px;
+      width: auto;
+      opacity: 0.65;
+      transition: opacity 0.3s;
+      flex-shrink: 0;
+    }
+    .marquee-track img:hover { opacity: 1; }
+    .vision-strip {
+      padding: 32px 24px;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-light);
+      text-align: center;
+    }
+    .vision-strip h2 {
+      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+    .vision-strip p {
+      font-size: clamp(0.875rem, 1.5vw, 1rem);
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+  </style>
+
 
   <!-- EducationalOrganization schema — primary identity for Google Knowledge Panel -->
   <script type="application/ld+json">
@@ -445,7 +487,14 @@
       <img src="/IMG/zenopulsky.png" alt="Zenopulsky" onerror="this.src='/IMG/logo.png'">
       <img src="/IMG/nexora.png" alt="Nexora" onerror="this.src='/IMG/logo.png'">
       <img src="/IMG/bazzar.png" alt="Bazzar" onerror="this.src='/IMG/logo.png'">
-      <!-- Duplicate for infinite scroll -->
+      <img src="/IMG/nexus.png" alt="Nexus" onerror="this.src='/IMG/logo.png'">
+      <img src="/IMG/ai.png" alt="AI" onerror="this.src='/IMG/logo.png'">
+      <img src="/IMG/ast.png" alt="AST" onerror="this.src='/IMG/logo.png'">
+      <img src="/IMG/timezy.png" alt="Timezy" onerror="this.src='/IMG/logo.png'">
+      <img src="/IMG/capacity.png" alt="Capacity" onerror="this.src='/IMG/logo.png'">
+      <img src="/IMG/zenopulsky.png" alt="Zenopulsky" onerror="this.src='/IMG/logo.png'">
+      <img src="/IMG/nexora.png" alt="Nexora" onerror="this.src='/IMG/logo.png'">
+      <img src="/IMG/bazzar.png" alt="Bazzar" onerror="this.src='/IMG/logo.png'">
       <img src="/IMG/nexus.png" alt="Nexus" onerror="this.src='/IMG/logo.png'">
       <img src="/IMG/ai.png" alt="AI" onerror="this.src='/IMG/logo.png'">
       <img src="/IMG/ast.png" alt="AST" onerror="this.src='/IMG/logo.png'">
@@ -458,23 +507,12 @@
   </div>
 
   <!-- =========================================================
-       2. OUR VISION
+       2. WHAT WE BUILD
   ========================================================= -->
-  <section class="section vision bg-light">
-    <div class="container text-center">
-      <div class="vision-grid">
-        <div class="vision-content">
-          <h2 class="section-title i18n-text" style="margin-bottom: 24px;">Our Vision</h2>
-          <p class="section-body i18n-text" style="margin-bottom: 24px;">A world where every student has the tools to learn anything, build anything, and become anything — without barriers of access, geography, or opportunity.</p>
-          <p class="section-body i18n-text">We're not building another app. We're building the infrastructure for the next generation of thinkers, creators, and leaders.</p>
-
-        </div>
-        <div class="vision-image">
-          <img src="/IMG/logoo.png" alt="AcademeForge Ecosystem App" class="vision-mockup" onerror="this.style.display='none'" />
-        </div>
-      </div>
-    </div>
-  </section>
+  <div class="vision-strip">
+    <p class="i18n-text" style="margin-bottom: 12px;">Instead of offering just one application, AcademeForge brings together multiple connected platforms designed for different aspects of a student's journey—from learning and AI to examinations, productivity, wellbeing, journalism, and creative innovation.</p>
+    <p class="i18n-text">Whether you're learning a new skill, preparing for an exam, organizing your day, exploring AI, or connecting with a community, AcademeForge provides a unified experience through one ecosystem.</p>
+  </div>
 
   <!-- =========================================================
        3. PRODUCTS (FILTERABLE ECOSYSTEM)
