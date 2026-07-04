@@ -75,13 +75,14 @@
     }
     .marquee-track img:hover { opacity: 1; }
 
-    /* ── Hero: tight padding, large heading, marquee visible on first screen ── */
-    .hero { padding: 48px 24px 24px !important; }
+    /* ── Hero: full viewport, marquee below the fold ── */
+    .hero { padding: 120px 24px 100px !important; min-height: calc(100vh - 120px); display: flex; align-items: center; justify-content: center; }
+    .hero-container { width: 100%; }
     .hero-headline { font-size: clamp(2.5rem, 5vw, 4.5rem) !important; margin-bottom: 14px !important; }
-    .hero-subheadline { font-size: clamp(1rem, 1.5vw, 1.2rem) !important; margin-bottom: 20px !important; }
+    .hero-subheadline { font-size: clamp(1rem, 1.5vw, 1.2rem) !important; margin-bottom: 24px !important; }
 
     /* ── Gap between picker and marquee ── */
-    .marquee-container { margin-top: 28px; }
+    .marquee-container { margin-top: 0; }
     .vision-strip {
       padding: 56px 48px;
       background: var(--bg-secondary);
