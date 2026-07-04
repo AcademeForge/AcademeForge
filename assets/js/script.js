@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function openDrawer() {
     mobileDrawer.classList.add('open');
     document.body.classList.add('no-scroll');
+    
   }
 
   function closeDrawer() {
