@@ -74,25 +74,29 @@
       flex-shrink: 0;
     }
     .marquee-track img:hover { opacity: 1; }
+
+    /* ── Hero: tighten so header+hero+marquee fit first screen ── */
+    .hero { padding: 40px 24px 28px !important; }
+    .hero-headline { font-size: clamp(2rem, 3.5vw, 3rem) !important; margin-bottom: 12px !important; }
+    .hero-subheadline { font-size: clamp(1rem, 1.5vw, 1.125rem) !important; margin-bottom: 20px !important; }
+
+    /* ── Gap between picker and marquee ── */
+    .marquee-container { margin-top: 32px; }
     .vision-strip {
-      padding: 32px 24px;
+      padding: 56px 48px;
       background: var(--bg-secondary);
       border-bottom: 1px solid var(--border-light);
       text-align: center;
     }
-    .vision-strip h2 {
-      font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-      font-weight: 800;
-      color: var(--text-primary);
-      letter-spacing: -0.03em;
-      margin-bottom: 10px;
-    }
     .vision-strip p {
-      font-size: clamp(0.875rem, 1.5vw, 1rem);
+      font-size: clamp(1rem, 1.5vw, 1.125rem);
       color: var(--text-secondary);
-      max-width: 700px;
+      max-width: 860px;
       margin: 0 auto;
-      line-height: 1.6;
+      line-height: 1.8;
+    }
+    .vision-strip p + p {
+      margin-top: 20px;
     }
   </style>
 
@@ -681,14 +685,18 @@
        3. WHY ACADEMEFORGE
   ========================================================= -->
   <section class="section">
-    <div class="container" style="padding: 120px 24px;">
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 60px; align-items: center;">
+    <div class="container" style="padding: 72px 24px;">
+
+      <!-- Heading — centered top like FAQ -->
+      <div class="section-header text-center" style="margin-bottom: 48px;">
+        <h2 class="section-title i18n-text">Why AcademeForge?</h2>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 48px; align-items: center;">
         
-        <!-- Left Side: Text -->
+        <!-- Left Side: Checklist -->
         <div style="text-align: left;">
-          <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; line-height: 1.1; margin-bottom: 40px; color: var(--text-primary);" class="i18n-text">Why AcademeForge?</h2>
-          
-          <div style="display: flex; flex-direction: column; gap: 20px; font-size: clamp(1rem, 1.5vw, 1.125rem); color: var(--text-primary);">
+          <div style="display: flex; flex-direction: column; gap: 14px; font-size: 0.9375rem; color: var(--text-primary);">
             <div style="display: flex; align-items: flex-start; gap: 12px;">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-tertiary); flex-shrink: 0;"><polyline points="20 6 9 17 4 12"/></svg>
               <span class="i18n-text">Learn practical digital skills.</span>
@@ -940,9 +948,11 @@
         <div class="footer-col brand-col">
           <a href="/" class="brand">
             <img src="/IMG/logo.png" alt="AcademeForge" width="24" height="24" onerror="this.style.display='none'" />
-            <span class="brand-text">AcademeForge</span>
+            <div class="brand-text-wrapper">
+              <span class="brand-text">AcademeForge</span>
+              <span class="brand-tagline i18n-text">LEARNING BEYOND THE CLASSROOM</span>
+            </div>
           </a>
-          <p class="footer-tagline i18n-text">Learning beyond the classroom.</p>
           <div style="margin-top: 24px; display: flex; flex-direction: column; gap: 12px;">
             <a href="mailto:help@academeforge.in" style="color: var(--text-secondary);">help@academeforge.in</a>
             <a href="mailto:info@academeforge.in" style="color: var(--text-secondary);">info@academeforge.in</a>
