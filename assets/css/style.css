@@ -250,9 +250,9 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); color: var(--text-pri
 /* =========================================================
    1. ARRIVAL (HERO & QUICK PICKER)
 ========================================================= */
-.hero { padding: 120px 24px 80px; }
-.hero-headline { font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 800; line-height: 1.05; margin-bottom: 24px; max-width: 1200px; }
-.hero-subheadline { font-size: clamp(1.125rem, 2vw, 1.25rem); max-width: 1000px; color: var(--text-secondary); margin-bottom: 40px; }
+.hero { padding: 60px 24px 40px; }
+.hero-headline { font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 800; line-height: 1.05; margin-bottom: 16px; max-width: 1200px; }
+.hero-subheadline { font-size: clamp(1.125rem, 2vw, 1.25rem); max-width: 1000px; color: var(--text-secondary); margin-bottom: 24px; }
 
 .quick-picker {
   display: inline-flex;
@@ -283,9 +283,15 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); color: var(--text-pri
 }
 
 /* =========================================================
-   2. VISION
+   2. WHY ACADEMEFORGE (VISION)
 ========================================================= */
-.vision-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
+.vision-grid { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center; }
+@media (min-width: 992px) {
+  .vision-grid { grid-template-columns: 1fr 1fr; text-align: left; }
+  .vision .text-center { text-align: left; }
+}
+.vision-mockup { max-width: 100%; height: auto; border-radius: var(--radius-md); box-shadow: 0 20px 40px rgba(0,0,0,0.1); transform: rotate(2deg); transition: transform var(--transition); }
+.vision-mockup:hover { transform: rotate(0deg); }
 
 /* =========================================================
    3. PRODUCTS (FILTERABLE GRID & ICONS)
@@ -440,9 +446,3 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); color: var(--text-pri
   .desktop-only { display: none !important; }
   .mobile-toggle { display: block; }
   
-  .product-row { flex-direction: column; align-items: flex-start; gap: 24px; }
-  .product-icon { margin-right: 0; }
-  .product-action { opacity: 1; }
-  
-  .quick-picker { flex-direction: column; align-items: stretch; border-radius: var(--radius-sm); padding: 16px; }
-}
