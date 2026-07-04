@@ -71,15 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Auto-filter the products list
       const correspondingChip = document.querySelector(`.filter-chip[data-filter="${intent}"]`);
       
-      // We map the picker values to categories/products
-      // Intent mapping:
-      // learn -> learn
-      // exams -> learn (scrolls to Scholars test)
-      // productivity -> track
-      // wellbeing -> personal
-      // reading -> create
-      // create -> create
-
+    
       let targetFilter = 'all';
       if (intent === 'learn' || intent === 'exams') targetFilter = 'learn';
       if (intent === 'productivity') targetFilter = 'track';
