@@ -1,0 +1,188 @@
+/* AcademeForge — main.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800;900&display=swap');
+
+:root {
+  --brand: #f97316;
+  --brand-light: #fff7ed;
+  --brand-dark: #c2410c;
+  --navy: #0f172a;
+  --slate-7: #334155;
+  --slate-5: #64748b;
+  --slate-2: #e2e8f0;
+  --slate-1: #f8fafc;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--slate-7);
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, .font-display { font-family: 'Manrope', sans-serif; }
+
+/* Hero mesh gradient */
+.hero-gradient {
+  background: radial-gradient(ellipse 80% 60% at 60% -10%, #fff7ed 0%, transparent 70%),
+              radial-gradient(ellipse 50% 40% at 90% 80%, #fef3c7 0%, transparent 60%),
+              #fff;
+}
+
+/* Orange text gradient */
+.text-gradient {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 50%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Card hover lift */
+.card-lift {
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px -8px rgba(249,115,22,0.14), 0 4px 16px -4px rgba(15,23,42,0.08);
+}
+
+/* Reveal animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Nav glass on scroll */
+.nav-scrolled {
+  box-shadow: 0 1px 12px rgba(15,23,42,0.08);
+  background: rgba(255,255,255,0.97) !important;
+  backdrop-filter: blur(12px);
+}
+
+/* Badge pill */
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--brand); }
+
+/* Modal */
+.modal-backdrop {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(15,23,42,0.5);
+  backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.modal-backdrop.open { opacity: 1; pointer-events: all; }
+.modal-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 520px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  transform: scale(0.95);
+  transition: transform 0.2s ease;
+}
+.modal-backdrop.open .modal-card { transform: scale(1); }
+
+/* XP bar */
+.xp-bar-fill {
+  height: 6px;
+  background: linear-gradient(90deg, var(--brand), #f59e0b);
+  border-radius: 99px;
+  transition: width 1s ease;
+}
+
+/* Heatmap grid */
+.heatmap-cell {
+  width: 14px; height: 14px;
+  border-radius: 3px;
+  background: #e2e8f0;
+}
+.heatmap-cell.l1 { background: #fed7aa; }
+.heatmap-cell.l2 { background: #fb923c; }
+.heatmap-cell.l3 { background: #f97316; }
+.heatmap-cell.l4 { background: #c2410c; }
+
+/* AST admit card */
+.admit-card {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  border-radius: 16px;
+  padding: 28px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.admit-card::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 150px; height: 150px;
+  border-radius: 50%;
+  background: rgba(249,115,22,0.15);
+}
+
+/* Floating AI button */
+.ai-fab {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  z-index: 100;
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 20px;
+  background: var(--navy);
+  color: #fff;
+  border-radius: 99px;
+  font-size: 14px; font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(15,23,42,0.25);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.ai-fab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(15,23,42,0.35);
+}
+.ai-fab-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #4ade80;
+  animation: pulse-dot 2s infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.4); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; }
+  .card-lift:hover { transform: none; }
+  .ai-fab-dot { animation: none; }
+}
+
+@media (max-width: 768px) {
+  .ai-fab span { display: none; }
+  .ai-fab { padding: 14px; border-radius: 50%; }
+}
