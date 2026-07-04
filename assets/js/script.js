@@ -1,7 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // ---------------------------------------------------------
-  // 1. MOBILE DRAWER LOGIC
-  // ---------------------------------------------------------
+ 
   const mobileToggleBtn = document.getElementById('mobile-toggle-btn');
   const drawerCloseBtn = document.getElementById('drawer-close-btn');
   const mobileDrawer = document.getElementById('mobile-drawer');
