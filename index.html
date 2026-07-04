@@ -1,236 +1,1307 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <meta name="description" content="AcademeForge — India's all-in-one learning ecosystem. Text-based courses with instant certificates, AI mentor, gamified quizzes, Scholars Test, community & free apps. Built for Indian students."/>
-  <meta property="og:title" content="AcademeForge — India's All-in-One Learning Ecosystem"/>
-  <meta property="og:image" content="https://academeforge.in/IMG/og-image.webp"/>
-  <link rel="canonical" href="https://academeforge.in/"/>
-  <title>AcademeForge — India's All-in-One Learning Ecosystem</title>
-  <link rel="icon" href="/IMG/icon-192.png"/>
-  <link rel="manifest" href="/manifest.json"/>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f8fafc" />
+  <meta
+    name="description"
+    content="AcademeForge is India's all-in-one learning ecosystem: text-based Explore courses with instant certificates, LearnSpace video programs, AF ProGuide AI mentor (AF 2.4, Dev 1.3, Tapri 7.9), gamified AF Test Arena quizzes with XP &amp; leaderboards, AcademeForge Scholars Test (AST) examination portal, Learning Heatmap streaks, student Community, plus free apps Timezy, Zenopulsky, and Capacity — built for Indian students in Patna, Bihar."
+  />
+  <meta name="keywords" content="AcademeForge, Indian EdTech, AF ProGuide AI, LearnSpace, AF Test Arena, AST, AcademeForge Scholars Test, Scholars Test, admit card, Timezy, Zenopulsky, Capacity, online courses India, AI coding India, freelancing course, graphic design course, prompt engineering, Bihar EdTech, Patna, instant certificate, free certificate courses" />
+  <meta name="author" content="AcademeForge" />
+  <meta name="robots" content="index, follow" />
+  <meta name="googlebot" content="index, follow" />
+  <link rel="canonical" href="https://academeforge.in/" />
+
+  <title>AcademeForge — India's All-in-One Learning Ecosystem | Courses, AI Mentor &amp; Test Arena</title>
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="AcademeForge" />
+  <meta property="og:title" content="AcademeForge — India's All-in-One Learning Ecosystem" />
+  <meta property="og:description" content="Text-based courses with instant certificates, video programs, AI mentor, gamified quizzes with XP &amp; leaderboards, AcademeForge Scholars Test (AST), community, and free productivity tools for Indian students." />
+  <meta property="og:url" content="https://academeforge.in/" />
+  <meta property="og:image" content="https://academeforge.in/IMG/og-image.webp" />
+  <meta property="og:image:type" content="image/webp" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="AcademeForge — India's All-in-One Learning Ecosystem" />
+  <meta property="og:locale" content="en_IN" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@academeforge" />
+  <meta name="twitter:title" content="AcademeForge — India's All-in-One Learning Ecosystem" />
+  <meta name="twitter:description" content="Courses with instant certificates, AI mentor, gamified quizzes, Scholars Test (AST), community, and free tools for Indian students." />
+  <meta name="twitter:image" content="https://academeforge.in/IMG/og-image.webp" />
+  <meta name="twitter:image:alt" content="AcademeForge — India's All-in-One Learning Ecosystem" />
+
+  <!-- PWA & platform meta -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="AcademeForge" />
+  <link rel="apple-touch-icon" href="/IMG/icon-192.png" />
+  <meta name="msapplication-TileColor" content="#f97316" />
+  <meta name="msapplication-TileImage" content="/IMG/icon-192.png" />
+  <meta name="application-name" content="AcademeForge" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" type="image/png" href="/IMG/icon-192.png" />
+  <link rel="icon" type="image/jpeg" href="/IMG/AF%20LOGO%202.jpeg" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Manrope:wght@600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- EducationalOrganization schema — primary identity for Google Knowledge Panel -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "AcademeForge",
+    "alternateName": "AF NEXUS",
+    "url": "https://academeforge.in/",
+    "logo": "https://academeforge.in/IMG/logo.png",
+    "description": "AcademeForge is a growing Indian EdTech platform offering text-based Explore courses with instant certificates, LearnSpace video lecture programs, AF ProGuide AI mentor, gamified AF Test Arena quizzes with XP and global leaderboards, the AcademeForge Scholars Test (AST) examination portal, Learning Heatmap streaks, a student Community, and free companion apps Timezy, Zenopulsky, and Capacity.",
+    "email": "academeforge@gmail.com",
+    "foundingDate": "2024",
+    "founder": {"@type": "Person", "name": "Devraj Kumar"},
+    "address": {"@type": "PostalAddress", "addressLocality": "Patna", "addressRegion": "Bihar", "addressCountry": "IN"},
+    "sameAs": [
+      "https://www.linkedin.com/company/academeforge/",
+      "https://www.instagram.com/academeforge.in",
+      "https://youtube.com/@academeforgepro",
+      "https://t.me/+46ubatq-EV0wNjY1"
+    ],
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "AcademeForge Courses & Examinations",
+      "itemListElement": [
+        {"@type": "Course", "name": "Creative & Graphic Design Mastery", "description": "Text-based course on design fundamentals, layout, and visual communication. Instant certificate on completion.", "provider": {"@type": "Organization", "name": "AcademeForge"}},
+        {"@type": "Course", "name": "Video & Media Editing Mastery", "description": "Read-and-learn lessons on editing workflows and media production, accessible without watching video.", "provider": {"@type": "Organization", "name": "AcademeForge"}},
+        {"@type": "Course", "name": "AI Coding & Logic Foundation", "description": "Beginner-friendly coding logic, AI fundamentals, and prompt thinking. Instant certificate on completion.", "provider": {"@type": "Organization", "name": "AcademeForge"}},
+        {"@type": "Course", "name": "Freelancing & Monetization Roadmap", "description": "Practical roadmap to online earning, client work, and digital skill monetization. Instant certificate on completion.", "provider": {"@type": "Organization", "name": "AcademeForge"}},
+        {"@type": "Course", "name": "AI & Prompt Engineering", "description": "Structured text-based lessons on prompt design and professional generative AI use cases. Instant certificate on completion.", "provider": {"@type": "Organization", "name": "AcademeForge"}},
+        {"@type": "Event", "name": "AcademeForge Scholars Test (AST)", "description": "Official examination platform for school students. Students register through their school, receive an official admit card with a unique Roll Number, and appear for the test at ast.academeforge.in.", "url": "https://ast.academeforge.in", "organizer": {"@type": "Organization", "name": "AcademeForge", "url": "https://academeforge.in/"}}
+      ]
+    }
+  }
+  </script>
+
+  <!-- WebSite schema — enables Google Sitelinks Search Box -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "AcademeForge",
+    "url": "https://academeforge.in/",
+    "potentialAction": {"@type": "SearchAction", "target": "https://academeforge.in/search?q={search_term_string}", "query-input": "required name=search_term_string"}
+  }
+  </script>
+
+  <!-- FAQPage schema — rich results in Google Search -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "What is AcademeForge?", "acceptedAnswer": {"@type": "Answer", "text": "AcademeForge is a growing Indian EdTech platform combining text-based Explore courses with instant certificates, LearnSpace video programs, the AF ProGuide AI mentor, gamified AF Test Arena quizzes with XP and global leaderboards, the AcademeForge Scholars Test (AST) examination portal, a Learning Heatmap for streak tracking, an in-app student Community, and free companion apps Timezy, Zenopulsky, and Capacity."}},
+      {"@type": "Question", "name": "Are AcademeForge Explore courses free?", "acceptedAnswer": {"@type": "Answer", "text": "Explore text-based courses are affordable and issue an instant certificate the moment a student completes the course. AF ProGuide AI mentor also has a free tier, and Timezy is 100% free with no account or download required."}},
+      {"@type": "Question", "name": "Do AcademeForge courses give certificates?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. All Explore text-based courses issue a completion certificate instantly. Progress and certificates are tracked on the student's personal Dashboard inside the AcademeForge app."}},
+      {"@type": "Question", "name": "What is AF ProGuide?", "acceptedAnswer": {"@type": "Answer", "text": "AF ProGuide is AcademeForge's built-in AI student mentor. It runs multiple AI model versions — AF 2.4, Dev 1.3, and Tapri 7.9 — and helps students with learning to code (e.g. Python), building a portfolio, preparing for job interviews, and choosing a tech career. Access it at ai.academeforge.in."}},
+      {"@type": "Question", "name": "What is AF Test Arena?", "acceptedAnswer": {"@type": "Answer", "text": "AF Test Arena is AcademeForge's gamified learning and quiz system. Students earn XP points, level up, maintain win streaks, compete in timed quizzes on AI, Machine Learning, Digital Literacy, and more, and appear on a live global leaderboard. Brain games like Sudoku are also built in."}},
+      {"@type": "Question", "name": "What is the AcademeForge Scholars Test (AST)?", "acceptedAnswer": {"@type": "Answer", "text": "The AcademeForge Scholars Test (AST) is an official examination platform for school students. Students register through their school using a unique School Code, receive an official admit card with a unique Roll Number (e.g. AST-2026-0001), class tier, and school details, and appear for the test through the dedicated portal at ast.academeforge.in."}},
+      {"@type": "Question", "name": "What is Timezy?", "acceptedAnswer": {"@type": "Answer", "text": "Timezy is a free, browser-based productivity app by AcademeForge. No account or download needed. It lets you add tasks with priority levels, plan your week visually, and track completion with a live progress ring. Supports dark and light mode."}},
+      {"@type": "Question", "name": "What are LearnSpace programs?", "acceptedAnswer": {"@type": "Answer", "text": "LearnSpace is AcademeForge's video lecture library. It offers structured instructor-led programs in Freelancing & Digital Monetization, AI & Prompt Engineering, Video Editing & Digital Media Production, Creative Graphic Design & Brand Visuals, and AI Coding & Logic Foundation. Fees and start dates are to be announced."}}
+    ]
+  }
+  </script>
+
+  <!-- SoftwareApplication schema — for Google's app rich results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "AcademeForge App",
+    "operatingSystem": "Android",
+    "applicationCategory": "EducationApplication",
+    "description": "AcademeForge's student app — Explore courses, LearnSpace video programs, AF ProGuide AI mentor, AF Test Arena quizzes, Learning Heatmap, Community, and more.",
+    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"}
+  }
+  </script>
+
+  <!-- Organization schema — strengthens business identity alongside EducationalOrganization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "AcademeForge",
+    "alternateName": "AF NEXUS",
+    "url": "https://academeforge.in/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://academeforge.in/IMG/logo.png",
+      "width": 512,
+      "height": 512
+    },
+    "description": "AcademeForge is India's all-in-one learning ecosystem — Explore text-based courses with instant certificates, LearnSpace video programs, AF ProGuide AI mentor, AF Test Arena gamified quizzes, AcademeForge Scholars Test (AST) examination portal, student Community, and free companion apps Timezy, Zenopulsky, and Capacity.",
+    "email": "academeforge@gmail.com",
+    "foundingDate": "2024",
+    "founder": {
+      "@type": "Person",
+      "name": "Devraj Kumar",
+      "jobTitle": "Founder",
+      "worksFor": {"@type": "Organization", "name": "AcademeForge"}
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Patna",
+      "addressRegion": "Bihar",
+      "addressCountry": "IN"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "email": "academeforge@gmail.com",
+      "availableLanguage": ["English", "Hindi"]
+    },
+    "sameAs": [
+      "https://www.linkedin.com/company/academeforge/",
+      "https://www.instagram.com/academeforge.in",
+      "https://youtube.com/@academeforgepro",
+      "https://t.me/+46ubatq-EV0wNjY1"
+    ]
+  }
+  </script>
+
+  <!-- WebPage schema — describes this specific homepage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "AcademeForge — India's All-in-One Learning Ecosystem",
+    "url": "https://academeforge.in/",
+    "description": "AcademeForge combines text-based Explore courses with instant certificates, LearnSpace video programs, AF ProGuide AI mentor, gamified AF Test Arena quizzes with XP and leaderboards, the AcademeForge Scholars Test (AST) examination portal, student Community, and free apps Timezy, Zenopulsky, and Capacity — built for Indian students.",
+    "inLanguage": "en-IN",
+    "isPartOf": {"@type": "WebSite", "name": "AcademeForge", "url": "https://academeforge.in/"},
+    "about": {"@type": "EducationalOrganization", "name": "AcademeForge", "url": "https://academeforge.in/"},
+    "publisher": {"@type": "Organization", "name": "AcademeForge", "url": "https://academeforge.in/"},
+    "datePublished": "2024-01-01",
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://academeforge.in/"}
+      ]
+    }
+  }
+  </script>
+
+  <!-- BreadcrumbList schema — covers main site sections for Google rich results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Home",                    "item": "https://academeforge.in/"},
+      {"@type": "ListItem", "position": 2, "name": "Explore Courses",         "item": "https://academeforge.in/#explore"},
+      {"@type": "ListItem", "position": 3, "name": "LearnSpace",              "item": "https://academeforge.in/#learnspace"},
+      {"@type": "ListItem", "position": 4, "name": "AF ProGuide AI",          "item": "https://academeforge.in/#proguide"},
+      {"@type": "ListItem", "position": 5, "name": "AF Test Arena",           "item": "https://academeforge.in/#testarena"},
+      {"@type": "ListItem", "position": 6, "name": "Scholars Test (AST)",     "item": "https://academeforge.in/#scholars-test"},
+      {"@type": "ListItem", "position": 7, "name": "Community",               "item": "https://academeforge.in/#community"},
+      {"@type": "ListItem", "position": 8, "name": "Apps",                    "item": "https://academeforge.in/#apps"},
+      {"@type": "ListItem", "position": 9, "name": "Contact",                 "item": "https://academeforge.in/#contact"}
+    ]
+  }
+  </script>
+
+  <!-- Speakable schema — voice assistant / Google Assistant compatibility -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "AcademeForge Homepage",
+    "url": "https://academeforge.in/",
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": [".hero-title", ".hero-text", ".section-title", ".section-text"]
+    }
+  }
+  </script>
+</head>
+
+<body>
+  <div id="offline" style="display:none;position:fixed;top:0;left:0;right:0;z-index:120;background:#dc2626;color:#fff;text-align:center;font-weight:900;font-size:14px;padding:12px 16px;">
+    Internet connection error. Some features may not load until you are online.
+  </div>
+
+  <div class="site">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div class="cw topbar-inner">
+        <div class="topbar-left">
+          <span>Patna, Bihar, India</span>
+          <a href="mailto:academeforge@gmail.com">academeforge@gmail.com</a>
+          <a href="https://help.academeforge.in" target="_blank" rel="noopener noreferrer" class="topbar-ai-link">AI Help Desk</a>
+        </div>
+        <div class="topbar-right">
+          <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/company/academeforge/">LinkedIn</a>
+          <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/academeforge.in">Instagram</a>
+          <a target="_blank" rel="noopener noreferrer" href="https://youtube.com/@academeforgepro">YouTube</a>
+          <a target="_blank" rel="noopener noreferrer" href="https://t.me/+46ubatq-EV0wNjY1">Telegram</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- MARQUEE -->
+    <div class="marquee-wrap" aria-hidden="true">
+      <div class="marquee-track">
+        <div class="marquee-group">
+          <span>Explore Courses</span><span>Instant Certificates</span><span>LearnSpace Videos</span><span>AF ProGuide AI</span><span>AF Test Arena · XP &amp; Leaderboards</span><span>Scholars Test (AST)</span><span>Learning Heatmap</span><span>Community</span><span>Timezy · Free Planner</span><span>Zenopulsky · Journalism</span><span>Capacity · Wellbeing</span><span>Built for Indian Students</span>
+        </div>
+        <div class="marquee-group" aria-hidden="true">
+          <span>Explore Courses</span><span>Instant Certificates</span><span>LearnSpace Videos</span><span>AF ProGuide AI</span><span>AF Test Arena · XP &amp; Leaderboards</span><span>Scholars Test (AST)</span><span>Learning Heatmap</span><span>Community</span><span>Timezy · Free Planner</span><span>Zenopulsky · Journalism</span><span>Capacity · Wellbeing</span><span>Built for Indian Students</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- HEADER — always sticky, never hides on scroll -->
+    <header class="header" id="mainHeader">
+      <div class="cw header-inner">
+        <a class="brand" href="#home" aria-label="AcademeForge Home">
+          <span class="logo" style="width:44px;height:44px;">
+            <img src="/IMG/logo.png" alt="AcademeForge" class="brand-logo" width="44" height="44" loading="eager" decoding="async" />
+          </span>
+          <div class="brand-text">
+            <b class="brand-title">AcademeForge</b>
+            <span class="brand-sub">Learning Beyond The Classroom</span>
+          </div>
+        </a>
+        <nav class="nav" aria-label="Main navigation">
+          <a href="#explore">Explore</a>
+          <a href="#learnspace">LearnSpace</a>
+          <a href="#proguide">AF ProGuide</a>
+          <a href="#testarena">Test Arena</a>
+          <a href="#scholars-test">AST</a>
+          <a href="#community" class="nav-extra">Community</a>
+          <a href="#apps" class="nav-extra">Apps</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <div class="header-actions">
+          <button id="themeToggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Toggle dark mode">
+            <span class="label">Night</span>
+            <span class="switch"><span class="knob"></span></span>
+          </button>
+          <a class="btn primary desktop-only" href="student-app-preview/">Student Portal</a>
+          <button class="menu-btn" id="openMenu" type="button" aria-label="Open menu" aria-expanded="false">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MOBILE MENU OVERLAY -->
+    <div id="menuOverlay" class="menu-overlay" aria-hidden="true"></div>
+
+    <!-- MOBILE MENU -->
+    <aside id="menu" class="mobile-menu" aria-label="Mobile navigation" aria-hidden="true">
+      <div class="mobile-menu-head">
+        <a class="brand" href="#home" onclick="closeMobileMenu()">
+          <span class="logo" style="width:40px;height:40px;flex-shrink:0;">
+            <img src="/IMG/logo.png" alt="AcademeForge" class="brand-logo" width="40" height="40" loading="eager" decoding="async" />
+          </span>
+          <div class="brand-text">
+            <b class="brand-title">AcademeForge</b>
+            <span class="brand-sub">AF NEXUS</span>
+          </div>
+        </a>
+        <button id="closeMenu" class="close-btn" type="button" aria-label="Close menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <nav class="mobile-nav">
+        <a class="mlnk" href="#home">Home</a>
+        <a class="mlnk" href="student-app-preview/">Student Portal</a>
+        <a class="mlnk" href="#explore">Explore Courses</a>
+        <a class="mlnk" href="#learnspace">LearnSpace</a>
+        <a class="mlnk" href="#proguide">AF ProGuide AI</a>
+        <a class="mlnk" href="#testarena">AF Test Arena</a>
+        <a class="mlnk" href="#scholars-test">Scholars Test (AST)</a>
+        <a class="mlnk" href="#community">Community</a>
+        <a class="mlnk" href="#apps">Timezy · Zenopulsky · Capacity</a>
+        <a class="mlnk" href="#help">Help &amp; Support</a>
+        <a class="mlnk" href="#suggest">Send Suggestion</a>
+        <a class="mlnk" href="#contact">Contact</a>
+        <a class="mlnk" href="/join-team/">Join Team</a>
+        <a class="mlnk" href="/verify-Certificate/">Verify Certificate</a>
+      </nav>
+      <div class="mobile-actions">
+        <button class="btn primary" type="button" onclick="downloadApk(); closeMobileMenu();">Get the App</button>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main>
+
+      <!-- HERO -->
+      <section id="home" class="hero">
+        <div class="hero-media">
+          <img src="/IMG/AFhome.jpg" alt="AcademeForge — India's all-in-one learning ecosystem for students" width="1200" height="800" loading="eager" decoding="async" fetchpriority="high" />
+          <div class="hero-overlay"></div>
+        </div>
+        <div class="cw hero-grid">
+          <div class="reveal">
+            <span class="eyebrow">India's all-in-one learning ecosystem</span>
+            <h1 class="hero-title">Study, learn with AI,<br>get certified — all in one place.</h1>
+            <p class="hero-text">
+              AcademeForge brings text-based <strong>Explore</strong> courses with instant certificates, video-based <strong>LearnSpace</strong> programs, the <strong>AF ProGuide</strong> AI mentor, gamified quizzes &amp; XP in <strong>AF Test Arena</strong>, the <strong>Scholars Test (AST)</strong> examination portal, a student <strong>Community</strong>, and free companion apps — Timezy, Zenopulsky, and Capacity.
+            </p>
+            <div class="hero-actions">
+              <button class="btn primary" type="button" onclick="info('Our Vision', TEXT.vision)">Discover Our Vision</button>
+              <a class="btn secondary" href="#explore">Explore Courses</a>
+              <button class="btn darkbtn" type="button" onclick="downloadApk()">Get the App</button>
+            </div>
+            <div class="stats">
+              <div class="glass stat"><b>2024</b><p>Founded</p></div>
+              <div class="glass stat"><b>1,000+</b><p>Students Reached</p></div>
+              <div class="glass stat"><b id="apkCount">0+</b><p>App Downloads</p></div>
+              <div class="glass stat"><b id="visitCount">0+</b><p>Website Visits</p></div>
+            </div>
+          </div>
+          <div></div>
+        </div>
+      </section>
+
+      <!-- SKILL MARQUEE -->
+      <section class="marquee-wrap" aria-hidden="true">
+        <div class="marquee-track">
+          <div class="marquee-group">
+            <span>Creative Design</span><span>Freelancing</span><span>AI Productivity</span><span>Video Editing</span><span>Coding Logic</span><span>Portfolio Labs</span><span>Scholars Test</span><span>Community Learning</span><span>Digital Confidence</span>
+          </div>
+          <div class="marquee-group" aria-hidden="true">
+            <span>Creative Design</span><span>Freelancing</span><span>AI Productivity</span><span>Video Editing</span><span>Coding Logic</span><span>Portfolio Labs</span><span>Scholars Test</span><span>Community Learning</span><span>Digital Confidence</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABOUT -->
+      <section id="about" class="section">
+        <div class="cx grid about-grid">
+          <div class="reveal">
+            <span class="eyebrow">About AcademeForge</span>
+            <h2 class="section-title">Built for the whole student.</h2>
+            <p class="section-text">
+              AcademeForge began in January 2024 as a Telegram community for Class 10 students — a space to solve doubts, take quizzes, and support each other. Today it is a practical learning ecosystem where students study, track progress, test knowledge, connect with peers, and manage their time. Affordable courses, an AI mentor, gamification, and productivity apps — all in one place.
+            </p>
+            <div class="hero-actions">
+              <button class="btn primary" type="button" onclick="info('Our Story', TEXT.about)">Our Story</button>
+              <a class="btn secondary" href="https://help.academeforge.in" target="_blank" rel="noopener noreferrer">Chat with AI</a>
+            </div>
+          </div>
+        </div>
+        <div class="cx" style="margin-top:48px;">
+          <div class="grid feature-grid">
+            <div class="glass card reveal">
+              <b class="num">01</b>
+              <h3>Explore &amp; LearnSpace</h3>
+              <p>Text-based courses with instant certificates, plus structured video lecture programs in 5 subject areas.</p>
+            </div>
+            <div class="glass card reveal">
+              <b class="num">02</b>
+              <h3>AF ProGuide AI Mentor</h3>
+              <p>Built-in AI running AF 2.4, Dev 1.3, and Tapri 7.9 — for coding, portfolios, interviews, and career guidance.</p>
+            </div>
+            <div class="glass card reveal">
+              <b class="num">03</b>
+              <h3>AF Test Arena &amp; AST</h3>
+              <p>XP points, levels, win streaks, global leaderboards, and the AcademeForge Scholars Test examination portal.</p>
+            </div>
+            <div class="glass card reveal">
+              <b class="num">04</b>
+              <h3>Community &amp; Companion Apps</h3>
+              <p>In-app student feed plus free apps Timezy, Zenopulsky, and Capacity — beyond the classroom.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- EXPLORE -->
+      <section id="explore" class="section section-alt">
+        <div class="cx">
+          <div class="section-head center reveal">
+            <span class="eyebrow">Explore · Text-Based Courses</span>
+            <h2 class="section-title">Explore Courses — Instant Certificates</h2>
+            <p class="section-text">
+              All Explore lessons are text-based — no audio or video required. Genuinely inclusive, especially for students who prefer reading over watching. Complete a course and a certificate is issued instantly. Progress and certificates are tracked in your personal Dashboard inside the AcademeForge app.
+            </p>
+          </div>
+          <div class="grid program-grid">
+            <article class="glass card reveal">
+              <div class="card-top">
+                <span class="num">01</span><span class="badge">Instant Certificate</span>
+              </div>
+              <h3>Creative &amp; Graphic Design Mastery</h3>
+              <p>Design fundamentals, layout, poster creation, thumbnails, banners, typography, branding, and visual communication.</p>
+            </article>
+            <article class="glass card reveal">
+              <div class="card-top">
+                <span class="num">02</span><span class="badge">Instant Certificate</span>
+              </div>
+              <h3>Video &amp; Media Editing Mastery</h3>
+              <p>Professional editing workflows, short-form content, storytelling, audio sync, captions, and digital media production.</p>
+            </article>
+            <article class="glass card reveal">
+              <div class="card-top">
+                <span class="num">03</span><span class="badge">Instant Certificate</span>
+              </div>
+              <h3>AI Coding &amp; Logic Foundation</h3>
+              <p>Coding logic, problem-solving, AI fundamentals, prompt thinking, and beginner-friendly programming concepts.</p>
+            </article>
+            <article class="glass card reveal">
+  <div class="card-top">
+    <span class="num">04</span><span class="badge">Instant Certificate</span>
+  </div>
+  <h3>Cybersecurity &amp; Digital Safety Essentials</h3>
+  <p>Learn online safety, password management, phishing awareness, digital privacy, cyber threats, and essential cybersecurity best practices.</p>
+</article>
+            <article class="glass card reveal">
+              <div class="card-top">
+                <span class="num">05</span><span class="badge">Instant Certificate</span>
+              </div>
+              <h3>Freelancing &amp; Monetization Roadmap</h3>
+              <p>Online earning, client communication, service packaging, pricing basics, and digital skill monetization.</p>
+            </article>
+            <article class="glass card reveal">
+              <div class="card-top">
+                <span class="num">06</span><span class="badge">Instant Certificate</span>
+              </div>
+              <h3>AI &amp; Prompt Engineering</h3>
+              <p>AI tools, prompt design, structured AI workflows, content automation, and professional generative AI use cases.</p>
+            </article>
+          </div>
+          <div class="grid action-grid three">
+            <a class="btn primary" href="https://help.academeforge.in" target="_blank" rel="noopener noreferrer">Ask AI — Learn More</a>
+            <a class="btn secondary" href="student-app-preview/">Student Dashboard</a>
+            <a class="btn secondary" href="/verify-Certificate/">Verify Certificate</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- LEARNSPACE -->
+      <section id="learnspace" class="section">
+        <div class="cx">
+          <div class="section-head center reveal">
+            <span class="eyebrow">LearnSpace · Video Programs</span>
+            <h2 class="section-title">LearnSpace Video Programs</h2>
+            <p class="section-text">
+              LearnSpace is AcademeForge's video lecture library, available under the Programs tab. Structured, instructor-led lessons you can progress through at your own pace. Fees and start dates are to be announced.
+            </p>
+          </div>
+          <div class="grid program-grid">
+            <article class="glass card reveal">
+              <div class="card-top">
+                <span class="num">01</span><span class="badge">TBA</span>
+              </div>
+              <h3>Freelancing, Client Work &amp; Digital Monetization</h3>
+              <p>Online earning, client communication, service packaging, pricing, and digital skill monetization.</p>
+              <button class="btn secondary btn-sm" type="button" style="margin-top:16px;" onclick="course('Freelancing, Client Work & Digital Monetization', 'To be announced', 'To be announced', 'Online earning, client communication, service packaging, pricing basics, and digital skill monetization.', 'Structured, instructor-led video lessons in LearnSpace under the Programs tab.')">Learn More</button>
+            </article>
+            <article class="glass card reveal">
+              <div class="card-top">
+                <span class="num">02</span><span class="badge">TBA</span>
+              </div>
+              <h3>AI &amp; Prompt Engineering</h3>
+              <p>AI tools, prompt design, structured AI workflows, content automation, and professional generative AI use cases.</p>
+              <button class="btn secondary btn-sm" type="button" style="margin-top:16px;" onclick="course('AI & Prompt Engineering', 'To be announced', 'To be announced', 'AI tools, prompt design, structured AI workflows, content automation, productivity systems, and professional generative AI use cases.', 'Structured, instructor-led video lessons in LearnSpace.')">Learn More</button>
+            </article>
+            <article class="glass card reveal">
+  <div class="card-top">
+    <span class="num">03</span><span class="badge">TBA</span>
+  </div>
+  <h3>Cybersecurity &amp; Ethical Hacking Fundamentals</h3>
+  <p>Learn digital security, ethical hacking basics, network protection, cyber threats, password security, and practical defensive techniques.</p>
+  <button class="btn secondary btn-sm" type="button" style="margin-top:16px;" onclick="course('Cybersecurity & Ethical Hacking Fundamentals', 'To be announced', 'To be announced', 'Cybersecurity essentials, ethical hacking concepts, network security, digital privacy, cyber threats, password security, and practical defensive techniques for beginners.', 'Structured, instructor-led video lessons in LearnSpace under the Programs tab.')">Learn More</button>
+</article>
+            <article class="glass card reveal">
+              <div class="card-top">
+                <span class="num">04</span><span class="badge">TBA</span>
+              </div>
+              <h3>Video Editing &amp; Digital Media Production</h3>
+              <p>Professional video editing, short-form content creation, storytelling, audio sync, captions, and media workflows.</p>
+              <button class="btn secondary btn-sm" type="button" style="margin-top:16px;" onclick="course('Video Editing & Digital Media Production', 'To be announced', 'To be announced', 'Professional video editing, short-form content, storytelling, audio sync, captions, and digital media workflows.', 'Structured, instructor-led video lessons in LearnSpace.')">Learn More</button>
+            </article>
+            <article class="glass card reveal">
+              <div class="card-top">
+                <span class="num">05</span><span class="badge">TBA</span>
+              </div>
+              <h3>Creative Graphic Design &amp; Brand Visuals</h3>
+              <p>Graphic design fundamentals, poster creation, thumbnails, banners, typography, branding, and visual communication.</p>
+              <button class="btn secondary btn-sm" type="button" style="margin-top:16px;" onclick="course('Creative Graphic Design & Brand Visuals', 'To be announced', 'To be announced', 'Graphic design fundamentals, poster creation, thumbnails, banners, typography, branding, and visual communication.', 'Structured, instructor-led video lessons in LearnSpace.')">Learn More</button>
+            </article>
+            <article class="glass card reveal">
+              <div class="card-top">
+                <span class="num">06</span><span class="badge">TBA</span>
+              </div>
+              <h3>AI Coding &amp; Logic Foundation</h3>
+              <p>Coding logic, problem-solving, AI fundamentals, prompt thinking, and beginner-friendly programming concepts.</p>
+              <button class="btn secondary btn-sm" type="button" style="margin-top:16px;" onclick="course('AI Coding & Logic Foundation', 'To be announced', 'To be announced', 'Coding logic, problem-solving, AI fundamentals, prompt thinking, and beginner-friendly programming.', 'Structured, instructor-led video lessons in LearnSpace.')">Learn More</button>
+            </article>
+          </div>
+          <div class="grid action-grid three">
+            <a class="btn primary" href="https://help.academeforge.in" target="_blank" rel="noopener noreferrer">Compare Programs</a>
+            <a class="btn secondary" href="https://help.academeforge.in" target="_blank" rel="noopener noreferrer">Find Your Program</a>
+            <a class="btn secondary" href="#explore">Back to Explore</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- AF PROGUIDE -->
+      <section id="proguide" class="section section-alt">
+        <div class="cx">
+          <div class="section-head center reveal">
+            <span class="eyebrow">AF ProGuide · AI Student Mentor</span>
+            <h2 class="section-title">AF ProGuide — Your AI Mentor</h2>
+            <p class="section-text">
+              AF ProGuide is AcademeForge's built-in AI mentor. It runs multiple AI model versions — <strong>AF 2.4</strong>, <strong>Dev 1.3</strong>, and <strong>Tapri 7.9</strong> — and helps students with learning to code (Python and more), building a portfolio, preparing for job interviews, and choosing a tech career. A free tier is available — no payment needed to start.
+            </p>
+          </div>
+          <div class="grid feature-grid reveal" style="margin-top:36px;">
+            <div class="glass card">
+              <b class="num">01</b>
+              <h3>Learn to Code</h3>
+              <p>Ask anything about Python, coding logic, debugging, and building your first projects step by step.</p>
+            </div>
+            <div class="glass card">
+              <b class="num">02</b>
+              <h3>Build a Portfolio</h3>
+              <p>Get guidance on what to build, how to present your work, and what skills to highlight for employers.</p>
+            </div>
+            <div class="glass card">
+              <b class="num">03</b>
+              <h3>Interview Prep</h3>
+              <p>Practice common interview questions, get feedback on your answers, and understand what recruiters look for.</p>
+            </div>
+            <div class="glass card">
+              <b class="num">04</b>
+              <h3>Career Direction</h3>
+              <p>Confused about which tech path to take? AF ProGuide maps out a realistic roadmap for your goals.</p>
+            </div>
+          </div>
+          <!-- AI Portal CTA — opens ai.academeforge.in in new tab -->
+          <div class="ai-portal-cta reveal">
+            <div class="ai-portal-inner glass">
+              <div class="ai-portal-content">
+                <div class="ai-portal-icon">AI</div>
+                <div>
+                  <h3 class="ai-portal-title">AF ProGuide — AcademeForge AI</h3>
+                  <p class="ai-portal-desc">Your AI student mentor. Available 24/7 to help with coding, learning, career, and more. Runs on AF 2.4, Dev 1.3, and Tapri 7.9.</p>
+                </div>
+              </div>
+              <a class="btn primary" href="https://help.academeforge.in" target="_blank" rel="noopener noreferrer">Open AF ProGuide AI &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- AF TEST ARENA -->
+      <section id="testarena" class="section">
+        <div class="cx">
+          <div class="section-head center reveal">
+            <span class="eyebrow">AF Test Arena · Gamified Learning</span>
+            <h2 class="section-title">AF Test Arena — Gamified Learning</h2>
+            <p class="section-text">
+              AF Test Arena turns studying into a game. Take timed quizzes on AI, Generative AI, Machine Learning, Digital Literacy, Computer Basics, and Communication Skills. Earn XP, level up, build streaks, and climb the global leaderboard. Brain games like Sudoku keep you sharp between study sessions.
+            </p>
+          </div>
+          <div class="grid program-grid">
+            <div class="glass card reveal">
+              <b class="num">XP</b>
+              <h3>XP Points System</h3>
+              <p>Earn experience points for every correct answer. XP accumulates across all quizzes, games, and daily challenges.</p>
+            </div>
+            <div class="glass card reveal">
+              <b class="num">LV</b>
+              <h3>Levels &amp; Ranks</h3>
+              <p>Climb through ranks as your XP grows. Unlock higher tiers as you progress from beginner to advanced.</p>
+            </div>
+            <div class="glass card reveal">
+              <b class="num" style="font-size:1.4rem;">🔥</b>
+              <h3>Win Streaks &amp; Challenges</h3>
+              <p>Maintain daily win streaks and take on special challenges for extra rewards and recognition.</p>
+            </div>
+            <div class="glass card reveal">
+              <b class="num" style="font-size:1.4rem;">🌍</b>
+              <h3>Global Leaderboard</h3>
+              <p>A live leaderboard shows XP, wins, and streaks across all AcademeForge students. See how you rank worldwide.</p>
+            </div>
+            <div class="glass card reveal">
+              <b class="num" style="font-size:1.4rem;">🧠</b>
+              <h3>Brain Games</h3>
+              <p>Sudoku and other brain games are built into the Games section — keeping learning engaging and mentally sharp.</p>
+            </div>
+            <div class="glass card reveal">
+              <b class="num" style="font-size:1.4rem;">📅</b>
+              <h3>Daily Challenges</h3>
+              <p>New challenges every day keep the routine fresh. Log in daily to take on new questions and protect your streak.</p>
+            </div>
+          </div>
+          <div class="grid action-grid reveal" style="margin-top:36px;">
+            <a class="btn primary" href="student-app-preview/">Launch Arena</a>
+            <a class="btn secondary" href="https://help.academeforge.in" target="_blank" rel="noopener noreferrer">How It Works — Ask AI</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ACADEMEFORGE SCHOLARS TEST (AST) -->
+      <section id="scholars-test" class="section section-alt">
+        <div class="cx">
+          <div class="section-head center reveal">
+            <span class="eyebrow">AcademeForge Scholars Test · AST</span>
+            <h2 class="section-title">Scholars Test — Official Examination Portal</h2>
+            <p class="section-text">
+              The AcademeForge Scholars Test (AST) is an official examination platform for school students. Students register through their school, receive an official admit card with a unique Roll Number, and appear for the test through the dedicated AST portal. The examination is structured, school-code based, and designed to assess academic readiness across classes and tiers.
+            </p>
+          </div>
+
+          <!-- AST Feature Cards -->
+          <div class="grid program-grid">
+            <div class="glass card reveal">
+              <b class="num" style="font-size:1.1rem;">🎓</b>
+              <h3>Official Admit Card</h3>
+              <p>Every registered student receives an official AcademeForge Scholars Test admit card with a unique Roll Number (e.g., AST-2026-0001), class tier, and school code.</p>
+            </div>
+            <div class="glass card reveal">
+              <b class="num" style="font-size:1.1rem;">🏫</b>
+              <h3>School-Based Registration</h3>
+              <p>Students register through their school using a unique School Code. Registration is coordinated by the school administrator or authorised AcademeForge representative.</p>
+            </div>
+            <div class="glass card reveal">
+              <b class="num" style="font-size:1.1rem;">📊</b>
+              <h3>Class-Wise &amp; Tier-Based</h3>
+              <p>The AST is structured by class (e.g., Class VIII) and tier (Standard or Premium), ensuring the examination is appropriately calibrated for every student's level.</p>
+            </div>
+            <div class="glass card reveal">
+              <b class="num" style="font-size:1.1rem;">🔒</b>
+              <h3>Secure &amp; Official</h3>
+              <p>The AST portal is secure and accessible only to registered students with valid credentials. Impersonation and unauthorised access are strictly prohibited.</p>
+            </div>
+            <div class="glass card reveal">
+              <b class="num" style="font-size:1.1rem;">📄</b>
+              <h3>Results &amp; Recognition</h3>
+              <p>Results are published through official AcademeForge channels. Top performers receive recognition and merit acknowledgement from the platform.</p>
+            </div>
+            <div class="glass card reveal">
+              <b class="num" style="font-size:1.1rem;">📱</b>
+              <h3>Accessible on Any Device</h3>
+              <p>The AST portal is fully responsive and accessible on mobile, tablet, and desktop. No additional download is required — just a browser and valid login.</p>
+            </div>
+          </div>
+
+          <!-- AST Admit Card Preview -->
+          <div class="ast-admit-preview reveal">
+            <div class="ast-admit-card glass">
+              <div class="ast-admit-header">
+                <div>
+                  <p class="ast-admit-org">ACADEMEFORGE SCHOLARS TEST</p>
+                  <p class="ast-admit-label">OFFICIAL ADMIT CARD</p>
+                </div>
+                <span class="badge ast-official-badge">OFFICIAL</span>
+              </div>
+              <div class="ast-admit-body">
+                <div class="ast-admit-photo">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+                </div>
+                <div class="ast-admit-fields">
+                  <div class="ast-field">
+                    <span class="ast-field-label">ROLL NO.</span>
+                    <span class="ast-field-value">AST-2026-0001</span>
+                  </div>
+                  <div class="ast-field">
+                    <span class="ast-field-label">CLASS</span>
+                    <span class="ast-field-value">VIII · Premium</span>
+                  </div>
+                  <div class="ast-field">
+                    <span class="ast-field-label">SCHOOL CODE</span>
+                    <span class="ast-field-value ast-field-blur">●●●● ●●●</span>
+                  </div>
+                </div>
+              </div>
+              <div class="ast-barcode"></div>
+            </div>
+            <p class="ast-admit-note">Sample admit card — actual card is issued to registered students only.</p>
+          </div>
+
+          <!-- AST CTAs -->
+          <div class="grid action-grid three" style="margin-top:36px;">
+            <a class="btn primary" href="https://ast.academeforge.in" target="_blank" rel="noopener noreferrer">Open AST Portal &rarr;</a>
+            <a class="btn secondary" href="https://help.academeforge.in" target="_blank" rel="noopener noreferrer">Ask AI About AST</a>
+            <a class="btn secondary" href="mailto:academeforge@gmail.com">Contact for Registration</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- LEARNING HEATMAP -->
+      <section class="section">
+        <div class="cx grid about-grid">
+          <div class="reveal">
+            <span class="eyebrow">Learning Heatmap</span>
+            <h2 class="section-title">Track Your Learning Streak</h2>
+            <p class="section-text">
+              The Learning Heatmap is a visual streak tracker inside AcademeForge. Every day you study, your activity fills into a week-by-week grid. Miss a day and the streak resets to zero — a simple mechanic that builds real consistency over time. It is not about pressure; it is about showing up.
+            </p>
+            <div class="hero-actions">
+              <a class="btn primary" href="student-app-preview/">Student Dashboard</a>
+              <a class="btn secondary" href="https://help.academeforge.in" target="_blank" rel="noopener noreferrer">How It Works — Ask AI</a>
+            </div>
+          </div>
+          <div class="grid feature-grid">
+            <div class="glass card">
+              <b class="num" style="font-size:1.4rem;">📆</b>
+              <h3>Week-by-Week Grid</h3>
+              <p>Your daily activity is tracked in a visual grid — active days fill in, missed days stay empty.</p>
+            </div>
+            <div class="glass card">
+              <b class="num">0</b>
+              <h3>Miss = Reset</h3>
+              <p>Missing a single day resets the streak to zero. Simple. It builds genuine consistency, not workarounds.</p>
+            </div>
+            <div class="glass card">
+              <b class="num" style="font-size:1.4rem;">🏆</b>
+              <h3>Streak Milestones</h3>
+              <p>Longer streaks unlock recognition and visibility inside the platform. The longer you go, the more you stand out.</p>
+            </div>
+            <div class="glass card">
+              <b class="num" style="font-size:1.4rem;">📊</b>
+              <h3>Progress Visibility</h3>
+              <p>Your heatmap is visible in your student Dashboard — a daily reminder of how far you have come.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMMUNITY -->
+      <section id="community" class="section section-alt">
+        <div class="cx">
+          <div class="section-head center reveal">
+            <span class="eyebrow">Community · Student Network</span>
+            <h2 class="section-title">Student Community</h2>
+            <p class="section-text">
+              AcademeForge has a built-in Community feed — not a separate app, not just a Telegram link. Students post thoughts, questions, and updates in English and Hindi/Hinglish. Like and comment on posts, view stories from members, and follow the official AcademeForge account for platform announcements. Direct messaging is built in too.
+            </p>
+          </div>
+          <div class="grid program-grid">
+            <div class="glass card reveal">
+              <b class="num" style="font-size:1.4rem;">📝</b>
+              <h3>Post &amp; Share</h3>
+              <p>Share thoughts, questions, study wins, or anything on your mind. Posts support English and Hindi/Hinglish naturally.</p>
+            </div>
+            <div class="glass card reveal">
+              <b class="num" style="font-size:1.4rem;">❤️</b>
+              <h3>Like &amp; Comment</h3>
+              <p>Engage with other students by liking and commenting on posts. Build genuine connections with your learning peers.</p>
+            </div>
+            <div class="glass card reveal">
+              <b class="num" style="font-size:1.4rem;">💬</b>
+              <h3>Direct Chats</h3>
+              <p>The Chats tab gives you direct messaging with other students — without leaving the AcademeForge app.</p>
+            </div>
+            <div class="glass card reveal">
+              <b class="num" style="font-size:1.4rem;">📖</b>
+              <h3>Stories</h3>
+              <p>View stories from other community members — short updates and highlights from across the student network.</p>
+            </div>
+            <div class="glass card reveal">
+  <b class="num" style="font-size:1.4rem;">👥</b>
+  <h3>Follow &amp; Connect</h3>
+  <p>Follow fellow students to stay updated with their posts, stories, and learning journey. Build your own network inside AcademeForge.</p>
+</div>
+            <div class="glass card reveal">
+              <b class="num" style="font-size:1.4rem;">📢</b>
+              <h3>Official Announcements</h3>
+              <p>Follow the official AcademeForge account inside Community for platform updates, new courses, and important news.</p>
+            </div>
+          </div>
+          <div class="grid action-grid reveal" style="margin-top:36px;">
+            <a class="btn primary" href="student-app-preview/">Join Now</a>
+            <a class="btn secondary" target="_blank" rel="noopener noreferrer" href="https://t.me/+46ubatq-EV0wNjY1">Join Telegram</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMPANION APPS -->
+      <section id="apps" class="section">
+        <div class="cx">
+          <div class="section-head center reveal">
+            <span class="eyebrow">Companion Apps · Beyond the Classroom</span>
+            <h2 class="section-title">Beyond the Classroom</h2>
+            <p class="section-text">
+              AcademeForge is not just courses. Timezy helps you manage time. Zenopulsky publishes honest journalism. Capacity helps you check in emotionally with a small trusted circle. None of them require payment. They are part of the ecosystem because student wellbeing and productivity matter as much as the curriculum.
+            </p>
+          </div>
+          <div class="grid program-grid">
+            <article class="glass card reveal">
+              <div class="card-top" style="margin-bottom:14px;">
+                <span class="eyebrow" style="font-size:.65rem;">Timezy</span>
+                <span class="badge">100% Free</span>
+              </div>
+              <h3>Timezy — Time Management</h3>
+              <p>A standalone productivity web app. Add tasks with title, description, priority level (High / Medium / Low), and due date. Plan your week visually — a calendar highlights busy and free days at a glance. A live progress ring fills as tasks are marked done. Supports dark and light mode. No account or download needed.</p>
+            </article>
+            <article class="glass card reveal">
+              <div class="card-top" style="margin-bottom:14px;">
+                <span class="eyebrow" style="font-size:.65rem;">Zenopulsky</span>
+                <span class="badge">Independent</span>
+              </div>
+              <h3>Zenopulsky — Independent Journalism</h3>
+              <p>AcademeForge's content publishing arm. Positioned as "Independent · Unfiltered · Necessary," Zenopulsky publishes long-form articles and journalism on Social Justice, Mental Health, Labour Rights &amp; Gig Economy, Technology, Healthcare, and issues specific to India.</p>
+              <a class="btn secondary btn-sm" href="https://zenopulsky.academeforge.in" target="_blank" rel="noopener noreferrer" style="margin-top:16px;display:inline-flex;">Visit Zenopulsky Portal &rarr;</a>
+            </article>
+            <article class="glass card reveal">
+              <div class="card-top" style="margin-bottom:14px;">
+                <span class="eyebrow" style="font-size:.65rem;">Capacity</span>
+                <span class="badge">Private</span>
+              </div>
+              <h3>Capacity — Private Wellbeing</h3>
+              <p>A quiet, intentionally small app for sharing how you are doing with a trusted circle. Set your emotional state — Good, Okay, Stretched, Need Space, or Off the Grid — and your close group sees it. Includes a private group chat. Completely separate from the Community feed. Low pressure, honest, and private by design.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOUNDER -->
+      <section id="founder" class="section section-alt">
+        <div class="cx grid founder-grid">
+          <div class="reveal">
+            <span class="eyebrow">Founder Profile</span>
+            <h2 class="section-title">Meet the Founder</h2>
+            <p class="section-text">
+              AcademeForge is led by Devraj Kumar — a student who started the platform because he understood firsthand how students struggle with outdated systems, lack of practical exposure, and confusion around modern digital skills. The long-term goal: impact 100,000+ students with practical, AI-ready, beginner-friendly learning.
+            </p>
+            <div class="grid feature-grid" style="margin-top:28px;">
+              <div class="glass card">
+                <p class="kv-label">Founder</p>
+                <h3 style="margin-top:8px;">Devraj Kumar</h3>
+              </div>
+              <div class="glass card">
+                <p class="kv-label">Mission</p>
+                <h3 style="margin-top:8px;">100,000+ Students</h3>
+              </div>
+            </div>
+            <div class="hero-actions">
+              <button class="btn primary" type="button" onclick="info('Founder Profile', TEXT.founder)">View Profile</button>
+              <a class="btn secondary" href="https://help.academeforge.in" target="_blank" rel="noopener noreferrer">Chat with AI</a>
+            </div>
+          </div>
+          <div class="glass founder-card reveal">
+            <div class="founder-inner">
+              <div class="founder-top">
+                <div>
+                  <span class="eyebrow">Founder &amp; Builder</span>
+                  <h3 class="section-title" style="font-size:clamp(2.4rem,4.4vw,4rem);">Devraj Kumar</h3>
+                  <p style="margin:8px 0 0;font-weight:900;color:var(--brand);">Founder, AcademeForge</p>
+                  <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
+                    <a href="https://www.linkedin.com/company/academeforge/" target="_blank" rel="noopener noreferrer" style="font-size:13px;color:var(--brand);font-weight:800;">LinkedIn</a>
+                    <a href="https://www.instagram.com/academeforge.in" target="_blank" rel="noopener noreferrer" style="font-size:13px;color:var(--brand);font-weight:800;">Instagram</a>
+                    <a href="https://youtube.com/@academeforgepro" target="_blank" rel="noopener noreferrer" style="font-size:13px;color:var(--brand);font-weight:800;">YouTube</a>
+                  </div>
+                </div>
+                <div class="avatar">
+                  <img src="/IMG/founder-profile.jpeg" alt="Devraj Kumar — Founder of AcademeForge" class="avatar-img" width="100" height="100" loading="lazy" decoding="async" />
+                </div>
+              </div>
+              <div class="quote">"Students should not wait for opportunities. They should learn how to create them."</div>
+              <div class="grid mini-grid">
+                <div class="card" style="background:var(--surface2);border:1px solid var(--line);">
+                  <b class="num">01</b>
+                  <h3>Student Empathy</h3>
+                  <p>Built from real student experience and genuine learning gaps — not investor-driven assumptions.</p>
+                </div>
+                <div class="card" style="background:var(--surface2);border:1px solid var(--line);">
+                  <b class="num">02</b>
+                  <h3>Builder Mindset</h3>
+                  <p>Focus on creating systems, real projects, and measurable outcomes — not just completing courses.</p>
+                </div>
+                <div class="card" style="background:var(--surface2);border:1px solid var(--line);">
+                  <b class="num">03</b>
+                  <h3>AI-First Learning</h3>
+                  <p>Using AI responsibly to accelerate student growth and make guidance available to everyone.</p>
+                </div>
+              </div>
+              <button class="btn primary" type="button" style="width:100%;margin-top:24px;" onclick="info('Founder Profile', TEXT.founder)">View Full Profile</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- POLICIES -->
+      <section id="policies" class="section">
+        <div class="cx">
+          <div class="section-head center reveal">
+            <span class="eyebrow">Trust, Safety &amp; Policies</span>
+            <h2 class="section-title">Policies &amp; Trust</h2>
+            <p class="section-text">Clear, honest policies for students and parents. We are committed to transparent communication about how the platform works, what data is collected, and how students are protected.</p>
+          </div>
+          <div class="grid policy-grid">
+            <article class="glass card reveal">
+              <h3>Privacy Policy</h3>
+              <p>Explains what student data may be collected, why it is used, and how platform improvement data is handled. Student data is not sold to advertisers.</p>
+              <button class="btn secondary btn-sm" type="button" style="margin-top:16px;" onclick="info('Privacy Policy', TEXT.privacy)">Read More</button>
+            </article>
+            <article class="glass card reveal">
+              <h3>Student Data Usage</h3>
+              <p>Data is used for learning access, support, batch allocation, certificate verification, safety monitoring, analytics, and platform improvement — nothing more.</p>
+              <button class="btn secondary btn-sm" type="button" style="margin-top:16px;" onclick="info('Student Data Usage', TEXT.data)">Read More</button>
+            </article>
+            <article class="glass card reveal">
+              <h3>Community Policy</h3>
+              <p>Defines respectful behavior, anti-spam rules, safe learning conduct, and student community expectations inside the platform.</p>
+              <button class="btn secondary btn-sm" type="button" style="margin-top:16px;" onclick="info('Community Policy', TEXT.community)">Read More</button>
+            </article>
+            <article class="glass card reveal">
+              <h3>Terms &amp; Conditions</h3>
+              <p>General website, app, learning content, support, and platform usage terms. Covers what students agree to when using AcademeForge services.</p>
+              <button class="btn secondary btn-sm" type="button" style="margin-top:16px;" onclick="info('Terms & Conditions', TEXT.terms)">Read More</button>
+            </article>
+            <article class="glass card reveal">
+              <h3>Safety &amp; Support</h3>
+              <p>Explains help desk routes, student support, how to report issues, and responsible platform use. Students should only use official AcademeForge links.</p>
+              <button class="btn secondary btn-sm" type="button" style="margin-top:16px;" onclick="info('Safety & Support', TEXT.safety)">Read More</button>
+            </article>
+            <article class="glass card reveal">
+              <h3>Workplace Policy</h3>
+              <p>Governs how AcademeForge team members work, collaborate, communicate, and uphold platform values internally.</p>
+              <a class="btn secondary btn-sm" href="/WorkplacePolicy/" style="margin-top:16px;display:inline-flex;">Read More</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- HELP DESK -->
+      <section id="help" class="section section-alt">
+        <div class="cx">
+          <div class="section-head center reveal">
+            <span class="eyebrow">Help &amp; Support</span>
+            <h2 class="section-title">How Can We Help?</h2>
+            <p class="section-text">
+              WhatsApp and phone calls are not available right now. Use the AcademeForge AI Help Desk for immediate answers on website features, programs, policies, and support. For issues requiring human review, submit the form below or email us — response time is 24–48 hours on working days.
+            </p>
+          </div>
+          <div class="grid about-grid" style="align-items:start;gap:36px;">
+            <!-- Quick Help Cards -->
+            <div class="grid feature-grid">
+              <button class="glass card reveal" type="button" style="text-align:left;cursor:pointer;" onclick="window.open('https://help.academeforge.in','_blank')">
+                <b class="num">01</b>
+                <h3>AI Support</h3>
+                <p>Ask AI about login, batch, certificate, program, or platform-related help — instant answers available 24/7.</p>
+              </button>
+              <button class="glass card reveal" type="button" style="text-align:left;cursor:pointer;" onclick="window.open('https://help.academeforge.in','_blank')">
+                <b class="num">02</b>
+                <h3>Settings &amp; Privacy</h3>
+                <p>Questions about profile, notifications, account, and privacy settings — AI can guide you through them.</p>
+              </button>
+              <button class="glass card reveal" type="button" style="text-align:left;cursor:pointer;" onclick="window.open('https://help.academeforge.in','_blank')">
+                <b class="num">03</b>
+                <h3>Parent Support</h3>
+                <p>For guardians who want to know about admission, safety, program structure, or platform trust signals.</p>
+              </button>
+              <button class="glass card reveal" type="button" style="text-align:left;cursor:pointer;" onclick="window.open('https://help.academeforge.in','_blank')">
+                <b class="num">04</b>
+                <h3>Report an Issue</h3>
+                <p>Report broken links, app issues, wrong information, or support delays through the Bug Center inside the app.</p>
+              </button>
+              <div style="grid-column:1/-1;">
+                <div class="hero-actions">
+                  <a class="btn primary" href="https://help.academeforge.in" target="_blank" rel="noopener noreferrer">Open AI Help Desk &rarr;</a>
+                  <a class="btn secondary" href="mailto:academeforge@gmail.com">Email Us</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Need Help Form -->
+            <div class="glass card reveal" style="border-radius:30px;">
+              <h3 style="margin-bottom:6px;">Submit a Help Request</h3>
+              <p style="margin:0 0 22px;color:var(--soft);font-size:14px;line-height:1.6;">Fill the form below and our team will review it within 24–48 working hours.</p>
+              <form id="helpForm" class="af-form" novalidate>
+                <div class="form-group">
+                  <label class="form-label" for="helpName">Full Name <span class="form-required">*</span></label>
+                  <input class="form-input" type="text" id="helpName" name="name" placeholder="Your full name" required maxlength="100" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="helpEmail">Email Address <span class="form-required">*</span></label>
+                  <input class="form-input" type="email" id="helpEmail" name="email" placeholder="you@example.com" required maxlength="200" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="helpType">Request Type <span class="form-required">*</span></label>
+                  <select class="form-input" id="helpType" name="type" required>
+                    <option value="">— Select a type —</option>
+                    <option value="technical">Technical Issue</option>
+                    <option value="account">Account / Login</option>
+                    <option value="certificate">Certificate</option>
+                    <option value="course">Course / Curriculum</option>
+                    <option value="ast">Scholars Test (AST)</option>
+                    <option value="payment">Payment / Fees</option>
+                    <option value="parent">Parent Enquiry</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="helpSubject">Subject <span class="form-required">*</span></label>
+                  <input class="form-input" type="text" id="helpSubject" name="subject" placeholder="Brief subject of your request" required maxlength="200" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="helpMessage">Message <span class="form-required">*</span></label>
+                  <textarea class="form-input form-textarea" id="helpMessage" name="message" placeholder="Describe your issue or question in detail..." required maxlength="2000" rows="5"></textarea>
+                </div>
+                <div id="helpFormStatus" class="form-status" aria-live="polite"></div>
+                <button class="btn primary" type="submit" id="helpSubmitBtn" style="width:100%;margin-top:4px;">
+                  <span class="btn-label">Submit Help Request</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="section">
+        <div class="cx" style="max-width:1060px;margin-inline:auto;">
+          <div class="section-head center reveal">
+            <span class="eyebrow">FAQ</span>
+            <h2 class="section-title">Frequently Asked Questions</h2>
+          </div>
+          <div class="faq-list">
+            <div class="faq glass reveal">
+              <div class="faq-q"><h3>What exactly is AcademeForge?</h3><span class="plus">+</span></div>
+              <div class="ans"><p>AcademeForge is a growing Indian EdTech platform combining text-based Explore courses with instant certificates, LearnSpace video programs, the AF ProGuide AI mentor, gamified AF Test Arena quizzes with XP and global leaderboards, the AcademeForge Scholars Test (AST) examination portal, a Learning Heatmap for streak tracking, an in-app student Community, and free companion apps Timezy, Zenopulsky, and Capacity.</p></div>
+            </div>
+            <div class="faq glass reveal">
+              <div class="faq-q"><h3>Do Explore courses give real certificates?</h3><span class="plus">+</span></div>
+              <div class="ans"><p>Yes. All Explore text-based courses issue a completion certificate instantly. Certificates are tracked in your personal Dashboard inside the AcademeForge app and can be verified at /verify-Certificate/.</p></div>
+            </div>
+            <div class="faq glass reveal">
+              <div class="faq-q"><h3>Is AcademeForge beginner friendly?</h3><span class="plus">+</span></div>
+              <div class="ans"><p>Absolutely. Both Explore courses and LearnSpace programs are designed for beginners and students who want structure and practical guidance. AF ProGuide AI can also answer basic questions at any level, any time.</p></div>
+            </div>
+            <div class="faq glass reveal">
+              <div class="faq-q"><h3>What is AF ProGuide and is it free?</h3><span class="plus">+</span></div>
+              <div class="ans"><p>AF ProGuide is AcademeForge's built-in AI student mentor. It runs multiple AI model versions — AF 2.4, Dev 1.3, and Tapri 7.9 — and helps students with learning to code, building a portfolio, preparing for interviews, and choosing a tech career. A free tier is available. Access it at <a href="https://help.academeforge.in" target="_blank" rel="noopener noreferrer" style="color:var(--brand);">ai.academeforge.in</a>.</p></div>
+            </div>
+            <div class="faq glass reveal">
+              <div class="faq-q"><h3>What is the AcademeForge Scholars Test (AST)?</h3><span class="plus">+</span></div>
+              <div class="ans"><p>The AcademeForge Scholars Test (AST) is an official examination platform for school students. Students register through their school using a unique School Code, receive an official admit card with a unique Roll Number, and appear for the test at <a href="https://ast.academeforge.in" target="_blank" rel="noopener noreferrer" style="color:var(--brand);">ast.academeforge.in</a>.</p></div>
+            </div>
+            <div class="faq glass reveal">
+              <div class="faq-q"><h3>What is Timezy and does it cost anything?</h3><span class="plus">+</span></div>
+              <div class="ans"><p>Timezy is a 100% free browser-based productivity app by AcademeForge. No account or download required. Add tasks, plan your week visually, and track completion with a live progress ring. Supports dark and light mode.</p></div>
+            </div>
+            <div class="faq glass reveal">
+              <div class="faq-q"><h3>When are LearnSpace fees and start dates announced?</h3><span class="plus">+</span></div>
+              <div class="ans"><p>LearnSpace video program fees and start dates are yet to be announced. They will be published once the platform structure, admission policies, and batch design are finalized. Watch the Community and Telegram group for official announcements.</p></div>
+            </div>
+            <div class="faq glass reveal">
+              <div class="faq-q"><h3>How is student data used?</h3><span class="plus">+</span></div>
+              <div class="ans"><p>Student data may be used for account access, login support, batch allocation, class communication, assignment tracking, certificate verification, support tickets, safety monitoring, analytics, and platform improvement. Data is not sold to advertisers.</p></div>
+            </div>
+          </div>
+          <div style="margin-top:32px;text-align:center;">
+            <a class="btn primary" href="https://help.academeforge.in" target="_blank" rel="noopener noreferrer">Ask a Question — AI Help Desk</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- SUGGESTION FORM -->
+      <section id="suggest" class="section section-alt">
+        <div class="cx" style="max-width:780px;margin-inline:auto;">
+          <div class="section-head center reveal">
+            <span class="eyebrow">We're Listening</span>
+            <h2 class="section-title">Send Us a Suggestion</h2>
+            <p class="section-text">
+              Have an idea to make AcademeForge better? We actively review every suggestion our students and visitors send. Your input directly shapes the platform. Tell us what you think.
+            </p>
+          </div>
+          <div class="glass card reveal" style="border-radius:32px;padding:clamp(24px,4vw,44px);margin-top:36px;">
+            <form id="suggestForm" class="af-form" novalidate>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="suggestName">Your Name <span class="form-optional">(optional)</span></label>
+                  <input class="form-input" type="text" id="suggestName" name="name" placeholder="Your name or nickname" maxlength="100" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="suggestEmail">Email Address <span class="form-optional">(optional)</span></label>
+                  <input class="form-input" type="email" id="suggestEmail" name="email" placeholder="For follow-up, if you want" maxlength="200" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="suggestCategory">Category <span class="form-required">*</span></label>
+                <select class="form-input" id="suggestCategory" name="category" required>
+                  <option value="">— What is your suggestion about? —</option>
+                  <option value="courses">Courses &amp; Curriculum</option>
+                  <option value="ai">AF ProGuide AI</option>
+                  <option value="testarena">AF Test Arena</option>
+                  <option value="ast">Scholars Test (AST)</option>
+                  <option value="apps">Companion Apps (Timezy, Zenopulsky, Capacity)</option>
+                  <option value="community">Community</option>
+                  <option value="website">Website &amp; Design</option>
+                  <option value="support">Support &amp; Help Desk</option>
+                  <option value="other">Other / General</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="suggestSubject">Suggestion Title <span class="form-required">*</span></label>
+                <input class="form-input" type="text" id="suggestSubject" name="subject" placeholder="Give your suggestion a short title" required maxlength="200" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="suggestText">Your Suggestion <span class="form-required">*</span></label>
+                <textarea class="form-input form-textarea" id="suggestText" name="suggestion" placeholder="Describe your idea in detail. What should we add, change, or improve? Why would it help students?" required maxlength="3000" rows="6"></textarea>
+              </div>
+              <div id="suggestFormStatus" class="form-status" aria-live="polite"></div>
+              <div class="form-submit-row">
+                <p class="form-privacy-note">Your suggestion is reviewed by the AcademeForge team. We do not share personal details with third parties.</p>
+                <button class="btn primary" type="submit" id="suggestSubmitBtn">
+                  <span class="btn-label">Submit Suggestion</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" class="section">
+        <div class="cx">
+          <div class="glass contact-box reveal">
+            <div class="grid contact-grid">
+              <div>
+                <span class="eyebrow">Contact</span>
+                <h2 class="section-title">Get in Touch</h2>
+                <p class="section-text">
+                  Use official routes for programs, student support, parent support, partnerships, and platform updates. The AI Help Desk is available on this website 24/7. For human review, email us — response time is 24–48 hours on working days.
+                </p>
+                <div class="hero-actions">
+                  <a class="btn primary" href="mailto:academeforge@gmail.com">Email Us</a>
+                  <a class="btn secondary" href="https://help.academeforge.in" target="_blank" rel="noopener noreferrer">AI Help Desk</a>
+                  <a class="btn secondary" href="mailto:academeforge@gmail.com">Partner With Us</a>
+                </div>
+              </div>
+              <div class="grid">
+                <div class="card" style="background:var(--surface2);border:1px solid var(--line);">
+                  <p class="kv-label">Location</p>
+                  <h3 style="margin-top:8px;">Patna, Bihar, India</h3>
+                </div>
+                <div class="card" style="background:var(--surface2);border:1px solid var(--line);">
+                  <p class="kv-label">Email</p>
+                  <h3 style="margin-top:8px;"><a href="mailto:academeforge@gmail.com">academeforge@gmail.com</a></h3>
+                </div>
+                <div class="card" style="background:var(--surface2);border:1px solid var(--line);">
+                  <p class="kv-label">AI Help Desk</p>
+                  <a href="https://help.academeforge.in" target="_blank" rel="noopener noreferrer" style="margin-top:8px;display:block;color:var(--brand);font-weight:900;font-size:1.05rem;">Open AI Help Desk &rarr;</a>
+                </div>
+                <div class="card" style="background:var(--surface2);border:1px solid var(--line);">
+                  <p class="kv-label">Scholars Test Portal</p>
+                  <a href="https://ast.academeforge.in" target="_blank" rel="noopener noreferrer" style="margin-top:8px;display:block;color:var(--brand);font-weight:900;font-size:1.05rem;">Open AST Portal &rarr;</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="cw grid footer-grid">
+        <div>
+          <div class="brand">
+            <span class="logo" style="width:44px;height:44px;">
+              <img src="/IMG/logo.png" alt="AcademeForge" class="brand-logo" width="44" height="44" loading="lazy" decoding="async" />
+            </span>
+            <div>
+              <b class="brand-title">AcademeForge</b>
+              <p class="brand-sub" style="margin:0;">Learning Beyond The Classroom</p>
+            </div>
+          </div>
+          <p style="margin-top:18px;max-width:420px;line-height:1.7;color:var(--soft);">
+            India's all-in-one learning ecosystem — courses, AI mentor, gamified quizzes, Scholars Test, community, and free productivity tools for students.
+          </p>
+          <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap;">
+            <a href="https://www.linkedin.com/company/academeforge/" target="_blank" rel="noopener noreferrer" style="font-size:13px;color:var(--soft);">LinkedIn</a>
+            <a href="https://www.instagram.com/academeforge.in" target="_blank" rel="noopener noreferrer" style="font-size:13px;color:var(--soft);">Instagram</a>
+            <a href="https://youtube.com/@academeforgepro" target="_blank" rel="noopener noreferrer" style="font-size:13px;color:var(--soft);">YouTube</a>
+            <a href="https://t.me/+46ubatq-EV0wNjY1" target="_blank" rel="noopener noreferrer" style="font-size:13px;color:var(--soft);">Telegram</a>
+          </div>
+        </div>
+        <div>
+          <h4>Platform</h4>
+          <div class="footer-links">
+            <a href="#explore">Explore Courses</a>
+            <a href="#learnspace">LearnSpace</a>
+            <a href="https://help.academeforge.in" target="_blank" rel="noopener noreferrer">AF ProGuide AI</a>
+            <a href="#testarena">AF Test Arena</a>
+            <a href="https://ast.academeforge.in" target="_blank" rel="noopener noreferrer">Scholars Test (AST)</a>
+            <a href="#community">Community</a>
+          </div>
+        </div>
+        <div>
+          <h4>Companion Apps</h4>
+          <div class="footer-links">
+            <a href="#apps">Timezy — Planner</a>
+            <a href="https://zenopulsky.academeforge.in" target="_blank" rel="noopener noreferrer">Zenopulsky — Journalism</a>
+            <a href="#apps">Capacity — Wellbeing</a>
+            <a href="student-app-preview/">Student Portal</a>
+          </div>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <div class="footer-links">
+            <a href="student-app-preview/">Student Portal</a>
+            <a href="/verify-Certificate/">Verify Certificate</a>
+            <a href="/join-team/">Join Team</a>
+            <a href="#suggest">Send Suggestion</a>
+            <a href="#help">Help &amp; Support</a>
+            <button type="button" onclick="info('Privacy Policy', TEXT.privacy)">Privacy Policy</button>
+            <button type="button" onclick="info('Terms & Conditions', TEXT.terms)">Terms of Service</button>
+            <button type="button" onclick="info('Safety & Support', TEXT.safety)">Safety &amp; Support</button>
+            <a href="/WorkplacePolicy/">Workplace Policy</a>
+          </div>
+        </div>
+      </div>
+      <div class="cw copyright">
+        <span>&copy; <span id="year"></span> AcademeForge &middot; AF NEXUS. All rights reserved.</span>
+        <span>Made in Patna, Bihar, India.</span>
+      </div>
+    </footer>
+
+    <!-- MODAL -->
+    <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="mtitle">
+      <div class="modal-card">
+        <div class="modal-head">
+          <h3 id="mtitle">Details</h3>
+          <button class="close-btn" type="button" onclick="closeModal()" aria-label="Close modal">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div id="mtext" class="modal-body"></div>
+      </div>
+    </div>
+
+    <!-- AI CHAT LAUNCHER — opens ai.academeforge.in in new tab -->
+    <a id="aiLauncher" class="ai-chat-launcher" href="https://help.academeforge.in" target="_blank" rel="noopener noreferrer" aria-label="Open AF ProGuide AI">
+      <span>AF ProGuide AI</span>
+    </a>
+
+  </div>
+
+  <script src="script.js"></script>
   <script>
-    tailwind.config = {
-      theme: { extend: {
-        colors: { brand: '#f97316', navy: '#0f172a' },
-        fontFamily: { display: ['Manrope','sans-serif'] }
-      }}
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/sw.js").catch(() => {});
+      });
     }
   </script>
-  <link rel="stylesheet" href="/assests/main.css"/>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"EducationalOrganization","name":"AcademeForge","url":"https://academeforge.in/","description":"India's all-in-one learning ecosystem — courses, AI mentor, quizzes, Scholars Test, community and free productivity apps for Indian students.","email":"academeforge@gmail.com","foundingDate":"2024","founder":{"@type":"Person","name":"Devraj Kumar"},"address":{"@type":"PostalAddress","addressLocality":"Patna","addressRegion":"Bihar","addressCountry":"IN"}}</script>
-</head>
-<body>
-
-<div id="site-nav"></div>
-
-<!-- HERO -->
-<section class="hero-gradient min-h-[88vh] flex items-center">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
-    <div class="max-w-4xl">
-      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100 text-orange-700 text-sm font-semibold mb-8 reveal">
-        <span class="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></span>
-        Built for Indian Students · Patna, Bihar
-      </div>
-      <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black text-slate-900 leading-[1.05] tracking-tight mb-6 reveal" style="font-family:Manrope,sans-serif;">
-        Learn Smarter.<br>
-        <span class="text-gradient">Not Harder.</span>
-      </h1>
-      <p class="text-xl text-slate-600 leading-relaxed max-w-2xl mb-10 reveal">
-        Courses with instant certificates, your personal AI mentor, gamified quizzes, the official Scholars Test, a built-in student community — and free apps that actually help you study.
-      </p>
-      <div class="flex flex-wrap gap-4 mb-14 reveal">
-        <a href="courses.html" class="inline-flex items-center gap-2 px-6 py-3.5 bg-orange-500 text-white font-bold rounded-xl hover:bg-orange-600 transition-all shadow-lg shadow-orange-200 hover:shadow-orange-300 hover:-translate-y-0.5">
-          Explore Courses
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-        <a href="proguide.html" class="inline-flex items-center gap-2 px-6 py-3.5 bg-white text-slate-800 font-bold rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all">
-          <span class="w-2 h-2 bg-green-400 rounded-full"></span>
-          AF ProGuide AI — Free
-        </a>
-      </div>
-      <!-- Trust badges -->
-      <div class="flex flex-wrap gap-x-8 gap-y-3 reveal">
-        <div class="flex items-center gap-2 text-slate-500 text-sm">
-          <svg class="w-4 h-4 text-orange-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          Instant Certificates
-        </div>
-        <div class="flex items-center gap-2 text-slate-500 text-sm">
-          <svg class="w-4 h-4 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H4a2 2 0 01-2-2V5a2 2 0 012-2h16a2 2 0 012 2v10a2 2 0 01-2 2h-1"/></svg>
-          3 AI Model Versions
-        </div>
-        <div class="flex items-center gap-2 text-slate-500 text-sm">
-          <svg class="w-4 h-4 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
-          Free Companion Apps
-        </div>
-        <div class="flex items-center gap-2 text-slate-500 text-sm">
-          <svg class="w-4 h-4 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
-          Official Scholars Test (AST)
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- STATS STRIP -->
-<section class="border-y border-slate-100 bg-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 reveal">
-      <div class="text-center">
-        <div class="text-4xl font-black text-orange-500 mb-1" style="font-family:Manrope,sans-serif;">6+</div>
-        <div class="text-sm text-slate-500 font-medium">Explore Courses</div>
-      </div>
-      <div class="text-center">
-        <div class="text-4xl font-black text-orange-500 mb-1" style="font-family:Manrope,sans-serif;">3</div>
-        <div class="text-sm text-slate-500 font-medium">AI Model Versions</div>
-      </div>
-      <div class="text-center">
-        <div class="text-4xl font-black text-orange-500 mb-1" style="font-family:Manrope,sans-serif;">100K+</div>
-        <div class="text-sm text-slate-500 font-medium">Student Goal</div>
-      </div>
-      <div class="text-center">
-        <div class="text-4xl font-black text-orange-500 mb-1" style="font-family:Manrope,sans-serif;">0₹</div>
-        <div class="text-sm text-slate-500 font-medium">Companion Apps Cost</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PLATFORM FEATURES -->
-<section class="py-24 bg-white">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-16 reveal">
-      <span class="badge-pill bg-orange-50 text-orange-600 mb-4">Everything in One Place</span>
-      <h2 class="text-4xl font-black text-slate-900 mt-3 mb-4" style="font-family:Manrope,sans-serif;">The Full AcademeForge Platform</h2>
-      <p class="text-slate-500 text-lg max-w-2xl mx-auto">Six core features, each with its own focused page. Click any card to explore.</p>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-      <!-- Explore Courses -->
-      <a href="courses.html" class="group block p-7 rounded-2xl border border-slate-100 bg-white card-lift reveal hover:border-orange-200">
-        <div class="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center mb-5 group-hover:bg-orange-100 transition-colors">
-          <svg class="w-6 h-6 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-        </div>
-        <div class="inline-block px-2.5 py-0.5 rounded-full bg-green-50 text-green-700 text-xs font-semibold mb-3">Instant Certificate</div>
-        <h3 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-orange-600 transition-colors" style="font-family:Manrope,sans-serif;">Explore Courses</h3>
-        <p class="text-slate-500 text-sm leading-relaxed">6 text-based courses — Graphic Design, Video Editing, AI Coding, Freelancing, Prompt Engineering & more. Complete and get certified instantly.</p>
-        <div class="flex items-center gap-1.5 mt-5 text-orange-500 text-sm font-semibold">Explore Courses <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-      </a>
-
-      <!-- LearnSpace -->
-      <a href="courses.html#learnspace" class="group block p-7 rounded-2xl border border-slate-100 bg-white card-lift reveal hover:border-orange-200">
-        <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mb-5 group-hover:bg-blue-100 transition-colors">
-          <svg class="w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-        </div>
-        <div class="inline-block px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold mb-3">Video Programs</div>
-        <h3 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-orange-600 transition-colors" style="font-family:Manrope,sans-serif;">LearnSpace</h3>
-        <p class="text-slate-500 text-sm leading-relaxed">Structured, instructor-led video lecture programs across Freelancing, AI, Video Editing, Graphic Design & Cybersecurity. Fees & dates to be announced.</p>
-        <div class="flex items-center gap-1.5 mt-5 text-orange-500 text-sm font-semibold">View Programs <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-      </a>
-
-      <!-- AF ProGuide -->
-      <a href="proguide.html" class="group block p-7 rounded-2xl border border-slate-100 bg-white card-lift reveal hover:border-orange-200">
-        <div class="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center mb-5 group-hover:bg-purple-100 transition-colors">
-          <svg class="w-6 h-6 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17H4a2 2 0 01-2-2V5a2 2 0 012-2h16a2 2 0 012 2v10a2 2 0 01-2 2h-1"/></svg>
-        </div>
-        <div class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-purple-50 text-purple-700 text-xs font-semibold mb-3">
-          <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span> Free Tier Available
-        </div>
-        <h3 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-orange-600 transition-colors" style="font-family:Manrope,sans-serif;">AF ProGuide AI</h3>
-        <p class="text-slate-500 text-sm leading-relaxed">Your personal AI student mentor. Runs on AF 2.4, Dev 1.3 & Tapri 7.9. Helps with coding, portfolio building, interview prep & career direction.</p>
-        <div class="flex items-center gap-1.5 mt-5 text-orange-500 text-sm font-semibold">Open AI Mentor <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-      </a>
-
-      <!-- AF Test Arena -->
-      <a href="arena.html" class="group block p-7 rounded-2xl border border-slate-100 bg-white card-lift reveal hover:border-orange-200">
-        <div class="w-12 h-12 rounded-xl bg-yellow-50 flex items-center justify-center mb-5 group-hover:bg-yellow-100 transition-colors">
-          <svg class="w-6 h-6 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-        </div>
-        <div class="inline-block px-2.5 py-0.5 rounded-full bg-yellow-50 text-yellow-700 text-xs font-semibold mb-3">XP · Leaderboard</div>
-        <h3 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-orange-600 transition-colors" style="font-family:Manrope,sans-serif;">AF Test Arena</h3>
-        <p class="text-slate-500 text-sm leading-relaxed">Gamified quizzes on AI, ML, Digital Literacy & more. Earn XP, level up, build streaks, climb the global leaderboard, and play brain games.</p>
-        <div class="flex items-center gap-1.5 mt-5 text-orange-500 text-sm font-semibold">Enter Arena <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-      </a>
-
-      <!-- Scholars Test -->
-      <a href="scholars.html" class="group block p-7 rounded-2xl border border-slate-100 bg-white card-lift reveal hover:border-orange-200">
-        <div class="w-12 h-12 rounded-xl bg-teal-50 flex items-center justify-center mb-5 group-hover:bg-teal-100 transition-colors">
-          <svg class="w-6 h-6 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-        </div>
-        <div class="inline-block px-2.5 py-0.5 rounded-full bg-teal-50 text-teal-700 text-xs font-semibold mb-3">Official Exam</div>
-        <h3 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-orange-600 transition-colors" style="font-family:Manrope,sans-serif;">Scholars Test (AST)</h3>
-        <p class="text-slate-500 text-sm leading-relaxed">Official examination portal for school students. School-code based registration, unique admit card with Roll Number, class-tier structure.</p>
-        <div class="flex items-center gap-1.5 mt-5 text-orange-500 text-sm font-semibold">AST Portal <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-      </a>
-
-      <!-- Community + Apps -->
-      <a href="community.html" class="group block p-7 rounded-2xl border border-slate-100 bg-white card-lift reveal hover:border-orange-200">
-        <div class="w-12 h-12 rounded-xl bg-pink-50 flex items-center justify-center mb-5 group-hover:bg-pink-100 transition-colors">
-          <svg class="w-6 h-6 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-        </div>
-        <div class="inline-block px-2.5 py-0.5 rounded-full bg-pink-50 text-pink-700 text-xs font-semibold mb-3">Built-in Feed</div>
-        <h3 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-orange-600 transition-colors" style="font-family:Manrope,sans-serif;">Community</h3>
-        <p class="text-slate-500 text-sm leading-relaxed">A real student community inside the app — posts, stories, likes, comments, direct chats, and official announcements. English & Hinglish welcome.</p>
-        <div class="flex items-center gap-1.5 mt-5 text-orange-500 text-sm font-semibold">Join Community <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-      </a>
-
-    </div>
-  </div>
-</section>
-
-<!-- COMPANION APPS TEASER -->
-<section class="py-20 bg-slate-50">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-14 reveal">
-      <span class="badge-pill bg-white border border-slate-200 text-slate-600 mb-4">Free Companion Apps</span>
-      <h2 class="text-4xl font-black text-slate-900 mt-3 mb-3" style="font-family:Manrope,sans-serif;">Beyond the Curriculum</h2>
-      <p class="text-slate-500 max-w-xl mx-auto">Three free apps built around student life. No payment, no catch.</p>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal">
-      <div class="bg-white rounded-2xl p-6 border border-slate-100 card-lift">
-        <div class="text-3xl mb-3">⏰</div>
-        <h3 class="font-bold text-slate-900 mb-1.5" style="font-family:Manrope,sans-serif;">Timezy</h3>
-        <p class="text-slate-500 text-sm leading-relaxed">Task manager with priority levels, weekly visual calendar, live progress ring. No account needed. Works in your browser.</p>
-        <a href="apps.html" class="inline-block mt-4 text-orange-500 text-sm font-semibold hover:text-orange-700">Open Timezy →</a>
-      </div>
-      <div class="bg-white rounded-2xl p-6 border border-slate-100 card-lift">
-        <div class="text-3xl mb-3">📰</div>
-        <h3 class="font-bold text-slate-900 mb-1.5" style="font-family:Manrope,sans-serif;">Zenopulsky</h3>
-        <p class="text-slate-500 text-sm leading-relaxed">Independent journalism covering Social Justice, Mental Health, Labour Rights, Technology & India-specific issues. Unfiltered.</p>
-        <a href="https://zenopulsky.academeforge.in" target="_blank" rel="noopener noreferrer" class="inline-block mt-4 text-orange-500 text-sm font-semibold hover:text-orange-700">Read Zenopulsky →</a>
-      </div>
-      <div class="bg-white rounded-2xl p-6 border border-slate-100 card-lift">
-        <div class="text-3xl mb-3">💚</div>
-        <h3 class="font-bold text-slate-900 mb-1.5" style="font-family:Manrope,sans-serif;">Capacity</h3>
-        <p class="text-slate-500 text-sm leading-relaxed">Share how you're doing with a small trusted circle. Good, Okay, Stretched, Need Space, or Off the Grid. Private by design.</p>
-        <a href="apps.html" class="inline-block mt-4 text-orange-500 text-sm font-semibold hover:text-orange-700">Learn about Capacity →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA BAND -->
-<section class="py-20 bg-slate-900 reveal">
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-    <h2 class="text-4xl font-black text-white mb-4" style="font-family:Manrope,sans-serif;">Start Learning Today.<br><span class="text-orange-400">It's Free to Begin.</span></h2>
-    <p class="text-slate-400 text-lg mb-10 max-w-xl mx-auto">Jump into Explore Courses, chat with AF ProGuide AI, or test your knowledge in the Arena. No payment required to start.</p>
-    <div class="flex flex-wrap justify-center gap-4">
-      <a href="courses.html" class="px-8 py-4 bg-orange-500 text-white font-bold rounded-xl hover:bg-orange-600 transition-all shadow-lg shadow-orange-900/40">
-        Browse Courses
-      </a>
-      <a href="student-app-preview/" class="px-8 py-4 bg-white/10 text-white font-bold rounded-xl hover:bg-white/20 transition-all border border-white/20">
-        Student Portal
-      </a>
-      <a href="about.html" class="px-8 py-4 text-slate-400 font-semibold hover:text-white transition-colors">
-        Our Story →
-      </a>
-    </div>
-  </div>
-</section>
-
-<div id="site-footer"></div>
-<script src="/assests/components.js"></script>
 </body>
 </html>
