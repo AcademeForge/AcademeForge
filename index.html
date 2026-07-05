@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -445,6 +444,7 @@
             <option value="reading" class="i18n-text">Reading &amp; Journalism</option>
             <option value="create" class="i18n-text">Design &amp; Innovation</option>
             <option value="shop" class="i18n-text">Shopping &amp; Marketplace</option>
+            <option value="games" class="i18n-text">Games</option>
           </select>
           <svg class="picker-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
@@ -495,20 +495,20 @@
   <!-- =========================================================
        2. ABOUT US
   ========================================================= -->
-  <section class="section about-us-section" style="padding: 80px 0;">
+  <section class="section about-us-section">
     <div class="container">
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; max-width: 960px; margin: 0 auto;">
-        <div style="text-align: left;">
-          <h2 class="section-title" style="text-align: left; margin-bottom: 24px;">About Us</h2>
-          <p style="color: var(--text-secondary); font-size: 1.0625rem; line-height: 1.85;">
+      <div class="about-us-grid">
+        <div>
+          <h2 class="section-title">About Us</h2>
+          <p class="about-us-text">
             AcademeForge began in January 2024 as a Telegram community for Class 10 students — a space to solve doubts, take quizzes, and support each other.
           </p>
         </div>
-        <div style="text-align: left;">
-          <p style="color: var(--text-secondary); font-size: 1.0625rem; line-height: 1.85; margin-bottom: 24px;">
+        <div>
+          <p class="about-us-text">
             Today it is a practical learning ecosystem where students study, track progress, test knowledge, connect with peers, and manage their time. Affordable courses, an AI mentor, gamification, and productivity apps — all in one place.
           </p>
-          <a href="https://about.academeforge.in" style="color: var(--highlight); font-weight: 600; font-size: 1rem; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">Read more <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+          <a href="https://about.academeforge.in" class="about-us-link">Read more <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
         </div>
       </div>
     </div>
@@ -529,6 +529,7 @@
           <button class="filter-chip i18n-text" data-filter="personal">Personal</button>
           <button class="filter-chip i18n-text" data-filter="create">Explore & Create</button>
           <button class="filter-chip i18n-text" data-filter="shop">Shopping</button>
+          <button class="filter-chip i18n-text" data-filter="games">Games</button>
         </div>
       </div>
 
@@ -654,7 +655,7 @@
         </a>
 
         <!-- Sudoku Master -->
-        <a href="https://sudoku.academeforge.in" class="product-row" id="product-sudoku" data-category="create" data-picker="create">
+        <a href="https://sudoku.academeforge.in" class="product-row" id="product-sudoku" data-category="games" data-picker="games">
           <div class="product-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
           </div>
@@ -669,7 +670,7 @@
         </a>
 
         <!-- Tic-XO-Toe -->
-        <a href="https://ticxotoe.academeforge.in" class="product-row" id="product-ticxotoe" data-category="create" data-picker="create">
+        <a href="https://ticxotoe.academeforge.in" class="product-row" id="product-ticxotoe" data-category="games" data-picker="games">
           <div class="product-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/><circle cx="12" cy="12" r="9"/></svg>
           </div>
@@ -864,52 +865,63 @@
   <!-- =========================================================
        TESTIMONIALS
   ========================================================= -->
-  <section class="section" style="background: var(--bg-secondary);">
+  <section class="section testimonials-section">
     <div class="container">
-      <div class="section-header text-center" style="margin-bottom: 48px;">
-        <h2 class="section-title">Testimonials</h2>
-        <p style="color: var(--text-secondary); font-size: 1.0625rem;">What our community says about AcademeForge</p>
+      <div class="section-header text-center">
+        <h2 class="section-title">TESTIMONIALS</h2>
       </div>
-      <div class="testimonials-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; max-width: 1000px; margin: 0 auto;">
-        <div class="testimonial-card">
-          <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
-            <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #f97316, #ea580c); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1.125rem;">A</div>
-            <div>
-              <div style="font-weight: 700; color: var(--text-primary); font-size: 1rem;">Aman Verma</div>
-              <div style="font-size: 0.8125rem; color: var(--text-tertiary);">Class 12, Patna</div>
-            </div>
-          </div>
-          <p style="color: var(--text-secondary); font-size: 0.9375rem; line-height: 1.7; font-style: italic;">"AcademeForge completely changed how I study. The courses are short, practical, and the instant certificates actually helped my portfolio. Love the AI mentor too!"</p>
+      <div class="testimonial-carousel" id="testimonial-carousel">
+        <div class="testimonial-nav">
+          <button id="testimonial-prev" aria-label="Previous">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button id="testimonial-next" aria-label="Next">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
+          </button>
         </div>
-        <div class="testimonial-card">
-          <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
-            <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #2563eb, #1d4ed8); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1.125rem;">P</div>
-            <div>
-              <div style="font-weight: 700; color: var(--text-primary); font-size: 1rem;">Priya Sharma</div>
-              <div style="font-size: 0.8125rem; color: var(--text-tertiary);">B.Tech Student, Delhi</div>
-            </div>
+
+        <div class="testimonial-slide active" data-slide="0">
+          <div class="testimonial-avatar">
+            <div class="testimonial-avatar-inner">A</div>
           </div>
-          <p style="color: var(--text-secondary); font-size: 0.9375rem; line-height: 1.7; font-style: italic;">"Timezy is my go-to productivity app now. No login needed, no ads, just clean planning. And Sudoku Master is the perfect study break!"</p>
+          <div class="testimonial-content">
+            <p class="testimonial-quote">"AcademeForge completely changed how I study. The courses are short, practical, and the instant certificates actually helped my portfolio. Love the AI mentor too!"</p>
+            <div class="testimonial-name">AMAN VERMA</div>
+            <div class="testimonial-role">Class 12, Patna</div>
+          </div>
         </div>
-        <div class="testimonial-card">
-          <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
-            <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #10b981, #059669); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1.125rem;">R</div>
-            <div>
-              <div style="font-weight: 700; color: var(--text-primary); font-size: 1rem;">Rahul Gupta</div>
-              <div style="font-size: 0.8125rem; color: var(--text-tertiary);">Class 10, Bihar</div>
-            </div>
+
+        <div class="testimonial-slide" data-slide="1">
+          <div class="testimonial-avatar">
+            <div class="testimonial-avatar-inner" style="background: linear-gradient(135deg, #2563eb, #1d4ed8);">P</div>
           </div>
-          <p style="color: var(--text-secondary); font-size: 0.9375rem; line-height: 1.7; font-style: italic;">"I joined the Telegram community first and then discovered the whole ecosystem. The Scholars Test helped me benchmark where I stand among other students."</p>
+          <div class="testimonial-content">
+            <p class="testimonial-quote">"Timezy is my go-to productivity app now. No login needed, no ads, just clean planning. And Sudoku Master is the perfect study break!"</p>
+            <div class="testimonial-name">PRIYA SHARMA</div>
+            <div class="testimonial-role">B.Tech Student, Delhi</div>
+          </div>
         </div>
-        <div class="testimonial-card">
-          <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
-            <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #8b5cf6, #7c3aed); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 1.125rem;">S</div>
-            <div>
-              <div style="font-weight: 700; color: var(--text-primary); font-size: 1rem;">Sneha Kumari</div>
-              <div style="font-size: 0.8125rem; color: var(--text-tertiary);">Freelancer, Ranchi</div>
-            </div>
+
+        <div class="testimonial-slide" data-slide="2">
+          <div class="testimonial-avatar">
+            <div class="testimonial-avatar-inner" style="background: linear-gradient(135deg, #10b981, #059669);">R</div>
           </div>
-          <p style="color: var(--text-secondary); font-size: 0.9375rem; line-height: 1.7; font-style: italic;">"The freelancing course gave me a clear roadmap. Within two months of completing it, I landed my first client. The certificate was a nice bonus for LinkedIn."</p>
+          <div class="testimonial-content">
+            <p class="testimonial-quote">"I joined the Telegram community first and then discovered the whole ecosystem. The Scholars Test helped me benchmark where I stand among other students."</p>
+            <div class="testimonial-name">RAHUL GUPTA</div>
+            <div class="testimonial-role">Class 10, Bihar</div>
+          </div>
+        </div>
+
+        <div class="testimonial-slide" data-slide="3">
+          <div class="testimonial-avatar">
+            <div class="testimonial-avatar-inner" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">S</div>
+          </div>
+          <div class="testimonial-content">
+            <p class="testimonial-quote">"The freelancing course gave me a clear roadmap. Within two months of completing it, I landed my first client. The certificate was a nice bonus for LinkedIn."</p>
+            <div class="testimonial-name">SNEHA KUMARI</div>
+            <div class="testimonial-role">Freelancer, Ranchi</div>
+          </div>
         </div>
       </div>
     </div>
