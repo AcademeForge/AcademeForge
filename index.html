@@ -54,52 +54,6 @@
     rel="stylesheet"
   />
   <link rel="stylesheet" href="/assets/css/style.css?v=3.0" />
-  <style>
-    @keyframes marquee-infinite {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    .marquee-track {
-      display: flex;
-      gap: 72px;
-      width: max-content;
-      animation: marquee-infinite 18s linear infinite;
-      align-items: center;
-    }
-    .marquee-track img {
-      height: 56px;
-      width: auto;
-      opacity: 0.65;
-      transition: opacity 0.3s;
-      flex-shrink: 0;
-    }
-    .marquee-track img:hover { opacity: 1; }
-
-    /* ── Hero: full viewport, marquee below the fold ── */
-    .hero { padding: 120px 24px 100px !important; min-height: calc(100vh - 120px); display: flex; align-items: center; justify-content: center; }
-    .hero-container { width: 100%; }
-    .hero-headline { font-size: clamp(2.5rem, 5vw, 4.5rem) !important; margin-bottom: 14px !important; }
-    .hero-subheadline { font-size: clamp(1rem, 1.5vw, 1.2rem) !important; margin-bottom: 24px !important; }
-
-    /* ── Gap between picker and marquee ── */
-    .marquee-container { margin-top: 0; }
-    .vision-strip {
-      padding: 56px 48px;
-      background: var(--bg-secondary);
-      border-bottom: 1px solid var(--border-light);
-      text-align: center;
-    }
-    .vision-strip p {
-      font-size: clamp(1rem, 1.5vw, 1.125rem);
-      color: var(--text-secondary);
-      max-width: 860px;
-      margin: 0 auto;
-      line-height: 1.8;
-    }
-    .vision-strip p + p {
-      margin-top: 20px;
-    }
-  </style>
 
 
   <!-- EducationalOrganization schema — primary identity for Google Knowledge Panel -->
@@ -460,22 +414,70 @@
       <h1 class="hero-headline i18n-text">India's Learning & Technology Ecosystem</h1>
       <p class="hero-subheadline center-block i18n-text">AcademeForge is a growing Indian technology ecosystem building digital platforms that help students learn, create, stay productive, and grow beyond the classroom.</p>
       
-      <div class="quick-picker">
+      <!-- Custom goal picker -->
+      <div class="quick-picker" style="position: relative;">
         <span class="picker-label i18n-text">What are you here for?</span>
-        <div class="picker-dropdown-wrapper">
-          <select class="picker-select" id="hero-quick-picker" aria-label="Select your goal">
-            <option value="" disabled selected class="i18n-text">Select a goal...</option>
-            <option value="learn" class="i18n-text">Learning & Courses</option>
-            <option value="exams" class="i18n-text">Assessments & Exams</option>
-            <option value="productivity" class="i18n-text">Productivity & Planning</option>
-            <option value="wellbeing" class="i18n-text">Personal Wellbeing</option>
-            <option value="reading" class="i18n-text">Reading & Journalism</option>
-            <option value="create" class="i18n-text">Design & Innovation</option>
-            <option value="shop" class="i18n-text">Shopping & Marketplace</option>
-          </select>
-          <svg class="picker-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        <div class="picker-dropdown-wrapper" id="goal-picker-trigger" style="cursor: pointer; user-select: none;" onclick="toggleGoalPicker()">
+          <span id="goal-picker-label" style="font-size: 1rem; font-weight: 600; color: var(--text-primary); padding-right: 10px;" class="i18n-text">Select a goal...</span>
+          <svg id="goal-picker-arrow" class="picker-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition: transform 0.2s;"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div id="goal-picker-menu" style="display:none; position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%); background: #fff; border: 1px solid var(--border-light); border-radius: 14px; box-shadow: 0 16px 48px rgba(0,0,0,0.12); min-width: 260px; overflow: hidden; z-index: 50;">
+          <div onclick="selectGoal('learn','Learning &amp; Courses')" class="goal-option i18n-text" data-value="learn">
+            <span style="font-size: 1.1rem;">📚</span> Learning &amp; Courses
+          </div>
+          <div onclick="selectGoal('exams','Assessments &amp; Exams')" class="goal-option i18n-text" data-value="exams">
+            <span style="font-size: 1.1rem;">📝</span> Assessments &amp; Exams
+          </div>
+          <div onclick="selectGoal('productivity','Productivity &amp; Planning')" class="goal-option i18n-text" data-value="productivity">
+            <span style="font-size: 1.1rem;">⏰</span> Productivity &amp; Planning
+          </div>
+          <div onclick="selectGoal('wellbeing','Personal Wellbeing')" class="goal-option i18n-text" data-value="wellbeing">
+            <span style="font-size: 1.1rem;">🌱</span> Personal Wellbeing
+          </div>
+          <div onclick="selectGoal('reading','Reading &amp; Journalism')" class="goal-option i18n-text" data-value="reading">
+            <span style="font-size: 1.1rem;">📰</span> Reading &amp; Journalism
+          </div>
+          <div onclick="selectGoal('create','Design &amp; Innovation')" class="goal-option i18n-text" data-value="create">
+            <span style="font-size: 1.1rem;">🎨</span> Design &amp; Innovation
+          </div>
+          <div onclick="selectGoal('shop','Shopping &amp; Marketplace')" class="goal-option i18n-text" data-value="shop">
+            <span style="font-size: 1.1rem;">🛍️</span> Shopping &amp; Marketplace
+          </div>
         </div>
       </div>
+      <script>
+        function toggleGoalPicker() {
+          var menu = document.getElementById('goal-picker-menu');
+          var arrow = document.getElementById('goal-picker-arrow');
+          var open = menu.style.display === 'block';
+          menu.style.display = open ? 'none' : 'block';
+          arrow.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
+        }
+        function selectGoal(value, label) {
+          document.getElementById('goal-picker-label').textContent = label;
+          document.getElementById('goal-picker-menu').style.display = 'none';
+          document.getElementById('goal-picker-arrow').style.transform = 'rotate(0deg)';
+          // trigger existing picker logic if present
+          var picker = document.getElementById('hero-quick-picker');
+          if (picker) { picker.value = value; picker.dispatchEvent(new Event('change')); }
+          // scroll to matching products
+          var rows = document.querySelectorAll('.product-row');
+          rows.forEach(function(r){ r.classList.remove('hidden'); });
+          if (value) {
+            rows.forEach(function(r){
+              if (r.dataset.picker && r.dataset.picker !== value) r.classList.add('hidden');
+            });
+          }
+        }
+        document.addEventListener('click', function(e) {
+          var picker = document.getElementById('goal-picker-trigger');
+          var menu = document.getElementById('goal-picker-menu');
+          if (!picker.contains(e.target) && !menu.contains(e.target)) {
+            menu.style.display = 'none';
+            document.getElementById('goal-picker-arrow').style.transform = 'rotate(0deg)';
+          }
+        });
+      </script>
     </div>
   </section>
 
@@ -729,127 +731,9 @@
           </div>
         </div>
 
-        <!-- Right Side: Coded Mobile Mockup -->
-        <div style="text-align: center; position: relative; display: flex; justify-content: center; align-items: center; gap: 20px;">
-
-          <!-- Floating decorative card (behind phone) -->
-          <div style="position: absolute; top: -20px; right: -10px; background: linear-gradient(135deg, #f97316, #fb923c); border-radius: 16px; padding: 14px 18px; box-shadow: 0 8px 24px rgba(249,115,22,0.3); z-index: 0; min-width: 130px;">
-            <div style="font-size: 0.65rem; color: rgba(255,255,255,0.8); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">XP Earned</div>
-            <div style="font-size: 1.6rem; font-weight: 800; color: #fff; line-height: 1;">2,450</div>
-            <div style="font-size: 0.7rem; color: rgba(255,255,255,0.7); margin-top: 4px;">↑ 120 this week</div>
-          </div>
-
-          <!-- Floating decorative card (below phone) -->
-          <div style="position: absolute; bottom: -10px; left: -10px; background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 14px 18px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); z-index: 0; min-width: 140px;">
-            <div style="font-size: 0.65rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Streak</div>
-            <div style="display: flex; align-items: center; gap: 6px;">
-              <span style="font-size: 1.4rem;">🔥</span>
-              <span style="font-size: 1.6rem; font-weight: 800; color: #0f172a; line-height: 1;">14 days</span>
-            </div>
-            <div style="font-size: 0.7rem; color: #64748b; margin-top: 4px;">Keep it going!</div>
-          </div>
-
-          <!-- Phone Frame -->
-          <div style="position: relative; z-index: 1; width: 240px; background: #0f172a; border-radius: 36px; padding: 10px; box-shadow: 0 30px 80px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.06); flex-shrink: 0;">
-            
-            <!-- Dynamic Island -->
-            <div style="width: 80px; height: 26px; background: #000; border-radius: 20px; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; gap: 6px;">
-              <div style="width: 8px; height: 8px; background: #1e293b; border-radius: 50%;"></div>
-              <div style="width: 14px; height: 14px; background: #1e293b; border-radius: 50%;"></div>
-            </div>
-
-            <!-- Screen -->
-            <div style="background: #f8fafc; border-radius: 26px; overflow: hidden; min-height: 480px;">
-              
-              <!-- Status Bar -->
-              <div style="background: #f8fafc; padding: 6px 14px; display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-size: 0.6rem; font-weight: 700; color: #0f172a;">9:41</span>
-                <div style="display: flex; gap: 4px; align-items: center;">
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="#0f172a"><path d="M1 6l11 13L23 6"/></svg>
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2.5"><rect x="2" y="7" width="20" height="11" rx="2"/><path d="M22 11v3"/></svg>
-                </div>
-              </div>
-
-              <!-- App Header -->
-              <div style="background: #0f172a; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-size: 0.55rem; color: #94a3b8; font-weight: 500;">Good morning 👋</div>
-                  <div style="font-size: 0.75rem; font-weight: 700; color: #fff;">AcademeForge</div>
-                </div>
-                <div style="width: 28px; height: 28px; background: #f97316; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-                  <span style="font-size: 0.6rem; font-weight: 800; color: #fff;">AF</span>
-                </div>
-              </div>
-
-              <!-- Progress Card -->
-              <div style="margin: 10px 10px 6px; background: linear-gradient(135deg, #1e293b, #334155); border-radius: 14px; padding: 12px;">
-                <div style="font-size: 0.55rem; color: #94a3b8; font-weight: 600; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;">Current Course</div>
-                <div style="font-size: 0.7rem; font-weight: 700; color: #fff; margin-bottom: 8px;">AI & Prompt Engineering</div>
-                <div style="background: rgba(255,255,255,0.1); border-radius: 100px; height: 5px; overflow: hidden;">
-                  <div style="background: linear-gradient(90deg, #f97316, #fb923c); height: 100%; width: 68%; border-radius: 100px;"></div>
-                </div>
-                <div style="display: flex; justify-content: space-between; margin-top: 5px;">
-                  <span style="font-size: 0.5rem; color: #64748b;">Progress</span>
-                  <span style="font-size: 0.5rem; color: #f97316; font-weight: 700;">68%</span>
-                </div>
-              </div>
-
-              <!-- Quick Actions -->
-              <div style="padding: 6px 10px;">
-                <div style="font-size: 0.55rem; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">Quick Access</div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
-                  <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 8px; text-align: center;">
-                    <div style="font-size: 1rem; margin-bottom: 2px;">🤖</div>
-                    <div style="font-size: 0.5rem; font-weight: 600; color: #0f172a;">AF AI</div>
-                  </div>
-                  <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 8px; text-align: center;">
-                    <div style="font-size: 1rem; margin-bottom: 2px;">🏆</div>
-                    <div style="font-size: 0.5rem; font-weight: 600; color: #0f172a;">Test Arena</div>
-                  </div>
-                  <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 8px; text-align: center;">
-                    <div style="font-size: 1rem; margin-bottom: 2px;">📅</div>
-                    <div style="font-size: 0.5rem; font-weight: 600; color: #0f172a;">Timezy</div>
-                  </div>
-                  <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 8px; text-align: center;">
-                    <div style="font-size: 1rem; margin-bottom: 2px;">📋</div>
-                    <div style="font-size: 0.5rem; font-weight: 600; color: #0f172a;">AST Exam</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Heatmap Strip -->
-              <div style="padding: 6px 10px 14px;">
-                <div style="font-size: 0.55rem; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">Learning Heatmap</div>
-                <div style="display: flex; gap: 3px; flex-wrap: wrap;">
-                  <!-- 28 heatmap dots -->
-                  <div style="width:10px;height:10px;border-radius:2px;background:#f97316;opacity:0.9;"></div>
-                  <div style="width:10px;height:10px;border-radius:2px;background:#f97316;opacity:0.5;"></div>
-                  <div style="width:10px;height:10px;border-radius:2px;background:#f97316;opacity:0.8;"></div>
-                  <div style="width:10px;height:10px;border-radius:2px;background:#e2e8f0;"></div>
-                  <div style="width:10px;height:10px;border-radius:2px;background:#f97316;opacity:1;"></div>
-                  <div style="width:10px;height:10px;border-radius:2px;background:#f97316;opacity:0.6;"></div>
-                  <div style="width:10px;height:10px;border-radius:2px;background:#f97316;opacity:0.9;"></div>
-                  <div style="width:10px;height:10px;border-radius:2px;background:#e2e8f0;"></div>
-                  <div style="width:10px;height:10px;border-radius:2px;background:#f97316;opacity:0.4;"></div>
-                  <div style="width:10px;height:10px;border-radius:2px;background:#f97316;opacity:1;"></div>
-                  <div style="width:10px;height:10px;border-radius:2px;background:#f97316;opacity:0.7;"></div>
-                  <div style="width:10px;height:10px;border-radius:2px;background:#f97316;opacity:0.9;"></div>
-                  <div style="width:10px;height:10px;border-radius:2px;background:#e2e8f0;"></div>
-                  <div style="width:10px;height:10px;border-radius:2px;background:#f97316;opacity:0.5;"></div>
-                  <div style="width:10px;height:10px;border-radius:2px;background:#f97316;opacity:1;"></div>
-                  <div style="width:10px;height:10px;border-radius:2px;background:#f97316;opacity:0.8;"></div>
-                  <div style="width:10px;height:10px;border-radius:2px;background:#e2e8f0;"></div>
-                  <div style="width:10px;height:10px;border-radius:2px;background:#f97316;opacity:0.6;"></div>
-                  <div style="width:10px;height:10px;border-radius:2px;background:#f97316;opacity:0.9;"></div>
-                  <div style="width:10px;height:10px;border-radius:2px;background:#f97316;opacity:1;"></div>
-                </div>
-              </div>
-
-            </div>
-            <!-- Home Indicator -->
-            <div style="width: 80px; height: 4px; background: rgba(255,255,255,0.3); border-radius: 100px; margin: 8px auto 0;"></div>
-          </div>
-
+        <!-- Right Side: Image -->
+        <div style="text-align: center;">
+          <img src="/IMG/mockup.png" alt="AcademeForge App Mockup" style="max-width: 100%; height: auto; filter: drop-shadow(0 24px 48px rgba(0,0,0,0.12));" onerror="this.style.display='none'" />
         </div>
 
       </div>
