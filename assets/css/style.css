@@ -1,6 +1,8 @@
-
+/* =========================================================
+   DESIGN TOKENS & FOUNDATION
+========================================================= */
 :root {
-  
+  /* Brand Personality: Minimal, Professional, Confident */
   --bg-primary: #ffffff;
   --bg-secondary: #fafafa;
   --bg-dark: #0a0a0a;
@@ -493,8 +495,9 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); color: var(--text-pri
    VISION STRIP
 ========================================================= */
 .vision-strip {
-  padding: 56px 48px;
+  padding: 80px 48px;
   background: var(--bg-secondary);
+  border-top: 1px solid var(--border-light);
   border-bottom: 1px solid var(--border-light);
   text-align: center;
 }
@@ -507,47 +510,6 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); color: var(--text-pri
 }
 .vision-strip p + p { margin-top: 20px; }
 
-/* =========================================================
-   GOAL PICKER DROPDOWN — custom styled
-========================================================= */
-.quick-picker { position: relative; }
-
-#goal-picker-menu {
-  display: none;
-  position: absolute;
-  top: calc(100% + 10px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
-  box-shadow: 0 16px 48px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.06);
-  min-width: 260px;
-  z-index: 200;
-  padding: 8px;
-}
-.goal-option {
-  display: block;
-  width: 100%;
-  padding: 11px 18px;
-  margin-bottom: 6px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #0f172a;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background 0.15s, border-color 0.15s, color 0.15s;
-  text-align: left;
-  box-sizing: border-box;
-}
-.goal-option:last-child { margin-bottom: 0; }
-.goal-option:hover {
-  background: #fff7ed;
-  border-color: #f97316;
-  color: #f97316;
-}
 
 /* =========================================================
    RESPONSIVE — Mobile / Tablet / Laptop
