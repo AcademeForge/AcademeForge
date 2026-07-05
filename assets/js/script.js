@@ -405,3 +405,44 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 });
+
+/* =========================================================
+   SECURITY & LOCKDOWN FEATURES
+========================================================= */
+
+// 1. Prevent Right Click
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+});
+
+// 2. Prevent Copying
+document.addEventListener('copy', function(e) {
+  e.preventDefault();
+});
+
+// 3. Prevent Zooming (Ctrl/Cmd + wheel and Ctrl/Cmd + +/-/0)
+document.addEventListener('wheel', function(e) {
+  if (e.ctrlKey || e.metaKey) {
+    e.preventDefault();
+  }
+}, { passive: false });
+
+document.addEventListener('keydown', function(e) {
+  if ((e.ctrlKey || e.metaKey) && (e.key === '=' || e.key === '-' || e.key === '0' || e.key === '+' || e.code === 'NumpadAdd' || e.code === 'NumpadSubtract')) {
+    e.preventDefault();
+  }
+});
+
+// 4. Anti-Debugger / Console Clear & Network Timing
+setInterval(function() {
+  console.clear();
+  
+  // Clears network performance data (Note: Browsers do not allow JS to clear the actual DevTools Network tab UI)
+  if (window.performance && window.performance.clearResourceTimings) {
+    window.performance.clearResourceTimings();
+  }
+
+  (function anonymous() {
+    debugger;
+  })();
+}, 100);
