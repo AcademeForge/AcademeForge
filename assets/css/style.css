@@ -251,8 +251,8 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); color: var(--text-pri
    1. ARRIVAL (HERO & QUICK PICKER)
 ========================================================= */
 .hero { padding: 60px 24px 40px; }
-.hero-headline { font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 800; line-height: 1.05; margin-bottom: 16px; max-width: 1200px; }
-.hero-subheadline { font-size: clamp(1.125rem, 2vw, 1.25rem); max-width: 1000px; color: var(--text-secondary); margin-bottom: 24px; }
+.hero-headline { font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 800; line-height: 1.05; margin-bottom: 14px; max-width: 1200px; }
+.hero-subheadline { font-size: clamp(1rem, 1.5vw, 1.2rem); max-width: 1000px; color: var(--text-secondary); margin-bottom: 64px; }
 
 .quick-picker {
   display: inline-flex;
@@ -464,12 +464,19 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); color: var(--text-pri
 .marquee-track img {
   height: 56px;
   width: auto;
-  opacity: 0.65;
-  transition: opacity 0.3s;
+  opacity: 0.6;
+  filter: invert(1) brightness(1.2);
+  transition: opacity 0.3s, filter 0.3s;
   flex-shrink: 0;
 }
-.marquee-track img:hover { opacity: 1; }
-.marquee-container { overflow: hidden; width: 100%; }
+.marquee-track img:hover { opacity: 1; filter: invert(1) brightness(1.5); }
+.marquee-container {
+  overflow: hidden;
+  width: 100%;
+  margin-top: 80px;
+  background: #0f172a;
+  padding: 24px 0;
+}
 
 /* =========================================================
    HERO — full viewport, marquee below fold
@@ -482,8 +489,7 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); color: var(--text-pri
   justify-content: center;
 }
 .hero-container { width: 100%; }
-.hero-headline { font-size: clamp(2.5rem, 5vw, 4.5rem) !important; margin-bottom: 14px !important; }
-.hero-subheadline { font-size: clamp(1rem, 1.5vw, 1.2rem) !important; margin-bottom: 24px !important; }
+
 
 /* =========================================================
    VISION STRIP
@@ -506,20 +512,21 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); color: var(--text-pri
 /* =========================================================
    GOAL PICKER DROPDOWN — custom styled
 ========================================================= */
+.quick-picker { position: relative; }
+
 #goal-picker-menu {
   display: none;
   position: absolute;
-  top: calc(100% + 12px);
+  top: calc(100% + 10px);
   left: 50%;
   transform: translateX(-50%);
   background: #fff;
   border: 1px solid #e2e8f0;
-  border-radius: 20px;
-  box-shadow: 0 24px 64px rgba(0,0,0,0.13), 0 4px 16px rgba(0,0,0,0.06);
-  min-width: 300px;
+  border-radius: 16px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.06);
+  min-width: 260px;
   z-index: 200;
-  padding: 12px;
-  display: none;
+  padding: 8px;
 }
 .goal-option {
   display: block;
@@ -578,6 +585,5 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); color: var(--text-pri
 
 /* Laptop / Desktop (1025px+) */
 @media (min-width: 1025px) {
-  .hero { padding: 120px 48px 100px !important; }
   .section { padding: 100px 48px !important; }
 }
