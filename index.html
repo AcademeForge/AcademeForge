@@ -414,56 +414,23 @@
       <h1 class="hero-headline i18n-text">India's Learning & Technology Ecosystem</h1>
       <p class="hero-subheadline center-block i18n-text">AcademeForge is a growing Indian technology ecosystem building digital platforms that help students learn, create, stay productive, and grow beyond the classroom.</p>
       
-      <!-- Custom goal picker -->
+      <!-- Goal picker — native select -->
       <div class="quick-picker">
         <span class="picker-label i18n-text">What are you here for?</span>
-        <div class="picker-dropdown-wrapper" id="goal-picker-trigger" style="cursor: pointer; user-select: none;" onclick="toggleGoalPicker()">
-          <span id="goal-picker-label" style="font-size: 1rem; font-weight: 600; color: var(--text-primary); padding-right: 10px;" class="i18n-text">Select a goal...</span>
-          <svg id="goal-picker-arrow" class="picker-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition: transform 0.2s;"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
-        <div id="goal-picker-menu" style="display:none;position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);background:#fff;border:1px solid #e2e8f0;border-radius:16px;box-shadow:0 16px 48px rgba(0,0,0,0.12),0 4px 12px rgba(0,0,0,0.06);min-width:260px;z-index:200;padding:8px;">
-          <div onclick="selectGoal('learn','Learning &amp; Courses')" class="goal-option i18n-text" data-value="learn" style="display:block;padding:7px 14px;margin-bottom:4px;font-size:0.8125rem;font-weight:600;color:#0f172a;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;cursor:pointer;transition:background 0.15s,border-color 0.15s,color 0.15s;text-align:left;box-sizing:border-box;" onmouseover="this.style.background='#fff7ed';this.style.borderColor='#f97316';this.style.color='#f97316';" onmouseout="this.style.background='#f8fafc';this.style.borderColor='#e2e8f0';this.style.color='#0f172a';">Learning &amp; Courses</div>
-          <div onclick="selectGoal('exams','Assessments &amp; Exams')" class="goal-option i18n-text" data-value="exams" style="display:block;padding:7px 14px;margin-bottom:4px;font-size:0.8125rem;font-weight:600;color:#0f172a;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;cursor:pointer;transition:background 0.15s,border-color 0.15s,color 0.15s;text-align:left;box-sizing:border-box;" onmouseover="this.style.background='#fff7ed';this.style.borderColor='#f97316';this.style.color='#f97316';" onmouseout="this.style.background='#f8fafc';this.style.borderColor='#e2e8f0';this.style.color='#0f172a';">Assessments &amp; Exams</div>
-          <div onclick="selectGoal('productivity','Productivity &amp; Planning')" class="goal-option i18n-text" data-value="productivity" style="display:block;padding:7px 14px;margin-bottom:4px;font-size:0.8125rem;font-weight:600;color:#0f172a;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;cursor:pointer;transition:background 0.15s,border-color 0.15s,color 0.15s;text-align:left;box-sizing:border-box;" onmouseover="this.style.background='#fff7ed';this.style.borderColor='#f97316';this.style.color='#f97316';" onmouseout="this.style.background='#f8fafc';this.style.borderColor='#e2e8f0';this.style.color='#0f172a';">Productivity &amp; Planning</div>
-          <div onclick="selectGoal('wellbeing','Personal Wellbeing')" class="goal-option i18n-text" data-value="wellbeing" style="display:block;padding:7px 14px;margin-bottom:4px;font-size:0.8125rem;font-weight:600;color:#0f172a;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;cursor:pointer;transition:background 0.15s,border-color 0.15s,color 0.15s;text-align:left;box-sizing:border-box;" onmouseover="this.style.background='#fff7ed';this.style.borderColor='#f97316';this.style.color='#f97316';" onmouseout="this.style.background='#f8fafc';this.style.borderColor='#e2e8f0';this.style.color='#0f172a';">Personal Wellbeing</div>
-          <div onclick="selectGoal('reading','Reading &amp; Journalism')" class="goal-option i18n-text" data-value="reading" style="display:block;padding:7px 14px;margin-bottom:4px;font-size:0.8125rem;font-weight:600;color:#0f172a;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;cursor:pointer;transition:background 0.15s,border-color 0.15s,color 0.15s;text-align:left;box-sizing:border-box;" onmouseover="this.style.background='#fff7ed';this.style.borderColor='#f97316';this.style.color='#f97316';" onmouseout="this.style.background='#f8fafc';this.style.borderColor='#e2e8f0';this.style.color='#0f172a';">Reading &amp; Journalism</div>
-          <div onclick="selectGoal('create','Design &amp; Innovation')" class="goal-option i18n-text" data-value="create" style="display:block;padding:7px 14px;margin-bottom:4px;font-size:0.8125rem;font-weight:600;color:#0f172a;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;cursor:pointer;transition:background 0.15s,border-color 0.15s,color 0.15s;text-align:left;box-sizing:border-box;" onmouseover="this.style.background='#fff7ed';this.style.borderColor='#f97316';this.style.color='#f97316';" onmouseout="this.style.background='#f8fafc';this.style.borderColor='#e2e8f0';this.style.color='#0f172a';">Design &amp; Innovation</div>
-          <div onclick="selectGoal('shop','Shopping &amp; Marketplace')" class="goal-option i18n-text" data-value="shop" style="display:block;padding:7px 14px;margin-bottom:0;font-size:0.8125rem;font-weight:600;color:#0f172a;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;cursor:pointer;transition:background 0.15s,border-color 0.15s,color 0.15s;text-align:left;box-sizing:border-box;" onmouseover="this.style.background='#fff7ed';this.style.borderColor='#f97316';this.style.color='#f97316';" onmouseout="this.style.background='#f8fafc';this.style.borderColor='#e2e8f0';this.style.color='#0f172a';">Shopping &amp; Marketplace</div>
+        <div class="picker-dropdown-wrapper">
+          <select class="picker-select" id="hero-quick-picker">
+            <option value="" class="i18n-text">Select a goal...</option>
+            <option value="learn" class="i18n-text">Learning &amp; Courses</option>
+            <option value="exams" class="i18n-text">Assessments &amp; Exams</option>
+            <option value="productivity" class="i18n-text">Productivity &amp; Planning</option>
+            <option value="wellbeing" class="i18n-text">Personal Wellbeing</option>
+            <option value="reading" class="i18n-text">Reading &amp; Journalism</option>
+            <option value="create" class="i18n-text">Design &amp; Innovation</option>
+            <option value="shop" class="i18n-text">Shopping &amp; Marketplace</option>
+          </select>
+          <svg class="picker-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
       </div>
-      <script>
-        function toggleGoalPicker() {
-          var menu = document.getElementById('goal-picker-menu');
-          var arrow = document.getElementById('goal-picker-arrow');
-          var open = menu.style.display === 'block';
-          menu.style.display = open ? 'none' : 'block';
-          arrow.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
-        }
-        function selectGoal(value, label) {
-          document.getElementById('goal-picker-label').textContent = label;
-          document.getElementById('goal-picker-menu').style.display = 'none';
-          document.getElementById('goal-picker-arrow').style.transform = 'rotate(0deg)';
-          // trigger existing picker logic if present
-          var picker = document.getElementById('hero-quick-picker');
-          if (picker) { picker.value = value; picker.dispatchEvent(new Event('change')); }
-          // scroll to matching products
-          var rows = document.querySelectorAll('.product-row');
-          rows.forEach(function(r){ r.classList.remove('hidden'); });
-          if (value) {
-            rows.forEach(function(r){
-              if (r.dataset.picker && r.dataset.picker !== value) r.classList.add('hidden');
-            });
-          }
-        }
-        document.addEventListener('click', function(e) {
-          var picker = document.getElementById('goal-picker-trigger');
-          var menu = document.getElementById('goal-picker-menu');
-          if (!picker.contains(e.target) && !menu.contains(e.target)) {
-            menu.style.display = 'none';
-            document.getElementById('goal-picker-arrow').style.transform = 'rotate(0deg)';
-          }
-        });
-      </script>
     </div>
   </section>
 
@@ -503,7 +470,10 @@
        2. WHAT WE BUILD
   ========================================================= -->
   <div class="vision-strip">
-    <p class="i18n-text" style="margin-bottom: 12px;">Instead of offering just one application, AcademeForge brings together multiple connected platforms designed for different aspects of a student's journey—from learning and AI to examinations, productivity, wellbeing, journalism, and creative innovation.</p>
+    <div class="section-header text-center" style="margin-bottom: 32px;">
+      <h2 class="section-title i18n-text">What We Build</h2>
+    </div>
+    <p class="i18n-text" style="margin-bottom: 20px;">Instead of offering just one application, AcademeForge brings together multiple connected platforms designed for different aspects of a student's journey—from learning and AI to examinations, productivity, wellbeing, journalism, and creative innovation.</p>
     <p class="i18n-text">Whether you're learning a new skill, preparing for an exam, organizing your day, exploring AI, or connecting with a community, AcademeForge provides a unified experience through one ecosystem.</p>
   </div>
 
