@@ -296,6 +296,64 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); color: var(--text-pri
 .vision-mockup { max-width: 100%; height: auto; border-radius: var(--radius-md); box-shadow: 0 20px 40px rgba(0,0,0,0.1); transform: rotate(2deg); transition: transform var(--transition); }
 .vision-mockup:hover { transform: rotate(0deg); }
 
+/* Feature Cards (Redesigned) */
+.feature-list-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 768px) {
+  .feature-list-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (min-width: 992px) {
+  .feature-list-grid { grid-template-columns: 1fr; }
+}
+.feature-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+  cursor: default;
+}
+.feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  border-color: var(--text-tertiary);
+}
+.feature-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  color: #fff;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(249, 115, 22, 0.3);
+}
+.feature-icon-wrapper svg { width: 20px; height: 20px; }
+.feature-text {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Floating Animation */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+.floating-anim {
+  animation: float 6s ease-in-out infinite;
+}
+
 /* =========================================================
    3. PRODUCTS (FILTERABLE GRID & ICONS)
 ========================================================= */
