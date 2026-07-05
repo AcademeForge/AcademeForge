@@ -1,8 +1,6 @@
-/* =========================================================
-   DESIGN TOKENS & FOUNDATION
-========================================================= */
+
 :root {
-  /* Brand Personality: Minimal, Professional, Confident */
+  
   --bg-primary: #ffffff;
   --bg-secondary: #fafafa;
   --bg-dark: #0a0a0a;
