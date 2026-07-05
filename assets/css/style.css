@@ -446,3 +446,140 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); color: var(--text-pri
   .desktop-only { display: none !important; }
   .mobile-toggle { display: block; }
   
+
+/* =========================================================
+   MARQUEE — infinite scroll, bigger images, faster
+========================================================= */
+@keyframes marquee-infinite {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  gap: 72px;
+  width: max-content;
+  animation: marquee-infinite 18s linear infinite;
+  align-items: center;
+}
+.marquee-track img {
+  height: 56px;
+  width: auto;
+  opacity: 0.65;
+  transition: opacity 0.3s;
+  flex-shrink: 0;
+}
+.marquee-track img:hover { opacity: 1; }
+.marquee-container { overflow: hidden; width: 100%; }
+
+/* =========================================================
+   HERO — full viewport, marquee below fold
+========================================================= */
+.hero {
+  padding: 120px 24px 100px !important;
+  min-height: calc(100vh - 120px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero-container { width: 100%; }
+.hero-headline { font-size: clamp(2.5rem, 5vw, 4.5rem) !important; margin-bottom: 14px !important; }
+.hero-subheadline { font-size: clamp(1rem, 1.5vw, 1.2rem) !important; margin-bottom: 24px !important; }
+
+/* =========================================================
+   VISION STRIP
+========================================================= */
+.vision-strip {
+  padding: 56px 48px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-light);
+  text-align: center;
+}
+.vision-strip p {
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  color: var(--text-secondary);
+  max-width: 860px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+.vision-strip p + p { margin-top: 20px; }
+
+/* =========================================================
+   GOAL PICKER DROPDOWN — custom styled
+========================================================= */
+#goal-picker-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.14), 0 4px 16px rgba(0,0,0,0.06);
+  min-width: 280px;
+  overflow: hidden;
+  z-index: 200;
+  padding: 6px;
+}
+.goal-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #0f172a;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.goal-option:hover { background: #f1f5f9; color: #f97316; }
+.goal-option::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f97316;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+.goal-option:hover::before { opacity: 1; }
+
+/* =========================================================
+   RESPONSIVE — Mobile / Tablet / Laptop
+========================================================= */
+
+/* Mobile (≤ 640px) */
+@media (max-width: 640px) {
+  .hero { padding: 64px 20px 48px !important; min-height: calc(100vh - 100px); }
+  .hero-headline { font-size: clamp(2rem, 8vw, 3rem) !important; }
+  .hero-subheadline { font-size: 1rem !important; }
+  .quick-picker { flex-direction: column; gap: 8px; padding: 12px 16px; border-radius: 16px; width: 100%; box-sizing: border-box; }
+  .picker-dropdown-wrapper { width: 100%; justify-content: space-between; border-radius: 12px; }
+  #goal-picker-menu { width: 100%; min-width: unset; left: 0; transform: none; }
+  .section-title { font-size: clamp(1.5rem, 6vw, 2rem) !important; }
+  .section { padding: 48px 16px !important; }
+  .vision-strip { padding: 32px 20px; }
+  .vision-strip p { font-size: 0.9375rem; }
+  .marquee-track img { height: 40px; }
+  .marquee-track { gap: 48px; }
+  .footer-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+  .footer-col { text-align: center; }
+  .brand { justify-content: center; }
+}
+
+/* Tablet (641px – 1024px) */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .hero { padding: 80px 32px 60px !important; }
+  .hero-headline { font-size: clamp(2.25rem, 5vw, 3.5rem) !important; }
+  .section { padding: 64px 32px !important; }
+  .vision-strip { padding: 48px 40px; }
+  .footer-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+
+/* Laptop / Desktop (1025px+) */
+@media (min-width: 1025px) {
+  .hero { padding: 120px 48px 100px !important; }
+  .section { padding: 100px 48px !important; }
+}
