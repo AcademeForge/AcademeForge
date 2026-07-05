@@ -433,16 +433,3 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
-// 4. Anti-Debugger / Console Clear & Network Timing
-setInterval(function() {
-  console.clear();
-  
-  // Clears network performance data (Note: Browsers do not allow JS to clear the actual DevTools Network tab UI)
-  if (window.performance && window.performance.clearResourceTimings) {
-    window.performance.clearResourceTimings();
-  }
-
-  (function anonymous() {
-    debugger;
-  })();
-}, 100);
