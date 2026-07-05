@@ -421,28 +421,14 @@
           <span id="goal-picker-label" style="font-size: 1rem; font-weight: 600; color: var(--text-primary); padding-right: 10px;" class="i18n-text">Select a goal...</span>
           <svg id="goal-picker-arrow" class="picker-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="transition: transform 0.2s;"><polyline points="6 9 12 15 18 9"/></svg>
         </div>
-        <div id="goal-picker-menu" style="display:none; position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%); background: #fff; border: 1px solid var(--border-light); border-radius: 14px; box-shadow: 0 16px 48px rgba(0,0,0,0.12); min-width: 260px; overflow: hidden; z-index: 50;">
-          <div onclick="selectGoal('learn','Learning &amp; Courses')" class="goal-option i18n-text" data-value="learn">
-            <span style="font-size: 1.1rem;">📚</span> Learning &amp; Courses
-          </div>
-          <div onclick="selectGoal('exams','Assessments &amp; Exams')" class="goal-option i18n-text" data-value="exams">
-            <span style="font-size: 1.1rem;">📝</span> Assessments &amp; Exams
-          </div>
-          <div onclick="selectGoal('productivity','Productivity &amp; Planning')" class="goal-option i18n-text" data-value="productivity">
-            <span style="font-size: 1.1rem;">⏰</span> Productivity &amp; Planning
-          </div>
-          <div onclick="selectGoal('wellbeing','Personal Wellbeing')" class="goal-option i18n-text" data-value="wellbeing">
-            <span style="font-size: 1.1rem;">🌱</span> Personal Wellbeing
-          </div>
-          <div onclick="selectGoal('reading','Reading &amp; Journalism')" class="goal-option i18n-text" data-value="reading">
-            <span style="font-size: 1.1rem;">📰</span> Reading &amp; Journalism
-          </div>
-          <div onclick="selectGoal('create','Design &amp; Innovation')" class="goal-option i18n-text" data-value="create">
-            <span style="font-size: 1.1rem;">🎨</span> Design &amp; Innovation
-          </div>
-          <div onclick="selectGoal('shop','Shopping &amp; Marketplace')" class="goal-option i18n-text" data-value="shop">
-            <span style="font-size: 1.1rem;">🛍️</span> Shopping &amp; Marketplace
-          </div>
+        <div id="goal-picker-menu">
+          <div onclick="selectGoal('learn','Learning &amp; Courses')" class="goal-option i18n-text" data-value="learn">Learning &amp; Courses</div>
+          <div onclick="selectGoal('exams','Assessments &amp; Exams')" class="goal-option i18n-text" data-value="exams">Assessments &amp; Exams</div>
+          <div onclick="selectGoal('productivity','Productivity &amp; Planning')" class="goal-option i18n-text" data-value="productivity">Productivity &amp; Planning</div>
+          <div onclick="selectGoal('wellbeing','Personal Wellbeing')" class="goal-option i18n-text" data-value="wellbeing">Personal Wellbeing</div>
+          <div onclick="selectGoal('reading','Reading &amp; Journalism')" class="goal-option i18n-text" data-value="reading">Reading &amp; Journalism</div>
+          <div onclick="selectGoal('create','Design &amp; Innovation')" class="goal-option i18n-text" data-value="create">Design &amp; Innovation</div>
+          <div onclick="selectGoal('shop','Shopping &amp; Marketplace')" class="goal-option i18n-text" data-value="shop">Shopping &amp; Marketplace</div>
         </div>
       </div>
       <script>
