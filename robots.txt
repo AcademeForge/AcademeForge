@@ -1,7 +1,3 @@
 User-agent: *
 Allow: /
-
-Disallow: /student-app-preview/
-Disallow: /AI/
-
-Sitemap: https://academeforge.in/sitemap.xml
+Sitemap: https://www.academeforge.in/sitemap.xml
