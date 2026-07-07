@@ -299,6 +299,30 @@ button {
 .footer.bg-dark h4, .footer.bg-dark a, .footer.bg-dark p, .footer.bg-dark span {
   color: #ffffff !important;
 }
-.footer.bg-dark svg {
+.footer.bg-dark svg:not(.theme-btn svg) {
   color: #ffffff !important;
+}
+
+
+/* Fix for Theme Toggle inside Dark Footer in Light Mode */
+.bg-dark .theme-controls {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+.bg-dark .theme-btn {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+.bg-dark .theme-btn:hover {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+.bg-dark .theme-btn.active {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+.bg-dark .theme-btn svg {
+  color: inherit !important;
+}
+.footer.bg-dark svg {
+  /* Let theme buttons handle their own svg colors */
 }
