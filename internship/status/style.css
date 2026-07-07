@@ -237,9 +237,8 @@ button {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-lg);
-  overflow-y: auto;
-  max-height: 700px;
-  height: 100%;
+  overflow: hidden;
+  height: 600px;
 }
 
 .empty-state {
@@ -262,7 +261,7 @@ button {
 }
 
 .loaded-state {
-  padding: 2.5rem;
+  padding: 1.5rem;
 }
 
 .loaded-header {
@@ -273,21 +272,22 @@ button {
 
 .loaded-header h2 {
   font-family: 'Manrope', sans-serif;
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
 }
 
 .loaded-header p {
   color: var(--text-muted);
+  font-size: 0.875rem;
 }
 
 .candidate-info {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   background: var(--bg-secondary);
-  padding: 1.5rem;
+  padding: 1rem;
   border-radius: 8px;
 }
 
@@ -305,28 +305,27 @@ button {
   font-weight: 600;
 }
 
-/* Timeline */
 .timeline {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .step {
   display: flex;
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
 .step-icon {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: var(--bg-secondary);
   border: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-weight: 700;
   flex-shrink: 0;
   color: var(--text-muted);
@@ -351,12 +350,12 @@ button {
 }
 
 .step h3 {
-  font-size: 1rem;
-  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
+  margin-bottom: 0.15rem;
 }
 
 .step p {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
 }
 
@@ -470,3 +469,5 @@ button {
     gap: 1rem;
   }
 }
+
+[hidden] { display: none !important; }
