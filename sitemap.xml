@@ -1,113 +1,142 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-
-  <!-- Homepage -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Main Domain -->
   <url>
-    <loc>https://academeforge.in/</loc>
-    <lastmod>2025-06-29</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://www.academeforge.in/</loc>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
-    <image:image>
-      <image:loc>https://academeforge.in/IMG/og-image.webp</image:loc>
-      <image:title>AcademeForge — India's All-in-One Learning Ecosystem</image:title>
-    </image:image>
   </url>
-
-  <!-- Explore Courses section -->
   <url>
-    <loc>https://academeforge.in/#explore</loc>
-    <lastmod>2025-06-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- LearnSpace section -->
-  <url>
-    <loc>https://academeforge.in/#learnspace</loc>
-    <lastmod>2025-06-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-
-  <!-- AF ProGuide AI section -->
-  <url>
-    <loc>https://academeforge.in/#proguide</loc>
-    <lastmod>2025-06-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-
-  <!-- AF Test Arena section -->
-  <url>
-    <loc>https://academeforge.in/#testarena</loc>
-    <lastmod>2025-06-29</lastmod>
+    <loc>https://www.academeforge.in/contact/index.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- Community section -->
+  <!-- Internship Pages -->
   <url>
-    <loc>https://academeforge.in/#community</loc>
-    <lastmod>2025-06-29</lastmod>
+    <loc>https://www.academeforge.in/internship/apply/index.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.academeforge.in/internship/status/index.html</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.8</priority>
   </url>
-
-  <!-- Companion Apps section -->
   <url>
-    <loc>https://academeforge.in/#apps</loc>
-    <lastmod>2025-06-29</lastmod>
+    <loc>https://www.academeforge.in/internship/policy/index.html</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-
-  <!-- About / Founder section -->
-  <url>
-    <loc>https://academeforge.in/#about</loc>
-    <lastmod>2025-06-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- FAQ section -->
-  <url>
-    <loc>https://academeforge.in/#faq</loc>
-    <lastmod>2025-06-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- Contact section -->
-  <url>
-    <loc>https://academeforge.in/#contact</loc>
-    <lastmod>2025-06-29</lastmod>
-    <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
-
-  <!-- Verify Certificate -->
   <url>
-    <loc>https://academeforge.in/verify-Certificate/</loc>
-    <lastmod>2025-06-29</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- Join Team -->
-  <url>
-    <loc>https://academeforge.in/join-team/</loc>
-    <lastmod>2025-06-29</lastmod>
+    <loc>https://www.academeforge.in/internship/what-to-do/index.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
-  <!-- Workplace Policy -->
+  <!-- Other Tools Pages -->
   <url>
-    <loc>https://academeforge.in/WorkplacePolicy/</loc>
-    <lastmod>2025-06-29</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.4</priority>
+    <loc>https://www.academeforge.in/other-tools/verify-certificate/index.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.academeforge.in/other-tools/verify-team/index.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.academeforge.in/other-tools/hopenext/index.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
+  <!-- Legal Pages -->
+  <url>
+    <loc>https://www.academeforge.in/legal/privacy/index.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.academeforge.in/legal/terms/index.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Ecosystem Subdomains -->
+  <url>
+    <loc>https://nexus.academeforge.in/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://ai.academeforge.in/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://ast.academeforge.in/</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://timezy.academeforge.in/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://capacity.academeforge.in/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://zenopulsky.academeforge.in/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://nexora.academeforge.in/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://shop.academeforge.in/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sudoku.academeforge.in/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ticxotoe.academeforge.in/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://download.academeforge.in/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://about.academeforge.in/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://about.academeforge.in/started.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://faq.academeforge.in/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://contact.academeforge.in/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
