@@ -75,6 +75,9 @@ function clearAlert() {
 }
 
 function renderStatus(status) {
+  if (Array.isArray(status)) status = status[0];
+  if (!status) throw new Error("No application data found.");
+
   byId("emptyState").hidden = true;
   byId("loadedState").hidden = false;
   byId("statusPanel").classList.remove("celebrate");
