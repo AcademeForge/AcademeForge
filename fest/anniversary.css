@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════════
-   Anniversary Balloons — Premium Edition
-   Architecture: position:fixed container, strings hang FROM header,
-   balloons suspended below. Gentle sway only.
+   Anniversary Balloons — Premium Edition v2
+   Architecture: fixed container, slot = pin + string + balloon.
+   Sway pivots from top (transform-origin: center top).
    ═══════════════════════════════════════════════════════════════════ */
 
 .anv-balloons-container {
@@ -15,7 +15,7 @@
   z-index: 99;
 }
 
-/* ── Balloon groups (left / right) ──────────────────────────────── */
+/* ── Groups ─────────────────────────────────────────────────────── */
 .anv-group {
   position: absolute;
   display: flex;
@@ -23,14 +23,11 @@
   align-items: flex-start;
   gap: 10px;
 }
-
 .anv-group-left  { left: 14px; }
 .anv-group-right { right: 14px; }
 
-/* ── Individual balloon column (string + balloon) ────────────────
-   Each slot is a flex column: SVG string on top, balloon below.
-   The wrapper animates the whole column so string moves with
-   the balloon — looks naturally suspended.                         */
+/* ── Balloon slot — the full hanging unit (pin + string + balloon) ─
+   transform-origin: center top so sway pivots from attachment point */
 .anv-balloon-slot {
   display: flex;
   flex-direction: column;
@@ -40,21 +37,26 @@
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
   animation-fill-mode: both;
-  transform-origin: center top;    /* sway pivots from the top (header) */
+  transform-origin: center top;
   will-change: transform;
 }
 
-/* ── String SVG (sits above the balloon) ─────────────────────────
-   Height is set dynamically by JS based on desired hang length.    */
+/* ── Pin SVG at the very top (attachment to header) ─────────────── */
+.anv-pin-svg {
+  display: block;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+/* ── String SVG ─────────────────────────────────────────────────── */
 .anv-string-svg {
   display: block;
-  width: 4px;         /* just a thin line, width controlled by viewBox */
   overflow: visible;
   flex-shrink: 0;
   pointer-events: none;
 }
 
-/* ── Balloon wrapper (inside slot, below string) ─────────────────  */
+/* ── Balloon wrapper ─────────────────────────────────────────────── */
 .anv-balloon-wrapper {
   display: flex;
   flex-direction: column;
@@ -65,49 +67,46 @@
   flex-shrink: 0;
 }
 
-/* No hover scale — premium feel */
+/* Minimal hover — only a very subtle shadow shift, no scale */
 .anv-balloon-wrapper:hover .anv-balloon-svg {
-  filter: drop-shadow(0 10px 28px rgba(0,0,0,0.28))
-          drop-shadow(0 0 18px rgba(255,215,0,0.22));
+  filter: drop-shadow(0 10px 24px rgba(0,0,0,0.26))
+          drop-shadow(0 0 16px rgba(255,215,0,0.18));
 }
 
-/* ── Balloon SVG ─────────────────────────────────────────────────
-   ~20% larger than original (78×152 → 94×182)                     */
+/* ── Balloon SVG (~20% larger than original 78×152) ──────────────── */
 .anv-balloon-svg {
   width: 94px;
   height: 182px;
   overflow: visible;
   display: block;
   filter: drop-shadow(0 6px 14px rgba(0,0,0,0.22))
-          drop-shadow(0 2px 4px rgba(0,0,0,0.12));
+          drop-shadow(0 2px 5px rgba(0,0,0,0.10));
   transition: filter 0.3s ease;
 }
 
-/* ── Gentle sway — hangs like a real balloon ─────────────────────
-   Very small rotation, almost imperceptible vertical drift.
-   Pivots from top so it mimics pendulum physics.                   */
+/* ── Gentle sway — ±0.8° max, slower period ─────────────────────── */
 @keyframes anv-sway {
-  0%   { transform: rotate(-1.2deg); }
-  25%  { transform: rotate( 0.8deg); }
-  50%  { transform: rotate( 1.4deg); }
-  75%  { transform: rotate(-0.6deg); }
-  100% { transform: rotate(-1.2deg); }
+  0%   { transform: rotate(-0.7deg); }
+  28%  { transform: rotate( 0.8deg); }
+  55%  { transform: rotate( 0.4deg); }
+  78%  { transform: rotate(-0.8deg); }
+  100% { transform: rotate(-0.7deg); }
 }
 
-/* ── Pop keyframe ────────────────────────────────────────────────  */
+/* ── Pop keyframe ────────────────────────────────────────────────── */
 @keyframes anv-pop {
   0%   { transform: scale(1);    opacity: 1; }
-  15%  { transform: scale(1.22); opacity: 1; }
-  50%  { transform: scale(0.25); opacity: 0.4; }
+  12%  { transform: scale(1.18); opacity: 1; }
+  45%  { transform: scale(0.22); opacity: 0.5; }
   100% { transform: scale(0);    opacity: 0; }
 }
 
 .anv-balloon-slot.anv-popping {
-  animation: anv-pop 0.36s cubic-bezier(0.36,0.07,0.19,0.97) forwards !important;
+  animation: anv-pop 0.34s cubic-bezier(0.36,0.07,0.19,0.97) forwards !important;
   pointer-events: none;
 }
 
-/* ── Sparkle circles ─────────────────────────────────────────────  */
+/* ── Sparkle circles ─────────────────────────────────────────────── */
 .anv-sparkle {
   position: fixed;
   border-radius: 50%;
@@ -124,7 +123,7 @@
          opacity: 0; }
 }
 
-/* ── Star shapes ─────────────────────────────────────────────────  */
+/* ── Star shapes ─────────────────────────────────────────────────── */
 .anv-star {
   position: fixed;
   pointer-events: none;
@@ -143,21 +142,93 @@
                     scale(0) rotate(200deg); opacity: 0; }
 }
 
-/* ── Responsive ──────────────────────────────────────────────────  */
+/* ── Anniversary message overlay ─────────────────────────────────── */
+.anv-message-overlay {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  z-index: 10000;
+  pointer-events: none;
+  opacity: 0;
+  animation: anv-msg-in 0.55s cubic-bezier(0.22,0.61,0.36,1) 0.18s forwards,
+             anv-msg-out 0.5s ease-in 2.8s forwards;
+}
+
+@keyframes anv-msg-in {
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes anv-msg-out {
+  to { opacity: 0; transform: translateX(-50%) translateY(-6px); }
+}
+
+.anv-message-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: 20px 32px 22px;
+  background: rgba(255,255,255,0.82);
+  backdrop-filter: blur(22px) saturate(1.7);
+  -webkit-backdrop-filter: blur(22px) saturate(1.7);
+  border: 1px solid rgba(255,255,255,0.60);
+  border-radius: 20px;
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.11),
+    0 2px 8px rgba(0,0,0,0.07),
+    0 0 0 1px rgba(255,215,0,0.12) inset;
+  text-align: center;
+  max-width: min(480px, 90vw);
+}
+
+.anv-message-title {
+  font-family: Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #0f0f10;
+  line-height: 1.25;
+  margin-bottom: 10px;
+}
+
+.anv-message-divider {
+  width: 48px;
+  height: 2.5px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #FFD700 0%, #FF8C00 50%, #FFD700 100%);
+  opacity: 0.88;
+  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+
+.anv-message-subtitle {
+  font-family: Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: rgba(30,30,35,0.62);
+  line-height: 1.4;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────── */
 @media (max-width: 640px) {
   .anv-balloon-svg { width: 72px; height: 140px; }
   .anv-group       { gap: 5px; }
   .anv-group-left  { left: 5px; }
   .anv-group-right { right: 5px; }
+  .anv-message-card    { padding: 16px 20px 18px; }
+  .anv-message-title   { font-size: 13px; }
+  .anv-message-subtitle{ font-size: 12px; }
 }
 
 @media (max-width: 360px) {
   .anv-balloon-svg { width: 56px; height: 108px; }
 }
 
-/* ── Respect reduced-motion ──────────────────────────────────────  */
+/* ── Reduced motion ──────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .anv-balloon-slot              { animation: none !important; }
   .anv-balloon-slot.anv-popping  { opacity: 0 !important; }
   .anv-sparkle, .anv-star        { display: none !important; }
+  .anv-message-overlay           { animation: none !important; opacity: 1 !important; }
 }
