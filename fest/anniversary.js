@@ -6,8 +6,10 @@
     topOffset    : 0,      // px below nav bottom where pin sits
     hangLength   : 67,     // px of string from pin to balloon knot
     confettiSrc  : 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js',
-    swayDur      : [6.4, 5.5, 7.2],   // per slot — slow, calm
-    swayDelay    : [0,   1.2, 2.5],
+    /* 6 unique durations + delays — one per balloon (L0,L1,L2,R0,R1,R2).
+       Durations 5–8 s, delays staggered so no two balloons ever sync.  */
+    swayDur      : [6.2, 7.8, 5.4, 7.1, 5.9, 6.7],
+    swayDelay    : [0,   0.9, 1.8, 0.4, 1.4, 2.3],
     chainDelay   : 150,    // ms between each balloon in chain reaction
   };
 
@@ -19,6 +21,8 @@
     BALLOON_TEXT     : 'NEW',
     OVERLAY_TITLE    : '🎉 Welcome to the AcademeForge Ecosystem 🎉',
     OVERLAY_SUBTITLE : 'One Ecosystem. Multiple Experiences.',
+    /* Bump the version string (v1 → v2) to re-show the experience for all users */
+    STORAGE_KEY      : 'af_ecosystem_launch_v1',
   };
 
   /* ── Colour palettes — preserved exactly ─────────────────────────── */
@@ -230,12 +234,13 @@
   }
 
   /* ── Create full slot (pin + string + balloon) ──────────────────────
-     Returned element is added to allSlots registry.                   */
-  function makeBalloonSlot(color, slotIdx, uid) {
+     globalIdx 0-5 maps into CFG.swayDur/swayDelay so every balloon
+     gets its own unique duration and delay.                            */
+  function makeBalloonSlot(color, globalIdx, uid) {
     var slot_el = document.createElement('div');
     slot_el.className = 'anv-balloon-slot';
-    slot_el.style.animationDuration = CFG.swayDur[slotIdx]  + 's';
-    slot_el.style.animationDelay    = CFG.swayDelay[slotIdx] + 's';
+    slot_el.style.animationDuration = CFG.swayDur[globalIdx]  + 's';
+    slot_el.style.animationDelay    = CFG.swayDelay[globalIdx] + 's';
 
     slot_el.appendChild(makePinSVG());
     slot_el.appendChild(makeStringSVG(uid));
@@ -270,6 +275,7 @@
     /* Chain reaction + overlay — only once */
     if (!chainFired) {
       chainFired = true;
+      markExperienceSeen();   /* persist flag so return visits skip the experience */
       showAnniversaryMessage();
       scheduleChain(slot_el);
     }
@@ -629,9 +635,11 @@
 
     allSlots = [];   /* reset */
 
+    /* globalIdx 0-2 → left balloons, 3-5 → right balloons
+       Each gets a unique duration/delay from CFG.swayDur/swayDelay.   */
     for (var i = 0; i < 3; i++) {
-      var ls = makeBalloonSlot(LEFT_C[i],  i, 'L'+i);
-      var rs = makeBalloonSlot(RIGHT_C[i], i, 'R'+i);
+      var ls = makeBalloonSlot(LEFT_C[i],  i,     'L'+i);
+      var rs = makeBalloonSlot(RIGHT_C[i], i + 3, 'R'+i);
       leftGroup.appendChild(ls);
       rightGroup.appendChild(rs);
       allSlots.push(ls, rs);
@@ -696,8 +704,22 @@
     document.head.appendChild(sc);
   }
 
+  /* ── localStorage helpers ─────────────────────────────────────────── */
+  function hasSeenExperience() {
+    try { return localStorage.getItem(CONFIG.STORAGE_KEY) === '1'; }
+    catch(e) { return false; }   /* private-browsing / blocked — fail open */
+  }
+
+  function markExperienceSeen() {
+    try { localStorage.setItem(CONFIG.STORAGE_KEY, '1'); }
+    catch(e) { /* ignore storage errors */ }
+  }
+
   /* ── Entry point ──────────────────────────────────────────────────── */
   function init() {
+    /* Skip everything on return visits — load the page normally */
+    if (hasSeenExperience()) return;
+
     try {
       buildDOM();
       attachListeners();
@@ -705,12 +727,6 @@
     } catch(e) {
       console.warn('[Anniversary] init error:', e);
     }
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
   }
 
 })();
