@@ -216,18 +216,30 @@
 }
 
 /* ── Responsive ──────────────────────────────────────────────────── */
-@media (max-width: 640px) {
-  .anv-balloon-svg { width: 72px; height: 140px; }
+
+/* Desktop (>=1024px) uses the base rules above, unchanged.
+   Balloon COUNT for tablet/mobile is controlled in JS (anniversary.js) —
+   these breakpoints only handle sizing/positioning of whatever the JS
+   layer actually renders (2 balloons on tablet + mobile). */
+
+/* ── Tablet (768px–1023px): 2 balloons, near the screen edges,
+   center kept clear — desktop balloon size is preserved. ─────────── */
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .anv-group-left  { left: 16px; }
+  .anv-group-right { right: 16px; }
+}
+
+/* ── Mobile (<768px): 2 balloons, ~27.5% smaller (within the
+   25–30% target), strings shortened proportionally via JS
+   (RUNTIME.hangLength), minimum 24px clearance from screen edges. ── */
+@media (max-width: 767.98px) {
+  .anv-balloon-svg { width: 68px; height: 132px; }
   .anv-group       { gap: 5px; }
-  .anv-group-left  { left: 5px; }
-  .anv-group-right { right: 5px; }
+  .anv-group-left  { left: 24px; }
+  .anv-group-right { right: 24px; }
   .anv-message-card    { padding: 16px 20px 18px; }
   .anv-message-title   { font-size: 13px; }
   .anv-message-subtitle{ font-size: 12px; }
-}
-
-@media (max-width: 360px) {
-  .anv-balloon-svg { width: 56px; height: 108px; }
 }
 
 /* ── Reduced motion ──────────────────────────────────────────────── */
