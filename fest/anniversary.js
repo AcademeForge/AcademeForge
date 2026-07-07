@@ -43,7 +43,7 @@
     OVERLAY_TITLE    : '🎉 Welcome to the AcademeForge Ecosystem 🎉',
     OVERLAY_SUBTITLE : 'One Ecosystem. Multiple Experiences.',
     /* Bump the version string (v1 → v2) to re-show the experience for all users */
-    STORAGE_KEY      : 'af_ecosystem_launch_v1',
+    STORAGE_KEY      : 'af_ecosystem_launch_v2',
   };
 
   /* ── Colour palettes — preserved exactly ─────────────────────────── */
