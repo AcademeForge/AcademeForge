@@ -84,13 +84,18 @@
   transition: filter 0.3s ease;
 }
 
-/* ── Gentle sway — ±0.8° max, slower period ─────────────────────── */
+/* ── Natural pendulum sway — ±2° rotation, 3–5px translate ──────────
+   transform-origin is center top (the pin), so rotate() mimics a
+   pendulum pivot. translateX adds lateral drift; translateY adds the
+   tiny vertical bob that real hanging objects have from air resistance.
+   Each balloon gets its own duration/delay from JS so they never sync. */
 @keyframes anv-sway {
-  0%   { transform: rotate(-0.7deg); }
-  28%  { transform: rotate( 0.8deg); }
-  55%  { transform: rotate( 0.4deg); }
-  78%  { transform: rotate(-0.8deg); }
-  100% { transform: rotate(-0.7deg); }
+  0%   { transform: rotate(-1.8deg) translateX(-2px) translateY(0px);   }
+  22%  { transform: rotate( 2.0deg) translateX( 2px) translateY(4px);   }
+  45%  { transform: rotate( 1.2deg) translateX( 1px) translateY(3px);   }
+  68%  { transform: rotate(-2.0deg) translateX(-2px) translateY(5px);   }
+  85%  { transform: rotate(-0.6deg) translateX(-1px) translateY(2px);   }
+  100% { transform: rotate(-1.8deg) translateX(-2px) translateY(0px);   }
 }
 
 /* ── Pop keyframe ────────────────────────────────────────────────── */
