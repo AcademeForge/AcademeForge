@@ -36,7 +36,6 @@ function initTheme() {
     });
   });
   
-  // Listen for system preference changes
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
     if (localStorage.getItem(THEME_KEY) === "system") {
       applyTheme("system");
@@ -83,11 +82,11 @@ function renderStatus(status) {
   byId("statusPanel").classList.remove("celebrate");
 
   byId("candidateName").textContent = clean(status.full_name) || "Not provided";
-  byId("appliedRole").textContent = clean(status.role) || "General Application";
+  byId("appliedRole").textContent = clean(status.selected_role) || "General Application";
 
   const statusIdEl = byId("statusIdDisplay");
-  if (status.application_id) {
-    statusIdEl.textContent = clean(status.application_id);
+  if (status.application_id || status.id) {
+    statusIdEl.textContent = clean(status.application_id || status.id);
     statusIdEl.parentElement.hidden = false;
   } else {
     statusIdEl.parentElement.hidden = true;
@@ -95,58 +94,73 @@ function renderStatus(status) {
 
   const timeline = byId("timelineList");
   let html = "";
-  let isHired = false;
+  
+  function normalize(val) {
+    if (val === true || val === "T" || val === "t" || val === "true" || val === "TRUE" || val == 1) return true;
+    if (val === false || val === "F" || val === "f" || val === "false" || val === "FALSE" || val === 0 || val === "0") return false;
+    return null;
+  }
 
-  const steps = [
-    { key: "received", title: "Application Received", failTitle: "Application Rejected", desc: "We received your application details.", failDesc: "Your application was not selected to move forward." },
-    { key: "reviewed", title: "Under Review", failTitle: "Review Failed", desc: "Our team is reviewing your profile.", failDesc: "After review, we decided not to proceed." },
-    { key: "interview", title: "Interview / Task", failTitle: "Interview / Task Unsuccessful", desc: "You have been invited for a task or interview.", failDesc: "The interview/task stage did not pass." },
-    { key: "final", title: "Final Decision", failTitle: "Offer Declined", desc: "A final decision is being made.", failDesc: "We were unable to extend an offer." },
-    { key: "hired", title: "Offer Extended", failTitle: "Offer Withdrawn", desc: "Congratulations! You have been selected.", failDesc: "The offer was withdrawn or rejected." }
-  ];
+  const hrRead = normalize(status.hr_read);
+  const hrApproved = normalize(status.hr_approved_resume);
+  const triedToContact = normalize(status.tried_to_contact);
+  const jobSecured = normalize(status.job_secured);
+  const finalRejected = normalize(status.final_rejected);
+  
+  const reason = status.hr_rejection_reason || status.final_rejection_reason || status.rejection_reason || "No reason added by HR yet.";
 
-  let hitPending = false;
-  let hitFail = false;
-
-  steps.forEach(function (step) {
-    const val = status[step.key];
-    const isDone = (val === true || val === "T" || val === "t" || val === "true" || val === "yes");
-    const isFailed = (val === false || val === "F" || val === "f" || val === "false" || val === "no");
-
-    let clz = "pending";
-    let icon = "⏳";
-    let stepTitle = step.title;
-    let stepDesc = step.desc;
-
-    if (hitFail) {
-      clz = "pending";
-      icon = "—";
-    } else if (isFailed) {
-      clz = "fail";
-      icon = "✕";
-      stepTitle = step.failTitle;
-      stepDesc = step.failDesc;
-      hitFail = true;
-    } else if (isDone) {
-      clz = "done";
-      icon = "✓";
-      if (step.key === "hired") {
-        isHired = true;
-      }
-    } else {
-      hitPending = true;
-    }
-
-    html += `
-      <div class="step ${clz}">
+  function step(state, icon, title, desc) {
+    return `
+      <div class="step ${state}">
         <div class="step-icon">${icon}</div>
         <div>
-          <h3>${stepTitle}</h3>
-          <p>${stepDesc}</p>
+          <h3>${title}</h3>
+          <p>${desc}</p>
         </div>
       </div>
     `;
-  });
+  }
+
+  html += step("done", "✓", "Application Received", "Your application has been submitted successfully.");
+
+  html += step(
+    hrRead ? "done" : "pending", 
+    hrRead ? "✓" : "⏳", 
+    "HR Read", 
+    hrRead ? "HR has read your application." : "Pending. HR has not marked this as read yet."
+  );
+
+  if (hrApproved === true) {
+    html += step("done", "✓", "HR Approved Resume", "HR has approved your profile/resume for the next stage.");
+  } else if (hrApproved === false) {
+    html += step("fail", "✕", "Application Rejected by HR", "Application rejected by HR. Reason: " + reason);
+  } else {
+    html += step("pending", "⏳", "HR Approved Resume", "Pending HR approval.");
+  }
+
+  if (hrApproved !== false) {
+    if (triedToContact === true) {
+      html += step("done", "✓", "Contacted for Next Steps", "We have tried to contact you for the next steps/interview.");
+    } else if (triedToContact === false) {
+      html += step("fail", "✕", "Contact Failed", "We tried to contact you but could not reach you.");
+    } else {
+      html += step("pending", "⏳", "Contacted for Next Steps", "Pending contact for next steps.");
+    }
+  }
+
+  let isHired = false;
+  let isClosed = hrApproved === false || triedToContact === false || jobSecured === false || finalRejected === true;
+
+  if (hrApproved !== false && triedToContact !== false) {
+    if (jobSecured === true) {
+      html += step("done", "✓", "Job Secured", "Congratulations! You have been selected.");
+      isHired = true;
+    } else if (jobSecured === false || finalRejected === true) {
+      html += step("fail", "✕", "Final Decision", "Unfortunately, you were not selected for the role. Reason: " + reason);
+    } else {
+      html += step("pending", "⏳", "Final Decision", "Pending final decision.");
+    }
+  }
 
   const title = byId("statusTitle");
   const text = byId("statusText");
@@ -155,7 +169,7 @@ function renderStatus(status) {
     byId("statusPanel").classList.add("celebrate");
     title.textContent = "Congratulations!";
     text.textContent = "You have been selected to join AcademeForge.";
-  } else if (hitFail) {
+  } else if (isClosed) {
     title.textContent = "Application Closed";
     text.textContent = "Unfortunately, we are not moving forward with this application.";
   } else {
