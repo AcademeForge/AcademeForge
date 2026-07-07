@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Application Status | AcademeForge</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-container">
+      <a href="https://academeforge.in" class="brand">
+        <img src="/IMG/logo.png" alt="AcademeForge Logo" class="logo-img">
+        <span>AcademeForge</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="/internship/apply/index.html">Apply</a>
+        <a href="/internship/status/index.html" class="active">Application Status</a>
+        <a href="/internship/policy/index.html">Workspace Policy</a>
+        <a href="/internship/what-to-do/index.html">What To Do</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="btn-primary">Internship</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="layout-grid">
+      
+      <!-- Left Panel: Info & Form -->
+      <section class="left-panel">
+        <div class="intro">
+          <h1>Track Your Application</h1>
+          <p>Enter your Email or Mobile Number below to check the real-time status of your internship application at AcademeForge.</p>
+        </div>
+
+        <form id="statusForm" class="form-card">
+          <div class="form-group">
+            <label for="statusEmail">Email Address</label>
+            <input type="email" id="statusEmail" class="form-control" placeholder="name@example.com">
+          </div>
+
+          <div class="form-group">
+            <label for="statusMobile">Mobile Number</label>
+            <input type="tel" id="statusMobile" class="form-control" placeholder="e.g. 9876543210">
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" id="checkStatusBtn" class="btn-primary">Check Status</button>
+            <button type="button" id="clearBtn" class="btn-outline">Clear</button>
+          </div>
+
+          <div id="alertMessage" class="alert"></div>
+        </form>
+
+        <div class="system-status">
+          <div class="status-dot"></div>
+          ALL SYSTEMS NORMAL.
+        </div>
+      </section>
+
+      <!-- Right Panel: Status Display -->
+      <section class="right-panel">
+        <div id="statusPanel" class="status-panel">
+          
+          <!-- Empty State -->
+          <div id="emptyState" class="empty-state">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <h3>Ready to check</h3>
+            <p>Your application timeline will appear here.</p>
+          </div>
+
+          <!-- Loaded State -->
+          <div id="loadedState" class="loaded-state" hidden>
+            <div class="loaded-header">
+              <h2 id="statusTitle">Application Status</h2>
+              <p id="statusText">Current application progress is shown below.</p>
+            </div>
+
+            <div class="candidate-info">
+              <div class="info-item">
+                <label>Applicant</label>
+                <span id="candidateName"></span>
+              </div>
+              <div class="info-item">
+                <label>Applied Role</label>
+                <span id="appliedRole"></span>
+              </div>
+              <div class="info-item" hidden>
+                <label>Application ID</label>
+                <span id="statusIdDisplay"></span>
+              </div>
+            </div>
+
+            <div id="timelineList" class="timeline">
+              <!-- Timeline items injected by script.js -->
+            </div>
+          </div>
+          
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <p>&copy; <span id="year"></span> <a href="https://academeforge.in">AcademeForge</a>. All rights reserved.</p>
+      
+      <!-- Theme Controls -->
+      <div class="theme-controls">
+        <!-- Light Mode -->
+        <button class="theme-btn" data-theme="light" aria-label="Light mode">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+        </button>
+        <!-- System Mode -->
+        <button class="theme-btn active" data-theme="system" aria-label="System mode">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </button>
+        <!-- Dark Mode -->
+        <button class="theme-btn" data-theme="dark" aria-label="Dark mode">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Link script -->
+  <script src="script.js"></script>
+</body>
+</html>
