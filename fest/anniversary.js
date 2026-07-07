@@ -3,14 +3,35 @@
 
   /* ── Config ──────────────────────────────────────────────────────── */
   var CFG = {
-    topOffset    : 0,      // px below nav bottom where pin sits
-    hangLength   : 67,     // px of string from pin to balloon knot
-    confettiSrc  : 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js',
-    /* 6 unique durations + delays — one per balloon (L0,L1,L2,R0,R1,R2).
-       Durations 5–8 s, delays staggered so no two balloons ever sync.  */
+    topOffset      : 0,      // px below nav bottom where pin sits
+    hangLengthBase : 67,     // px of string from pin to balloon knot (desktop/tablet)
+    mobileScale    : 0.725,  // ~27.5% size/string reduction on mobile (<768px)
+    confettiSrc    : 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js',
+    /* 6 unique durations + delays — one per balloon slot (L0,L1,L2,R0,R1,R2).
+       Durations 5–8 s, delays staggered so no two balloons ever sync.
+       Only a subset of these indices is used when fewer balloons are
+       rendered (tablet/mobile), but the array always has all 6 so the
+       mapping never runs out of bounds regardless of breakpoint.       */
     swayDur      : [6.2, 7.8, 5.4, 7.1, 5.9, 6.7],
     swayDelay    : [0,   0.9, 1.8, 0.4, 1.4, 2.3],
     chainDelay   : 150,    // ms between each balloon in chain reaction
+  };
+
+  /* ── Responsive breakpoints ───────────────────────────────────────
+     Desktop >=1024px : 6 balloons (3 left / 3 right), base size.
+     Tablet  768–1023px: 2 balloons (1 left / 1 right), base size,
+                          positioned near the edges, center clear.
+     Mobile  <768px    : 2 balloons (1 left / 1 right), scaled down
+                          by CFG.mobileScale, strings shortened by
+                          the same factor, min 24px from edges (CSS). */
+  var BP = {
+    TABLET_MIN : 768,
+    DESKTOP_MIN: 1024,
+  };
+
+  /* ── Runtime values that change per breakpoint ───────────────────── */
+  var RUNTIME = {
+    hangLength: CFG.hangLengthBase,   // current string length in px
   };
 
   /* ── Content configuration — edit here to change all text ───────────
@@ -45,7 +66,8 @@
   var rafId            = null;
   var chainFired       = false;   // guard: chain runs only once
   var messagShown      = false;   // guard: overlay shown only once
-  var allSlots         = [];      // ordered list of all 6 slot elements
+  var allSlots         = [];      // ordered list of all currently-rendered slot elements
+  var activeConfig     = null;    // the breakpoint config currently rendered {name,leftCount,rightCount,hangLength}
 
   /* ── SVG helper ───────────────────────────────────────────────────── */
   var NS = 'http://www.w3.org/2000/svg';
@@ -91,9 +113,10 @@
 
   /* ── String SVG ────────────────────────────────────────────────────
      Slightly curved, more visible stroke.
-     Height = CFG.hangLength. Connects pin bottom to balloon knot top. */
+     Height = RUNTIME.hangLength (breakpoint-scaled). Connects pin
+     bottom to balloon knot top.                                      */
   function makeStringSVG(uid) {
-    var H  = CFG.hangLength;
+    var H  = RUNTIME.hangLength;
     var CX = 3;   // centre X in a 6-wide viewBox
     var svg = s('svg', {
       viewBox        : '0 0 6 '+H,
@@ -613,6 +636,58 @@
     return fallback || 72;
   }
 
+  /* ── Breakpoint detection ─────────────────────────────────────────── */
+  function getBreakpointName() {
+    var w = window.innerWidth;
+    if (w >= BP.DESKTOP_MIN) return 'desktop';
+    if (w >= BP.TABLET_MIN)  return 'tablet';
+    return 'mobile';
+  }
+
+  /* ── Per-breakpoint layout config ─────────────────────────────────
+     Desktop : 3 left / 3 right, base string length, base balloon size
+               (balloon size is controlled entirely by CSS — unchanged).
+     Tablet  : 1 left / 1 right, base string length, base balloon size.
+     Mobile  : 1 left / 1 right, shortened string (CFG.mobileScale),
+               smaller balloon size (handled by the <768px CSS rule). */
+  function getConfigForBreakpoint(name) {
+    if (name === 'mobile') {
+      return {
+        name       : 'mobile',
+        leftCount  : 1,
+        rightCount : 1,
+        hangLength : Math.round(CFG.hangLengthBase * CFG.mobileScale),
+      };
+    }
+    if (name === 'tablet') {
+      return {
+        name       : 'tablet',
+        leftCount  : 1,
+        rightCount : 1,
+        hangLength : CFG.hangLengthBase,
+      };
+    }
+    return {
+      name       : 'desktop',
+      leftCount  : 3,
+      rightCount : 3,
+      hangLength : CFG.hangLengthBase,
+    };
+  }
+
+  /* ── Tear down the currently-rendered balloon DOM (if any) ────────
+     Ensures a rebuild never duplicates elements — the old container
+     is fully removed from the document before a new one is created. */
+  function destroyDOM() {
+    if (container && container.isConnected) {
+      container.remove();
+    }
+    container   = null;
+    leftGroup   = null;
+    rightGroup  = null;
+    allSlots    = [];
+  }
+
   /* ── Position groups flush to header bottom ───────────────────────── */
   function positionGroups() {
     if (!leftGroup || !rightGroup) return;
@@ -621,10 +696,20 @@
     rightGroup.style.top = top + 'px';
   }
 
-  /* ── Build DOM ────────────────────────────────────────────────────── */
-  function buildDOM() {
+  /* ── Build DOM ────────────────────────────────────────────────────── *
+     Renders exactly bpConfig.leftCount + bpConfig.rightCount balloons —
+     no CSS-only hiding, only the required elements are ever created.
+     globalIdx 0-2 → left balloons, 3-5 → right balloons, matching the
+     original 6-slot CFG.swayDur/swayDelay mapping regardless of how
+     many of those slots are actually rendered on this breakpoint.     */
+  function buildDOM(bpConfig) {
+    destroyDOM();   /* guarantee no duplicate elements ever accumulate */
+
+    activeConfig = bpConfig;
+    RUNTIME.hangLength = bpConfig.hangLength;
+
     container = document.createElement('div');
-    container.className = 'anv-balloons-container';
+    container.className = 'anv-balloons-container anv-bp-' + bpConfig.name;
     container.setAttribute('aria-hidden','true');
     container.setAttribute('role','presentation');
 
@@ -635,14 +720,18 @@
 
     allSlots = [];   /* reset */
 
-    /* globalIdx 0-2 → left balloons, 3-5 → right balloons
-       Each gets a unique duration/delay from CFG.swayDur/swayDelay.   */
-    for (var i = 0; i < 3; i++) {
-      var ls = makeBalloonSlot(LEFT_C[i],  i,     'L'+i);
-      var rs = makeBalloonSlot(RIGHT_C[i], i + 3, 'R'+i);
-      leftGroup.appendChild(ls);
-      rightGroup.appendChild(rs);
-      allSlots.push(ls, rs);
+    var maxCount = Math.max(bpConfig.leftCount, bpConfig.rightCount);
+    for (var i = 0; i < maxCount; i++) {
+      if (i < bpConfig.leftCount) {
+        var ls = makeBalloonSlot(LEFT_C[i % LEFT_C.length], i, 'L'+i);
+        leftGroup.appendChild(ls);
+        allSlots.push(ls);
+      }
+      if (i < bpConfig.rightCount) {
+        var rs = makeBalloonSlot(RIGHT_C[i % RIGHT_C.length], i + 3, 'R'+i);
+        rightGroup.appendChild(rs);
+        allSlots.push(rs);
+      }
     }
 
     container.appendChild(leftGroup);
@@ -654,12 +743,31 @@
     });
   }
 
+  /* ── Rebuild the balloon layout if the breakpoint has changed ──────
+     Called on resize (debounced). Skips the rebuild once the pop
+     chain has started (chainFired) so an in-progress/completed
+     celebration is never reset or duplicated by a viewport change. */
+  function rebuildIfBreakpointChanged() {
+    var name = getBreakpointName();
+    if (activeConfig && activeConfig.name === name) {
+      positionGroups();
+      return;
+    }
+    if (chainFired) {
+      /* Experience already committed — just keep whatever remains
+         correctly positioned instead of tearing it down/rebuilding. */
+      positionGroups();
+      return;
+    }
+    buildDOM(getConfigForBreakpoint(name));
+  }
+
   /* ── Event listeners ──────────────────────────────────────────────── */
   function attachListeners() {
     var resizeTimer;
     window.addEventListener('resize', function(){
       clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(positionGroups, 180);
+      resizeTimer = setTimeout(rebuildIfBreakpointChanged, 180);
     }, {passive:true});
 
     window.addEventListener('scroll', function(){
@@ -721,7 +829,7 @@
     if (hasSeenExperience()) return;
 
     try {
-      buildDOM();
+      buildDOM(getConfigForBreakpoint(getBreakpointName()));
       attachListeners();
       loadConfetti();
     } catch(e) {
