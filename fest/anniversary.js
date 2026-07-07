@@ -42,8 +42,8 @@
     BALLOON_TEXT     : 'NEW',
     OVERLAY_TITLE    : '🎉 Welcome to the AcademeForge Ecosystem 🎉',
     OVERLAY_SUBTITLE : 'One Ecosystem. Multiple Experiences.',
-    /* Bump the version string (v1 → v2) to re-show the experience for all users */
-    STORAGE_KEY      : 'af_ecosystem_launch_v2',
+    STORAGE_KEY      : 'af_ecosystem_launch_v1',
+    STORAGE_TTL_MS   : 7 * 24 * 60 * 60 * 1000,   // 7 days in milliseconds
   };
 
   /* ── Colour palettes — preserved exactly ─────────────────────────── */
@@ -298,7 +298,7 @@
     /* Chain reaction + overlay — only once */
     if (!chainFired) {
       chainFired = true;
-      markExperienceSeen();   /* persist flag so return visits skip the experience */
+      markExperienceSeen();
       showAnniversaryMessage();
       scheduleChain(slot_el);
     }
@@ -812,22 +812,32 @@
     document.head.appendChild(sc);
   }
 
-  /* ── localStorage helpers ─────────────────────────────────────────── */
+  /* ── sessionStorage helpers — 7-day TTL ──────────────────────────────
+     Stores a JSON payload {ts: <epoch ms>} in sessionStorage.
+     hasSeenExperience() returns true only if the stored timestamp is
+     less than CONFIG.STORAGE_TTL_MS (7 days) old.  After 7 days the
+     key is treated as absent and the experience reshows.              */
   function hasSeenExperience() {
-    try { return localStorage.getItem(CONFIG.STORAGE_KEY) === '1'; }
-    catch(e) { return false; }   /* private-browsing / blocked — fail open */
+    try {
+      var raw = sessionStorage.getItem(CONFIG.STORAGE_KEY);
+      if (!raw) return false;
+      var payload = JSON.parse(raw);
+      if (!payload || typeof payload.ts !== 'number') return false;
+      return (Date.now() - payload.ts) < CONFIG.STORAGE_TTL_MS;
+    } catch(e) {
+      return false;
+    }
   }
 
   function markExperienceSeen() {
-    try { localStorage.setItem(CONFIG.STORAGE_KEY, '1'); }
-    catch(e) { /* ignore storage errors */ }
+    try {
+      sessionStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify({ ts: Date.now() }));
+    } catch(e) { /* quota exceeded or private browsing — fail silently */ }
   }
 
   /* ── Entry point ──────────────────────────────────────────────────── */
   function init() {
-    /* Skip everything on return visits — load the page normally */
     if (hasSeenExperience()) return;
-
     try {
       buildDOM(getConfigForBreakpoint(getBreakpointName()));
       attachListeners();
@@ -835,6 +845,13 @@
     } catch(e) {
       console.warn('[Anniversary] init error:', e);
     }
+  }
+
+  /* ── Auto-boot on DOM ready ───────────────────────────────────────── */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
   }
 
 })();
