@@ -15,6 +15,54 @@
   
   <link rel="stylesheet" href="/assets/css/style.min.css?v=6.0">
   <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What information does AcademeForge collect?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We collect Personal Information (name, email, phone, education), Usage Data (heatmaps, course progress), and Device Information (IP address, browser type)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does AcademeForge use my personal information?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Data is used to provide educational services, track learning progress, issue certificates, personalize the AI experience, and communicate important updates."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my data secure on AcademeForge?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, we implement industry-standard encryption and secure modern hosting. Your profile details are heavily encrypted, and we do not sell your data to third parties."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are my privacy rights and how do I delete my AcademeForge account?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can request account deletion from the AF Nexus app settings or by emailing privacy@academeforge.in. The deletion takes 90 days, during which logging back in will cancel the request."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I contact AcademeForge regarding privacy concerns?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can contact us anytime regarding our Privacy Policy by emailing privacy@academeforge.in."
+      }
+    }
+  ]
+}
+  </script>
 </head>
 <body>
 
@@ -104,7 +152,16 @@
             <a href="/other-tools/hopenext/index.html" class="dropdown-item i18n-text">HopeNext Portal</a>
           </div>
         </div>
-        <a href="/contact/index.html" class="nav-link i18n-text">Contact</a>
+        <div class="dropdown">
+          <button class="nav-link">
+            <span class="i18n-text">Contact</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="dropdown-arrow"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="dropdown-menu">
+            <a href="/contact/help/index.html" class="dropdown-item i18n-text">Help Request</a>
+            <a href="/contact/suggest/index.html" class="dropdown-item i18n-text">Suggestion</a>
+          </div>
+        </div>
       </div>
 
       <div class="nav-right">
@@ -163,7 +220,8 @@
         <a href="/other-tools/hopenext/index.html" class="drawer-link i18n-text">HopeNext Portal</a>
       </div>
       <div class="drawer-section">
-        <a href="/contact/index.html" class="drawer-link i18n-text">Contact</a>
+        <a href="/contact/help/index.html" class="drawer-link i18n-text">Help Request</a>
+        <a href="/contact/suggest/index.html" class="drawer-link i18n-text">Suggestion</a>
         <a href="https://download.academeforge.in" class="drawer-link highlight i18n-text">Download Center</a>
       </div>
       <div class="drawer-section lang-section">
@@ -174,24 +232,53 @@
           <button class="lang-btn" data-lang="hi">HI</button>
         </div>
       </div>
+      <div class="drawer-section mobile-theme-controls">
+        <h3 class="i18n-text">Theme</h3>
+        <div class="theme-controls" style="margin-top: 10px; width: fit-content;">
+          <button class="theme-btn" data-theme="light" aria-label="Light mode">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+          </button>
+          <button class="theme-btn active" data-theme="system" aria-label="System mode">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+          </button>
+          <button class="theme-btn" data-theme="dark" aria-label="Dark mode">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <main class="main-content">
-    
-<div class="legal-header">
-    <h1 class="i18n-text">Privacy Policy</h1>
-    <p>Last Updated: May 14, 2026</p>
-</div>
-<div class="legal-body">
-    <p>At AcademeForge, we are committed to protecting your privacy and ensuring the security of your personal data. This Privacy Policy explains how we collect, use, and safeguard your information when you use our digital platforms, including AF Nexus, AcademeForge AI, Scholars Test, Timezy, and Capacity.</p>
-    
+    <div class="intro">
+      <h1 class="i18n-text">Privacy Policy</h1>
+      <p>Last Updated: January 1, 2024</p>
+    </div>
+
+    <div class="doc-layout">
+      <!-- Sidebar TOC -->
+      <aside class="sidebar">
+        <h4>Table of Contents</h4>
+        <ul class="toc-list">
+          <li><a href="#info">1. Information We Collect</a></li>\n<li><a href="#usage">2. How We Use Information</a></li>\n<li><a href="#security">3. Data Security</a></li>\n<li><a href="#rights">4. Rights & Deletion</a></li>\n<li><a href="#contact">5. Contact Us</a></li>
+        </ul>
+      </aside>
+
+      <!-- Document Content -->
+      <article class="doc-content">
+        
+<section id="info" class="doc-section">
     <h2>1. Information We Collect</h2>
+    <p>At AcademeForge, we are committed to protecting your privacy and ensuring the security of your personal data. This Privacy Policy explains how we collect, use, and safeguard your information when you use our digital platforms.</p>
     <p>We may collect the following types of information:</p>
     <ul>
         <li><strong>Personal Information:</strong> Name, email address, phone number, and educational details provided during registration.</li>
         <li><strong>Usage Data:</strong> Information about how you interact with our platforms (e.g., learning heatmaps, course progress).</li>
         <li><strong>Device Information:</strong> IP address, browser type, and device identifiers to optimize your experience.</li>
     </ul>
+</section>
 
+<section id="usage" class="doc-section">
     <h2>2. How We Use Your Information</h2>
     <p>Your data is used strictly for the following purposes:</p>
     <ul>
@@ -200,17 +287,25 @@
         <li>To personalize your experience using AcademeForge AI.</li>
         <li>To communicate important updates, security alerts, and support messages.</li>
     </ul>
+</section>
 
+<section id="security" class="doc-section">
     <h2>3. Data Security & Storage</h2>
     <p>We implement industry-standard encryption and secure modern hosting to protect your data. Your personal profile details are heavily encrypted. We do not sell your personal data to any third-party advertisers or data brokers.</p>
+</section>
 
+<section id="rights" class="doc-section">
     <h2>4. Your Rights & Account Deletion</h2>
     <p>You have the right to access, modify, or delete your personal data. You can instantly request account deletion from inside the AF Nexus app settings, or by emailing <a href="mailto:privacy@academeforge.in">privacy@academeforge.in</a>. If you log back in within 90 days, the request is canceled. Otherwise, all associated data is permanently wiped.</p>
+</section>
 
+<section id="contact" class="doc-section">
     <h2>5. Contact Us</h2>
     <p>If you have any questions about this Privacy Policy, please contact us at <a href="mailto:privacy@academeforge.in">privacy@academeforge.in</a>.</p>
-</div>
+</section>
 
+      </article>
+    </div>
   </main>
 
   <footer class="footer bg-dark">
@@ -304,9 +399,6 @@
     </div>
   </footer>
 
-  <!-- =========================================================
-       COMMAND PALETTE MODAL
-  ========================================================= -->
   <div class="cmd-palette-overlay" id="cmd-palette-overlay">
     <div class="cmd-palette">
       <div class="cmd-palette-header">
@@ -320,7 +412,9 @@
         <!-- Results injected via JS -->
       </div>
     </div>
+  </div>
 
+  <script src="script.js"></script>
   <script src="/assets/js/theme.js"></script>
   <script src="/assets/js/script.min.js?v=6.0" defer></script>
   <script src="/assets/js/security.min.js?v=2.0" defer></script>
