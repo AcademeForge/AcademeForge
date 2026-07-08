@@ -215,105 +215,87 @@
 
   <!-- Main Content -->
   <main class="main-content">
-    <div class="layout-grid">
-      <!-- Left Panel: Info (simplified to top header for contact) -->
-      <div class="left-panel">
+    
+    <!-- Hero Section -->
+    <section class="contact-hero">
+      <div class="hero-content">
         <h1 class="page-title i18n-text">Contact AcademeForge</h1>
-        <p class="page-desc i18n-text" style="color: var(--text-muted);">
+        <p class="page-desc i18n-text">
           Have a question, need support, or want to suggest a feature? We're here to help. Choose the form that best fits your needs.
         </p>
+        <div class="hero-buttons">
+          <button class="hero-btn active" id="btn-help" onclick="switchTab('help')">Help Request</button>
+          <button class="hero-btn" id="btn-suggest" onclick="switchTab('suggest')">Suggestion</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Forms Section -->
+    <section class="forms-section">
+      
+      <!-- Help Request Form (Get In Touch) -->
+      <div id="helpTab" class="tab-content active">
+        <div class="grid-2">
+          <div class="contact-form-wrap">
+            <h2 class="i18n-text" style="font-size: 2rem; margin-bottom: 0.5rem;">Get In Touch</h2>
+            <p class="i18n-text" style="color: var(--text-muted); margin-bottom: 2rem;">
+              Feel free to share any queries, feedback, or concerns regarding the AcademeForge ecosystem. We're here to support your practical learning journey!
+            </p>
+            
+            <form id="getInTouchForm" class="contact-form">
+              <input type="text" id="contactName" class="form-control" placeholder="Name" />
+              <input type="tel" id="contactMobile" class="form-control" placeholder="Mobile" />
+              <input type="email" id="contactEmail" class="form-control" placeholder="Email" required />
+              
+              <input type="text" id="contactSubject" class="form-control" placeholder="Subject" required />
+              
+              <textarea id="contactMessage" class="form-control" placeholder="Enter Text Message" rows="5" required></textarea>
+              
+              <div class="submit-wrap">
+                <button type="submit" class="btn-primary i18n-text">Send Message</button>
+              </div>
+              <div id="contactFormStatus" class="form-status"></div>
+            </form>
+          </div>
+
+          <div class="contact-image-wrap">
+            <img src="/IMG/getInTouch.png" alt="Get In Touch Support Team" />
+          </div>
+        </div>
       </div>
 
-      <!-- Right Panel: Forms -->
-      <div class="status-panel">
-        <div class="loaded-state">
-          
-          <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('help')">Help Request</button>
-            <button class="tab-btn" onclick="switchTab('suggest')">Suggestion</button>
-          </div>
-
-          <!-- Help Request Form (Get In Touch) -->
-          <div id="helpTab" class="tab-content active">
-            <div class="grid-2">
-              <div class="contact-form-wrap">
-                <div class="loaded-header">
-                  <h2 class="i18n-text">Get In Touch</h2>
-                  <p class="i18n-text">
-                    Feel free to share any queries, feedback, or concerns regarding the AcademeForge ecosystem. We're here to support your practical learning journey!
-                  </p>
-                </div>
-                
-                <form id="getInTouchForm" style="display: flex; flex-direction: column; gap: 16px;">
-                  <input type="text" id="contactName" class="form-control" placeholder="Name"  />
-                  <input type="tel" id="contactMobile" class="form-control" placeholder="Mobile"  />
-                  <input type="email" id="contactEmail" class="form-control" placeholder="Email" required  />
-                  
-                  <input type="hidden" id="contactType" value="general" />
-                  
-                  <input type="text" id="contactSubject" class="form-control" placeholder="Subject" required  />
-                  
-                  <textarea id="contactMessage" class="form-control" placeholder="Enter Text Message" rows="5" required ></textarea>
-                  
-                  <div style="margin-top: 8px;">
-                    <button type="submit" class="btn btn-primary">Send Message</button>
-                  </div>
-                  <div id="contactFormStatus" class="form-status" style="display: none; padding: 1rem; border-radius: 8px; font-size: 0.875rem;"></div>
-                </form>
-              </div>
-
-              <div class="contact-image-wrap" style="text-align: center;">
-                <img src="/IMG/getInTouch.png" alt="Get In Touch Support Team" style="max-width: 100%; height: auto; display: block;" />
-              </div>
-            </div>
-          </div>
-
-          <!-- Suggestion Form -->
-          <div id="suggestTab" class="tab-content" style="display: none;">
-            <div class="grid-2">
-              <div class="contact-form-wrap">
-                <div class="loaded-header">
-              <h2 class="i18n-text">Submit a Suggestion</h2>
-              <p class="i18n-text">Have an idea to improve AcademeForge? We want to hear it!</p>
-            </div>
-            <form id="suggestForm">
-              <div class="form-group" style="margin-bottom: 1rem;">
-                <label for="suggestName" class="i18n-text" style="display: block; margin-bottom: 0.25rem; font-size: 0.875rem; font-weight: 600;">Full Name (Optional)</label>
-                <input type="text" id="suggestName" name="suggestName" class="form-control" placeholder="John Doe" maxlength="100" >
-              </div>
-              <div class="form-group" style="margin-bottom: 1rem;">
-                <label for="suggestEmail" class="i18n-text" style="display: block; margin-bottom: 0.25rem; font-size: 0.875rem; font-weight: 600;">Email Address (Optional)</label>
-                <input type="email" id="suggestEmail" name="suggestEmail" class="form-control" placeholder="john@example.com" maxlength="200" >
-              </div>
+      <!-- Suggestion Form -->
+      <div id="suggestTab" class="tab-content" style="display: none;">
+        <div class="grid-2">
+          <div class="contact-form-wrap">
+            <h2 class="i18n-text" style="font-size: 2rem; margin-bottom: 0.5rem;">Submit a Suggestion</h2>
+            <p class="i18n-text" style="color: var(--text-muted); margin-bottom: 2rem;">
+              Have an idea to improve AcademeForge? We want to hear it! Let us know how we can make the ecosystem better for you.
+            </p>
+            
+            <form id="suggestForm" class="contact-form">
+              <input type="text" id="suggestName" name="suggestName" class="form-control" placeholder="Full Name (Optional)" maxlength="100" />
+              <input type="email" id="suggestEmail" name="suggestEmail" class="form-control" placeholder="Email Address (Optional)" maxlength="200" />
               <input type="hidden" id="suggestCategory" name="suggestCategory" value="general" />
-              <div class="form-group" style="margin-bottom: 1rem;">
-                <label for="suggestSubject" class="i18n-text" style="display: block; margin-bottom: 0.25rem; font-size: 0.875rem; font-weight: 600;">Suggestion Title <span class="required" style="color: #ef4444;">*</span></label>
-                <input type="text" id="suggestSubject" name="suggestSubject" class="form-control" placeholder="Brief title for your idea" required minlength="3" maxlength="200" >
-              </div>
-              <div class="form-group" style="margin-bottom: 1rem;">
-                <label for="suggestText" class="i18n-text" style="display: block; margin-bottom: 0.25rem; font-size: 0.875rem; font-weight: 600;">Detailed Suggestion <span class="required" style="color: #ef4444;">*</span></label>
-                <textarea id="suggestText" name="suggestText" class="form-control" placeholder="How would this improve AcademeForge?" required minlength="10" maxlength="3000" ></textarea>
-              </div>
+              <input type="text" id="suggestSubject" name="suggestSubject" class="form-control" placeholder="Suggestion Title *" required minlength="3" maxlength="200" />
+              <textarea id="suggestText" name="suggestText" class="form-control" placeholder="How would this improve AcademeForge? *" required minlength="10" maxlength="3000" rows="5"></textarea>
               
-              <div id="suggestFormStatus" class="form-status" style="margin-bottom: 1rem; padding: 1rem; border-radius: 8px; display: none; font-size: 0.875rem;"></div>
-              
-              <div class="form-actions" style="margin-top: 1.5rem;">
-                <button type="submit" id="suggestSubmitBtn" class="btn btn-primary" >
+              <div class="submit-wrap">
+                <button type="submit" id="suggestSubmitBtn" class="btn-primary">
                   <span class="btn-label i18n-text">Submit Suggestion</span>
                 </button>
               </div>
+              <div id="suggestFormStatus" class="form-status"></div>
             </form>
-              </div>
-
-              <div class="contact-image-wrap" style="text-align: center;">
-                <img src="/IMG/suggestion.png" alt="Submit a Suggestion" style="max-width: 100%; height: auto; display: block;" />
-              </div>
-            </div>
           </div>
 
+          <div class="contact-image-wrap">
+            <img src="/IMG/suggestion.png" alt="Submit a Suggestion" />
+          </div>
         </div>
       </div>
-    </div>
+
+    </section>
   </main>
 <footer class="footer bg-dark">
     <div class="container">
