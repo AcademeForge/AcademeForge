@@ -74,8 +74,8 @@
 }
 
 .btn-primary {
-  background: var(--primary);
-  color: white;
+  background: #10b981 !important;
+  color: #ffffff !important;
   padding: 0.625rem 1.25rem;
   border-radius: 9999px;
   font-size: 0.875rem;
@@ -83,10 +83,10 @@
   border: none;
   width: 100%;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, opacity 0.2s;
 }
 .btn-primary:hover {
-  background: var(--primary-hover);
+  opacity: 0.9;
 }
 .btn-primary:disabled {
   opacity: 0.7;
