@@ -1,5 +1,89 @@
 
-/* Add specific styles for the verification results */
+.main-content {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+.layout-grid {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+.intro { margin-bottom: 1.5rem; }
+.intro h1 { font-size: 2.2rem; margin-bottom: 0.5rem; font-family: 'Manrope', sans-serif; }
+.intro p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; }
+
+.form-group { margin-bottom: 1rem; }
+.form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem; }
+.required { color: var(--red); }
+
+.form-control {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid #000000;
+  border-radius: 8px;
+  background: var(--bg-secondary, rgba(0,0,0,0.02));
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+[data-theme="dark"] .form-control {
+  border: 1px solid #ffffff;
+  background: rgba(255, 255, 255, 0.03);
+}
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: var(--bg);
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 0.8rem;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-primary:hover { background: #059669; }
+.btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
+
+.right-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.status-panel {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+[data-theme="dark"] .status-panel {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 900px) {
+  .layout-grid { grid-template-columns: 1fr; gap: 2rem; }
+  /* Do not hide right panel here, we need it for results! */
+  .main-content { padding: 2rem 0; min-height: auto; }
+}
+
+/* Base result styles */
 .spinner {
     width: 40px; height: 40px; border-radius: 50%;
     border: 3px solid var(--border); border-top-color: var(--primary);
@@ -15,6 +99,8 @@
 .chip-p { background: rgba(37, 99, 235, 0.1); color: var(--primary); border-color: rgba(37, 99, 235, 0.2); }
 .chip-s { background: rgba(16, 185, 129, 0.1); color: var(--green); border-color: rgba(16, 185, 129, 0.2); }
 .chip-w { background: rgba(245, 158, 11, 0.1); color: var(--amber); border-color: rgba(245, 158, 11, 0.2); }
+.chip-d { background: rgba(239, 68, 68, 0.1); color: var(--red); border-color: rgba(239, 68, 68, 0.2); }
+.chip-n { background: rgba(100, 116, 139, 0.1); color: var(--text-muted); border-color: rgba(100, 116, 139, 0.2); }
 
 .detail-cell {
     background: var(--bg-secondary); border: 1px solid var(--border);
@@ -26,17 +112,4 @@
 }
 .detail-lbl {
     font-size: 0.625rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted);
-}
-
-.form-control {
-  border: 1px solid #000000;
-}
-[data-theme="dark"] .form-control {
-  border: 1px solid #ffffff;
-}
-.btn-primary {
-  background: #10b981;
-}
-.btn-primary:hover {
-  background: #059669;
 }
