@@ -29,7 +29,7 @@
   width: 100%;
   padding: 0.8rem 1rem;
   border: 1px solid #000000;
-  border-radius: 8px;
+  border-radius: 6px;
   background: var(--bg-secondary, rgba(0,0,0,0.02));
   color: var(--text);
   font-family: inherit;
@@ -52,7 +52,7 @@
   background: #10b981;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
@@ -70,10 +70,12 @@
   background: var(--bg-secondary);
   border-radius: 12px;
   overflow: hidden;
-  border: 1px solid var(--border);
+  height: 600px;
+  border: 1px solid #000000; /* Black lining in white mode */
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 [data-theme="dark"] .status-panel {
+  border: 1px solid #ffffff; /* White lining in black mode */
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
 }
 
@@ -92,8 +94,8 @@
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .chip {
-    display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.25rem 0.75rem;
-    border-radius: 999px; font-size: 0.75rem; font-weight: 700; border: 1px solid var(--border);
+    display: inline-flex; align-items: center; gap: 0.2rem; padding: 0.15rem 0.5rem;
+    border-radius: 999px; font-size: 0.65rem; font-weight: 700; border: 1px solid var(--border);
     background: var(--bg-secondary); color: var(--text);
 }
 .chip-p { background: rgba(37, 99, 235, 0.1); color: var(--primary); border-color: rgba(37, 99, 235, 0.2); }
@@ -104,21 +106,21 @@
 
 .detail-cell {
     background: var(--bg-secondary); border: 1px solid var(--border);
-    border-radius: 8px; padding: 1rem;
+    border-radius: 6px; padding: 0.5rem 0.75rem;
 }
 .detail-val {
-    font-family: monospace; font-size: 0.875rem; font-weight: 700; color: var(--text);
-    margin-bottom: 0.25rem; word-break: break-all;
+    font-family: monospace; font-size: 0.75rem; font-weight: 700; color: var(--text);
+    margin-bottom: 0.15rem; word-break: break-all;
 }
 .detail-lbl {
-    font-size: 0.625rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted);
+    font-size: 0.55rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted);
 }
 
 /* Extra styles for team */
 .ext-link {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid var(--border);
-    background: var(--bg-secondary); color: var(--text); font-size: 0.875rem; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    padding: 0.3rem 0.6rem; border-radius: 6px; border: 1px solid var(--border);
+    background: var(--bg-secondary); color: var(--text); font-size: 0.75rem; font-weight: 600;
     transition: all 0.2s;
 }
 .ext-link:hover {
