@@ -216,7 +216,7 @@
 
   <!-- Main Content -->
     <!-- Main Content -->
-    <main class="main-content">
+      <main class="main-content">
     <div class="layout-grid">
       
       <!-- Left Panel: Info & Form -->
@@ -227,27 +227,24 @@
         </div>
 
         <form id="verifyForm" class="form-card" onsubmit="event.preventDefault(); verify();">
-          <div id="verifyStatus" class="alert" style="display:none;"></div>
-
           <div class="form-group">
             <label for="certInput">Certificate ID <span class="required">*</span></label>
             <input type="text" id="certInput" name="certInput" class="form-control" placeholder="e.g. AFC-2025-001" autocomplete="off" autocorrect="off" spellcheck="false" required>
-            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">IDs are case-insensitive.</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">IDs are case-insensitive.</div>
           </div>
 
           <div class="form-actions" style="margin-top: 1rem;">
-            <button type="submit" id="verifyBtn" class="btn-primary" style="width: 100%;">Verify Certificate</button>
+            <button type="submit" id="verifyBtn" class="btn-primary">Verify Certificate</button>
           </div>
         </form>
         
-        <!-- Trust block -->
-        <div style="margin-top: 2rem; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem;">
-            <h4 style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 1rem;">Security & Trust</h4>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.65rem; font-weight: 600;">
-                <div style="display: flex; gap: 0.5rem; align-items: center;"><span>🔒</span> Encrypted</div>
-                <div style="display: flex; gap: 0.5rem; align-items: center;"><span>🛡️</span> Tamper-Proof</div>
-                <div style="display: flex; gap: 0.5rem; align-items: center;"><span>⚡</span> Real-Time</div>
-                <div style="display: flex; gap: 0.5rem; align-items: center;"><span>✅</span> Official</div>
+        <div class="trust-block">
+            <h4>Security & Trust</h4>
+            <div class="trust-grid">
+                <div class="trust-item"><span>🔒</span> Encrypted</div>
+                <div class="trust-item"><span>🛡️</span> Tamper-Proof</div>
+                <div class="trust-item"><span>⚡</span> Real-Time</div>
+                <div class="trust-item"><span>✅</span> Official</div>
             </div>
         </div>
       </section>
@@ -255,78 +252,92 @@
       <!-- Right Panel: Results -->
       <section class="right-panel">
         
-        <!-- Default State -->
-        <div class="status-panel" id="defaultState" style="background: transparent; border: 1px dashed var(--border); box-shadow: none; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 1.5rem 1rem;">
-            <span style="font-size: 3rem; margin-bottom: 1rem;">🔍</span>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 1rem; margin-bottom: 0.5rem;">Enter a Certificate ID</h3>
-            <p style="color: var(--text-muted); font-size: 0.65rem; max-width: 300px;">Type a certificate ID in the search field to check its authenticity instantly.</p>
-        </div>
-
-        <!-- Loading State -->
-        <div class="status-panel" id="loadingState" style="display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 1.5rem 1rem;">
-            <div class="spinner" style="margin-bottom: 1rem;"></div>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 1rem; margin-bottom: 0.5rem;">Verifying...</h3>
-            <p style="color: var(--text-muted); font-size: 0.65rem;">Checking authenticity against our secure database.</p>
-        </div>
-
-        <!-- Result State -->
-        <div class="status-panel" id="resultState" style="display: none;">
-            <div style="height: 4px; background: var(--green); width: 100%;"></div>
+        <div class="status-panel" id="statusPanel">
             
-            <div style="padding: 0.5rem;">
-                <div style="display: flex; gap: 0.5rem; align-items: flex-start; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem;">
-                    <div style="width: 45px; height: 45px; background: rgba(16, 185, 129, 0.1); border: 2px solid rgba(16, 185, 129, 0.3); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0;">🏅</div>
-                    <div>
-                        <div style="color: var(--green); font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem;">✅ Verified Authentic</div>
-                        <h2 id="resultName" style="font-family: 'Manrope', sans-serif; font-size: 1.1rem; margin-bottom: 0.25rem;">John Doe</h2>
-                        <div id="resultRole" style="color: var(--text-muted); font-size: 0.65rem; margin-bottom: 0.5rem;">Frontend Developer</div>
-                        <div id="resultCertId" style="display: inline-block; background: rgba(37, 99, 235, 0.1); color: var(--primary); padding: 0.25rem 0.75rem; border-radius: 999px; font-family: monospace; font-size: 0.65rem; font-weight: 700;">AFC-123</div>
-                    </div>
-                </div>
+            <!-- Default / Empty State -->
+            <div id="defaultState" class="empty-state">
+                <span style="font-size: 3rem; margin-bottom: 1rem;">🔍</span>
+                <h3 style="font-family: 'Manrope', sans-serif; font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text);">Enter a Certificate ID</h3>
+                <p>Type a certificate ID in the search field to check its authenticity instantly.</p>
+            </div>
 
-                <div id="chipsRow" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
-                    <!-- Chips inserted here -->
-                </div>
+            <!-- Loading State -->
+            <div id="loadingState" class="empty-state" style="display: none;">
+                <div class="spinner" style="margin-bottom: 1.5rem;"></div>
+                <h3 style="font-family: 'Manrope', sans-serif; font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text);">Verifying...</h3>
+                <p>Checking authenticity against our secure database.</p>
+            </div>
 
-                <h4 style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem;">Certificate Details</h4>
-                <div id="detailGrid" class="detail-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 1rem;">
-                    <!-- Grid items inserted here -->
-                </div>
-
-                <div id="signatorySection" style="margin-bottom: 1rem; display: none;">
-                    <h4 style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem;">Authorized By</h4>
-                    <div style="background: var(--bg-secondary); border: 1px solid var(--border); padding: 0.5rem; border-radius: var(--radius); display: flex; align-items: center; gap: 0.5rem;">
-                        <div id="signAva" style="width: 32px; height: 32px; background: var(--primary); color: white; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold;">JD</div>
-                        <div style="flex: 1;">
-                            <div id="signName" style="font-weight: 700;">Jane Doe</div>
-                            <div id="signRole" style="font-size: 0.65rem; color: var(--text-muted);">Manager</div>
+            <!-- Result State -->
+            <div id="resultState" class="loaded-state" style="display: none;">
+                <div class="loaded-header">
+                    <div class="header-profile">
+                        <div class="avatar-box">🏅</div>
+                        <div>
+                            <div class="status-badge" id="resultStatusLbl">✅ Verified Authentic</div>
+                            <h2 id="resultName">John Doe</h2>
+                            <p id="resultRole">Frontend Developer</p>
+                            <div class="chips-row" id="chipsRow"></div>
                         </div>
-                        <div style="background: rgba(16, 185, 129, 0.1); color: var(--green); padding: 0.25rem 0.5rem; border-radius: 999px; font-size: 0.65rem; font-weight: bold;">✓</div>
                     </div>
                 </div>
 
-                <div id="descSection" style="margin-bottom: 1rem; display: none;">
-                    <h4 style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem;">Description</h4>
-                    <div id="descBlock" style="background: var(--bg-secondary); border: 1px solid var(--border); padding: 0.5rem; border-radius: var(--radius); font-size: 0.65rem; line-height: 1.6; color: var(--text-muted);"></div>
+                <div class="candidate-info">
+                    <div class="info-item">
+                        <label>Certificate ID</label>
+                        <span id="resultCertId" style="font-family: monospace; color: var(--primary);">AFC-123</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Issue Date</label>
+                        <span id="resultIssueDate">10 January 2024</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Department</label>
+                        <span id="resultDept">Engineering</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Type</label>
+                        <span id="resultType">Internship</span>
+                    </div>
+                </div>
+
+                <div id="signatorySection" class="candidate-info" style="display: none; grid-template-columns: 1fr;">
+                    <div class="info-item">
+                        <label>Authorized By</label>
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-top: 0.5rem;">
+                            <div id="signAva" style="width: 40px; height: 40px; background: var(--bg); color: var(--text); border-radius: 8px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-weight: bold;">JD</div>
+                            <div>
+                                <div id="signName" style="font-weight: 700; color: var(--text);">Jane Doe</div>
+                                <div id="signRole" style="font-size: 0.75rem; color: var(--text-muted);">Manager</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="descSection" class="candidate-info" style="display: none; grid-template-columns: 1fr;">
+                    <div class="info-item">
+                        <label>Description</label>
+                        <span id="descBlock" style="font-weight: normal; line-height: 1.5; color: var(--text-muted);"></span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Not Found State -->
-        <div class="status-panel" id="notFoundState" style="display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 1.5rem 1rem; border: 1px solid var(--red);">
-            <span style="font-size: 3rem; margin-bottom: 1rem;">🚫</span>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 1rem; color: var(--red); margin-bottom: 0.5rem;">Certificate Not Found</h3>
-            <div id="nfId" style="display: inline-block; background: rgba(239, 68, 68, 0.1); color: var(--red); padding: 0.25rem 0.75rem; border-radius: 999px; font-family: monospace; font-size: 0.65rem; font-weight: 700; margin-bottom: 1rem;">AFC-XXX</div>
-            <p style="color: var(--text-muted); font-size: 0.65rem; max-width: 300px;">No certificate matches this ID in our records. The ID may be incorrect.</p>
-        </div>
+            <!-- Not Found State -->
+            <div id="notFoundState" class="empty-state" style="display: none;">
+                <span style="font-size: 3rem; margin-bottom: 1rem;">🚫</span>
+                <h3 style="font-family: 'Manrope', sans-serif; font-size: 1.25rem; color: var(--red); margin-bottom: 0.5rem;">Certificate Not Found</h3>
+                <div id="nfId" style="display: inline-block; background: rgba(239, 68, 68, 0.1); color: var(--red); padding: 0.25rem 0.75rem; border-radius: 999px; font-family: monospace; font-size: 0.875rem; font-weight: 700; margin-bottom: 1rem;">AFC-XXX</div>
+                <p>No certificate matches this ID in our records. The ID may be incorrect.</p>
+            </div>
 
-        <!-- Error State -->
-        <div class="status-panel" id="errorState" style="display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 1.5rem 1rem;">
-            <span style="font-size: 3rem; margin-bottom: 1rem;">⚠️</span>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 1rem; margin-bottom: 0.5rem;">Connection Error</h3>
-            <p style="color: var(--text-muted); font-size: 0.65rem; max-width: 300px;">Could not reach the verification server. Please check your connection and try again.</p>
-        </div>
+            <!-- Error State -->
+            <div id="errorState" class="empty-state" style="display: none;">
+                <span style="font-size: 3rem; margin-bottom: 1rem;">⚠️</span>
+                <h3 style="font-family: 'Manrope', sans-serif; font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text);">Connection Error</h3>
+                <p>Could not reach the verification server. Please check your connection and try again.</p>
+            </div>
 
+        </div>
       </section>
 
     </div>
