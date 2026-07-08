@@ -211,54 +211,52 @@
   </div>
 
   <!-- Unpaid Banner -->
-  <div class="banner">
-    <strong>Unpaid Internship Roles:</strong> All roles listed below are officially unpaid. However, you will receive exclusive professional perks, networking opportunities, and verifiable experience certificates similar to top-tier organizations.
-  </div>
+  
 
   <!-- Main Content -->
-  <main class="main-content" style="max-width: 900px; margin: 0 auto; padding: 2rem 1rem;">
-    <div class="layout-grid" style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
+  <main class="main-content">
+    <div class="layout-grid">
       <!-- Left Panel: Info (simplified to top header for contact) -->
-      <div class="left-panel" style="text-align: center; margin-bottom: 1rem;">
-        <h1 class="page-title i18n-text" style="font-size: 2rem; font-family: 'Manrope', sans-serif; margin-bottom: 0.5rem;">Contact AcademeForge</h1>
+      <div class="left-panel">
+        <h1 class="page-title i18n-text">Contact AcademeForge</h1>
         <p class="page-desc i18n-text" style="color: var(--text-muted);">
           Have a question, need support, or want to suggest a feature? We're here to help. Choose the form that best fits your needs.
         </p>
       </div>
 
       <!-- Right Panel: Forms -->
-      <div class="status-panel" style="background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 2rem;">
+      <div class="status-panel">
         <div class="loaded-state">
           
-          <div class="tabs" style="display: flex; gap: 1rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; overflow-x: auto;">
-            <button class="tab-btn active" onclick="switchTab('help')" style="background: none; border: none; border-bottom: 2px solid var(--primary); padding: 0.5rem 1rem; color: var(--text); font-weight: 600; cursor: pointer;">Help Request</button>
-            <button class="tab-btn" onclick="switchTab('suggest')" style="background: none; border: none; padding: 0.5rem 1rem; color: var(--text-muted); cursor: pointer;">Suggestion</button>
+          <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('help')">Help Request</button>
+            <button class="tab-btn" onclick="switchTab('suggest')">Suggestion</button>
           </div>
 
           <!-- Help Request Form (Get In Touch) -->
           <div id="helpTab" class="tab-content active">
-            <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 40px;">
+            <div class="grid-2">
               <div class="contact-form-wrap">
-                <div class="loaded-header" style="margin-bottom: 1.5rem;">
-                  <h2 class="i18n-text" style="font-size: 1.5rem; text-align: left; margin-bottom: 8px;">Get In Touch</h2>
-                  <p class="i18n-text" style="text-align: left; margin-bottom: 24px; color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">
+                <div class="loaded-header">
+                  <h2 class="i18n-text">Get In Touch</h2>
+                  <p class="i18n-text">
                     Feel free to share any queries, feedback, or concerns regarding the AcademeForge ecosystem. We're here to support your practical learning journey!
                   </p>
                 </div>
                 
                 <form id="getInTouchForm" style="display: flex; flex-direction: column; gap: 16px;">
-                  <input type="text" id="contactName" class="form-control" placeholder="Name" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text);" />
-                  <input type="tel" id="contactMobile" class="form-control" placeholder="Mobile" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text);" />
-                  <input type="email" id="contactEmail" class="form-control" placeholder="Email" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text);" />
+                  <input type="text" id="contactName" class="form-control" placeholder="Name"  />
+                  <input type="tel" id="contactMobile" class="form-control" placeholder="Mobile"  />
+                  <input type="email" id="contactEmail" class="form-control" placeholder="Email" required  />
                   
                   <input type="hidden" id="contactType" value="general" />
                   
-                  <input type="text" id="contactSubject" class="form-control" placeholder="Subject" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text);" />
+                  <input type="text" id="contactSubject" class="form-control" placeholder="Subject" required  />
                   
-                  <textarea id="contactMessage" class="form-control" placeholder="Enter Text Message" rows="5" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text);"></textarea>
+                  <textarea id="contactMessage" class="form-control" placeholder="Enter Text Message" rows="5" required ></textarea>
                   
                   <div style="margin-top: 8px;">
-                    <button type="submit" class="btn btn-primary" style="background-color: var(--primary); color: #fff; border: none; padding: 12px 32px; border-radius: 6px; cursor: pointer; width: 100%; font-weight: 600;">Send Message</button>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
                   </div>
                   <div id="contactFormStatus" class="form-status" style="display: none; padding: 1rem; border-radius: 8px; font-size: 0.875rem;"></div>
                 </form>
@@ -272,35 +270,35 @@
 
           <!-- Suggestion Form -->
           <div id="suggestTab" class="tab-content" style="display: none;">
-            <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 40px;">
+            <div class="grid-2">
               <div class="contact-form-wrap">
-                <div class="loaded-header" style="margin-bottom: 1.5rem;">
-              <h2 class="i18n-text" style="font-size: 1.25rem;">Submit a Suggestion</h2>
-              <p class="i18n-text" style="font-size: 0.875rem; color: var(--text-muted);">Have an idea to improve AcademeForge? We want to hear it!</p>
+                <div class="loaded-header">
+              <h2 class="i18n-text">Submit a Suggestion</h2>
+              <p class="i18n-text">Have an idea to improve AcademeForge? We want to hear it!</p>
             </div>
             <form id="suggestForm">
               <div class="form-group" style="margin-bottom: 1rem;">
                 <label for="suggestName" class="i18n-text" style="display: block; margin-bottom: 0.25rem; font-size: 0.875rem; font-weight: 600;">Full Name (Optional)</label>
-                <input type="text" id="suggestName" name="suggestName" class="form-control" placeholder="John Doe" maxlength="100" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text);">
+                <input type="text" id="suggestName" name="suggestName" class="form-control" placeholder="John Doe" maxlength="100" >
               </div>
               <div class="form-group" style="margin-bottom: 1rem;">
                 <label for="suggestEmail" class="i18n-text" style="display: block; margin-bottom: 0.25rem; font-size: 0.875rem; font-weight: 600;">Email Address (Optional)</label>
-                <input type="email" id="suggestEmail" name="suggestEmail" class="form-control" placeholder="john@example.com" maxlength="200" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text);">
+                <input type="email" id="suggestEmail" name="suggestEmail" class="form-control" placeholder="john@example.com" maxlength="200" >
               </div>
               <input type="hidden" id="suggestCategory" name="suggestCategory" value="general" />
               <div class="form-group" style="margin-bottom: 1rem;">
                 <label for="suggestSubject" class="i18n-text" style="display: block; margin-bottom: 0.25rem; font-size: 0.875rem; font-weight: 600;">Suggestion Title <span class="required" style="color: #ef4444;">*</span></label>
-                <input type="text" id="suggestSubject" name="suggestSubject" class="form-control" placeholder="Brief title for your idea" required minlength="3" maxlength="200" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text);">
+                <input type="text" id="suggestSubject" name="suggestSubject" class="form-control" placeholder="Brief title for your idea" required minlength="3" maxlength="200" >
               </div>
               <div class="form-group" style="margin-bottom: 1rem;">
                 <label for="suggestText" class="i18n-text" style="display: block; margin-bottom: 0.25rem; font-size: 0.875rem; font-weight: 600;">Detailed Suggestion <span class="required" style="color: #ef4444;">*</span></label>
-                <textarea id="suggestText" name="suggestText" class="form-control" placeholder="How would this improve AcademeForge?" required minlength="10" maxlength="3000" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); min-height: 120px;"></textarea>
+                <textarea id="suggestText" name="suggestText" class="form-control" placeholder="How would this improve AcademeForge?" required minlength="10" maxlength="3000" ></textarea>
               </div>
               
               <div id="suggestFormStatus" class="form-status" style="margin-bottom: 1rem; padding: 1rem; border-radius: 8px; display: none; font-size: 0.875rem;"></div>
               
               <div class="form-actions" style="margin-top: 1.5rem;">
-                <button type="submit" id="suggestSubmitBtn" class="btn btn-primary" style="width: 100%; background: var(--primary); color: white; border: none; padding: 0.75rem; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                <button type="submit" id="suggestSubmitBtn" class="btn btn-primary" >
                   <span class="btn-label i18n-text">Submit Suggestion</span>
                 </button>
               </div>
