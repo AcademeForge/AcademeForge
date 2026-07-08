@@ -242,8 +242,8 @@
         
         <!-- Trust block -->
         <div style="margin-top: 2rem; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem;">
-            <h4 style="font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 1rem;">Security & Trust</h4>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.875rem; font-weight: 600;">
+            <h4 style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 1rem;">Security & Trust</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.65rem; font-weight: 600;">
                 <div style="display: flex; gap: 0.5rem; align-items: center;"><span>🔒</span> Encrypted</div>
                 <div style="display: flex; gap: 0.5rem; align-items: center;"><span>🛡️</span> Tamper-Proof</div>
                 <div style="display: flex; gap: 0.5rem; align-items: center;"><span>⚡</span> Real-Time</div>
@@ -256,75 +256,75 @@
       <section class="right-panel">
         
         <!-- Default State -->
-        <div class="status-panel" id="defaultState" style="background: transparent; border: 1px dashed var(--border); box-shadow: none; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 4rem 2rem;">
+        <div class="status-panel" id="defaultState" style="background: transparent; border: 1px dashed var(--border); box-shadow: none; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 1.5rem 1rem;">
             <span style="font-size: 3rem; margin-bottom: 1rem;">🔍</span>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 1.25rem; margin-bottom: 0.5rem;">Enter a Certificate ID</h3>
-            <p style="color: var(--text-muted); font-size: 0.875rem; max-width: 300px;">Type a certificate ID in the search field to check its authenticity instantly.</p>
+            <h3 style="font-family: 'Manrope', sans-serif; font-size: 1rem; margin-bottom: 0.5rem;">Enter a Certificate ID</h3>
+            <p style="color: var(--text-muted); font-size: 0.65rem; max-width: 300px;">Type a certificate ID in the search field to check its authenticity instantly.</p>
         </div>
 
         <!-- Loading State -->
-        <div class="status-panel" id="loadingState" style="display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 4rem 2rem;">
+        <div class="status-panel" id="loadingState" style="display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 1.5rem 1rem;">
             <div class="spinner" style="margin-bottom: 1rem;"></div>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 1.25rem; margin-bottom: 0.5rem;">Verifying...</h3>
-            <p style="color: var(--text-muted); font-size: 0.875rem;">Checking authenticity against our secure database.</p>
+            <h3 style="font-family: 'Manrope', sans-serif; font-size: 1rem; margin-bottom: 0.5rem;">Verifying...</h3>
+            <p style="color: var(--text-muted); font-size: 0.65rem;">Checking authenticity against our secure database.</p>
         </div>
 
         <!-- Result State -->
         <div class="status-panel" id="resultState" style="display: none;">
             <div style="height: 4px; background: var(--green); width: 100%;"></div>
             
-            <div style="padding: 2rem;">
-                <div style="display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 2rem;">
-                    <div style="width: 60px; height: 60px; background: rgba(16, 185, 129, 0.1); border: 2px solid rgba(16, 185, 129, 0.3); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2rem; flex-shrink: 0;">🏅</div>
+            <div style="padding: 0.5rem;">
+                <div style="display: flex; gap: 0.5rem; align-items: flex-start; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem;">
+                    <div style="width: 45px; height: 45px; background: rgba(16, 185, 129, 0.1); border: 2px solid rgba(16, 185, 129, 0.3); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0;">🏅</div>
                     <div>
-                        <div style="color: var(--green); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem;">✅ Verified Authentic</div>
-                        <h2 id="resultName" style="font-family: 'Manrope', sans-serif; font-size: 1.5rem; margin-bottom: 0.25rem;">John Doe</h2>
-                        <div id="resultRole" style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: 0.5rem;">Frontend Developer</div>
-                        <div id="resultCertId" style="display: inline-block; background: rgba(37, 99, 235, 0.1); color: var(--primary); padding: 0.25rem 0.75rem; border-radius: 999px; font-family: monospace; font-size: 0.75rem; font-weight: 700;">AFC-123</div>
+                        <div style="color: var(--green); font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem;">✅ Verified Authentic</div>
+                        <h2 id="resultName" style="font-family: 'Manrope', sans-serif; font-size: 1.1rem; margin-bottom: 0.25rem;">John Doe</h2>
+                        <div id="resultRole" style="color: var(--text-muted); font-size: 0.65rem; margin-bottom: 0.5rem;">Frontend Developer</div>
+                        <div id="resultCertId" style="display: inline-block; background: rgba(37, 99, 235, 0.1); color: var(--primary); padding: 0.25rem 0.75rem; border-radius: 999px; font-family: monospace; font-size: 0.65rem; font-weight: 700;">AFC-123</div>
                     </div>
                 </div>
 
-                <div id="chipsRow" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem;">
+                <div id="chipsRow" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
                     <!-- Chips inserted here -->
                 </div>
 
-                <h4 style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem;">Certificate Details</h4>
-                <div id="detailGrid" class="detail-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+                <h4 style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem;">Certificate Details</h4>
+                <div id="detailGrid" class="detail-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-bottom: 1rem;">
                     <!-- Grid items inserted here -->
                 </div>
 
-                <div id="signatorySection" style="margin-bottom: 2rem; display: none;">
-                    <h4 style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem;">Authorized By</h4>
-                    <div style="background: var(--bg-secondary); border: 1px solid var(--border); padding: 1rem; border-radius: var(--radius); display: flex; align-items: center; gap: 1rem;">
-                        <div id="signAva" style="width: 40px; height: 40px; background: var(--primary); color: white; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold;">JD</div>
+                <div id="signatorySection" style="margin-bottom: 1rem; display: none;">
+                    <h4 style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem;">Authorized By</h4>
+                    <div style="background: var(--bg-secondary); border: 1px solid var(--border); padding: 0.5rem; border-radius: var(--radius); display: flex; align-items: center; gap: 0.5rem;">
+                        <div id="signAva" style="width: 32px; height: 32px; background: var(--primary); color: white; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold;">JD</div>
                         <div style="flex: 1;">
                             <div id="signName" style="font-weight: 700;">Jane Doe</div>
-                            <div id="signRole" style="font-size: 0.75rem; color: var(--text-muted);">Manager</div>
+                            <div id="signRole" style="font-size: 0.65rem; color: var(--text-muted);">Manager</div>
                         </div>
-                        <div style="background: rgba(16, 185, 129, 0.1); color: var(--green); padding: 0.25rem 0.5rem; border-radius: 999px; font-size: 0.75rem; font-weight: bold;">✓</div>
+                        <div style="background: rgba(16, 185, 129, 0.1); color: var(--green); padding: 0.25rem 0.5rem; border-radius: 999px; font-size: 0.65rem; font-weight: bold;">✓</div>
                     </div>
                 </div>
 
-                <div id="descSection" style="margin-bottom: 2rem; display: none;">
-                    <h4 style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem;">Description</h4>
-                    <div id="descBlock" style="background: var(--bg-secondary); border: 1px solid var(--border); padding: 1rem; border-radius: var(--radius); font-size: 0.875rem; line-height: 1.6; color: var(--text-muted);"></div>
+                <div id="descSection" style="margin-bottom: 1rem; display: none;">
+                    <h4 style="font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem;">Description</h4>
+                    <div id="descBlock" style="background: var(--bg-secondary); border: 1px solid var(--border); padding: 0.5rem; border-radius: var(--radius); font-size: 0.65rem; line-height: 1.6; color: var(--text-muted);"></div>
                 </div>
             </div>
         </div>
 
         <!-- Not Found State -->
-        <div class="status-panel" id="notFoundState" style="display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 4rem 2rem; border: 1px solid var(--red);">
+        <div class="status-panel" id="notFoundState" style="display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 1.5rem 1rem; border: 1px solid var(--red);">
             <span style="font-size: 3rem; margin-bottom: 1rem;">🚫</span>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 1.25rem; color: var(--red); margin-bottom: 0.5rem;">Certificate Not Found</h3>
-            <div id="nfId" style="display: inline-block; background: rgba(239, 68, 68, 0.1); color: var(--red); padding: 0.25rem 0.75rem; border-radius: 999px; font-family: monospace; font-size: 0.875rem; font-weight: 700; margin-bottom: 1rem;">AFC-XXX</div>
-            <p style="color: var(--text-muted); font-size: 0.875rem; max-width: 300px;">No certificate matches this ID in our records. The ID may be incorrect.</p>
+            <h3 style="font-family: 'Manrope', sans-serif; font-size: 1rem; color: var(--red); margin-bottom: 0.5rem;">Certificate Not Found</h3>
+            <div id="nfId" style="display: inline-block; background: rgba(239, 68, 68, 0.1); color: var(--red); padding: 0.25rem 0.75rem; border-radius: 999px; font-family: monospace; font-size: 0.65rem; font-weight: 700; margin-bottom: 1rem;">AFC-XXX</div>
+            <p style="color: var(--text-muted); font-size: 0.65rem; max-width: 300px;">No certificate matches this ID in our records. The ID may be incorrect.</p>
         </div>
 
         <!-- Error State -->
-        <div class="status-panel" id="errorState" style="display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 4rem 2rem;">
+        <div class="status-panel" id="errorState" style="display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 1.5rem 1rem;">
             <span style="font-size: 3rem; margin-bottom: 1rem;">⚠️</span>
-            <h3 style="font-family: 'Manrope', sans-serif; font-size: 1.25rem; margin-bottom: 0.5rem;">Connection Error</h3>
-            <p style="color: var(--text-muted); font-size: 0.875rem; max-width: 300px;">Could not reach the verification server. Please check your connection and try again.</p>
+            <h3 style="font-family: 'Manrope', sans-serif; font-size: 1rem; margin-bottom: 0.5rem;">Connection Error</h3>
+            <p style="color: var(--text-muted); font-size: 0.65rem; max-width: 300px;">Could not reach the verification server. Please check your connection and try again.</p>
         </div>
 
       </section>
