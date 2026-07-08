@@ -1,0 +1,42 @@
+
+/* Add specific styles for the verification results */
+.spinner {
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 3px solid var(--border); border-top-color: var(--primary);
+    animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.chip {
+    display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.25rem 0.75rem;
+    border-radius: 999px; font-size: 0.75rem; font-weight: 700; border: 1px solid var(--border);
+    background: var(--bg-secondary); color: var(--text);
+}
+.chip-p { background: rgba(37, 99, 235, 0.1); color: var(--primary); border-color: rgba(37, 99, 235, 0.2); }
+.chip-s { background: rgba(16, 185, 129, 0.1); color: var(--green); border-color: rgba(16, 185, 129, 0.2); }
+.chip-w { background: rgba(245, 158, 11, 0.1); color: var(--amber); border-color: rgba(245, 158, 11, 0.2); }
+
+.detail-cell {
+    background: var(--bg-secondary); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1rem;
+}
+.detail-val {
+    font-family: monospace; font-size: 0.875rem; font-weight: 700; color: var(--text);
+    margin-bottom: 0.25rem; word-break: break-all;
+}
+.detail-lbl {
+    font-size: 0.625rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted);
+}
+
+.form-control {
+  border: 1px solid #000000;
+}
+[data-theme="dark"] .form-control {
+  border: 1px solid #ffffff;
+}
+.btn-primary {
+  background: #10b981;
+}
+.btn-primary:hover {
+  background: #059669;
+}
