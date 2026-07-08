@@ -5,20 +5,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#f8fafc" />
-  <meta name="description" content="Contact AcademeForge for help, support, and suggestions." />
+  <meta name="description" content="Check the status of your AcademeForge internship application in real-time." />
   <meta name="keywords" content="AcademeForge, Internship, Remote work, EdTech Internships, Professional Perks, Certificate of Experience, Student Opportunities" />
   <meta name="author" content="AcademeForge" />
   <meta name="robots" content="index, follow" />
   <meta name="googlebot" content="index, follow" />
-  <link rel="canonical" href="https://academeforge.in/internship/apply/" />
+  <link rel="canonical" href="https://academeforge.in/internship/status/" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="AcademeForge" />
-  <meta property="og:title" content="Contact Us | AcademeForge" />
-  <meta property="og:description" content="Contact AcademeForge for help, support, and suggestions." />
-  <meta property="og:url" content="https://academeforge.in/internship/apply/" />
+  <meta property="og:title" content="Application Status | AcademeForge" />
+  <meta property="og:description" content="Check the status of your AcademeForge internship application in real-time." />
+  <meta property="og:url" content="https://academeforge.in/internship/status/" />
   <meta property="og:image" content="https://academeforge.in/IMG/og-image.webp" />
   <meta property="og:image:type" content="image/webp" />
-  <title>Contact Us | AcademeForge</title>
+  <title>Help Request | AcademeForge</title>
   <link rel="icon" type="image/png" href="/IMG/logo.png">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,13 +26,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="/assets/css/style.min.css?v=6.0">
-  <link rel="stylesheet" href="style.css">
-<style>
-  @media (max-width: 768px) {
-    .grid-2 { grid-template-columns: 1fr !important; }
-    .contact-image-wrap { display: none; } /* Hide image on mobile if desired, or let it stack */
-  }
-</style>
+  <link rel="stylesheet" href="style.css?v=3.0">
 </head>
 <body>
 
@@ -123,7 +117,16 @@
             <a href="/other-tools/hopenext/index.html" class="dropdown-item i18n-text">HopeNext Portal</a>
           </div>
         </div>
-        <a href="/contact/index.html" class="nav-link i18n-text">Contact</a>
+        <div class="dropdown">
+          <button class="nav-link">
+            <span class="i18n-text">Contact</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="dropdown-arrow"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="dropdown-menu">
+            <a href="/contact/help/index.html" class="dropdown-item i18n-text">Help Request</a>
+            <a href="/contact/suggest/index.html" class="dropdown-item i18n-text">Suggestion</a>
+          </div>
+        </div>
       </div>
 
       <div class="nav-right">
@@ -182,7 +185,8 @@
         <a href="/other-tools/hopenext/index.html" class="drawer-link i18n-text">HopeNext Portal</a>
       </div>
       <div class="drawer-section">
-        <a href="/contact/index.html" class="drawer-link i18n-text">Contact</a>
+        <a href="/contact/help/index.html" class="drawer-link i18n-text">Help Request</a>
+        <a href="/contact/suggest/index.html" class="drawer-link i18n-text">Suggestion</a>
         <a href="https://download.academeforge.in" class="drawer-link highlight i18n-text">Download Center</a>
       </div>
       <div class="drawer-section lang-section">
@@ -210,94 +214,61 @@
     </div>
   </div>
 
-  <!-- Unpaid Banner -->
-  
-
   <!-- Main Content -->
+    <!-- Main Content -->
   <main class="main-content">
-    
-    <!-- Hero Section -->
-    <section class="contact-hero">
-      <div class="hero-content">
-        <h1 class="page-title i18n-text">Contact AcademeForge</h1>
-        <p class="page-desc i18n-text">
-          Have a question, need support, or want to suggest a feature? We're here to help. Choose the form that best fits your needs.
-        </p>
-        <div class="hero-buttons">
-          <button class="hero-btn active" id="btn-help" onclick="switchTab('help')">Help Request</button>
-          <button class="hero-btn" id="btn-suggest" onclick="switchTab('suggest')">Suggestion</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Forms Section -->
-    <section class="forms-section">
+    <div class="layout-grid">
       
-      <!-- Help Request Form (Get In Touch) -->
-      <div id="helpTab" class="tab-content active">
-        <div class="grid-2">
-          <div class="contact-form-wrap">
-            <h2 class="i18n-text" style="font-size: 2rem; margin-bottom: 0.5rem;">Get In Touch</h2>
-            <p class="i18n-text" style="color: var(--text-muted); margin-bottom: 2rem;">
-              Feel free to share any queries, feedback, or concerns regarding the AcademeForge ecosystem. We're here to support your practical learning journey!
-            </p>
-            
-            <form id="getInTouchForm" class="contact-form">
-              <input type="text" id="contactName" class="form-control" placeholder="Name" />
-              <input type="tel" id="contactMobile" class="form-control" placeholder="Mobile" />
-              <input type="email" id="contactEmail" class="form-control" placeholder="Email" required />
-              
-              <input type="text" id="contactSubject" class="form-control" placeholder="Subject" required />
-              
-              <textarea id="contactMessage" class="form-control" placeholder="Enter Text Message" rows="5" required></textarea>
-              
-              <div class="submit-wrap">
-                <button type="submit" class="btn-primary i18n-text">Send Message</button>
-              </div>
-              <div id="contactFormStatus" class="form-status"></div>
-            </form>
-          </div>
-
-          <div class="contact-image-wrap">
-            <img src="/IMG/getInTouch.png" alt="Get In Touch Support Team" />
-          </div>
+      <!-- Left Panel: Info & Form -->
+      <section class="left-panel">
+        <div class="intro">
+          <h1 class="i18n-text">Get In Touch</h1>
+          <p class="i18n-text">Feel free to share any queries, feedback, or concerns regarding the AcademeForge ecosystem. We're here to support your practical learning journey!</p>
         </div>
-      </div>
 
-      <!-- Suggestion Form -->
-      <div id="suggestTab" class="tab-content" style="display: none;">
-        <div class="grid-2">
-          <div class="contact-form-wrap">
-            <h2 class="i18n-text" style="font-size: 2rem; margin-bottom: 0.5rem;">Submit a Suggestion</h2>
-            <p class="i18n-text" style="color: var(--text-muted); margin-bottom: 2rem;">
-              Have an idea to improve AcademeForge? We want to hear it! Let us know how we can make the ecosystem better for you.
-            </p>
-            
-            <form id="suggestForm" class="contact-form">
-              <input type="text" id="suggestName" name="suggestName" class="form-control" placeholder="Full Name (Optional)" maxlength="100" />
-              <input type="email" id="suggestEmail" name="suggestEmail" class="form-control" placeholder="Email Address (Optional)" maxlength="200" />
-              <input type="hidden" id="suggestCategory" name="suggestCategory" value="general" />
-              <input type="text" id="suggestSubject" name="suggestSubject" class="form-control" placeholder="Suggestion Title *" required minlength="3" maxlength="200" />
-              <textarea id="suggestText" name="suggestText" class="form-control" placeholder="How would this improve AcademeForge? *" required minlength="10" maxlength="3000" rows="5"></textarea>
-              
-              <div class="submit-wrap">
-                <button type="submit" id="suggestSubmitBtn" class="btn-primary">
-                  <span class="btn-label i18n-text">Submit Suggestion</span>
-                </button>
-              </div>
-              <div id="suggestFormStatus" class="form-status"></div>
-            </form>
+        <form id="getInTouchForm" class="form-card">
+          <div id="contactFormStatus" class="alert" style="display:none;"></div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <input type="text" id="contactName" name="contactName" class="form-control" placeholder="Name">
+            </div>
+            <div class="form-group">
+              <input type="tel" id="contactMobile" name="contactMobile" class="form-control" placeholder="Mobile">
+            </div>
           </div>
 
-          <div class="contact-image-wrap">
-            <img src="/IMG/suggestion.png" alt="Submit a Suggestion" />
+          <div class="form-row">
+            <div class="form-group">
+              <input type="email" id="contactEmail" name="contactEmail" class="form-control" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+              <input type="text" id="contactSubject" name="contactSubject" class="form-control" placeholder="Subject" required>
+            </div>
           </div>
+
+          <div class="form-group">
+            <textarea id="contactMessage" name="contactMessage" class="form-control" placeholder="Enter Text Message" required rows="4"></textarea>
+          </div>
+
+          <div class="form-actions" style="margin-top: 1rem;">
+            <button type="submit" id="submitBtn" class="btn-primary">Send Message</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Right Panel: Image -->
+      <section class="right-panel" style="display: flex; align-items: center; justify-content: center;">
+        <div class="status-panel" style="background: transparent; border: none; box-shadow: none;">
+          <img src="/IMG/getInTouch.png" alt="Get In Touch" style="max-width: 100%; height: auto;" />
         </div>
-      </div>
+      </section>
 
-    </section>
+    </div>
   </main>
-<footer class="footer bg-dark">
+
+  <!-- Footer -->
+  <footer class="footer bg-dark">
     <div class="container">
       <div class="footer-nav">
         <div class="footer-col brand-col">
@@ -414,7 +385,6 @@
   <script src="/assets/js/security.min.js?v=2.0" defer></script>
 </body>
 </html>
-
 
 
 
