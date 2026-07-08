@@ -73,17 +73,19 @@ button {
 .nav-links a:hover, 
 
 .btn-primary {
-  background: var(--primary);
-  color: white;
+  background: #10b981 !important;
+  color: #ffffff !important;
   padding: 0.625rem 1.25rem;
   border-radius: 9999px;
   font-size: 0.875rem;
   font-weight: 600;
-  transition: background 0.2s;
+  transition: background 0.2s, opacity 0.2s;
+  border: none;
+  cursor: pointer;
 }
 
 .btn-primary:hover {
-  background: var(--primary-hover);
+  opacity: 0.9;
 }
 
 .btn-outline {
