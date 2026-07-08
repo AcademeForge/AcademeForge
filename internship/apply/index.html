@@ -26,7 +26,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="/assets/css/style.min.css?v=6.0">
-  <link rel="stylesheet" href="style.css?v=2.0">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -206,11 +206,11 @@
 
   <!-- Unpaid Banner -->
   <div class="banner">
-    <strong>Internship Roles:</strong> All roles listed below are officially unpaid. However, you will receive exclusive professional perks, networking opportunities, and verifiable experience certificates.
+    <strong>Unpaid Internship Roles:</strong> All roles listed below are officially unpaid. However, you will receive exclusive professional perks, networking opportunities, and verifiable experience certificates similar to top-tier organizations.
   </div>
 
   <!-- Main Content -->
-  <main class="main-content" style="max-width: 900px;">
+  <main class="main-content">
     <div class="intro">
       <h1>Join The Team</h1>
       <p>Fill out the application below to apply for a role at AcademeForge. Our team carefully reviews every profile.</p>
@@ -219,23 +219,22 @@
     <form id="applyForm" class="form-card">
       <div id="alertMessage" class="alert"></div>
 
-      <div class="form-grid">
-        <!-- Personal Information -->
-        <div class="form-group full">
+            <div class="form-grid">
+        <!-- Row 1: Name & Emails -->
+        <div class="form-group">
           <label for="fullName">Full Name <span class="required">*</span></label>
           <input type="text" id="fullName" name="fullName" class="form-control" placeholder="John Doe" required>
         </div>
-
         <div class="form-group">
           <label for="email">Primary Email <span class="required">*</span></label>
           <input type="email" id="email" name="email" class="form-control" placeholder="name@example.com" required>
         </div>
-
         <div class="form-group">
           <label for="alternateEmail">Alternate Email Optional</label>
           <input type="email" id="alternateEmail" name="alternateEmail" class="form-control" placeholder="name2@example.com">
         </div>
 
+        <!-- Row 2: Phone & DOB -->
         <div class="form-group">
           <label for="contactNumber">Contact Number <span class="required">*</span></label>
           <div class="phone">
@@ -243,7 +242,6 @@
             <input type="tel" id="contactNumber" name="contactNumber" class="form-control" required>
           </div>
         </div>
-
         <div class="form-group">
           <label for="whatsappNumber">WhatsApp <span class="required">*</span></label>
           <div class="phone">
@@ -251,12 +249,12 @@
             <input type="tel" id="whatsappNumber" name="whatsappNumber" class="form-control" required>
           </div>
         </div>
-
         <div class="form-group">
           <label for="dateOfBirth">Date of Birth <span class="required">*</span></label>
           <input type="date" id="dateOfBirth" name="dateOfBirth" class="form-control" required>
         </div>
 
+        <!-- Row 3: Demographics & Country -->
         <div class="form-group">
           <label for="ageGroup">Age Group <span class="required">*</span></label>
           <select id="ageGroup" name="ageGroup" class="form-control" required>
@@ -268,7 +266,6 @@
             <option value="above_30">Above 30</option>
           </select>
         </div>
-
         <div class="form-group">
           <label for="gender">Gender <span class="required">*</span></label>
           <select id="gender" name="gender" class="form-control" required>
@@ -278,40 +275,43 @@
             <option value="other">Other</option>
           </select>
         </div>
-
-        <!-- Location Information -->
-        <div class="form-group">
+        <div class="form-group search-select" style="position: relative;">
           <label for="countrySearch">Country <span class="required">*</span></label>
-          <input type="text" id="countrySearch" name="countrySearch" class="form-control" placeholder="Start typing..." required>
+          <input type="hidden" id="country" name="country">
+          <input type="text" id="countrySearch" name="countrySearch" class="form-control" placeholder="Start typing..." autocomplete="off" required>
+          <div id="countryList" class="search-list"></div>
         </div>
 
-        <div class="form-group">
+        <!-- Row 4: Location details -->
+        <div class="form-group search-select" style="position: relative;">
           <label for="stateSearch">State <span class="required">*</span></label>
-          <input type="text" id="stateSearch" name="stateSearch" class="form-control" placeholder="Start typing..." required>
+          <input type="hidden" id="stateName" name="stateName">
+          <input type="text" id="stateSearch" name="stateSearch" class="form-control" placeholder="Start typing..." autocomplete="off" required>
+          <div id="stateList" class="search-list"></div>
         </div>
-
-        <div class="form-group">
+        <div class="form-group search-select" style="position: relative;">
           <label for="districtSearch">District <span class="required">*</span></label>
-          <input type="text" id="districtSearch" name="districtSearch" class="form-control" placeholder="Start typing..." required>
+          <input type="hidden" id="district" name="district">
+          <input type="text" id="districtSearch" name="districtSearch" class="form-control" placeholder="Start typing..." autocomplete="off" required>
+          <div id="districtList" class="search-list"></div>
         </div>
-
         <div class="form-group">
           <label for="pincode">Pincode <span class="required">*</span></label>
           <input type="text" id="pincode" name="pincode" class="form-control" inputmode="numeric" required>
         </div>
 
-        <div class="form-group full">
+        <!-- Row 5: Address -->
+        <div class="form-group">
           <label for="postOffice">Post Office (For future certificate delivery) <span class="required">*</span></label>
           <input type="text" id="postOffice" name="postOffice" class="form-control" required>
         </div>
-
-        <div class="form-group full">
+        <div class="form-group span-2">
           <label for="fullAddress">Full Address <span class="required">*</span></label>
-          <textarea id="fullAddress" name="fullAddress" class="form-control" required></textarea>
+          <textarea id="fullAddress" name="fullAddress" class="form-control" required style="min-height: 44px; height: 44px;"></textarea>
         </div>
 
-        <!-- Role Information -->
-        <div class="form-group full">
+        <!-- Row 6: Role & Background -->
+        <div class="form-group">
           <label for="roleOfInterest">Role of Interest <span class="required">*</span></label>
           <select id="roleOfInterest" name="roleOfInterest" class="form-control" required>
             <option value="">Select a role</option>
@@ -339,8 +339,7 @@
             <option value="Other">Other</option>
           </select>
         </div>
-
-        <div class="form-group full">
+        <div class="form-group">
           <label for="weeklyAvailability">Weekly Availability <span class="required">*</span></label>
           <select id="weeklyAvailability" name="weeklyAvailability" class="form-control" required>
             <option value="">Select weekly availability</option>
@@ -351,8 +350,7 @@
             <option value="More than 40 hours">More than 40 hours</option>
           </select>
         </div>
-
-        <div class="form-group full">
+        <div class="form-group">
           <label for="educationLevel">Education <span class="required">*</span></label>
           <select id="educationLevel" name="educationLevel" class="form-control" required>
             <option value="">Select education</option>
@@ -366,7 +364,8 @@
           </select>
         </div>
 
-        <div class="form-group full">
+        <!-- Row 7: Status, Exp, Skills -->
+        <div class="form-group">
           <label for="currentStatus">Current Status <span class="required">*</span></label>
           <select id="currentStatus" name="currentStatus" class="form-control" required>
             <option value="">Select current status</option>
@@ -377,8 +376,7 @@
             <option value="Career Break">Career Break</option>
           </select>
         </div>
-
-        <div class="form-group full">
+        <div class="form-group">
           <label for="experienceLevel">Experience <span class="required">*</span></label>
           <select id="experienceLevel" name="experienceLevel" class="form-control" required>
             <option value="">Select experience</option>
@@ -388,13 +386,12 @@
             <option value="Expert (5+ years)">Expert (5+ years)</option>
           </select>
         </div>
-
-        <div class="form-group full">
+        <div class="form-group">
           <label for="skills">Skills <span class="required">*</span></label>
-          <textarea id="skills" name="skills" class="form-control" placeholder="Example: HTML, CSS, JavaScript, Video Editing, Content Writing" required></textarea>
+          <input type="text" id="skills" name="skills" class="form-control" placeholder="Example: HTML, CSS, JavaScript" required>
         </div>
 
-        <!-- Links -->
+        <!-- Row 8: Links -->
         <div class="form-group">
           <label for="portfolioUrl">Portfolio URL Optional</label>
           <input type="url" id="portfolioUrl" name="portfolioUrl" class="form-control" placeholder="https://...">
@@ -404,46 +401,42 @@
           <input type="url" id="linkedinUrl" name="linkedinUrl" class="form-control" placeholder="https://linkedin.com/in/...">
         </div>
         <div class="form-group">
-          <label for="githubUrl">GitHub URL Optional</label>
+          <label for="githubUrl">GitHub / Instagram Optional</label>
           <input type="url" id="githubUrl" name="githubUrl" class="form-control" placeholder="https://github.com/...">
         </div>
-        <div class="form-group">
-          <label for="instagramUrl">Instagram URL Optional</label>
-          <input type="url" id="instagramUrl" name="instagramUrl" class="form-control" placeholder="https://instagram.com/...">
-        </div>
 
-        <!-- Additional Information -->
-        <div class="form-group full">
+        <!-- Row 9: Long Answers -->
+        <div class="form-group span-3">
           <label for="whyJoin">Why do you want to join us? <span class="required">*</span></label>
-          <textarea id="whyJoin" name="whyJoin" class="form-control" required></textarea>
+          <textarea id="whyJoin" name="whyJoin" class="form-control" required style="min-height: 80px;"></textarea>
         </div>
         
-        <div class="form-group full">
+        <div class="form-group span-3">
           <label for="previousWork">Previous Work / Experience <span class="required">*</span></label>
-          <textarea id="previousWork" name="previousWork" class="form-control" required></textarea>
+          <textarea id="previousWork" name="previousWork" class="form-control" required style="min-height: 80px;"></textarea>
         </div>
 
-        <!-- Consents -->
-        <div class="form-group full" style="margin-top: 1rem;">
-          <label class="check" for="certificateDeliveryRequired">
+        <!-- Row 10: Consents -->
+        <div class="form-group span-3" style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
+          <label class="check" for="certificateDeliveryRequired" style="margin-bottom: 0;">
             <input id="certificateDeliveryRequired" type="checkbox" required />
-            <span>I may need certificate delivery in the future. <span class="required">*</span></span>
+            <span>I may need certificate delivery. <span class="required">*</span></span>
           </label>
           
-          <label class="check" for="consentAccuracy">
+          <label class="check" for="consentAccuracy" style="margin-bottom: 0;">
             <input id="consentAccuracy" type="checkbox" required />
-            <span>I confirm that all provided information is accurate. <span class="required">*</span></span>
+            <span>I confirm all info is accurate. <span class="required">*</span></span>
           </label>
           
-          <label class="check" for="consentContact">
+          <label class="check" for="consentContact" style="margin-bottom: 0;">
             <input id="consentContact" type="checkbox" required />
             <span>I allow AcademeForge to contact me. <span class="required">*</span></span>
           </label>
         </div>
 
         <!-- Submit Button -->
-        <div class="form-group full" style="text-align: center; margin-top: 1rem;">
-          <button type="submit" id="submitBtn" class="btn-primary" style="width: 100%; max-width: 300px; padding: 1rem; font-size: 1rem;">Submit Application</button>
+        <div class="form-group span-3" style="text-align: center; margin-top: 1rem;">
+          <button type="submit" id="submitBtn" class="btn-primary" style="width: 100%; max-width: 400px; padding: 1rem; font-size: 1rem;">Submit Application</button>
         </div>
       </div>
     </form>
