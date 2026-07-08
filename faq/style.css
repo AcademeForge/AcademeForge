@@ -46,7 +46,7 @@
 .journey-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
+  
 }
 .journey-card {
   background: var(--bg);
@@ -213,11 +213,7 @@
 }
 
 /* FAQ Grid Layout */
-.faq-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-}
+
 
 .faq-item {
   margin-bottom: 0; /* Reset margin since gap handles spacing */
@@ -226,7 +222,12 @@
 }
 
 @media (max-width: 900px) {
-  .faq-grid {
-    grid-template-columns: 1fr;
-  }
+  
+}
+
+.faq-grid {
+    display: block;
+}
+.faq-item {
+    margin-bottom: 1rem !important;
 }
