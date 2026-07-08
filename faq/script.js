@@ -10,11 +10,13 @@ document.addEventListener("DOMContentLoaded", () => {
         questionBtn.addEventListener('click', () => {
             const isActive = item.classList.contains('active');
             
-            // Close all other active items (optional - currently allowing multiple to be open)
-            // faqItems.forEach(otherItem => {
-            //     otherItem.classList.remove('active');
-            //     otherItem.querySelector('.faq-answer').style.maxHeight = null;
-            // });
+            // Close all other active items
+            faqItems.forEach(otherItem => {
+                if(otherItem !== item) {
+                    otherItem.classList.remove('active');
+                    otherItem.querySelector('.faq-answer').style.maxHeight = null;
+                }
+            });
             
             if (isActive) {
                 item.classList.remove('active');
