@@ -7,7 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const questionBtn = item.querySelector('.faq-question');
         const answer = item.querySelector('.faq-answer');
         
-        questionBtn.addEventListener('click', () => {
+        questionBtn.addEventListener('click', (e) => {
+            e.stopImmediatePropagation();
             const isActive = item.classList.contains('active');
             
             // Close all other active items
