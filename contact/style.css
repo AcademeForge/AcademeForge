@@ -1,0 +1,165 @@
+/* contact/style.css */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.form-status {
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1.5rem;
+  font-size: 0.875rem;
+  display: none;
+}
+
+.form-status.show {
+  display: block;
+}
+
+.form-status.error {
+  display: block;
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--red);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.form-status.success {
+  display: block;
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--green);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 1rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+  overflow-x: auto;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0.5rem 1rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.tab-btn:hover {
+  color: var(--text);
+}
+
+.tab-btn.active {
+  color: var(--text);
+  border-bottom-color: var(--primary);
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.required {
+  color: var(--red);
+}
+
+textarea.form-control {
+  min-height: 120px;
+  resize: vertical;
+}
+
+select.form-control {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748b%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem top 50%;
+  background-size: 0.65rem auto;
+}
+
+@media (max-width: 768px) {
+  .layout-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Failsafe Global Footer Styles */
+.footer.bg-dark {
+  background-color: #0a0a0a !important;
+  color: #ffffff !important;
+}
+[data-theme="dark"] .footer.bg-dark {
+  background-color: #000000 !important;
+}
+.footer.bg-dark h4, .footer.bg-dark a, .footer.bg-dark p, .footer.bg-dark span {
+  color: #ffffff !important;
+}
+.footer.bg-dark svg:not(.theme-btn svg) {
+  color: #ffffff !important;
+}
+
+/* Fix for Theme Toggle inside Dark Footer in Light Mode */
+.bg-dark .theme-controls {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+.bg-dark .theme-btn {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+.bg-dark .theme-btn:hover {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+.bg-dark .theme-btn.active {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+.bg-dark .theme-btn svg {
+  color: inherit !important;
+}
+.footer.bg-dark svg {
+  /* Let theme buttons handle their own svg colors */
+}
