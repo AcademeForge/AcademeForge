@@ -73,7 +73,7 @@ button {
 .nav-links a:hover, 
 
 .btn-primary {
-  background: var(--primary);
+  background: #10b981;
   color: white;
   padding: 0.625rem 1.25rem;
   border-radius: 9999px;
@@ -83,11 +83,11 @@ button {
 }
 
 .btn-primary:hover {
-  background: var(--primary-hover);
+  background: #059669;
 }
 
 .btn-outline {
-  border: 1px solid var(--border);
+  border: 1px solid #000000;
   padding: 0.625rem 1.25rem;
   border-radius: 9999px;
   font-size: 0.875rem;
@@ -133,14 +133,14 @@ button {
 /* Form Area */
 .form-card {
   background: var(--bg-secondary);
-  border: 1px solid var(--border);
+  border: 1px solid #000000;
   border-radius: var(--radius);
-  padding: 2rem;
+  padding: 1.5rem;
   margin-top: 2rem;
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .form-group label {
@@ -153,7 +153,7 @@ button {
 .form-control {
   width: 100%;
   padding: 0.75rem 1rem;
-  border: 1px solid var(--border);
+  border: 1px solid #000000;
   border-radius: 8px;
   background: var(--bg);
   color: var(--text);
@@ -200,7 +200,7 @@ button {
 /* Right Panel / Status display */
 .status-panel {
   background: var(--bg);
-  border: 1px solid var(--border);
+  border: 1px solid #000000;
   border-radius: var(--radius);
   box-shadow: var(--shadow-lg);
   overflow: hidden;
@@ -274,7 +274,7 @@ button {
 .timeline {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .step {
@@ -287,7 +287,7 @@ button {
   height: 32px;
   border-radius: 50%;
   background: var(--bg-secondary);
-  border: 1px solid var(--border);
+  border: 1px solid #000000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -433,12 +433,10 @@ button {
 /* Apply Form Specifics */
 .form-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 1.5rem;
 }
-.form-group.full {
-  grid-column: 1 / -1;
-}
+
 .required {
   color: var(--red);
 }
@@ -478,10 +476,11 @@ select.form-control {
   flex: 1;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .form-grid {
     grid-template-columns: 1fr;
   }
+  .span-2, .span-3 { grid-column: 1 / -1; }
 }
 
 
@@ -522,4 +521,46 @@ select.form-control {
 }
 .footer.bg-dark svg {
   /* Let theme buttons handle their own svg colors */
+}
+
+
+[data-theme="dark"] .form-control {
+  border: 1px solid #ffffff;
+}
+
+.span-2 { grid-column: span 2; }
+.span-3 { grid-column: span 3; }
+
+/* Search Dropdown Styles */
+.search-list {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  z-index: 50;
+  box-shadow: var(--shadow-lg);
+  margin-top: 4px;
+}
+.search-list.open {
+  display: block;
+}
+.search-option {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border: none;
+  background: none;
+  color: var(--text);
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+.search-option:hover {
+  background: var(--bg-secondary);
 }
