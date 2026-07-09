@@ -436,6 +436,8 @@ button {
   grid-template-columns: 1fr 1fr 1fr;
   gap: 1.5rem;
 }
+.span-2 { grid-column: span 2; }
+.span-3 { grid-column: span 3; }
 
 .required {
   color: var(--red);
@@ -540,9 +542,6 @@ select.form-control {
 [data-theme="dark"] .form-control {
   border: 1px solid #ffffff;
 }
-
-.span-2 { grid-column: span 2; }
-.span-3 { grid-column: span 3; }
 
 /* Search Dropdown Styles */
 .search-list {
