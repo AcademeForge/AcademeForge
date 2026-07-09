@@ -141,17 +141,15 @@ function renderStatus(status) {
   if (hrApproved !== false) {
     if (triedToContact === true) {
       html += step("done", "✓", "Contacted for Next Steps", "We have tried to contact you for the next steps/interview.");
-    } else if (triedToContact === false) {
-      html += step("fail", "✕", "Contact Failed", "We tried to contact you but could not reach you.");
     } else {
       html += step("pending", "⏳", "Contacted for Next Steps", "Pending contact for next steps.");
     }
   }
 
   let isHired = false;
-  let isClosed = hrApproved === false || triedToContact === false || jobSecured === false || finalRejected === true;
+  let isClosed = (hrApproved === false) || (finalRejected === true) || (jobSecured === false);
 
-  if (hrApproved !== false && triedToContact !== false) {
+  if (hrApproved !== false) {
     if (jobSecured === true) {
       html += step("done", "✓", "Job Secured", "Congratulations! You have been selected.");
       isHired = true;
