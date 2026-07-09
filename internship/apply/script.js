@@ -126,9 +126,51 @@ async function handleSubmit(e) {
   btn.disabled = true;
   btn.textContent = "Submitting...";
   
-  const payload = {};
-  formIds.forEach(id => payload[id] = id === "countrySearch" ? byId("country").value : id === "stateSearch" ? byId("stateName").value : id === "districtSearch" ? byId("district").value : clean(byId(id)?.value));
-  checkboxIds.forEach(id => payload[id] = byId(id)?.checked);
+  const payload = {
+    full_name: clean(byId("fullName")?.value),
+    email: clean(byId("email")?.value),
+    contact_country_code: clean(byId("contactCountryCode")?.value),
+    contact_number: clean(byId("contactNumber")?.value),
+    whatsapp_country_code: clean(byId("whatsappCountryCode")?.value),
+    whatsapp_number: clean(byId("whatsappNumber")?.value),
+    date_of_birth: clean(byId("dateOfBirth")?.value),
+    age_group: clean(byId("ageGroup")?.value),
+    gender: clean(byId("gender")?.value),
+    
+    country: clean(byId("country")?.value),
+    state: clean(byId("stateName")?.value),
+    district: clean(byId("district")?.value),
+    pincode: clean(byId("pincode")?.value),
+    post_office: clean(byId("postOffice")?.value),
+    address_line: clean(byId("fullAddress")?.value),
+    
+    selected_role: clean(byId("roleOfInterest")?.value),
+    work_type: "Remote",
+    work_time_type: "Part-time",
+    weekly_availability: clean(byId("weeklyAvailability")?.value),
+    
+    education_level: clean(byId("educationLevel")?.value),
+    current_status: clean(byId("currentStatus")?.value),
+    experience_level: clean(byId("experienceLevel")?.value),
+    
+    skills_text: clean(byId("skills")?.value),
+    
+    portfolio_url: clean(byId("portfolioUrl")?.value),
+    linkedin_url: clean(byId("linkedinUrl")?.value),
+    github_url: clean(byId("githubUrl")?.value),
+    instagram_url: clean(byId("githubUrl")?.value),
+    
+    why_join: clean(byId("whyJoin")?.value),
+    previous_work: clean(byId("previousWork")?.value),
+    
+    certificate_delivery_needed: byId("certificateDeliveryRequired")?.checked,
+    accuracy_confirmed: byId("consentAccuracy")?.checked,
+    contact_permission: byId("consentContact")?.checked,
+    
+    source_page: window.location.href,
+    user_agent: navigator.userAgent,
+    submitted_at_client: new Date().toISOString()
+  };
   
   try {
     const response = await fetch(EDGE_FUNCTION_URL, {
@@ -137,7 +179,11 @@ async function handleSubmit(e) {
       body: JSON.stringify(payload)
     });
     
-    if (!response.ok) throw new Error("Server rejected the application. Please try again.");
+    const resData = await response.json().catch(() => ({}));
+    
+    if (!response.ok) {
+        throw new Error(resData.error || "Server rejected the application. Please try again.");
+    }
     
     showAlert("Application submitted successfully!", false);
     localStorage.removeItem(DRAFT_KEY);
