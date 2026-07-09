@@ -205,7 +205,8 @@ button {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow-lg);
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   height: 600px;
 }
 
@@ -271,6 +272,7 @@ button {
 
 .info-item span {
   font-weight: 600;
+  word-break: break-all;
 }
 
 .timeline {
@@ -409,12 +411,13 @@ button {
 }
 
 @media (max-width: 768px) {
-  
-  
   .main-content {
     padding: 2rem 1rem;
   }
   
+  .candidate-info {
+    grid-template-columns: 1fr;
+  }
 }
 
 [hidden] { display: none !important; }
