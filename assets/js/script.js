@@ -1,480 +1,544 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Mobile Drawer Toggle
-    const mobileToggleBtn = document.getElementById('mobile-toggle-btn');
-    const drawerCloseBtn = document.getElementById('drawer-close-btn');
-    const mobileDrawer = document.getElementById('mobile-drawer');
+/* ═══════════ STUDENT DATA — CACHED ═══════════ */
+function getAFStudent(){
+  const live={
+    name:      localStorage.getItem('af_student_name')||'',
+    phone:     localStorage.getItem('af_student_mobile')||localStorage.getItem('af_student_phone')||'',
+    email:     localStorage.getItem('af_student_email')||'',
+    studentId: localStorage.getItem('af_student_id')||'',
+    uuid:      localStorage.getItem('af_student_uuid')||'',
+    profilePhoto: localStorage.getItem('af_student_photo')||'',
+    loggedIn:  localStorage.getItem('af_student_logged_in')==='true'
+  };
+  if(live.studentId){
+    localStorage.setItem('sm_cached_student',JSON.stringify({...live,ca:Date.now()}));
+    return live;
+  }
+  try{
+    const c=JSON.parse(localStorage.getItem('sm_cached_student')||'null');
+    if(c&&c.studentId)return c;
+  }catch(e){}
+  return{name:'',phone:'',email:'',studentId:'',uuid:'',profilePhoto:'',loggedIn:false};
+}
 
-    function openDrawer() {
-        if (mobileDrawer) {
-            mobileDrawer.classList.add('open');
-        }
-        document.body.classList.add('no-scroll');
-    }
+function getXp()    {return nxdbPlayer?(nxdbPlayer.xp||0)         :localData.xp;}
+function getLevel() {return nxdbPlayer?(nxdbPlayer.level||1)      :localData.level;}
+function getWins()  {return nxdbStats ?(nxdbStats.games_won||0)   :localData.wins;}
+function getPlayed(){return nxdbStats ?(nxdbStats.games_played||0):localData.played;}
+function getBestTime(){return nxdbStats?(nxdbStats.best_time||0)  :localData.bestTime;}
+function getStreak(){return nxdbPlayer?(nxdbPlayer.streak||0)     :localData.streak;}
+function getRank()  {return nxdbPlayer?(nxdbPlayer.rank||0)       :localData.globalRank;}
 
-    function closeDrawer() {
-        if (mobileDrawer) {
-            mobileDrawer.classList.remove('open');
-        }
-        document.body.classList.remove('no-scroll');
-    }
+function computeLevel(xp){let lv=1,t=0;while(t+lv*500<=xp){t+=lv*500;lv++;}return lv;}
+function xpForLevel(xp){let lv=1,t=0;while(t+lv*500<=xp){t+=lv*500;lv++;}return{level:lv,progress:xp-t,needed:lv*500};}
 
-    if (mobileToggleBtn) {
-        mobileToggleBtn.addEventListener('click', openDrawer);
-    }
-    if (drawerCloseBtn) {
-        drawerCloseBtn.addEventListener('click', closeDrawer);
-    }
+function getTier(level){
+  if(level>=25)return{name:'Heroic', css:'tier-heroic', icon:'⚔️'};
+  if(level>=20)return{name:'Diamond',css:'tier-diamond',icon:'💎'};
+  if(level>=15)return{name:'Platinum',css:'tier-platinum',icon:'🔷'};
+  if(level>=10)return{name:'Gold',   css:'tier-gold',   icon:'🥇'};
+  if(level>=5) return{name:'Silver', css:'tier-silver', icon:'🥈'};
+  return{name:'Bronze',css:'tier-bronze',icon:'🥉'};
+}
 
-    const drawerProductLinks = document.querySelectorAll('.drawer-product-link');
-    drawerProductLinks.forEach(link => {
-        link.addEventListener('click', closeDrawer);
+function fmtTime(s){const m=Math.floor(s/60),r=s%60;return m>0?`${m}m ${r}s`:`${r}s`;}
+
+// Win streak bonus: 3 wins = +5, 4 = +10, 5 = +15 etc.
+function getStreakBonus(cw){
+  if(cw<3)return 0;
+  return (cw-2)*5;
+}
+
+/* ═══════════ LOCAL STORAGE ═══════════ */
+function loadLocal(){
+  try{const s=localStorage.getItem('sm_local3');if(s)localData={...localData,...JSON.parse(s)};}catch(e){}
+  consecutiveWins=localData.consecutiveWins||0;
+}
+function saveLocal(){localStorage.setItem('sm_local3',JSON.stringify(localData));}
+function addLocalXp(amount){localData.xp+=amount;localData.level=computeLevel(localData.xp);saveLocal();}
+function loadOfflineQueue(){
+  try{const s=localStorage.getItem('sm_oq3');if(s)offlineQueue=JSON.parse(s)||[];}catch(e){offlineQueue=[];}
+}
+function saveOfflineQueue(){localStorage.setItem('sm_oq3',JSON.stringify(offlineQueue));}
+function updateOfflineSub(){
+  const el=document.getElementById('offlineSyncSub');if(!el)return;
+  const n=offlineQueue.length;
+  el.textContent=n>0?`${n} game${n>1?'s':''} pending sync`:'No pending games';
+}
+
+/* ═══════════ ONLINE/OFFLINE ═══════════ */
+function setOnlineState(online){
+  _isOnline=online;
+  document.getElementById('offlineBanner').classList.toggle('show',!online);
+  if(online)flushOfflineQueue();
+}
+window.addEventListener('online',()=>setOnlineState(true));
+window.addEventListener('offline',()=>setOnlineState(false));
+
+/* ═══════════ OFFLINE FLUSH ═══════════ */
+async function flushOfflineQueue(){
+  const af=getAFStudent();
+  if(!af.loggedIn||!af.studentId||!_isOnline||!offlineQueue.length)return;
+  if(_syncInProgress)return;
+  _syncInProgress=true;
+  const toFlush=[...offlineQueue];let flushed=0;
+  for(const item of toFlush){
+    try{
+      await nxdbApi(NXDB_PROGRESS_URL,{...item,action:'save',student_id:af.studentId});
+      offlineQueue=offlineQueue.filter(q=>q._id!==item._id);flushed++;
+    }catch(e){break;}
+  }
+  saveOfflineQueue();updateOfflineSub();_syncInProgress=false;
+  if(flushed>0){toast(`${flushed} game${flushed>1?'s':''} synced!`,'','success',3000);await doRefresh();}
+}
+
+/* ═══════════ API ═══════════ */
+async function nxdbApi(url,payload){
+  const res=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  const data=await res.json();
+  if(!res.ok)throw new Error(data.message||data.error||'Error');
+  return data;
+}
+
+/* ═══════════ REFRESH ═══════════ */
+async function doRefresh(){
+  const af=getAFStudent();
+  if(!af.loggedIn||!af.studentId||!_isOnline){refreshUI();return;}
+  try{
+    const res=await nxdbApi(NXDB_API_URL,{
+      action:'sync',student_id:af.studentId,
+      name:af.name,email:af.email,phone:af.phone,profile_photo:af.profilePhoto||''
     });
+    if(res.player)nxdbPlayer=res.player;
+    if(res.stats) nxdbStats=res.stats;
+    if(res.achievements)nxdbAchievements=res.achievements;
+    loadLeaderboard().catch(()=>{});
+    flushOfflineQueue().catch(()=>{});
+  }catch(e){console.warn('Sync failed:',e);}
+  refreshUI();
+}
 
-    // Product Grid Filters
-    const filterChips = document.querySelectorAll('.filter-chip');
-    const productRows = document.querySelectorAll('.product-row');
+/* ═══════════ SAVE PROGRESS ═══════════ */
+async function saveGameProgress({won,time,mistakes:m,hintsUsed,difficulty,boardSz,isD,xpEarned,perfect,noHints}){
+  const af=getAFStudent();
+  if(!af.loggedIn||!af.studentId)return null;
+  const payload={action:'save',student_id:af.studentId,won,time_seconds:time||0,
+    mistakes:m,hints_used:hintsUsed,difficulty,board_size:boardSz,is_daily:isD||false,
+    xp_earned:xpEarned||0,perfect:perfect||false,no_hints:noHints||false};
+  if(!_isOnline){
+    payload._id=Date.now()+'_'+Math.random().toString(36).slice(2,7);
+    offlineQueue.push(payload);saveOfflineQueue();updateOfflineSub();return null;
+  }
+  const badge=document.getElementById('savingBadge');
+  if(badge)badge.classList.add('show');
+  try{
+    const res=await nxdbApi(NXDB_PROGRESS_URL,payload);
+    if(res.player)nxdbPlayer=res.player;
+    if(res.stats) nxdbStats=res.stats;
+    return res;
+  }catch(e){
+    payload._id=Date.now()+'_'+Math.random().toString(36).slice(2,7);
+    offlineQueue.push(payload);saveOfflineQueue();updateOfflineSub();return null;
+  }finally{if(badge)badge.classList.remove('show');}
+}
 
-    filterChips.forEach(chip => {
-        chip.addEventListener('click', () => {
-            filterChips.forEach(c => c.classList.remove('active'));
-            chip.classList.add('active');
-
-            const filterValue = chip.getAttribute('data-filter');
-
-            productRows.forEach(row => {
-                row.classList.add('fade-out');
-
-                setTimeout(() => {
-                    const isMatch = (filterValue === 'all' || row.getAttribute('data-category') === filterValue);
-                    if (isMatch) {
-                        row.classList.remove('hidden');
-                        setTimeout(() => {
-                            row.classList.remove('fade-out');
-                        }, 50);
-                    } else {
-                        row.classList.add('hidden');
-                    }
-                }, 300);
-            });
-        });
-    });
-
-    // Quick Picker Scroll & Highlight
-    const heroQuickPicker = document.getElementById('hero-quick-picker');
-    if (heroQuickPicker) {
-        heroQuickPicker.addEventListener('change', (e) => {
-            const selectedVal = e.target.value;
-            let filterCategory = 'all';
-
-            if (selectedVal === 'learn' || selectedVal === 'exams') {
-                filterCategory = 'learn';
-            }
-            if (selectedVal === 'productivity') {
-                filterCategory = 'track';
-            }
-            if (selectedVal === 'wellbeing') {
-                filterCategory = 'personal';
-            }
-            if (selectedVal === 'reading' || selectedVal === 'create') {
-                filterCategory = 'create';
-            }
-            if (selectedVal === 'shop') {
-                filterCategory = 'shop';
-            }
-            if (selectedVal === 'games') {
-                filterCategory = 'games';
-            }
-
-            const matchedChip = document.querySelector(`.filter-chip[data-filter="${filterCategory}"]`);
-            if (matchedChip) {
-                matchedChip.click();
-            }
-
-            setTimeout(() => {
-                const productsSection = document.getElementById('products-section');
-                if (productsSection) {
-                    const offset = 100;
-                    const bodyTop = document.body.getBoundingClientRect().top;
-                    const sectionTop = productsSection.getBoundingClientRect().top;
-                    const offsetPosition = (sectionTop - bodyTop) - offset;
-
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-
-                productRows.forEach(row => {
-                    if (row.getAttribute('data-picker') === selectedVal) {
-                        row.style.backgroundColor = 'var(--bg-secondary)';
-                        setTimeout(() => {
-                            row.style.backgroundColor = 'transparent';
-                        }, 1500);
-                    }
-                });
-            }, 350);
-        });
+/* ═══════════ ACHIEVEMENTS ═══════════ */
+async function syncAchievements(){
+  const af=getAFStudent();
+  if(!af.loggedIn||!af.studentId||!_isOnline)return;
+  const stats=buildAchStats();
+  try{
+    const res=await nxdbApi(NXDB_ACHIEVEMENT_URL,{action:'sync',student_id:af.studentId,stats});
+    if(res.achievements)nxdbAchievements=res.achievements;
+    if(res.newly_unlocked&&res.newly_unlocked.length){
+      const ul=ACHIEVEMENTS.filter(a=>res.newly_unlocked.includes(a.id));
+      ul.forEach(a=>toast(`Achievement Unlocked! ${a.icon}`,a.name,'success',4000));
     }
+    buildAchUI();
+  }catch(e){}
+}
+function buildAchStats(){
+  return{wins:getWins(),streak:getStreak(),bestTime:getBestTime(),
+    perfectGames:localData.perfectGames,dailyChallenges:localData.dailyChallenges,
+    noHintWins:localData.noHintWins,level:getLevel(),globalRank:getRank()};
+}
+function buildAchUI(){
+  const grid=document.getElementById('achGrid');if(!grid)return;
+  const stats=buildAchStats();
+  const unlockedIds=nxdbAchievements.map(a=>a.achievement_id||a.id);
+  grid.innerHTML=ACHIEVEMENTS.map(a=>{
+    const unlocked=unlockedIds.includes(a.id)||a.condition(stats);
+    return`<div class="ach-card ${unlocked?'unlocked':'locked'}">
+      <div class="ach-icon">${a.icon}</div>
+      <div class="ach-name">${a.name}</div>
+    </div>`;
+  }).join('');
+}
 
-    // Command Palette Modal
-    const cmdPaletteOverlay = document.getElementById('cmd-palette-overlay');
-    const openSearchBtn = document.getElementById('open-search');
-    const cmdCloseBtn = document.getElementById('cmd-close');
-    const cmdInput = document.getElementById('cmd-input');
-    const cmdResults = document.getElementById('cmd-results');
+/* ═══════════ TOAST ═══════════ */
+function toast(title,msg='',type='info',dur=3000){
+  const icons={success:'✅',error:'❌',warning:'⚠️',info:'ℹ️'};
+  const wrap=document.getElementById('toastWrap');
+  const el=document.createElement('div');
+  el.className=`toast ${type}`;
+  el.innerHTML=`<span class="toast-ico">${icons[type]}</span>
+    <div class="toast-body">
+      <div class="toast-ttl">${title}</div>
+      ${msg?`<div class="toast-msg">${msg}</div>`:''}
+    </div>
+    <button class="toast-x" onclick="this.parentElement.remove()">✕</button>
+    <div class="toast-bar" style="animation-duration:${dur}ms"></div>`;
+  wrap.appendChild(el);
+  setTimeout(()=>{el.classList.add('out');setTimeout(()=>el.remove(),220);},dur);
+}
 
-    const cmdItems = [
-        { title: 'AF Nexus', desc: 'Platform', url: 'https://nexus.academeforge.in' },
-        { title: 'AcademeForge AI', desc: 'Tool', url: 'https://ai.academeforge.in' },
-        { title: 'Scholars Test', desc: 'Platform', url: 'https://ast.academeforge.in' },
-        { title: 'Timezy', desc: 'App', url: 'https://timezy.academeforge.in' },
-        { title: 'Capacity', desc: 'Platform', url: 'https://capacity.academeforge.in' },
-        { title: 'Zenopulsky', desc: 'App', url: 'https://zenopulsky.academeforge.in' },
-        { title: 'Nexora Studio', desc: 'Studio', url: 'https://nexora.academeforge.in' },
-        { title: 'AF Bazzar', desc: 'Store', url: 'https://shop.academeforge.in' },
-        { title: 'Certificate Verification Portal', desc: 'Tool', url: '/other-tools/verify-certificate/index.html' },
-        { title: 'Team Verification Portal', desc: 'Tool', url: '/other-tools/verify-team/index.html' },
-        { title: 'HopeNext Portal', desc: 'Platform', url: '/other-tools/hopenext/index.html' },
-        { title: 'Download Center', desc: 'Resource', url: 'https://download.academeforge.in' },
-        { title: 'Help Desk', desc: 'Support', url: 'https://faq.academeforge.in' },
-        { title: 'Sudoku Master', desc: 'Game', url: 'https://sudoku.academeforge.in' },
-        { title: 'Tic-XO-Toe', desc: 'Game', url: 'https://ticxotoe.academeforge.in' }
-    ];
-
-    function openCmdPalette() {
-        if (cmdPaletteOverlay) {
-            cmdPaletteOverlay.classList.add('active');
-        }
-        document.body.classList.add('no-scroll');
-        if (cmdInput) {
-            cmdInput.value = '';
-            setTimeout(() => cmdInput.focus(), 100);
-        }
-        renderCmdResults(cmdItems);
-    }
-
-    function closeCmdPalette() {
-        if (cmdPaletteOverlay) {
-            cmdPaletteOverlay.classList.remove('active');
-        }
-        document.body.classList.remove('no-scroll');
-    }
-
-    function renderCmdResults(items) {
-        if (!cmdResults) return;
-        if (items.length === 0) {
-            cmdResults.innerHTML = '<div style="padding: 16px; color: var(--text-tertiary);">No results found.</div>';
-            return;
-        }
-        cmdResults.innerHTML = items.map(item => `
-      <a href="${item.url}" class="cmd-item" onclick="document.getElementById('cmd-close').click()">
-        <span>${item.title}</span>
-        <span>${item.desc}</span>
-      </a>
-    `).join('');
-    }
-
-    if (openSearchBtn) {
-        openSearchBtn.addEventListener('click', openCmdPalette);
-    }
-    if (cmdCloseBtn) {
-        cmdCloseBtn.addEventListener('click', closeCmdPalette);
-    }
-    if (cmdPaletteOverlay) {
-        cmdPaletteOverlay.addEventListener('click', (e) => {
-            if (e.target === cmdPaletteOverlay) {
-                closeCmdPalette();
-            }
-        });
-    }
-
-    document.addEventListener('keydown', (e) => {
-        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-            e.preventDefault();
-            openCmdPalette();
-        }
-        if (e.key === 'Escape' && cmdPaletteOverlay && cmdPaletteOverlay.classList.contains('active')) {
-            closeCmdPalette();
-        }
-    });
-
-    if (cmdInput) {
-        cmdInput.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase().trim();
-            if (!query) {
-                renderCmdResults(cmdItems);
-                return;
-            }
-            const filtered = cmdItems.filter(item => 
-                item.title.toLowerCase().includes(query) || 
-                item.desc.toLowerCase().includes(query)
-            );
-            renderCmdResults(filtered);
-        });
-    }
-
-    // FAQ Accordion Toggle
-    const faqItems = document.querySelectorAll('.faq-item');
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
-        if (question) {
-            question.addEventListener('click', () => {
-                const isActive = item.classList.contains('active');
-                faqItems.forEach(i => i.classList.remove('active'));
-                if (!isActive) {
-                    item.classList.add('active');
-                }
-            });
-        }
-    });
-
-    // Multi-language Translation Engine (English <=> Hindi)
-    const langToggles = document.querySelectorAll('.lang-toggle');
-    const i18nTexts = document.querySelectorAll('.i18n-text');
-
-    const translations = {
-        'Download AcademeForge App': 'एकेडमीफोर्ज ऐप डाउनलोड करें',
-        'Get the official app to access downloaded courses, track your learning heatmap, and use AI mentor anytime, anywhere.': 'डाउनलोड किए गए पाठ्यक्रमों तक पहुँचने, अपने सीखने के हीटमैप को ट्रैक करने और कभी भी, कहीं भी एआई मेंटर का उपयोग करने के लिए आधिकारिक ऐप प्राप्त करें।',
-        'Direct Download': 'सीधा डाउनलोड',
-        'Android APK': 'एंड्रॉइड एपीके',
-        'All Platforms': 'सभी प्लेटफार्म',
-        'AcademeForge began in January 2024 as a Telegram community where students solved doubts, joined quizzes, shared study resources, and learned together in a supportive environment.': 'एकेडमीफोर्ज जनवरी 2024 में कक्षा 10 के छात्रों के लिए एक टेलीग्राम समुदाय के रूप में शुरू हुआ था — शंकाओं को हल करने, क्विज़ लेने और एक-दूसरे का समर्थन करने का एक स्थान।',
-        'Today it is a student-first learning ecosystem with practical courses, AI guidance, quizzes, certifications, productivity tools, and a growing community to help every learner succeed.': 'आज यह एक छात्र-प्रथम शिक्षण इकोसिस्टम है जिसमें व्यावहारिक पाठ्यक्रम, एआई मार्गदर्शन, प्रश्नोत्तरी, प्रमाणपत्र, उत्पादकता उपकरण और एक बढ़ता हुआ समुदाय शामिल है ताकि हर शिक्षार्थी को सफल होने में मदद मिल सके।',
-        'Have a project or idea? Let\'s build something meaningful together.': 'क्या आपके पास कोई प्रोजेक्ट या विचार है? आइए मिलकर कुछ सार्थक बनाएं।',
-        'Let\'s Talk': 'बातचीत करें',
-        'We are actively upgrading the ecosystem. Some features may not work as expected.': 'हम सक्रिय रूप से इकोसिस्टम को अपग्रेड कर रहे हैं। कुछ सुविधाएँ अपेक्षित रूप से काम नहीं कर सकती हैं।',
-        'Products': 'उत्पाद',
-        'The central student platform for learning.': 'सीखने के लिए केंद्रीय छात्र मंच।',
-        'An intelligent learning companion.': 'एक बुद्धिमान सीखने का साथी।',
-        'A dedicated examination platform.': 'एक समर्पित परीक्षा मंच।',
-        'A productivity and time management platform.': 'एक उत्पादकता और समय प्रबंधन मंच।',
-        'A private wellbeing platform.': 'एक निजी भलाई मंच।',
-        'An independent publishing platform.': 'एक स्वतंत्र प्रकाशन मंच।',
-        'The creative and innovation studio.': 'रचनात्मक और नवाचार स्टूडियो।',
-        'The official AcademeForge store and marketplace.': 'आधिकारिक एकेडमीफोर्ज स्टोर और बाज़ार।',
-        'Internship': 'इंटर्नशिप',
-        'Apply': 'आवेदन करें',
-        'Application Status': 'आवेदन की स्थिति',
-        'Workspace Policy': 'कार्यक्षेत्र नीति',
-        'What To Do': 'क्या करें',
-        'Company': 'कंपनी',
-        'Contact': 'संपर्क करें',
-        'Download Center': 'डाउनलोड सेंटर',
-        'Menu': 'मेनू',
-        'Status': 'स्थिति',
-        'Language': 'भाषा',
-        'India\'s Learning & Technology Ecosystem': 'भारत का लर्निंग और टेक्नोलॉजी इकोसिस्टम',
-        'AcademeForge is a growing Indian technology ecosystem building digital platforms that help students learn, create, stay productive, and grow beyond the classroom.': 'एकेडमीफोर्ज एक बढ़ता हुआ भारतीय टेक्नोलॉजी इकोसिस्टम है जो ऐसे डिजिटल प्लेटफॉर्म बना रहा है जो छात्रों को कक्षा से परे सीखने, बनाने, उत्पादक बने रहने और बढ़ने में मदद करते हैं।',
-        'What are you here for?': 'आप यहाँ किस लिए आए हैं?',
-        'Select a goal...': 'एक लक्ष्य चुनें...',
-        'Instead of offering just one application, AcademeForge brings together multiple connected platforms designed for different aspects of a student\'s journey—from learning and AI to examinations, productivity, wellbeing, journalism, and creative innovation.': 'केवल एक एप्लिकेशन पेश करने के बजाय, एकेडमीफोर्ज एक छात्र की यात्रा के विभिन्न पहलुओं के लिए डिज़ाइन किए गए कई जुड़े हुए प्लेटफॉर्मों को एक साथ लाता है—लर्निंग और एआई से लेकर परीक्षाओं, उत्पादकता, भलाई, पत्रकारिता और रचनात्मक नवाचार तक।',
-        'Whether you\'re learning a new skill, preparing for an exam, organizing your day, exploring AI, or connecting with a community, AcademeForge provides a unified experience through one ecosystem.': 'चाहे आप कोई नया कौशल सीख रहे हों, परीक्षा की तैयारी कर रहे हों, अपना दिन व्यवस्थित कर रहे हों, एआई की खोज कर रहे हों, या किसी समुदाय से जुड़ रहे हों, एकेडमीफोर्ज एक इकोसिस्टम के माध्यम से एक एकीकृत अनुभव प्रदान करता है।',
-        'Explore the Ecosystem': 'इकोसिस्टम का अन्वेषण करें',
-        'The central student platform for learning, courses, assessments, certificates, progress tracking, and community.': 'लर्निंग, पाठ्यक्रम, मूल्यांकन, प्रमाण पत्र, प्रगति ट्रैकिंग और समुदाय के लिए केंद्रीय छात्र मंच।',
-        'Start Learning': 'सीखना शुरू करें',
-        'An intelligent learning companion designed to assist with coding, problem-solving, writing, career guidance, and productivity.': 'कोडिंग, समस्या-समाधान, लेखन, कैरियर मार्गदर्शन और उत्पादकता में सहायता के लिए डिज़ाइन किया गया एक बुद्धिमान सीखने का साथी।',
-        'Chat Now': 'अभी चैट करें',
-        'A dedicated examination platform for students and schools, offering secure assessments, admit cards, results, and academic services.': 'छात्रों और स्कूलों के लिए एक समर्पित परीक्षा मंच, जो सुरक्षित मूल्यांकन, प्रवेश पत्र, परिणाम और शैक्षणिक सेवाएं प्रदान करता है।',
-        'Book Exam': 'परीक्षा बुक करें',
-        'A productivity and time management platform that helps users organize tasks, plan schedules, and stay focused throughout the day.': 'एक उत्पादकता और समय प्रबंधन मंच जो उपयोगकर्ताओं को कार्यों को व्यवस्थित करने, कार्यक्रम की योजना बनाने और दिन भर केंद्रित रहने में मदद करता है।',
-        'Plan Your Day': 'अपने दिन की योजना बनाएं',
-        'A private wellbeing platform where users can share how they\'re feeling, stay connected with trusted people, and maintain meaningful conversations.': 'एक निजी भलाई मंच जहां उपयोगकर्ता साझा कर सकते हैं कि वे कैसा महसूस कर रहे हैं, विश्वसनीय लोगों से जुड़े रह सकते हैं, और सार्थक बातचीत बनाए रख सकते हैं।',
-        'Open Privately': 'निजी तौर पर खोलें',
-        'An independent publishing platform focused on journalism, technology, education, society, and stories that matter.': 'पत्रकारिता, प्रौद्योगिकी, शिक्षा, समाज और मायने रखने वाली कहानियों पर केंद्रित एक स्वतंत्र प्रकाशन मंच।',
-        'Read Stories': 'कहानियां पढ़ें',
-        'The creative and innovation studio behind the AcademeForge ecosystem, focused on design, branding, product development, and digital experiences.': 'डिजाइन, ब्रांडिंग, उत्पाद विकास और डिजिटल अनुभवों पर केंद्रित एकेडमीफोर्ज इकोसिस्टम के पीछे रचनात्मक और नवाचार स्टूडियो।',
-        'Enter Studio': 'स्टूडियो में प्रवेश करें',
-        'The official AcademeForge store and marketplace for digital and physical resources.': 'डिजिटल और भौतिक संसाधनों के लिए आधिकारिक एकेडमीफोर्ज स्टोर और बाज़ार।',
-        'Shop Now': 'अभी खरीदारी करें',
-        'One Ecosystem.<br>Multiple Experiences.': 'एक इकोसिस्टम।<br>कई अनुभव।',
-        'Every AcademeForge product is designed to work independently while remaining connected through a shared ecosystem.': 'प्रत्येक एकेडमीफोर्ज उत्पाद को एक साझा इकोसिस्टम के माध्यम से जुड़े रहने के साथ स्वतंत्र रूप से काम करने के लिए डिज़ाइन किया गया है।',
-        'One account.': 'एक खाता।',
-        'Multiple platforms.': 'कई प्लेटफार्म।',
-        'A consistent experience.': 'एक सुसंगत अनुभव।',
-        'Built for students, creators, educators, and future innovators.': 'छात्रों, रचनाकारों, शिक्षकों और भविष्य के नवोन्मेषकों के लिए बनाया गया।',
-        'Why AcademeForge?': 'एकेडमीफोर्ज क्यों?',
-        'Learn practical digital skills.': 'व्यावहारिक डिजिटल कौशल सीखें।',
-        'Explore AI-powered learning.': 'एओ-संचालित शिक्षण का अन्वेषण करें।',
-        'Prepare for examinations.': 'परीक्षा की तैयारी करें।',
-        'Stay productive with dedicated tools.': 'समर्पित उपकरणों के साथ उत्पादक बने रहें।',
-        'Take care of your wellbeing.': 'अपनी भलाई का ख्याल रखें।',
-        'Connect with a growing student community.': 'बढ़ते छात्र समुदाय से जुड़ें।',
-        'Discover new ideas through independent journalism.': 'स्वतंत्र पत्रकारिता के माध्यम से नए विचारों की खोज करें।',
-        'Learning Beyond the Classroom': 'कक्षा से परे सीखना',
-        'Learning Beyond The Classroom': 'कक्षा से परे सीखना',
-        'AcademeForge is building a future where education extends beyond traditional classrooms—bringing learning, technology, creativity, productivity, and innovation together in one connected ecosystem for the next generation of learners.': 'एकेडमीफोर्ज एक ऐसे भविष्य का निर्माण कर रहा है जहां शिक्षा पारंपरिक कक्षाओं से आगे बढ़ती है—लर्निंग, प्रौद्योगिकी, रचनात्मकता, उत्पादकता और नवाचार को शिक्षार्थियों की अगली पीढ़ी के लिए एक जुड़े हुए इकोसिस्टम में एक साथ लाती है।',
-        'Visit Download Center': 'डाउनलोड सेंटर पर जाएं',
-        'Learning beyond the classroom.': 'कक्षा से परे सीखना।',
-        'About': 'के बारे में',
-        'Clients': 'ग्राहक',
-        'News': 'समाचार',
-        'Help Desk': 'हेल्प डेस्क',
-        'Legal': 'कानूनी',
-        'Privacy Policy': 'गोपनीयता नीति',
-        'Terms of Service': 'सेवा की शर्तें',
-        'Designed in India.': 'भारत में डिज़ाइन किया गया।',
-        'Get Started Free': 'मुफ़्त में शुरू करें',
-        'Frequently Asked Questions': 'अक्सर पूछे जाने वाले प्रश्न',
-        'Got questions? We\'ve got answers about the AcademeForge ecosystem.': 'क्या आपके कोई प्रश्न हैं? हमारे पास एकेडमीफोर्ज इकोसिस्टम के बारे में उत्तर हैं।',
-        'What is AcademeForge?': 'एकेडमीफोर्ज क्या है?',
-        'AcademeForge is a technology ecosystem building multiple platforms for students to learn, prepare for exams, stay productive, and more, all under one unified account.': 'एकेडमीफोर्ज एक प्रौद्योगिकी इकोसिस्टम है जो छात्रों को सीखने, परीक्षा की तैयारी करने, उत्पादक बने रहने और बहुत कुछ करने के लिए कई प्लेटफॉर्म बनाता है, वह भी एक एकीकृत खाते के तहत।',
-        'Do I need separate accounts for each app?': 'क्या मुझे प्रत्येक ऐप के लिए अलग खाते चाहिए?',
-        'No, a single AcademeForge account grants you access to all our platforms, including AF Nexus, AcademeForge AI, Scholars Test, and Timezy.': 'नहीं, एक एकल एकेडमीफोर्ज खाता आपको हमारे सभी प्लेटफॉर्म तक पहुंच प्रदान करता है, जिसमें AF Nexus, AcademeForge AI, Scholars Test, और Timezy शामिल हैं।',
-        'More Doubts?': 'और अधिक शंकाएँ?',
-        'Visit faq.academeforge.in': 'faq.academeforge.in पर जाएं',
-        'View All FAQs': 'सभी प्रश्न देखें',
-        'Other tools': 'अन्य उपकरण',
-        'Certificate Verification Portal': 'प्रमाणपत्र सत्यापन पोर्टल',
-        'Team Verification Portal': 'टीम सत्यापन पोर्टल',
-        'HopeNext Portal': 'HopeNext पोर्टल',
-       
-        'A brain-training puzzle game.': 'मस्तिष्क को प्रशिक्षित करने वाला एक पहेली खेल।',
-        'A classic strategy game reimagined.': 'एक क्लासिक रणनीति खेल नए रूप में।',
-        'Play Now': 'अभी खेलें',
-        'A brain-training puzzle game designed to sharpen logical thinking and focus through classic Sudoku challenges.': 'क्लासिक सुडोकू चुनौतियों के माध्यम से तार्किक सोच और फोकस को तेज करने के लिए डिज़ाइन किया गया एक पहेली खेल।',
-        'A classic strategy game reimagined with modern design — play against friends or AI opponents.': 'आधुनिक डिजाइन के साथ फिर से तैयार किया गया एक क्लासिक रणनीति खेल — दोस्तों या एआई विरोधियों के खिलाफ खेलें।',
-        'About Us': 'हमारे बारे में',
-        'How it started': 'यह कैसे शुरू हुआ',
-        'How it\'s going': 'यह कैसा चल रहा है',
-        'AcademeForge began in January 2024 as a Telegram community for Class 10 students — a space to solve doubts, take quizzes, and support each other.': 'एकेडमीफोर्ज जनवरी 2024 में कक्षा 10 के छात्रों के लिए एक टेलीग्राम समुदाय के रूप में शुरू हुआ था — शंकाओं को हल करने, क्विज़ लेने और एक-दूसरे का समर्थन करने का स्थान।',
-        'Today it is a practical learning ecosystem where students study, track progress, test knowledge, connect with peers, and manage their time. Affordable courses, an AI mentor, gamification, and productivity apps — all in one place.': 'आज यह एक व्यावहारिक शिक्षण इकोसिस्टम है जहाँ छात्र अध्ययन करते हैं, प्रगति को ट्रैक करते हैं, ज्ञान का परीक्षण करते हैं, साथियों से जुड़ते हैं, और अपना समय प्रबंधित करते हैं। किफायती पाठ्यक्रम, एक एई मेंटर, गेमिफिकेशन और उत्पादकता ऐप — सभी एक ही स्थान पर।',
-        'Read more': 'और पढ़ें',
-        'TESTIMONIALS': 'प्रशंसापत्र',
-        'What our community says about AcademeForge': 'एकेडमीफोर्ज के बारे में हमारा समुदाय क्या कहता है',
-        'Is AcademeForge free to use?': 'क्या एकेडमीफोर्ज का उपयोग मुफ़्त है?',
-        'Most productivity tools like Timezy and brain games are completely free. Premium certification courses and special practice tests are offered at highly affordable pricing.': 'उत्पादकता के अधिकांश उपकरण जैसे Timezy और दिमाग के खेल पूरी तरह से मुफ़्त हैं। प्रीमियम प्रमाणन पाठ्यक्रम और विशेष अभ्यास परीक्षण अत्यधिक किफायती दरों पर प्रदान किए जाते हैं।',
-        'How do I apply for an internship?': 'मैं इंटर्नशिप के लिए कैसे आवेदन करूं?',
-        'You can apply through the dedicated Careers or Internship portals on our website. Selected candidates undergo practical training and gain live workspace experience.': 'आप हमारी वेबसाइट पर समर्पित करियर या इंटर्नशिप पोर्टल्स के माध्यम से आवेदन कर सकते हैं। Selected candidates undergo practical training and gain live workspace experience.',
-        'What platforms are the apps available on?': 'ऐप्स किन प्लेटफॉर्म्स पर उपलब्ध हैं?',
-        'Our products run natively as responsive web applications in any mobile or desktop browser. We also offer Android APK installations via the Download Center.': 'हमारे उत्पाद किसी भी mobile या desktop ब्राउज़र में रिस्पॉन्सिव वेब एप्लिकेशन के रूप में चलते हैं। हम डाउनलोड सेंटर के माध्यम से एंड्रॉइड एपीके इंस्टॉलेशन भी प्रदान करते हैं।',
-        'Is my data safe on AcademeForge?': 'क्या एकेडमीफोर्ज पर मेरा डेटा सुरक्षित है?',
-        'Yes, student privacy is our top priority. We use secure modern hosting and encrypt all personal profile details. We never sell your data.': 'हाँ, छात्रों की गोपनीयता हमारी सर्वोच्च प्राथमिकता है। हम सुरक्षित आधुनिक होस्टिंग का उपयोग करते हैं और सभी व्यक्तिगत प्रोफाइल विवरणों को एन्क्रिप्ट करते हैं। हम आपका डेटा कभी नहीं बेचते हैं।',
-        'How do I contact support?': 'मैं सहायता टीम से कैसे संपर्क करूं?',
-        'You can write to us directly at help@academeforge.in, visit the Help Desk portal, or use our contact form.': 'आप सीधे हमें help@academeforge.in पर लिख सकते हैं, हेल्प डेस्क पोर्टल पर जा सकते हैं, या हमारे संपर्क फ़ॉर्म का उपयोग कर सकते हैं।'
-    };
-
-    // Store English baseline text in data-en attribute (using innerHTML to match translations with HTML tags)
-    i18nTexts.forEach(el => {
-        if (!el.getAttribute('data-en')) {
-            el.setAttribute('data-en', el.innerHTML.trim());
-        }
-    });
-
-    langToggles.forEach(toggle => {
-        const buttons = toggle.querySelectorAll('.lang-btn');
-        buttons.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const targetBtn = e.target.closest('.lang-btn');
-                if (!targetBtn) return;
-                const lang = targetBtn.getAttribute('data-lang');
-
-                document.querySelectorAll('.lang-btn').forEach(b => {
-                    if (b.getAttribute('data-lang') === lang) {
-                        b.classList.add('active');
-                    } else {
-                        b.classList.remove('active');
-                    }
-                });
-
-                i18nTexts.forEach(el => {
-                    const enText = el.getAttribute('data-en');
-                    if (lang === 'hi') {
-                        if (translations[enText]) {
-                            el.innerHTML = translations[enText];
-                        }
-                    } else {
-                        el.innerHTML = enText;
-                    }
-                });
-            });
-        });
-    });
-
-    // Testimonial Carousel
-    const slides = document.querySelectorAll('.testimonial-slide');
-    const prevBtn = document.getElementById('testimonial-prev');
-    const nextBtn = document.getElementById('testimonial-next');
-    const dotsContainer = document.getElementById('testimonial-dots');
-    
-    let currentSlide = 0;
-    let autoPlayInterval = null;
-
-    function showSlide(index) {
-        slides.forEach(slide => slide.classList.remove('active'));
-        currentSlide = (index + slides.length) % slides.length;
-        slides[currentSlide].classList.add('active');
-        
-        if (dotsContainer) {
-            const dots = dotsContainer.querySelectorAll('.dot');
-            dots.forEach((dot, idx) => {
-                if (idx === currentSlide) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
-                }
-            });
-        }
-    }
-
-    function startAutoPlay() {
-        stopAutoPlay();
-        autoPlayInterval = setInterval(() => {
-            showSlide(currentSlide + 1);
-        }, 5000);
-    }
-
-    function stopAutoPlay() {
-        if (autoPlayInterval) {
-            clearInterval(autoPlayInterval);
-        }
-    }
-
-    if (prevBtn && nextBtn && slides.length > 0) {
-        prevBtn.addEventListener('click', () => {
-            showSlide(currentSlide - 1);
-            startAutoPlay();
-        });
-        nextBtn.addEventListener('click', () => {
-            showSlide(currentSlide + 1);
-            startAutoPlay();
-        });
-    }
-
-    if (dotsContainer && slides.length > 0) {
-        const dots = dotsContainer.querySelectorAll('.dot');
-        dots.forEach((dot, idx) => {
-            dot.addEventListener('click', () => {
-                showSlide(idx);
-                startAutoPlay();
-            });
-        });
-    }
-
-    if (slides.length > 0) {
-        startAutoPlay();
-    }
-
-    // Sticky CTA Visibility
-    const stickyCta = document.getElementById('sticky-cta');
-    const footer = document.querySelector('footer');
-    
-    if (stickyCta) {
-        window.addEventListener('scroll', () => {
-            const scrollPos = window.scrollY;
-            let nearFooter = false;
-            
-            if (footer) {
-                const footerRect = footer.getBoundingClientRect();
-                if (footerRect.top < window.innerHeight) {
-                    nearFooter = true;
-                }
-            }
-            
-            if (scrollPos > 300 && !nearFooter) {
-                stickyCta.classList.add('visible');
-            } else {
-                stickyCta.classList.remove('visible');
-            }
-        });
-    }
+/* ═══════════ MODALS ═══════════ */
+function openModal(id){document.getElementById(id).classList.add('show');}
+function closeModal(id){document.getElementById(id).classList.remove('show');}
+document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show');}));
+function showConfirm({title,msg,icon='⚠️',onConfirm}){
+  document.getElementById('confirmTitle').textContent=title||'Are you sure?';
+  document.getElementById('confirmMsg').textContent=msg||'';
+  document.getElementById('confirmIcon').textContent=icon;
+  confirmCallback=onConfirm;openModal('confirmModal');
+}
+document.getElementById('confirmOkBtn').addEventListener('click',()=>{
+  closeModal('confirmModal');if(typeof confirmCallback==='function')confirmCallback();
 });
+
+/* ═══════════ SCREEN NAV ═══════════ */
+function openScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  const btn=document.querySelector(`.nav-btn[data-screen="${id}"]`);
+  if(btn)btn.classList.add('active');
+  const labels={homeScreen:'Sudoku Master',playScreen:'Play',profileScreen:'Profile',leaderboardScreen:'Rankings',settingsScreen:'Settings'};
+  document.getElementById('hdrSub').textContent=labels[id]||'Sudoku Master';
+  if(id==='leaderboardScreen')loadLeaderboard();
+  if(id==='profileScreen'){buildAchUI();refreshUI();}
+  if(id==='homeScreen')refreshUI();
+}
+function navToPlay(){
+  openScreen('playScreen');
+  if(gameActive){
+    document.getElementById('setupView').style.display='none';
+    document.getElementById('gameView').style.display='block';
+  }else{
+    document.getElementById('setupView').style.display='block';
+    document.getElementById('gameView').style.display='none';
+  }
+}
+
+/* ═══════════ GLOBAL UI REFRESH ═══════════ */
+function refreshUI(){
+  const af=getAFStudent();
+  const xp=getXp(),level=getLevel(),wins=getWins(),played=getPlayed(),best=getBestTime();
+  const xpData=xpForLevel(xp),tier=getTier(level),rank=getRank();
+  const displayName=(af.loggedIn&&af.name)?af.name:(nxdbPlayer?.name||localStorage.getItem('sm_nxdb_username')||'Guest Player');
+  const displayAvatar=localStorage.getItem('af_student_avatar')||localStorage.getItem('sm_nxdb_avatar')||(af.loggedIn?'🎓':'😀');
+
+  document.getElementById('headerAvatarBtn').textContent=displayAvatar;
+  document.getElementById('heroEyebrow').textContent=`⚡ Level ${level} · ${tier.icon} ${tier.name}`;
+  document.getElementById('heroName').textContent=displayName;
+  document.getElementById('heroId').textContent=af.studentId?`ID: ${af.studentId}`:'';
+  document.getElementById('stLevel').textContent=level;
+  document.getElementById('stWins').textContent=wins;
+  document.getElementById('stStreak').textContent=getStreak();
+  if(rank>0)updateRankUI(rank);
+  document.getElementById('xpLvLabel').textContent=`Level ${level}`;
+  document.getElementById('xpNums').textContent=`${xpData.progress.toLocaleString()} / ${xpData.needed.toLocaleString()} XP`;
+  document.getElementById('xpFill').style.width=`${Math.min(100,Math.round(xpData.progress/xpData.needed*100))}%`;
+
+  // Daily card
+  const dailyCfg=getTodayDailyConfig();
+  const today=new Date().toDateString(),todayDone=localData.dailyDone===today;
+  const dailyXpKey=`daily_${dailyCfg.size}_${dailyCfg.diff}`;
+  const dailyXp=XP_TABLE[dailyXpKey]||500;
+  document.getElementById('dailyTitle').textContent=todayDone?'✅ Completed! Come back tomorrow.':'Today\'s Challenge';
+  document.getElementById('dailyType').textContent=`🧩 ${dailyCfg.size}×${dailyCfg.size} ${DIFF_CONFIG[dailyCfg.diff].label}`;
+  document.getElementById('dailyMeta').textContent=todayDone?'New challenge at midnight':`+${dailyXp} Bonus XP`;
+
+  document.getElementById('qsWins').textContent=wins;
+  document.getElementById('qsPlayed').textContent=played;
+  document.getElementById('qsWinRate').textContent=played>0?`${Math.round(wins/played*100)}%`:'0%';
+
+  document.getElementById('profileAvatar').textContent=displayAvatar;
+  document.getElementById('profileName').textContent=displayName;
+  document.getElementById('profileLevelBadge').textContent=`⚡ Level ${level}`;
+  const tb=document.getElementById('profileTierBadge');
+  tb.textContent=`${tier.icon} ${tier.name}`;tb.className=`tier-badge ${tier.css}`;
+  document.getElementById('profileEmail').textContent=nxdbPlayer?.email||af.email||'';
+  const syncEl=document.getElementById('syncStatus');
+  if(syncEl){
+    if(!_isOnline){syncEl.textContent='📡 Offline — playing locally';}
+    else if(nxdbPlayer){syncEl.textContent='☁️ Cloud synced';}
+    else if(af.loggedIn){syncEl.textContent='⏳ Syncing…';}
+    else syncEl.textContent='';
+  }
+  document.getElementById('pxpLv').textContent=`Level ${level}`;
+  document.getElementById('pxpNums').textContent=`${xpData.progress.toLocaleString()} / ${xpData.needed.toLocaleString()} XP`;
+  document.getElementById('pxpFill').style.width=`${Math.min(100,Math.round(xpData.progress/xpData.needed*100))}%`;
+  document.getElementById('pxpRemaining').textContent=`${(xpData.needed-xpData.progress).toLocaleString()} XP to Level ${level+1}`;
+  document.getElementById('pTotalXp').textContent=xp.toLocaleString();
+  document.getElementById('pWins').textContent=wins;
+  document.getElementById('pPlayed').textContent=played;
+  document.getElementById('pWinRate').textContent=played>0?`${Math.round(wins/played*100)}%`:'0%';
+  document.getElementById('pBestTime').textContent=best?fmtTime(best):'—';
+  if(rank>0)document.getElementById('pGlobalRank').textContent=`#${rank}`;
+
+  const afCard=document.getElementById('afProfileCard');
+  if(af.loggedIn&&af.name){
+    afCard.style.display='block';
+    document.getElementById('afpcName').textContent=af.name||'—';
+    document.getElementById('afpcPhone').textContent=af.phone||'—';
+    document.getElementById('afpcEmail').textContent=af.email||'—';
+    document.getElementById('afpcSid').textContent=af.studentId||'—';
+  }else{afCard.style.display='none';}
+
+  buildAchUI();updateOfflineSub();
+
+  // Update win streak banner in game view
+  updateStreakBanner();
+}
+
+function updateStreakBanner(){
+  const banner=document.getElementById('winStreakBanner');
+  const cw=consecutiveWins;
+  if(!banner)return;
+  if(cw>=3&&gameActive){
+    banner.style.display='flex';
+    document.getElementById('streakBannerText').textContent=`${cw}-Win Streak! 🔥`;
+    const bonus=getStreakBonus(cw);
+    document.getElementById('streakBannerBonus').textContent=`+${bonus} XP bonus`;
+  }else{
+    banner.style.display='none';
+  }
+}
+
+/* ═══════════ SETUP FLOW ═══════════ */
+function selectBoard(size){
+  setupBoard=size;
+  document.querySelectorAll('.board-card').forEach(c=>c.classList.toggle('selected',Number(c.dataset.board)===size));
+  document.getElementById('step1Next').disabled=false;
+}
+function buildDiffOptions(){
+  const list=document.getElementById('diffList');if(!list)return;
+  list.innerHTML=['easy','moderate','hard'].map(d=>{
+    const c=DIFF_CONFIG[d],xp=XP_TABLE[`${setupBoard||9}-${d}`]||50;
+    return`<div class="diff-card${setupDiff===d?' selected':''}" data-diff="${d}" onclick="selectDiff('${d}')">
+      <div class="diff-icon">${c.icon}</div>
+      <div class="diff-info"><div class="diff-name">${c.label}</div><div class="diff-desc">${c.desc}</div></div>
+      <div class="diff-xp-badge">+${xp} XP</div>
+    </div>`;
+  }).join('');
+}
+function selectDiff(d){
+  setupDiff=d;
+  document.querySelectorAll('.diff-card').forEach(c=>c.classList.toggle('selected',c.dataset.diff===d));
+  document.getElementById('step2Next').disabled=false;
+}
+function goStep(step){
+  if(step===2&&!setupBoard){toast('Pick a board size first','','warning');return;}
+  if(step===3&&!setupDiff){toast('Pick a difficulty','','warning');return;}
+  [1,2,3].forEach(i=>{
+    document.getElementById(`sd${i}`).classList.toggle('active',i===step);
+    document.getElementById(`sd${i}`).classList.toggle('done',i<step);
+  });
+  [1,2].forEach(i=>document.getElementById(`sl${i}`)?.classList.toggle('done',i<step));
+  document.querySelectorAll('.step-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById(`step${step}`).classList.add('active');
+  if(step===2)buildDiffOptions();
+  if(step===3)updateSummary();
+}
+function updateSummary(){
+  const sz=setupBoard,d=setupDiff;
+  const xp=XP_TABLE[`${sz}-${d}`]||50,lim=BOARD_LIMITS[sz],cfg=DIFF_CONFIG[d];
+  document.getElementById('ssIcon').textContent=cfg.icon;
+  document.getElementById('ssDesc').textContent=`${sz}×${sz} ${cfg.label}`;
+  document.getElementById('ssBoard').textContent=`${sz}×${sz}`;
+  document.getElementById('ssDiff').textContent=cfg.label;
+  document.getElementById('ssHints').textContent=`${lim.hints} Hints`;
+  document.getElementById('ssLives').textContent=`${lim.maxLives} Lives`;
+  document.getElementById('ssXp').textContent=`+${xp} XP`;
+}
+
+/* ═══════════ DAILY CHALLENGE ═══════════ */
+function startDailyChallenge(){
+  const today=new Date().toDateString();
+  if(localData.dailyDone===today){openModal('dailyDoneModal');return;}
+  const cfg=getTodayDailyConfig();
+  isDaily=true;setupBoard=cfg.size;setupDiff=cfg.diff;
+  startGame();
+}
+
+/* ═══════════ EDIT PROFILE ═══════════ */
+function openEditProfile(){
+  const username=nxdbPlayer?.name||localStorage.getItem('sm_nxdb_username')||'';
+  document.getElementById('editUsername').value=username;
+  editSelectedAvatar=localStorage.getItem('af_student_avatar')||localStorage.getItem('sm_nxdb_avatar')||'😀';
+  const grid=document.getElementById('editAvatarGrid');grid.innerHTML='';
+  AVATARS.forEach(av=>{
+    const btn=document.createElement('button');btn.type='button';
+    btn.style.cssText=`height:40px;font-size:1.25rem;border-radius:8px;background:var(--surf-3);border:2px solid ${av===editSelectedAvatar?'var(--pri)':'transparent'};transition:all .12s;cursor:pointer`;
+    btn.textContent=av;
+    btn.onclick=()=>{
+      grid.querySelectorAll('button').forEach(b=>{b.style.borderColor='transparent';b.style.background='var(--surf-3)';});
+      btn.style.borderColor='var(--pri)';btn.style.background='var(--pri-bg)';
+      editSelectedAvatar=av;
+    };
+    grid.appendChild(btn);
+  });
+  openModal('editProfileModal');
+}
+async function saveProfileEdit(){
+  const username=document.getElementById('editUsername').value.trim();
+  if(username.length<3){toast('Min 3 characters','','warning');return;}
+  localStorage.setItem('sm_nxdb_username',username);
+  localStorage.setItem('sm_nxdb_avatar',editSelectedAvatar);
+  localStorage.setItem('af_student_avatar',editSelectedAvatar);
+  const af=getAFStudent();
+  if(af.loggedIn&&af.studentId&&nxdbPlayer&&_isOnline){
+    try{await nxdbApi(NXDB_API_URL,{action:'update-profile',student_id:af.studentId,display_name:username,avatar:editSelectedAvatar});}catch(e){}
+  }
+  closeModal('editProfileModal');toast('Profile updated!','','success');refreshUI();
+}
+
+/* ═══════════ SETTINGS ═══════════ */
+function confirmResetProgress(){
+  showConfirm({title:'Reset Local Data',msg:'Cloud data is safe.',icon:'🗑️',onConfirm(){
+    localData={xp:0,level:1,wins:0,played:0,bestTime:0,streak:0,lastPlayDate:null,perfectGames:0,dailyChallenges:0,noHintWins:0,dailyDone:null,globalRank:0,consecutiveWins:0};
+    consecutiveWins=0;offlineQueue=[];saveLocal();saveOfflineQueue();refreshUI();
+    toast('Local data cleared','','info');
+  }});
+}
+
+/* ═══════════ ONBOARDING ═══════════ */
+const ONBOARD_STEPS=[
+  {ico:'🧩',title:'Welcome to Sudoku Master!',desc:'Fill the grid so every row, column, and box contains each number exactly once. Earn XP, level up, and climb the rankings!',hl:null},
+  {ico:'🎮',title:'Start a Game',desc:'Tap Play at the bottom to choose your board size (4×4 for quick sessions or 9×9 for the full challenge) and your difficulty.',hlIcon:'🎮',hlText:'Tap "Play" in the bottom bar to begin a game anytime'},
+  {ico:'🗓️',title:'Daily Challenge',desc:'A fresh puzzle drops every day on your Home screen. Complete it for massive XP bonus — up to +500 XP!',hlIcon:'🗓️',hlText:'The Daily Challenge card is on your Home screen. Tap it to play!'},
+  {ico:'💡',title:'Game Tools',desc:'Inside a game you have Notes mode for pencil marks, Erase to clear a cell, Hints if you\'re stuck, and Auto-Solve to reveal the answer (no XP).',hlIcon:'📝',hlText:'Notes · Erase · Hint · Solve — these appear above the board during a game'},
+  {ico:'🔥',title:'Win Streaks & XP',desc:'Win 3 games in a row for a +5 XP bonus, 4 in a row for +10, 5 for +15, and so on. Perfect games and no-hint clears earn extra too!',hlIcon:'🏆',hlText:'Check your XP progress anytime on your Profile tab'},
+  {ico:'🚀',title:'You\'re Ready!',desc:'Compete on the global leaderboard, unlock achievements, and become a Sudoku Master. Good luck! 🎓',hl:null}
+];
+let obStep=0;
+function showOnboarding(){
+  obStep=0;
+  document.getElementById('onboardOverlay').classList.remove('hidden');
+  renderObStep();
+}
+function renderObStep(){
+  const s=ONBOARD_STEPS[obStep];
+  const dots=document.getElementById('obDots');
+  dots.innerHTML=ONBOARD_STEPS.map((_,i)=>`<div class="ob-dot ${i===obStep?'active':''}"></div>`).join('');
+  document.getElementById('obIco').textContent=s.ico;
+  document.getElementById('obTitle').textContent=s.title;
+  document.getElementById('obDesc').textContent=s.desc;
+  const hl=document.getElementById('obHighlight');
+  if(s.hlIcon){
+    hl.style.display='flex';
+    document.getElementById('obHlIcon').textContent=s.hlIcon;
+    document.getElementById('obHlText').textContent=s.hlText;
+  }else{hl.style.display='none';}
+  const btn=document.getElementById('obNextBtn');
+  const isLast=obStep===ONBOARD_STEPS.length-1;
+  btn.textContent=isLast?'Start Playing! 🚀':'Next →';
+  btn.className=isLast?'ob-finish':'ob-next';
+}
+function nextOnboardStep(){
+  if(obStep<ONBOARD_STEPS.length-1){
+    obStep++;renderObStep();
+  }else{
+    skipOnboarding();
+  }
+}
+function skipOnboarding(){
+  document.getElementById('onboardOverlay').classList.add('hidden');
+  localStorage.setItem('sm_onboarded','1');
+}
+
+/* ═══════════ KEYBOARD ═══════════ */
+document.addEventListener('keydown',e=>{
+  if(!gameActive)return;
+  const num=parseInt(e.key);
+  if(num>=1&&num<=boardSize){placeNumber(num);return;}
+  if(e.key==='Backspace'||e.key==='Delete'){eraseCell();return;}
+  if(!selectedCell)return;
+  let{row,col}=selectedCell;const sz=boardSize;
+  const dirs={ArrowUp:[-1,0],ArrowDown:[1,0],ArrowLeft:[0,-1],ArrowRight:[0,1]};
+  if(dirs[e.key]){
+    e.preventDefault();
+    row=Math.max(0,Math.min(sz-1,row+dirs[e.key][0]));
+    col=Math.max(0,Math.min(sz-1,col+dirs[e.key][1]));
+    selectCellFn(row,col);
+  }
+});
+
+/* ═══════════ SWIPE NAV ═══════════ */
+const SCREEN_ORDER=['homeScreen','playScreen','profileScreen','leaderboardScreen','settingsScreen'];
+let swipeStartX=0,swipeStartY=0,swipeT=0;
+const appEl=document.querySelector('.app');
+if(appEl){
+  appEl.addEventListener('touchstart',e=>{swipeStartX=e.changedTouches[0].clientX;swipeStartY=e.changedTouches[0].clientY;swipeT=Date.now();},{passive:true});
+  appEl.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-swipeStartX,dy=e.changedTouches[0].clientY-swipeStartY;
+    if(Math.abs(dy)>Math.abs(dx)||Math.abs(dx)<90||Date.now()-swipeT>600)return;
+    if(e.target.closest('.modal,.modal-sheet,.onboard-sheet,#editAvatarGrid'))return;
+    const activeBtn=document.querySelector('.bottom-nav .nav-btn.active');
+    if(!activeBtn)return;
+    const cur=SCREEN_ORDER.indexOf(activeBtn.dataset.screen);if(cur===-1)return;
+    if(dx<0&&cur<SCREEN_ORDER.length-1){const n=SCREEN_ORDER[cur+1];n==='playScreen'?navToPlay():openScreen(n);}
+    if(dx>0&&cur>0){const p=SCREEN_ORDER[cur-1];p==='playScreen'?navToPlay():openScreen(p);}
+  },{passive:true});
+}
+
+/* ═══════════ CROSS-TAB STORAGE SYNC ═══════════ */
+window.addEventListener('storage',e=>{
+  const afKeys=['af_student_name','af_student_mobile','af_student_email','af_student_logged_in','af_student_id','af_student_uuid'];
+  if(afKeys.includes(e.key)){
+    refreshUI();
+    const af=getAFStudent();
+    if(af.loggedIn&&af.studentId&&_isOnline)doRefresh().catch(()=>{});
+  }
+});
+
+/* ═══════════ SECURITY ═══════════ */
+document.addEventListener('contextmenu',e=>e.preventDefault());
+document.addEventListener('keydown',e=>{
+  if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['i','j','c'].includes(e.key.toLowerCase()))||(e.ctrlKey&&['u','s'].includes(e.key.toLowerCase())))e.preventDefault();
+});
+document.addEventListener('selectstart',e=>e.preventDefault());
+document.addEventListener('copy',e=>e.preventDefault());
+document.addEventListener('dragstart',e=>e.preventDefault());
+window.addEventListener('wheel',e=>{if(e.ctrlKey)e.preventDefault();},{passive:false});
+document.addEventListener('touchmove',e=>{if(e.touches.length>1)e.preventDefault();},{passive:false});
+let lastTap=0;document.addEventListener('touchend',e=>{const n=Date.now();if(n-lastTap<=300)e.preventDefault();lastTap=n;},false);
+
+/* ═══════════ LOGOUT ═══════════ */
+window.doLogout = function() {
+  localStorage.clear();
+  window.location.replace('index.html');
+};
+
+/* ═══════════ INIT ═══════════ */
+async function init(){
+  try{
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(err => console.error('SW registration failed:', err));
+    }
+    loadLocal();loadOfflineQueue();setOnlineState(navigator.onLine);
+    consecutiveWins=localData.consecutiveWins||0;
+    refreshUI();
+    const af=getAFStudent();
+    if(af.loggedIn&&af.name){
+      setTimeout(()=>toast(`Hi, ${af.name.split(' ')[0]}! 👋`,_isOnline?'Syncing…':'Playing offline','success',2800),500);
+    }
+    if(_isOnline){doRefresh().then(()=>refreshUI()).catch(()=>{});}
+    updateOfflineSub();
+    // Onboarding — only on first visit
+    if(!localStorage.getItem('sm_onboarded')){
+      setTimeout(showOnboarding,800);
+    }
+  }catch(err){console.error('Init error:',err);}
+}
+init();
