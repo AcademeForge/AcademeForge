@@ -1455,9 +1455,7 @@ async function doInternshipLogin() {
       }
     }
 
-    setTimeout(() => {
-      startApplication();
-    }, 800);
+    startApplication();
   } catch (e) {
     if (loadingOverlay) loadingOverlay.classList.remove("active");
     showAuthMsg(
@@ -1471,90 +1469,33 @@ async function doInternshipLogin() {
   }
 }
 
-// Multi-step logic
-
+// Single-step form logic
 
 function startApplication() {
   const overlay = document.getElementById("loadingOverlay");
-  overlay.classList.add("active");
+  const loginGate = document.getElementById("loginGate");
+  const formContainer = document.getElementById("formContainer");
 
-  setTimeout(() => {
-    document.getElementById("loginGate").style.display = "none";
-    document.getElementById("formContainer").style.display = "block";
-    goToStep(1);
-    overlay.classList.remove("active");
-  }, 600); // 0.6s artificial delay for loading.png to show
+  if (loginGate) loginGate.style.display = "none";
+  if (formContainer) formContainer.style.display = "block";
+  if (overlay) overlay.classList.remove("active");
+
+  restoreDraft();
+  initCountryCodes();
+  initLocationSearch();
 }
 
-function goToStep(step) {
-  // Optional validation before moving next
-  if (step > currentStep) {
-    // Check if required fields in current step are filled
-    const currentContainer = document.getElementById("step" + currentStep);
-    if (currentContainer) {
-      const requiredInputs = currentContainer.querySelectorAll(
-        "input[required], select[required], textarea[required]",
-      );
-      let allFilled = true;
-      requiredInputs.forEach((inp) => {
-        if (!inp.value.trim() && inp.type !== "checkbox") {
-          allFilled = false;
-          inp.style.borderColor = "red";
-        } else if (inp.type === "checkbox" && !inp.checked) {
-          allFilled = false;
-        } else {
-          inp.style.borderColor = "";
-        }
-      });
-      if (!allFilled) {
-        showAlert("Please fill out all required fields before proceeding.");
-        return; // Prevent moving forward
-      }
-    }
-  }
-
-  // Show loading overlay
-  const overlay = document.getElementById("loadingOverlay");
-  overlay.classList.add("active");
-
-  setTimeout(() => {
-    // Hide all steps
-    for (let i = 1; i <= totalSteps; i++) {
-      const s = document.getElementById("step" + i);
-      if (s) {
-        s.classList.remove("active");
-      }
-      const dot = document.getElementById("dot" + i);
-      if (dot) {
-        dot.classList.remove("active");
-        if (i < step) {
-          dot.classList.add("completed");
-          dot.classList.remove("active");
-        } else dot.classList.remove("completed");
-      }
-    }
-
-    currentStep = step;
-
-    // Show target step
-    const target = document.getElementById("step" + step);
-    if (target) target.classList.add("active");
-
-    const dot = document.getElementById("dot" + step);
-    if (dot) dot.classList.add("active");
-
-    window.scrollTo({
-      top: document.getElementById("stepper").offsetTop - 100,
-      behavior: "smooth",
-    });
-
-    overlay.classList.remove("active");
-  }, 500); // 0.5s loading PNG delay requested by user
-}
-
-// Check initial session
+// Check initial session on page load
 document.addEventListener("DOMContentLoaded", () => {
+  // Check localStorage for already-submitted state first
   if (localStorage.getItem("af_intern_logged_in") === "true") {
+    const localSubmitted = localStorage.getItem("academeforge_join_team_submitted");
+    if (localSubmitted) {
+      document.getElementById("loginGate").style.display = "none";
+      showSubmittedState(localSubmitted);
+      return;
+    }
+    // Logged in but not submitted — show form directly
     document.getElementById("loginGate").style.display = "none";
     document.getElementById("formContainer").style.display = "block";
   }
@@ -1603,6 +1544,10 @@ function doLogout() {
   localStorage.removeItem("af_intern_logged_in");
   localStorage.removeItem("af_intern_login_id");
   localStorage.removeItem("academeforge_join_team_submitted");
+  localStorage.removeItem("af_student_uuid");
+  localStorage.removeItem("af_student_name");
+  localStorage.removeItem("af_student_email");
+  localStorage.removeItem("af_student_mobile");
   window.location.reload();
 }
 
