@@ -192,6 +192,8 @@ function showSubmittedState(dateStr) {
   const checklist = byId("applicationChecklist");
 
   if (form) form.style.display = "none";
+  const loginGate = document.getElementById("loginGate");
+  if (loginGate) loginGate.style.display = "none";
   const stepper = byId("stepper");
   if (stepper) stepper.style.display = "none";
   if (submittedState) submittedState.style.display = "block";
@@ -276,7 +278,7 @@ async function handleSubmit(e) {
     showAlert("Application submitted successfully!", false);
     localStorage.removeItem(DRAFT_KEY);
     const nowStr = new Date().toISOString();
-    localStorage.setItem("academeforge_join_team_submitted", nowStr);
+    
     byId("applyForm").reset();
 
     showSubmittedState(nowStr);
@@ -1245,21 +1247,27 @@ function initLocationSearch() {
 document.addEventListener("DOMContentLoaded", () => {
   initTheme();
 
-  const submittedStr = localStorage.getItem("academeforge_join_team_submitted");
-  if (submittedStr) {
-    let submittedDate = new Date(submittedStr);
-    if (isNaN(submittedDate.getTime())) submittedDate = new Date();
-
-    const now = new Date();
-    const daysPassed =
-      (now.getTime() - submittedDate.getTime()) / (1000 * 3600 * 24);
-
-    if (daysPassed >= 30) {
-      localStorage.removeItem("academeforge_join_team_submitted");
-      localStorage.removeItem(DRAFT_KEY);
+  if (localStorage.getItem("af_intern_logged_in") === "true") {
+    const loginId = localStorage.getItem("af_intern_login_id");
+    if (loginId) {
+      // Securely fetch status from backend on page load
+      fetchApplicationStatus(
+        loginId.includes("@") ? loginId : null,
+        !loginId.includes("@") ? loginId : null,
+      )
+        .then((status) => {
+          if (status && (status.application_id || status.id)) {
+            showSubmittedState(status.created_at || new Date().toISOString());
+          } else {
+            startApplication();
+          }
+        })
+        .catch(() => {
+          // If API fails or no app found, allow them to apply
+          startApplication();
+        });
     } else {
-      showSubmittedState(submittedDate.toISOString());
-      return;
+      startApplication();
     }
   }
 
@@ -1385,7 +1393,8 @@ async function doInternshipLogin() {
     }
 
     // Success - Save basics
-    sessionStorage.setItem("af_intern_logged_in", "true");
+    localStorage.setItem("af_intern_logged_in", "true");
+    localStorage.setItem("af_intern_login_id", loginId);
     localStorage.setItem("af_student_uuid", data.student.id || "");
     localStorage.setItem("af_student_name", data.student.name || "");
     localStorage.setItem("af_student_email", data.student.email || "");
@@ -1481,8 +1490,10 @@ function goToStep(step) {
       const dot = document.getElementById("dot" + i);
       if (dot) {
         dot.classList.remove("active");
-        if (i < step) { dot.classList.add("completed"); dot.classList.remove("active"); }
-        else dot.classList.remove("completed");
+        if (i < step) {
+          dot.classList.add("completed");
+          dot.classList.remove("active");
+        } else dot.classList.remove("completed");
       }
     }
 
@@ -1506,7 +1517,7 @@ function goToStep(step) {
 
 // Check initial session
 document.addEventListener("DOMContentLoaded", () => {
-  if (sessionStorage.getItem("af_intern_logged_in") === "true") {
+  if (localStorage.getItem("af_intern_logged_in") === "true") {
     document.getElementById("loginGate").style.display = "none";
     document.getElementById("formContainer").style.display = "block";
   }
@@ -1514,23 +1525,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* --- INLINE JS FROM HTML --- */
 
-      function closeGuidelines() {
-        let e = document.getElementById("guidelinesPopup");
-        ((e.style.opacity = "0"),
-          setTimeout(() => {
-            e.style.display = "none";
-          }, 300),
-          sessionStorage.setItem("agreed_to_guidelines", "true"));
-      }
-      document.addEventListener("DOMContentLoaded", () => {
-        "true" === sessionStorage.getItem("agreed_to_guidelines") &&
-          (document.getElementById("guidelinesPopup").style.display = "none");
-      });
-    
+function closeGuidelines() {
+  let e = document.getElementById("guidelinesPopup");
+  ((e.style.opacity = "0"),
+    setTimeout(() => {
+      e.style.display = "none";
+    }, 300),
+    localStorage.setItem("agreed_to_guidelines", "true"));
+}
+document.addEventListener("DOMContentLoaded", () => {
+  "true" === localStorage.getItem("agreed_to_guidelines") &&
+    (document.getElementById("guidelinesPopup").style.display = "none");
+});
 
-const STATUS_FUNCTION_URL = "https://afooyyydhlwngzssgqih.supabase.co/functions/v1/join-team-application-status";
+const STATUS_FUNCTION_URL =
+  "https://afooyyydhlwngzssgqih.supabase.co/functions/v1/join-team-application-status";
 async function fetchApplicationStatus(email, mobile) {
-  const cleanEmail = String(email || "").trim().toLowerCase();
+  const cleanEmail = String(email || "")
+    .trim()
+    .toLowerCase();
   const cleanMobile = String(mobile || "").replace(/\D/g, "");
   const params = new URLSearchParams();
   if (cleanEmail) params.set("email", cleanEmail);
@@ -1540,7 +1553,7 @@ async function fetchApplicationStatus(email, mobile) {
     mode: "cors",
     cache: "no-store",
     credentials: "omit",
-    headers: { "Accept": "application/json" }
+    headers: { Accept: "application/json" },
   });
   const result = await response.json().catch(() => ({ success: false }));
   if (!response.ok || !(result.success || result.ok)) {
@@ -1550,14 +1563,15 @@ async function fetchApplicationStatus(email, mobile) {
 }
 
 function doLogout() {
-  sessionStorage.removeItem("af_intern_logged_in");
+  localStorage.removeItem("af_intern_logged_in");
+  localStorage.removeItem("af_intern_login_id");
   window.location.reload();
 }
 
 function checkLoginState() {
-  if (sessionStorage.getItem("af_intern_logged_in") === "true") {
-    const logoutBtn = document.getElementById("navLogoutBtn");
-    if (logoutBtn) logoutBtn.style.display = "inline-block";
+  if (localStorage.getItem("af_intern_logged_in") === "true") {
+    const profileDropdown = document.getElementById("navProfileDropdown");
+    if (profileDropdown) profileDropdown.style.display = "inline-block";
   }
 }
 document.addEventListener("DOMContentLoaded", checkLoginState);
