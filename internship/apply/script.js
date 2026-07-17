@@ -1416,6 +1416,9 @@ async function doInternshipLogin() {
       data.student.mobile || data.student.phone || "",
     );
 
+    // Show profile/logout immediately
+    checkLoginState();
+
     if (loadingOverlay) {
       loadingOverlay.querySelector("p").innerText =
         "Authentication successful! Starting application...";
@@ -1475,9 +1478,11 @@ function startApplication() {
   const overlay = document.getElementById("loadingOverlay");
   const loginGate = document.getElementById("loginGate");
   const formContainer = document.getElementById("formContainer");
+  const formIntro = document.getElementById("formIntro");
 
   if (loginGate) loginGate.style.display = "none";
   if (formContainer) formContainer.style.display = "block";
+  if (formIntro) formIntro.style.display = "";
   if (overlay) overlay.classList.remove("active");
 
   restoreDraft();
@@ -1498,6 +1503,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Logged in but not submitted — show form directly
     document.getElementById("loginGate").style.display = "none";
     document.getElementById("formContainer").style.display = "block";
+    const intro = document.getElementById("formIntro");
+    if (intro) intro.style.display = "";
   }
 });
 
