@@ -1263,7 +1263,11 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         })
         .catch((e) => {
-          if (!e.message || (!e.message.includes("Application status not found") && !e.message.includes("Not found"))) {
+          if (
+            !e.message ||
+            (!e.message.includes("Application status not found") &&
+              !e.message.includes("Not found"))
+          ) {
             showAlert("Verification failed: " + (e.message || "Unknown error"));
             return;
           }
@@ -1431,9 +1435,16 @@ async function doInternshipLogin() {
         return;
       }
     } catch (e) {
-      if (!e.message || (!e.message.includes("Application status not found") && !e.message.includes("Not found"))) {
+      if (
+        !e.message ||
+        (!e.message.includes("Application status not found") &&
+          !e.message.includes("Not found"))
+      ) {
         if (loadingOverlay) loadingOverlay.classList.remove("active");
-        showAuthMsg("err", "Verification failed: " + (e.message || "Unknown error"));
+        showAuthMsg(
+          "err",
+          "Verification failed: " + (e.message || "Unknown error"),
+        );
         return;
       }
     }
@@ -1592,7 +1603,7 @@ function doLogout() {
 function checkLoginState() {
   if (localStorage.getItem("af_intern_logged_in") === "true") {
     const profileDropdown = document.getElementById("navProfileDropdown");
-    if (profileDropdown) profileDropdown.style.display = "inline-block";
+    if (profileDropdown) profileDropdown.style.display = "flex";
   }
 }
 document.addEventListener("DOMContentLoaded", checkLoginState);
