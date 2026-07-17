@@ -1472,8 +1472,7 @@ async function doInternshipLogin() {
 }
 
 // Multi-step logic
-let currentStep = 1;
-const totalSteps = 3;
+
 
 function startApplication() {
   const overlay = document.getElementById("loadingOverlay");
