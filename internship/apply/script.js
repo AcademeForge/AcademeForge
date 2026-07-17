@@ -278,7 +278,7 @@ async function handleSubmit(e) {
     showAlert("Application submitted successfully!", false);
     localStorage.removeItem(DRAFT_KEY);
     const nowStr = new Date().toISOString();
-    
+
     byId("applyForm").reset();
 
     showSubmittedState(nowStr);
@@ -1416,6 +1416,18 @@ async function doInternshipLogin() {
     if (document.getElementById("contactNumber"))
       document.getElementById("contactNumber").value =
         data.student.mobile || data.student.phone || "";
+
+    try {
+      const status = await fetchApplicationStatus(
+        data.student.email,
+        data.student.mobile || data.student.phone
+      );
+      if (status && (status.application_id || status.id)) {
+        if (loadingOverlay) loadingOverlay.classList.remove("active");
+        showSubmittedState(status.created_at || new Date().toISOString());
+        return;
+      }
+    } catch (e) {}
 
     setTimeout(() => {
       startApplication();
