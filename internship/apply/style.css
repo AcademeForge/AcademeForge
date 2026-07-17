@@ -85,14 +85,10 @@ button {
   flex: 1;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 4rem 2rem;
+  padding: 1.5rem 2rem;
   width: 100%;
 }
-.layout-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 4rem;
-}
+
 .intro h1 {
   font-family: Manrope, sans-serif;
   font-size: 3rem;
@@ -161,148 +157,7 @@ button {
   color: var(--green);
   border: 1px solid rgba(16, 185, 129, 0.2);
 }
-.status-panel {
-  background: var(--bg);
-  border: 1px solid #000;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-lg);
-  overflow: hidden;
-  height: 100%;
-}
-.empty-state {
-  height: 100%;
-  min-height: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 3rem;
-  text-align: center;
-  color: var(--text-muted);
-}
-.empty-state svg {
-  width: 48px;
-  height: 48px;
-  margin-bottom: 1rem;
-  opacity: 0.5;
-}
-.loaded-state {
-  padding: 2.5rem;
-}
-.loaded-header {
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 1.5rem;
-  margin-bottom: 2rem;
-}
-.loaded-header h2 {
-  font-family: Manrope, sans-serif;
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-.loaded-header p {
-  color: var(--text-muted);
-}
-.candidate-info {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  background: var(--bg-secondary);
-  padding: 1.5rem;
-  border-radius: 8px;
-}
-.info-item label {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
-  font-weight: 600;
-  display: block;
-  margin-bottom: 0.25rem;
-}
-.info-item span {
-  font-weight: 600;
-}
-.timeline {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-.step {
-  display: flex;
-  gap: 1.25rem;
-}
-.step-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--bg-secondary);
-  border: 1px solid #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.875rem;
-  font-weight: 700;
-  flex-shrink: 0;
-  color: var(--text-muted);
-}
-.step.done .step-icon {
-  background: var(--green);
-  border-color: var(--green);
-  color: #fff;
-}
-.step.fail .step-icon {
-  background: var(--red);
-  border-color: var(--red);
-  color: #fff;
-}
-.step.pending .step-icon {
-  background: var(--amber);
-  border-color: var(--amber);
-  color: #fff;
-}
-.step h3 {
-  font-size: 1rem;
-  margin-bottom: 0.25rem;
-}
-.step p {
-  font-size: 0.875rem;
-  color: var(--text-muted);
-}
-.celebrate {
-  border-color: var(--green);
-}
-.celebrate .loaded-header h2 {
-  color: var(--green);
-}
-.system-status {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  color: var(--primary);
-  margin-top: 3rem;
-}
-.status-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--primary);
-  border-radius: 50%;
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4);
-  }
-  70% {
-    box-shadow: 0 0 0 6px rgba(37, 99, 235, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
-  }
-}
+
 .theme-controls {
   display: flex;
   background: var(--bg-secondary);
@@ -332,14 +187,10 @@ button {
   width: 16px;
   height: 16px;
 }
-@media (max-width: 992px) {
-  .layout-grid {
-    grid-template-columns: 1fr;
-  }
-}
+
 @media (max-width: 768px) {
   .main-content {
-    padding: 2rem 1rem;
+    padding: 1rem;
   }
 }
 .banner {
@@ -495,23 +346,6 @@ select.form-control {
 .search-option:hover {
   background: var(--bg-secondary);
 }
-.step-container {
-  display: none;
-  animation: fadeIn 0.4s ease forwards;
-}
-.step-container.active {
-  display: block;
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 .loading-overlay {
   display: none;
   position: absolute;
@@ -526,60 +360,6 @@ select.form-control {
 .loading-overlay.active {
   display: flex;
 }
-.step-buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border-light, #e2e8f0);
-  grid-column: 1/-1;
-}
-.step-buttons button {
-  padding: 12px 28px;
-  border-radius: 12px;
-  font-weight: 700;
-  cursor: pointer;
-  border: none;
-  font-size: 15px;
-  transition: 0.2s;
-}
-.btn-next {
-  background: var(--green, #22c55e);
-  color: #fff;
-  box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
-}
-.btn-next:active {
-  transform: scale(0.98);
-}
-.btn-prev {
-  background: var(--red, #ef4444);
-  border: none;
-  color: #fff;
-}
-.btn-prev:active {
-  transform: scale(0.98);
-}
-.stepper {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 2.5rem;
-  gap: 8px;
-}
-.step-dot {
-  flex: 1;
-  max-width: 80px;
-  height: 6px;
-  border-radius: 4px;
-  background: var(--border-light, #e2e8f0);
-  transition: 0.4s ease;
-}
-.step-dot.active {
-  background: var(--red, #ef4444);
-}
-.step-dot.completed {
-  background: var(--green, #22c55e);
-  opacity: 1;
-}
 .al-card {
   background: var(--surface, #fff);
   border: 1px solid var(--border-light, #e2e8f0);
@@ -587,33 +367,7 @@ select.form-control {
   padding: 24px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
 }
-.al-brand {
-  text-align: center;
-  margin-bottom: 20px;
-}
-.al-brand-logo {
-  width: 72px;
-  height: 72px;
-  border-radius: 18px;
-  margin-bottom: 12px;
-  box-shadow: 0 4px 20px rgba(79, 70, 229, 0.22);
-}
-.al-brand-name {
-  font-size: 24px;
-  font-weight: 900;
-  color: var(--text);
-}
-.al-brand-sub {
-  font-size: 14px;
-  color: var(--text-secondary);
-  margin-top: 4px;
-}
-.al-section-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 16px;
-}
+
 .al-field {
   margin-bottom: 16px;
   text-align: left;
@@ -764,20 +518,7 @@ select.form-control {
   text-decoration: none;
   margin-left: 4px;
 }
-.step-title {
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: var(--text);
-  margin-bottom: 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  grid-column: 1/-1;
-}
-.step-title span {
-  color: var(--primary);
-  font-size: 1.5rem;
-}
+
 .guidelines-overlay {
   display: flex;
   position: fixed;
