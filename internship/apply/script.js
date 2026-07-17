@@ -1262,8 +1262,11 @@ document.addEventListener("DOMContentLoaded", () => {
             startApplication();
           }
         })
-        .catch(() => {
-          // If API fails or no app found, allow them to apply
+        .catch((e) => {
+          if (!e.message || (!e.message.includes("Application status not found") && !e.message.includes("Not found"))) {
+            showAlert("Verification failed: " + (e.message || "Unknown error"));
+            return;
+          }
           startApplication();
         });
     } else {
@@ -1420,14 +1423,20 @@ async function doInternshipLogin() {
     try {
       const status = await fetchApplicationStatus(
         data.student.email,
-        data.student.mobile || data.student.phone
+        data.student.mobile || data.student.phone,
       );
       if (status && (status.application_id || status.id)) {
         if (loadingOverlay) loadingOverlay.classList.remove("active");
         showSubmittedState(status.created_at || new Date().toISOString());
         return;
       }
-    } catch (e) {}
+    } catch (e) {
+      if (!e.message || (!e.message.includes("Application status not found") && !e.message.includes("Not found"))) {
+        if (loadingOverlay) loadingOverlay.classList.remove("active");
+        showAuthMsg("err", "Verification failed: " + (e.message || "Unknown error"));
+        return;
+      }
+    }
 
     setTimeout(() => {
       startApplication();
