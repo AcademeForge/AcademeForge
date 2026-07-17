@@ -166,11 +166,11 @@ function showSubmittedState(dateStr) {
   let submittedDate = new Date(dateStr);
   if (isNaN(submittedDate.getTime())) {
     submittedDate = new Date();
-    localStorage.setItem(
-      "academeforge_join_team_submitted",
-      submittedDate.toISOString(),
-    );
   }
+  localStorage.setItem(
+    "academeforge_join_team_submitted",
+    submittedDate.toISOString(),
+  );
 
   const reapplyDate = new Date(
     submittedDate.getTime() + 30 * 24 * 60 * 60 * 1000,
@@ -1248,6 +1248,12 @@ document.addEventListener("DOMContentLoaded", () => {
   initTheme();
 
   if (localStorage.getItem("af_intern_logged_in") === "true") {
+    const localSubmitted = localStorage.getItem("academeforge_join_team_submitted");
+    if (localSubmitted) {
+      showSubmittedState(localSubmitted);
+      return;
+    }
+
     const loginId = localStorage.getItem("af_intern_login_id");
     if (loginId) {
       // Securely fetch status from backend on page load
@@ -1597,6 +1603,7 @@ async function fetchApplicationStatus(email, mobile) {
 function doLogout() {
   localStorage.removeItem("af_intern_logged_in");
   localStorage.removeItem("af_intern_login_id");
+  localStorage.removeItem("academeforge_join_team_submitted");
   window.location.reload();
 }
 
