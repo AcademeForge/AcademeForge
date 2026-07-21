@@ -1,13 +1,12 @@
 (function () {
-  var HEADER_URL = "/global/header.html";
-  var FOOTER_URL = "/global/footer.html";
-
+  var HEADER_URL = "https://academeforge.in/global/header.html";
+  var FOOTER_URL = "https://academeforge.in/global/footer.html";
   var SCRIPTS_AFTER_INJECT = [
-    "/assets/js/theme.js",
-    "/assets/js/lang.min.js?v=2.0",
-    "/assets/js/script.min.js?v=7.0",
-    "/assets/js/warn.js?v=3.0",
-    "/assets/js/security.min.js?v=3.0"
+    "https://academeforge.in/assets/js/theme.js",
+    "https://academeforge.in/assets/js/lang.min.js?v=2.0",
+    "https://academeforge.in/assets/js/script.min.js?v=7.0",
+    "https://academeforge.in/assets/js/warn.js?v=3.0",
+    "https://academeforge.in/assets/js/security.min.js?v=3.0"
   ];
 
   var scriptsReadyFired = false;
