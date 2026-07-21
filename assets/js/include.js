@@ -1,5 +1,3 @@
-
-
 (function () {
   var HEADER_URL = "/global/header.html";
   var FOOTER_URL = "/global/footer.html";
@@ -12,20 +10,23 @@
     "/assets/js/security.min.js?v=3.0"
   ];
 
+  var scriptsReadyFired = false;
   function loadScriptsInOrder(urls, done) {
     var i = 0;
     function next() {
       if (i >= urls.length) {
-       
-        document.dispatchEvent(new Event("DOMContentLoaded", { bubbles: true, cancelable: true }));
-        window.dispatchEvent(new Event("load"));
+        if (!scriptsReadyFired) {
+          scriptsReadyFired = true;
+          document.dispatchEvent(new Event("DOMContentLoaded", { bubbles: true, cancelable: true }));
+          window.dispatchEvent(new Event("load"));
+        }
         done && done();
         return;
       }
       var s = document.createElement("script");
       s.src = urls[i++];
       s.onload = next;
-      s.onerror = next; 
+      s.onerror = next;
       document.body.appendChild(s);
     }
     next();
@@ -47,12 +48,18 @@
       });
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
+  function bootstrap() {
     Promise.all([
       inject(HEADER_URL, "site-header"),
       inject(FOOTER_URL, "site-footer")
     ]).then(function () {
       loadScriptsInOrder(SCRIPTS_AFTER_INJECT);
     });
-  });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bootstrap, { once: true });
+  } else {
+    bootstrap();
+  }
 })();
