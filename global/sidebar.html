@@ -1,4 +1,7 @@
 <style>
+  :host {
+    all: initial;
+  }
   .float-sidebar {
     position: fixed;
     right: 0;
@@ -32,6 +35,7 @@
     white-space: nowrap;
     box-shadow: -2px 2px 8px rgba(0,0,0,0.18);
     user-select: none;
+    pointer-events: auto;
   }
   .float-tab:hover {
     background: #aa0000;
