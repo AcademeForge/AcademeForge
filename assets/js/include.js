@@ -1,7 +1,6 @@
 (function () {
   var HEADER_URL = "https://academeforge.in/global/header.html";
   var FOOTER_URL = "https://academeforge.in/global/footer.html";
-  var SIDEBAR_URL = "https://academeforge.in/global/sidebar.html";
   var SCRIPTS_AFTER_INJECT = [
     "https://academeforge.in/assets/js/theme.js",
     "https://academeforge.in/assets/js/lang.min.js?v=2.0",
@@ -48,32 +47,10 @@
       });
   }
 
-  function injectSidebar(url) {
-    return fetch(url)
-      .then(function (res) {
-        if (!res.ok) throw new Error("Failed to load " + url);
-        return res.text();
-      })
-      .then(function (html) {
-        var host = document.createElement("div");
-        host.id = "site-sidebar-host";
-        host.style.cssText =
-          "position:fixed;top:0;left:0;width:0;height:0;" +
-          "overflow:visible;z-index:9999;pointer-events:none;";
-        document.body.appendChild(host);
-        var shadow = host.attachShadow({ mode: "open" });
-        shadow.innerHTML = html;
-      })
-      .catch(function (err) {
-        console.error(err);
-      });
-  }
-
   function bootstrap() {
     Promise.all([
       inject(HEADER_URL, "site-header"),
-      inject(FOOTER_URL, "site-footer"),
-      injectSidebar(SIDEBAR_URL)
+      inject(FOOTER_URL, "site-footer")
     ]).then(function () {
       loadScriptsInOrder(SCRIPTS_AFTER_INJECT);
     });
