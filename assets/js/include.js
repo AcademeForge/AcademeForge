@@ -48,11 +48,31 @@
       });
   }
 
+  /* Sidebar — appended directly to <body> so it is never inside
+     any scrollable container and never affects page layout flow. */
+  function injectSidebar(url) {
+    return fetch(url)
+      .then(function (res) {
+        if (!res.ok) throw new Error("Failed to load " + url);
+        return res.text();
+      })
+      .then(function (html) {
+        var wrapper = document.createElement("div");
+        wrapper.id = "site-sidebar";
+        wrapper.style.cssText = "position:fixed;top:0;left:0;width:0;height:0;overflow:visible;pointer-events:none;z-index:9999;";
+        wrapper.innerHTML = html;
+        document.body.appendChild(wrapper);
+      })
+      .catch(function (err) {
+        console.error(err);
+      });
+  }
+
   function bootstrap() {
     Promise.all([
       inject(HEADER_URL, "site-header"),
       inject(FOOTER_URL, "site-footer"),
-      inject(SIDEBAR_URL, "site-sidebar")
+      injectSidebar(SIDEBAR_URL)
     ]).then(function () {
       loadScriptsInOrder(SCRIPTS_AFTER_INJECT);
     });
