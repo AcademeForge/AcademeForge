@@ -48,8 +48,6 @@
       });
   }
 
-  /* Sidebar — appended directly to <body> so it is never inside
-     any scrollable container and never affects page layout flow. */
   function injectSidebar(url) {
     return fetch(url)
       .then(function (res) {
@@ -57,11 +55,14 @@
         return res.text();
       })
       .then(function (html) {
-        var wrapper = document.createElement("div");
-        wrapper.id = "site-sidebar";
-        wrapper.style.cssText = "position:fixed;top:0;left:0;width:0;height:0;overflow:visible;pointer-events:none;z-index:9999;";
-        wrapper.innerHTML = html;
-        document.body.appendChild(wrapper);
+        var host = document.createElement("div");
+        host.id = "site-sidebar-host";
+        host.style.cssText =
+          "position:fixed;top:0;left:0;width:0;height:0;" +
+          "overflow:visible;z-index:9999;pointer-events:none;";
+        document.body.appendChild(host);
+        var shadow = host.attachShadow({ mode: "open" });
+        shadow.innerHTML = html;
       })
       .catch(function (err) {
         console.error(err);
