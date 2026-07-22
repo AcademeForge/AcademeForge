@@ -51,7 +51,8 @@
   function bootstrap() {
     Promise.all([
       inject(HEADER_URL, "site-header"),
-      inject(FOOTER_URL, "site-footer")
+      inject(FOOTER_URL, "site-footer"),
+      inject(SIDEBAR_URL, "site-sidebar")
     ]).then(function () {
       loadScriptsInOrder(SCRIPTS_AFTER_INJECT);
     });
