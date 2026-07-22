@@ -1,6 +1,7 @@
 (function () {
   var HEADER_URL = "https://academeforge.in/global/header.html";
   var FOOTER_URL = "https://academeforge.in/global/footer.html";
+  var SIDEBAR_URL = "https://academeforge.in/global/sidebar.html";
   var SCRIPTS_AFTER_INJECT = [
     "https://academeforge.in/assets/js/theme.js",
     "https://academeforge.in/assets/js/lang.min.js?v=2.0",
