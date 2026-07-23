@@ -1,65 +1,8 @@
-"use strict";
-
-const CACHE_NAME = "academeforge-v3";
-const CACHE_URLS = [
-  "/",
-  "/index.html",
-  "/style.css",
-  "/script.js",
-  "/manifest.json",
-  "/IMG/AF%20LOGO%203.png",
-  "/IMG/AF%20LOGO%202.jpeg",
-  "/IMG/AFhome.jpg",
-  "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Manrope:wght@600;700;800&display=swap"
-];
-
-self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(CACHE_URLS))
-  );
-  self.skipWaiting();
-});
-
-self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(
-        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
-      )
-    )
-  );
-  self.clients.claim();
-});
-
-self.addEventListener("fetch", (event) => {
-  const { request } = event;
-  const url = new URL(request.url);
-
-  if (request.method !== "GET") return;
-  if (url.origin !== self.location.origin && !url.href.includes("fonts.googleapis.com") && !url.href.includes("fonts.gstatic.com")) return;
-
-  if (url.pathname.startsWith("/AI/") || url.pathname.startsWith("/student-app-preview/")) {
-    return;
-  }
-
-  event.respondWith(
-    caches.match(request).then((cached) => {
-      if (cached) return cached;
-
-      return fetch(request)
-        .then((response) => {
-          if (!response || response.status !== 200 || response.type === "opaque") {
-            return response;
-          }
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
-          return response;
-        })
-        .catch(() => {
-          if (request.destination === "document") {
-            return caches.match("/index.html");
-          }
-        });
-    })
-  );
-});
+const CACHE_VERSION = "v1";
+const CACHE_NAME    = `academeforge-cache-${CACHE_VERSION}`;
+const BASE          = "/AcademeForge";
+const P=[`${BASE}/`,`${BASE}/index.html`,`${BASE}/script.js`,`${BASE}/style.css`,`${BASE}/manifest.json`,`${BASE}/robots.txt`,`${BASE}/sitemap.xml`,`${BASE}/sw.js`,`${BASE}/warn.html`,`${BASE}/scratch`,`${BASE}/CNAME`,`${BASE}/README.md`,`${BASE}/AI/`,`${BASE}/AI/index.html`,`${BASE}/IMG/`,`${BASE}/IMG/index.html`,`${BASE}/IMG/AF%20LOGO%201.jpeg`,`${BASE}/IMG/AF%20LOGO%202.jpeg`,`${BASE}/IMG/AFhome.jpg`,`${BASE}/IMG/AcademeForge.jpg`,`${BASE}/IMG/af-v3.apk`,`${BASE}/IMG/ast.png`,`${BASE}/IMG/banner.png`,`${BASE}/IMG/banner6.png`,`${BASE}/IMG/capacity.png`,`${BASE}/IMG/founder-profile.jpeg`,`${BASE}/IMG/getInTouch.png`,`${BASE}/IMG/logo.png`,`${BASE}/IMG/logoo.png`,`${BASE}/IMG/mockup.png`,`${BASE}/IMG/signup_hero.jpg`,`${BASE}/IMG/suggestion.png`,`${BASE}/IMG/zenopulsky.png`,`${BASE}/about/`,`${BASE}/about/how-it-started/`,`${BASE}/about/how-it-started/index.html`,`${BASE}/about/how-it-started/script.js`,`${BASE}/about/how-it-started/style.css`,`${BASE}/about/how-its-going/`,`${BASE}/about/how-its-going/index.html`,`${BASE}/about/how-its-going/script.js`,`${BASE}/about/how-its-going/style.css`,`${BASE}/assests/`,`${BASE}/assests/components.js`,`${BASE}/assests/main.css`,`${BASE}/assets/`,`${BASE}/assets/css/`,`${BASE}/assets/css/style.css`,`${BASE}/assets/css/style.min.css`,`${BASE}/assets/js/`,`${BASE}/assets/js/include.js`,`${BASE}/assets/js/lang.min.js`,`${BASE}/assets/js/script.js`,`${BASE}/assets/js/script.min.js`,`${BASE}/assets/js/security.js`,`${BASE}/assets/js/security.min.js`,`${BASE}/assets/js/sidebar.js`,`${BASE}/assets/js/theme.js`,`${BASE}/assets/js/visit.js`,`${BASE}/assets/js/warn.html`,`${BASE}/assets/js/warn.js`,`${BASE}/contact/`,`${BASE}/contact/index.html`,`${BASE}/contact/script.js`,`${BASE}/contact/style.css`,`${BASE}/contact/help/`,`${BASE}/contact/help/index.html`,`${BASE}/contact/help/script.js`,`${BASE}/contact/help/style.css`,`${BASE}/contact/suggest/`,`${BASE}/contact/suggest/index.html`,`${BASE}/contact/suggest/script.js`,`${BASE}/contact/suggest/style.css`,`${BASE}/faq/`,`${BASE}/faq/index.html`,`${BASE}/faq/script.js`,`${BASE}/faq/style.css`,`${BASE}/fest/`,`${BASE}/fest/anniversary.css`,`${BASE}/fest/anniversary.js`,`${BASE}/global/`,`${BASE}/global/footer.html`,`${BASE}/global/header.html`,`${BASE}/global/sidebar.html`,`${BASE}/internship/`,`${BASE}/internship/Web%20Assests/`,`${BASE}/internship/Web%20Assests/index.html`,`${BASE}/internship/Web%20Assests/logo.png`,`${BASE}/internship/Web%20Assests/page-loader.gif`,`${BASE}/internship/apply/`,`${BASE}/internship/apply/index.html`,`${BASE}/internship/apply/script.js`,`${BASE}/internship/apply/script.min.js`,`${BASE}/internship/apply/style.css`,`${BASE}/internship/policy/`,`${BASE}/internship/policy/index.html`,`${BASE}/internship/policy/script.js`,`${BASE}/internship/policy/style.css`,`${BASE}/internship/status/`,`${BASE}/internship/status/index.html`,`${BASE}/internship/status/script.js`,`${BASE}/internship/status/style.css`,`${BASE}/internship/what-to-do/`,`${BASE}/internship/what-to-do/index.html`,`${BASE}/internship/what-to-do/script.js`,`${BASE}/internship/what-to-do/style.css`,`${BASE}/legal/`,`${BASE}/legal/privacy/`,`${BASE}/legal/privacy/index.html`,`${BASE}/legal/privacy/script.js`,`${BASE}/legal/privacy/style.css`,`${BASE}/legal/terms/`,`${BASE}/legal/terms/index.html`,`${BASE}/legal/terms/script.js`,`${BASE}/legal/terms/style.css`,`${BASE}/other-tools/`,`${BASE}/other-tools/hopenext/`,`${BASE}/other-tools/hopenext/index.html`,`${BASE}/other-tools/hopenext/style.css`,`${BASE}/other-tools/verify-certificate/`,`${BASE}/other-tools/verify-certificate/index.html`,`${BASE}/other-tools/verify-certificate/script.js`,`${BASE}/other-tools/verify-certificate/style.css`,`${BASE}/other-tools/verify-team/`,`${BASE}/other-tools/verify-team/index.html`,`${BASE}/other-tools/verify-team/script.js`,`${BASE}/other-tools/verify-team/style.css`,`${BASE}/student-app-preview/`,`${BASE}/student-app-preview/index.html`];
+self.addEventListener("install",e=>{e.waitUntil(caches.open(CACHE_NAME).then(c=>Promise.allSettled(P.map(u=>c.add(u).catch(()=>{})))).then(()=>self.skipWaiting()));});
+self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(n=>n!==CACHE_NAME).map(n=>caches.delete(n)))).then(()=>self.clients.claim()));});
+self.addEventListener("fetch",e=>{const r=e.request;if(r.method!=="GET")return;const u=new URL(r.url);if(u.origin!==location.origin)return;e.respondWith(caches.open(CACHE_NAME).then(async c=>{const h=await c.match(r);const n=fetch(r).then(s=>{if(s&&s.status===200)c.put(r,s.clone());return s;}).catch(()=>null);if(h)return h;const f=await n;if(f)return f;const b=await c.match(`${BASE}/warn.html`);return b||new Response("<!DOCTYPE html><html><body style='font-family:sans-serif;text-align:center;padding:3rem'><h2>You're offline</h2></body></html>",{headers:{"Content-Type":"text/html"}});});});});
+self.addEventListener("message",e=>{const{type,url}=e.data||{};if(type==="CLEAR_CACHE")caches.delete(CACHE_NAME).then(()=>e.ports[0]?.postMessage({cleared:true}));if(type==="CACHE_URL"&&url)caches.open(CACHE_NAME).then(c=>fetch(url).then(r=>c.put(url,r)).catch(()=>{}));});
