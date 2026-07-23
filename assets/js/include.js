@@ -5,8 +5,8 @@
     "https://academeforge.in/assets/js/theme.js",
     "https://academeforge.in/assets/js/lang.min.js?v=2.0",
     "https://academeforge.in/assets/js/script.min.js?v=7.0",
-    "https://academeforge.in/assets/js/warn.js?v=3.0",
-    "https://academeforge.in/assets/js/security.min.js?v=3.0"
+    "https://academeforge.in/assets/js/warn.js?v=4.0",
+    "https://academeforge.in/assets/js/security.min.js?v=4.0"
   ];
 
   var scriptsReadyFired = false;
