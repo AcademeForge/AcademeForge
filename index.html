@@ -4,7 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#f8fafc" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; worker-src 'self'; connect-src 'self' https://academeforge.in; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:">
+  <meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com;
+  worker-src 'self';
+  connect-src 'self' https://academeforge.in https://cloudflareinsights.com https://afooyyydhlwngzssgqih.supabase.co;
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+  font-src 'self' data: https://fonts.gstatic.com;
+  img-src 'self' data: blob:;
+  base-uri 'self';
+  form-action 'self'
+">
   <meta
     name="description"
     content="AcademeForge is a global all-in-one learning ecosystem: text-based Explore courses with instant certificates, LearnSpace video programs, AF ProGuide AI mentor (AF 2.4, Dev 1.3, Tapri 7.9), gamified AF Test Arena quizzes with XP &amp; leaderboards, AcademeForge Scholars Test (AST) examination portal, Learning Heatmap streaks, student Community, plus free apps Timezy, Zenopulsky, and Capacity — built for students globally, with specialized support for US, UK, India, and neighboring regions."
