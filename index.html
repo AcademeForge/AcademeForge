@@ -1042,10 +1042,20 @@
     <script src="https://academeforge.in/assets/js/include.js?v=4.0" defer></script>
     <script src="https://academeforge.in/assets/js/sidebar.js?v=1.0" defer></script>
 
-  <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js');
-  }
+ <script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('https://academeforge.in/sw.js', {
+      scope: '/'
+    })
+    .then(reg => {
+      console.log('Service Worker registered:', reg.scope);
+    })
+    .catch(err => {
+      console.error('Service Worker registration failed:', err);
+    });
+  });
+}
 </script>
   
 </body>
