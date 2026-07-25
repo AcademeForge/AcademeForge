@@ -1,299 +1,236 @@
-/* ═══════════════════════════════════════════════════════════════════
-   Anniversary Balloons — Premium Edition v2
-   Architecture: fixed container, slot = pin + string + balloon.
-   Sway pivots from top (transform-origin: center top).
+/* fest/anniversary.css
+   ═══════════════════════════════════════════════════════════════════
+   Indian Flag Anniversary Intro Animation — Premium Edition
+   Architecture: fixed fullscreen overlay → animated flag stripes
+   → Ashoka Chakra reveal → cinematic exit.
+   JS injects all DOM. This file owns all styles & keyframes.
    ═══════════════════════════════════════════════════════════════════ */
 
-.anv-balloons-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  pointer-events: none;
-  z-index: 99;
+/* ── Design Tokens ───────────────────────────────────────────────── */
+:root {
+  --anv-saffron      : #FF9933;
+  --anv-flag-white   : #FFFFFF;
+  --anv-green        : #138808;
+  --anv-navy         : #000080;
+  --anv-glow-soft    : rgba(0, 0, 128, 0.28);
+  --anv-glow-strong  : rgba(0, 0, 128, 0.50);
+
+  --anv-stripe-ease  : cubic-bezier(0.22, 0.61, 0.36, 1);
+  --anv-chakra-ease  : cubic-bezier(0.22, 0.61, 0.36, 1);
+  --anv-exit-ease    : cubic-bezier(0.4, 0, 0.6, 1);
+
+  --anv-stripe-dur   : 0.9s;
+  --anv-chakra-dur   : 0.7s;
+  --anv-exit-dur     : 0.8s;
+  --anv-spin-dur     : 9s;
 }
 
-/* ── Groups ─────────────────────────────────────────────────────── */
-.anv-group {
-  position: absolute;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 10px;
+/* ── Fullscreen Overlay ──────────────────────────────────────────── */
+#anv-intro-overlay {
+  position         : fixed;
+  inset            : 0;
+  width            : 100vw;
+  height           : 100vh;
+  z-index          : 2147483647;
+  background       : var(--anv-flag-white);
+  overflow         : hidden;
+  will-change      : opacity, transform, filter;
 }
-.anv-group-left  { left: 14px; }
-.anv-group-right { right: 14px; }
 
-/* ── Balloon slot — the full hanging unit (pin + string + balloon) ─
-   transform-origin: center top so sway pivots from attachment point */
-.anv-balloon-slot {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* Exit state — added by JS right before removal */
+#anv-intro-overlay.anv-exit {
+  animation    : anv-overlay-exit var(--anv-exit-dur) var(--anv-exit-ease) forwards;
   pointer-events: none;
-  animation-name: anv-sway;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-  animation-fill-mode: both;
-  transform-origin: center top;
+}
+
+/* ── Flag Container ──────────────────────────────────────────────── */
+.anv-flag-container {
+  position       : absolute;
+  inset          : 0;
+  pointer-events : none;
+}
+
+/* ── Flag Stripes ────────────────────────────────────────────────── */
+.anv-stripe {
+  position   : absolute;
+  left       : 0;
+  width      : 100%;
+  height     : 33.334%;
   will-change: transform;
 }
 
-/* ── Pin SVG at the very top (attachment to header) ─────────────── */
-.anv-pin-svg {
-  display: block;
-  flex-shrink: 0;
-  overflow: visible;
+.anv-stripe-saffron {
+  top        : 0;
+  background : var(--anv-saffron);
+  animation  : anv-slide-down var(--anv-stripe-dur) var(--anv-stripe-ease) forwards;
 }
 
-/* ── String SVG ─────────────────────────────────────────────────── */
-.anv-string-svg {
-  display: block;
-  overflow: visible;
-  flex-shrink: 0;
+.anv-stripe-green {
+  bottom     : 0;
+  background : var(--anv-green);
+  animation  : anv-slide-up var(--anv-stripe-dur) var(--anv-stripe-ease) forwards;
+}
+
+/* ── Ashoka Chakra — outer wrapper (handles positioning) ─────────── */
+.anv-chakra-container {
+  position       : absolute;
+  top            : 50%;
+  left           : 50%;
+  transform      : translate(-50%, -50%);
+  pointer-events : none;
+}
+
+/* Inner wrapper — handles fade-in + scale-up appear animation */
+.anv-chakra-inner {
+  opacity    : 0;
+  transform  : scale(0.5);
+  will-change: opacity, transform;
+}
+
+.anv-chakra-inner.anv-chakra-in {
+  animation: anv-chakra-appear var(--anv-chakra-dur) var(--anv-chakra-ease) forwards;
+}
+
+/* SVG — handles continuous spin; starts when appear class is added */
+.anv-chakra-svg {
+  display     : block;
+  width       : 156px;
+  height      : 156px;
+  will-change : transform;
+  filter      : drop-shadow(0 0 10px var(--anv-glow-soft))
+                drop-shadow(0 0 26px var(--anv-glow-soft))
+                drop-shadow(0 0  6px rgba(255, 255, 255, 0.6));
+}
+
+.anv-chakra-inner.anv-chakra-in .anv-chakra-svg {
+  animation: anv-chakra-spin var(--anv-spin-dur) linear infinite;
+}
+
+/* ── Shine sweep on white stripe ─────────────────────────────────── */
+.anv-stripe-white-shine {
+  position   : absolute;
+  inset      : 0;
   pointer-events: none;
+  background : linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.0) 35%,
+    rgba(255, 255, 255, 0.55) 50%,
+    rgba(255, 255, 255, 0.0) 65%,
+    transparent 100%
+  );
+  animation  : anv-shine-sweep 1.6s ease 1.3s forwards;
+  opacity    : 0;
 }
 
-/* ── Balloon wrapper ─────────────────────────────────────────────── */
-.anv-balloon-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  pointer-events: auto;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  flex-shrink: 0;
+@keyframes anv-shine-sweep {
+  0%   { opacity: 0; transform: translateX(-120%); }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { opacity: 0; transform: translateX(120%); }
 }
 
-/* Minimal hover — only a very subtle shadow shift, no scale */
-.anv-balloon-wrapper:hover .anv-balloon-svg {
-  filter: drop-shadow(0 10px 24px rgba(0,0,0,0.26))
-          drop-shadow(0 0 16px rgba(255,215,0,0.18));
+/* ══════════════════════════════════════════════════════════════════
+   Keyframes
+   ══════════════════════════════════════════════════════════════════ */
+
+@keyframes anv-slide-down {
+  from { transform: translateY(-100%); }
+  to   { transform: translateY(0);     }
 }
 
-/* ── Balloon SVG (~20% larger than original 78×152) ──────────────── */
-.anv-balloon-svg {
-  width: 94px;
-  height: 182px;
-  overflow: visible;
-  display: block;
-  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.22))
-          drop-shadow(0 2px 5px rgba(0,0,0,0.10));
-  transition: filter 0.3s ease;
+@keyframes anv-slide-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0);    }
 }
 
-/* ── Natural pendulum sway ───────────────────────────────────────── */
-@keyframes anv-sway {
-  0%   { transform: rotate(-1.8deg) translateX(-2px) translateY(0px);   }
-  22%  { transform: rotate( 2.0deg) translateX( 2px) translateY(4px);   }
-  45%  { transform: rotate( 1.2deg) translateX( 1px) translateY(3px);   }
-  68%  { transform: rotate(-2.0deg) translateX(-2px) translateY(5px);   }
-  85%  { transform: rotate(-0.6deg) translateX(-1px) translateY(2px);   }
-  100% { transform: rotate(-1.8deg) translateX(-2px) translateY(0px);   }
+@keyframes anv-chakra-appear {
+  0%   { opacity: 0; transform: scale(0.46); }
+  60%  { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1);    }
 }
 
-/* ── Pop keyframe ────────────────────────────────────────────────── */
-@keyframes anv-pop {
-  0%   { transform: scale(1);    opacity: 1; }
-  12%  { transform: scale(1.18); opacity: 1; }
-  45%  { transform: scale(0.22); opacity: 0.5; }
-  100% { transform: scale(0);    opacity: 0; }
+@keyframes anv-chakra-spin {
+  from { transform: rotate(0deg);   }
+  to   { transform: rotate(360deg); }
 }
 
-.anv-balloon-slot.anv-popping {
-  animation: anv-pop 0.34s cubic-bezier(0.36,0.07,0.19,0.97) forwards !important;
-  pointer-events: none;
+@keyframes anv-overlay-exit {
+  0%   {
+    opacity   : 1;
+    transform : scale(1);
+    filter    : blur(0px);
+  }
+  100% {
+    opacity   : 0;
+    transform : scale(1.05);
+    filter    : blur(12px);
+  }
 }
 
-/* ── Sparkle circles ─────────────────────────────────────────────── */
-.anv-sparkle {
-  position: fixed;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  animation: anv-sparkle-out var(--dur, 480ms) ease-out forwards;
-}
+/* ══════════════════════════════════════════════════════════════════
+   Responsive
+   ══════════════════════════════════════════════════════════════════ */
 
-@keyframes anv-sparkle-out {
-  0%   { transform: translate(-50%,-50%) scale(1);   opacity: 1; }
-  100% { transform: translate(calc(-50% + var(--dx,0px)),
-                              calc(-50% + var(--dy,0px))) scale(0);
-         opacity: 0; }
-}
-
-/* ── Star shapes ─────────────────────────────────────────────────── */
-.anv-star {
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,
-                     79% 91%,50% 70%,21% 91%,32% 57%,
-                     2%  35%,39% 35%);
-  animation: anv-star-out var(--dur, 560ms) ease-out forwards;
-}
-
-@keyframes anv-star-out {
-  0%   { transform: translate(var(--sx,0px),var(--sy,0px))
-                    scale(1) rotate(0deg);   opacity: 1; }
-  100% { transform: translate(calc(var(--sx,0px)+var(--dx,0px)),
-                              calc(var(--sy,0px)+var(--dy,0px)))
-                    scale(0) rotate(200deg); opacity: 0; }
-}
-
-/* ── Anniversary message overlay ─────────────────────────────────── */
-.anv-message-overlay {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%) translateY(8px);
-  z-index: 10000;
-  pointer-events: none;
-  opacity: 0;
-  animation: anv-msg-in 0.55s cubic-bezier(0.22,0.61,0.36,1) 0.18s forwards,
-             anv-msg-out 0.5s ease-in 2.8s forwards;
-}
-
-@keyframes anv-msg-in {
-  to { opacity: 1; transform: translateX(-50%) translateY(0); }
-}
-
-@keyframes anv-msg-out {
-  to { opacity: 0; transform: translateX(-50%) translateY(-6px); }
-}
-
-.anv-message-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0;
-  padding: 20px 32px 22px;
-  background: rgba(255,255,255,0.82);
-  backdrop-filter: blur(22px) saturate(1.7);
-  -webkit-backdrop-filter: blur(22px) saturate(1.7);
-  border: 1px solid rgba(255,255,255,0.60);
-  border-radius: 20px;
-  box-shadow:
-    0 8px 32px rgba(0,0,0,0.11),
-    0 2px 8px rgba(0,0,0,0.07),
-    0 0 0 1px rgba(255,215,0,0.12) inset;
-  text-align: center;
-  max-width: min(480px, 90vw);
-}
-
-/* ── Title — desktop variant (default, always rendered) ──────────── */
-.anv-message-title {
-  font-family: Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
-  font-size: 16px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: #0f0f10;
-  line-height: 1.25;
-  margin-bottom: 10px;
-}
-
-/* ── Mobile title variant — hidden by default, shown only <768px ─── *
-   JS injects this as a sibling of .anv-message-title with a shorter
-   copy string. The media query below toggles which is visible.       */
-.anv-message-title-mobile {
-  display: none;
-}
-
-.anv-message-divider {
-  width: 48px;
-  height: 2.5px;
-  border-radius: 99px;
-  background: linear-gradient(90deg, #FFD700 0%, #FF8C00 50%, #FFD700 100%);
-  opacity: 0.88;
-  margin-bottom: 10px;
-  flex-shrink: 0;
-}
-
-.anv-message-subtitle {
-  font-family: Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  color: rgba(30,30,35,0.62);
-  line-height: 1.4;
-}
-
-/* ── Responsive ──────────────────────────────────────────────────── */
-
-/* ── Tablet (768px–1023px) ───────────────────────────────────────── */
+/* Tablet */
 @media (min-width: 768px) and (max-width: 1023.98px) {
-  .anv-group-left  { left: 16px; }
-  .anv-group-right { right: 16px; }
+  .anv-chakra-svg {
+    width : 128px;
+    height: 128px;
+  }
 }
 
-/* ── Mobile (<768px) ─────────────────────────────────────────────── *
-   Balloon sizing and positioning — unchanged from original.
-   Overlay: tighter card, smaller type, no awkward wrapping,
-   shorter copy via the .anv-message-title-mobile element toggle.     */
+/* Mobile */
 @media (max-width: 767.98px) {
-  /* Balloons */
-  .anv-balloon-svg { width: 68px; height: 132px; }
-  .anv-group       { gap: 5px; }
-  .anv-group-left  { left: 24px; }
-  .anv-group-right { right: 24px; }
-
-  /* Overlay card — compact, premium-notification feel */
-  .anv-message-card {
-    padding: 14px 18px 16px;
-    max-width: min(300px, calc(100vw - 40px));   /* 20px safe-zone each side */
-    border-radius: 16px;
-  }
-
-  /* Hide the long desktop title, show the short mobile one */
-  .anv-message-title:not(.anv-message-title-mobile) {
-    display: none;
-  }
-  .anv-message-title-mobile {
-    display: block;
-    font-size: 13.5px;
-    font-weight: 800;
-    letter-spacing: -0.01em;
-    line-height: 1.3;
-    margin-bottom: 9px;
-    /* word-break prevents any single emoji/word from overflowing */
-    word-break: break-word;
-    overflow-wrap: break-word;
-  }
-
-  /* Subtitle — slightly tighter on mobile */
-  .anv-message-subtitle {
-    font-size: 11.5px;
-    letter-spacing: 0.008em;
-    line-height: 1.45;
-  }
-
-  /* Divider — slightly narrower to match compact card */
-  .anv-message-divider {
-    width: 36px;
-    margin-bottom: 9px;
+  .anv-chakra-svg {
+    width : 96px;
+    height: 96px;
   }
 }
 
-/* Fine-tune for very small phones (320px–374px) */
-@media (max-width: 374px) {
-  .anv-message-card {
-    padding: 12px 14px 14px;
-    max-width: calc(100vw - 32px);
-    border-radius: 14px;
-  }
-  .anv-message-title-mobile {
-    font-size: 12.5px;
-  }
-  .anv-message-subtitle {
-    font-size: 11px;
+/* Very small phones */
+@media (max-width: 374.98px) {
+  .anv-chakra-svg {
+    width : 80px;
+    height: 80px;
   }
 }
 
-/* ── Reduced motion ──────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════════
+   Dark Mode — flag colours are vivid enough, no change needed.
+   Overlay bg stays white so the flag reads correctly on any theme.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════════════════════════════
+   Reduced Motion — skip all heavy animation; fade overlay only.
+   ══════════════════════════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
-  .anv-balloon-slot              { animation: none !important; }
-  .anv-balloon-slot.anv-popping  { opacity: 0 !important; }
-  .anv-sparkle, .anv-star        { display: none !important; }
-  .anv-message-overlay           { animation: none !important; opacity: 1 !important; }
+  .anv-stripe-saffron,
+  .anv-stripe-green {
+    animation : none !important;
+    transform : translateY(0) !important;
+  }
+
+  .anv-stripe-white-shine {
+    display : none !important;
+  }
+
+  .anv-chakra-inner.anv-chakra-in {
+    animation : none !important;
+    opacity   : 1 !important;
+    transform : scale(1) !important;
+  }
+
+  .anv-chakra-inner.anv-chakra-in .anv-chakra-svg {
+    animation : none !important;
+  }
+
+  #anv-intro-overlay.anv-exit {
+    animation : anv-overlay-fade-reduced 0.45s ease forwards !important;
+  }
+}
+
+@keyframes anv-overlay-fade-reduced {
+  from { opacity: 1; }
+  to   { opacity: 0; }
 }
