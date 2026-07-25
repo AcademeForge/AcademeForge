@@ -1,224 +1,198 @@
 /* fest/anniversary.js
    ═══════════════════════════════════════════════════════════════════
-   Indian Flag Anniversary Intro Animation — Premium Edition
-   Injects all DOM, sequences the animation, cleans up completely.
+   Indian Flag Anniversary Intro — Premium Edition v3
+   All animations are transition-based, triggered by JS class toggles.
    No external dependencies. Pure Vanilla JS. IIFE-wrapped.
+
+   Sequence
+   ────────
+   0 ms        → Overlay injected (stripes off-screen), scroll locked
+   ~20 ms      → .anv-go added → saffron slides down, green slides up
+   920 ms      → Stripes fully formed (flag complete)
+   1 080 ms    → Chakra fades in + spins (simultaneously)
+   1 830 ms    → Chakra fully visible
+   1 830 ms    → Hold flag + chakra for 2 700 ms
+   4 530 ms    → .anv-exit added → overlay fades out (850 ms)
+   5 430 ms    → DOM removed, scroll restored
    ═══════════════════════════════════════════════════════════════════ */
 
 (function () {
   'use strict';
 
-  /* ── Timing (ms) ─────────────────────────────────────────────────
-     stripeDur   : CSS stripe animation (matches --anv-stripe-dur)
-     stripeSettle: brief pause after stripes land, flag complete
-     chakraDur   : CSS chakra appear animation (matches --anv-chakra-dur)
-     pause       : hold complete flag before exit
-     exitDur     : CSS overlay exit animation (matches --anv-exit-dur)
-  ─────────────────────────────────────────────────────────────────── */
-  var T = {
-    stripeDur   : 900,
-    stripeSettle: 300,
-    chakraDur   : 700,
-    pause       : 1000,
-    exitDur     : 820,
-  };
+  /* ── Timing ──────────────────────────────────────────────────────── */
+  var STRIPE_DUR    = 920;   /* matches --anv-stripe-spd  */
+  var STRIPE_SETTLE = 160;   /* tiny pause after stripes land */
+  var CHAKRA_DUR    = 750;   /* matches --anv-chakra-spd  */
+  var HOLD          = 2700;  /* flag fully visible hold   */
+  var EXIT_DUR      = 880;   /* matches --anv-exit-spd    */
+  var CLEANUP_EXTRA = 60;    /* safety buffer after exit  */
 
-  /* Derived trigger points */
-  var tChakra = T.stripeDur + T.stripeSettle;           // 1 200ms
-  var tExit   = tChakra + T.chakraDur + T.pause;        // 2 900ms
-  var tRemove = tExit + T.exitDur + 40;                 // 3 760ms
+  var T_CHAKRA = STRIPE_DUR + STRIPE_SETTLE;               /* 1 080 ms */
+  var T_EXIT   = T_CHAKRA   + CHAKRA_DUR + HOLD;           /* 4 530 ms */
+  var T_REMOVE = T_EXIT     + EXIT_DUR   + CLEANUP_EXTRA;  /* 5 470 ms */
 
-  /* ── Reduced-motion check ────────────────────────────────────────── */
-  var reducedMotion = (
-    window.matchMedia &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  );
+  /* ── Reduced motion ──────────────────────────────────────────────── */
+  var noMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
   /* ── State ───────────────────────────────────────────────────────── */
-  var overlay       = null;
-  var timers        = [];
-  var originalOverflow    = '';
-  var originalOverflowBody = '';
+  var overlay = null;
+  var timers  = [];
 
-  /* ── Tiny scheduler that tracks IDs for cleanup ─────────────────── */
-  function after(delay, fn) {
-    timers.push(setTimeout(fn, delay));
-  }
+  /* ── Scroll lock ─────────────────────────────────────────────────── */
+  var _docOvf  = '';
+  var _bodyOvf = '';
 
-  /* ── Lock / unlock scroll ────────────────────────────────────────── */
   function lockScroll() {
-    originalOverflow     = document.documentElement.style.overflow;
-    originalOverflowBody = document.body.style.overflow;
+    _docOvf  = document.documentElement.style.overflow;
+    _bodyOvf = document.body.style.overflow;
     document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow             = 'hidden';
   }
 
   function unlockScroll() {
-    document.documentElement.style.overflow = originalOverflow;
-    document.body.style.overflow             = originalOverflowBody;
+    document.documentElement.style.overflow = _docOvf;
+    document.body.style.overflow             = _bodyOvf;
   }
 
-  /* ── Build Ashoka Chakra SVG ─────────────────────────────────────── *
-     Accurate 24-spoke design with:
-       • outer ring (thick)
-       • inner hub circle (filled)
-       • 24 evenly spaced spokes (15° apart)
-       • small teardrop caps at each spoke tip
-       • mid-ring for structural detail
-  ─────────────────────────────────────────────────────────────────── */
-  function buildChakraSVG() {
-    var NS  = 'http://www.w3.org/2000/svg';
-    var CX  = 100, CY = 100;     /* viewBox centre */
-    var R   = 94;                /* outer rim radius */
-    var RIN = 8;                 /* hub radius */
-    var RSP = 78;                /* spoke end (just inside outer rim) */
-    var RMID = 54;               /* mid-ring radius */
+  /* ── Scheduled helpers ───────────────────────────────────────────── */
+  function after(ms, fn) { timers.push(setTimeout(fn, ms)); }
+
+  function raf2(fn) {
+    /* Two rAF frames guarantee the browser has painted the initial state
+       before we trigger transitions — the key fix for "no animation". */
+    requestAnimationFrame(function () {
+      requestAnimationFrame(fn);
+    });
+  }
+
+  /* ── Build Ashoka Chakra SVG ─────────────────────────────────────── */
+  function buildChakra() {
+    var NS   = 'http://www.w3.org/2000/svg';
+    var CX   = 100, CY = 100;
     var NAVY = '#000080';
+
+    function el(tag, a) {
+      var e = document.createElementNS(NS, tag);
+      for (var k in a) e.setAttribute(k, a[k]);
+      return e;
+    }
 
     var svg = document.createElementNS(NS, 'svg');
     svg.setAttribute('viewBox', '0 0 200 200');
     svg.setAttribute('xmlns', NS);
-    svg.setAttribute('role', 'img');
     svg.setAttribute('aria-label', 'Ashoka Chakra');
-    svg.classList.add('anv-chakra-svg');
-
-    function el(tag, attrs) {
-      var e = document.createElementNS(NS, tag);
-      for (var k in attrs) e.setAttribute(k, attrs[k]);
-      return e;
-    }
+    svg.setAttribute('role', 'img');
+    svg.className = 'anv-chakra-svg';
 
     /* Outer ring */
-    svg.appendChild(el('circle', {
-      cx: CX, cy: CY, r: R,
-      fill: 'none', stroke: NAVY, 'stroke-width': '4.5'
-    }));
+    svg.appendChild(el('circle', { cx:CX, cy:CY, r:94, fill:'none', stroke:NAVY, 'stroke-width':'5' }));
 
-    /* Mid structural ring */
-    svg.appendChild(el('circle', {
-      cx: CX, cy: CY, r: RMID,
-      fill: 'none', stroke: NAVY, 'stroke-width': '1.2', opacity: '0.45'
-    }));
+    /* Inner rim ring */
+    svg.appendChild(el('circle', { cx:CX, cy:CY, r:82, fill:'none', stroke:NAVY, 'stroke-width':'1', opacity:'0.4' }));
 
-    /* Thin inner-hub ring */
-    svg.appendChild(el('circle', {
-      cx: CX, cy: CY, r: RIN + 3,
-      fill: 'none', stroke: NAVY, 'stroke-width': '1.2', opacity: '0.5'
-    }));
+    /* Mid ring */
+    svg.appendChild(el('circle', { cx:CX, cy:CY, r:52, fill:'none', stroke:NAVY, 'stroke-width':'1', opacity:'0.35' }));
+
+    /* Inner hub ring */
+    svg.appendChild(el('circle', { cx:CX, cy:CY, r:12, fill:'none', stroke:NAVY, 'stroke-width':'1.2', opacity:'0.5' }));
 
     /* 24 spokes + teardrop tips */
     for (var i = 0; i < 24; i++) {
-      var deg = i * 15;
-      var rad = deg * Math.PI / 180;
+      var rad = (i * 15) * Math.PI / 180;
+      var cos = Math.cos(rad), sin = Math.sin(rad);
 
-      /* Spoke line */
+      /* Spoke */
       svg.appendChild(el('line', {
-        x1: CX + (RIN + 3) * Math.cos(rad),
-        y1: CY + (RIN + 3) * Math.sin(rad),
-        x2: CX + RSP        * Math.cos(rad),
-        y2: CY + RSP        * Math.sin(rad),
-        stroke: NAVY, 'stroke-width': '2.1',
-        'stroke-linecap': 'round'
+        x1: CX + 12 * cos, y1: CY + 12 * sin,
+        x2: CX + 80 * cos, y2: CY + 80 * sin,
+        stroke: NAVY, 'stroke-width': '2.2', 'stroke-linecap': 'round'
       }));
 
-      /* Teardrop cap at spoke tip */
-      var tipX = CX + (RSP + 8) * Math.cos(rad);
-      var tipY = CY + (RSP + 8) * Math.sin(rad);
-      var cap  = el('ellipse', {
-        cx: tipX, cy: tipY,
-        rx: '2.6', ry: '5.8',
-        fill: NAVY,
-        transform: 'rotate(' + (deg + 90) + ',' + tipX + ',' + tipY + ')'
-      });
-      svg.appendChild(cap);
+      /* Teardrop at tip */
+      var tx = CX + 88 * cos, ty = CY + 88 * sin;
+      svg.appendChild(el('ellipse', {
+        cx: tx, cy: ty, rx: '2.8', ry: '6.2', fill: NAVY,
+        transform: 'rotate(' + (i * 15 + 90) + ',' + tx + ',' + ty + ')'
+      }));
     }
 
-    /* Filled centre hub */
-    svg.appendChild(el('circle', {
-      cx: CX, cy: CY, r: RIN,
-      fill: NAVY
-    }));
+    /* Centre hub */
+    svg.appendChild(el('circle', { cx:CX, cy:CY, r:9, fill:NAVY }));
 
     return svg;
   }
 
-  /* ── Build the full overlay DOM ──────────────────────────────────── */
+  /* ── Build full overlay DOM ──────────────────────────────────────── */
   function buildOverlay() {
-    /* Root overlay */
     overlay = document.createElement('div');
-    overlay.id = 'anv-intro-overlay';
+    overlay.id = 'anv-overlay';
     overlay.setAttribute('aria-hidden', 'true');
     overlay.setAttribute('role', 'presentation');
 
-    /* Flag container */
-    var flagWrap = document.createElement('div');
-    flagWrap.className = 'anv-flag-container';
+    /* Flag */
+    var flag = document.createElement('div');
+    flag.className = 'anv-flag';
 
     var saffron = document.createElement('div');
     saffron.className = 'anv-stripe anv-stripe-saffron';
 
-    /* White middle — just the overlay background, but add a shine div */
-    var shine = document.createElement('div');
-    shine.className = 'anv-stripe-white-shine';
-
     var green = document.createElement('div');
     green.className = 'anv-stripe anv-stripe-green';
 
-    flagWrap.appendChild(saffron);
-    flagWrap.appendChild(shine);
-    flagWrap.appendChild(green);
+    flag.appendChild(saffron);
+    flag.appendChild(green);
 
     /* Chakra */
-    var chakraWrap = document.createElement('div');
-    chakraWrap.className = 'anv-chakra-container';
+    var wrap = document.createElement('div');
+    wrap.className = 'anv-chakra-wrap';
 
-    var chakraInner = document.createElement('div');
-    chakraInner.className = 'anv-chakra-inner';
-    chakraInner.id = 'anv-chakra-inner';
+    var inner = document.createElement('div');
+    inner.className = 'anv-chakra-inner';
+    inner.id = 'anv-chakra-inner';
+    inner.appendChild(buildChakra());
+    wrap.appendChild(inner);
 
-    chakraInner.appendChild(buildChakraSVG());
-    chakraWrap.appendChild(chakraInner);
-
-    overlay.appendChild(flagWrap);
-    overlay.appendChild(chakraWrap);
-
+    overlay.appendChild(flag);
+    overlay.appendChild(wrap);
     document.body.appendChild(overlay);
   }
 
-  /* ── Exit — add class, wait, then remove everything ─────────────── */
-  function startExit() {
+  /* ── Exit: fade overlay, remove DOM ─────────────────────────────── */
+  function doExit() {
     if (!overlay) return;
     overlay.classList.add('anv-exit');
 
-    after(T.exitDur + 40, function () {
-      if (overlay && overlay.parentNode) {
-        overlay.parentNode.removeChild(overlay);
-      }
+    after(EXIT_DUR + CLEANUP_EXTRA, function () {
+      if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
       overlay = null;
       unlockScroll();
     });
   }
 
   /* ── Reduced-motion fast path ────────────────────────────────────── */
-  function runReducedMotion() {
-    /* Flag is already fully visible (CSS nullifies animations).
-       Show chakra immediately, then exit after a short pause. */
+  function runReduced() {
+    /* CSS already shows flag (transitions disabled). Show chakra right away. */
     var inner = document.getElementById('anv-chakra-inner');
     if (inner) inner.classList.add('anv-chakra-in');
-
-    after(900, startExit);
+    after(1200, doExit);
   }
 
   /* ── Full animation sequence ─────────────────────────────────────── */
-  function runFullSequence() {
-    /* Chakra appears after stripes settle */
-    after(tChakra, function () {
+  function runFull() {
+    /* Step 1 — wait 2 frames so browser paints the initial hidden state,
+       then trigger stripe transitions by adding .anv-go */
+    raf2(function () {
+      if (overlay) overlay.classList.add('anv-go');
+    });
+
+    /* Step 2 — Chakra appears (fade in + scale up + starts spinning) */
+    after(T_CHAKRA, function () {
       var inner = document.getElementById('anv-chakra-inner');
       if (inner) inner.classList.add('anv-chakra-in');
     });
 
-    /* Start cinematic exit */
-    after(tExit, startExit);
+    /* Step 3 — Hold complete flag for HOLD ms, then exit */
+    after(T_EXIT, doExit);
   }
 
   /* ── Entry point ─────────────────────────────────────────────────── */
@@ -226,21 +200,14 @@
     try {
       lockScroll();
       buildOverlay();
-
-      if (reducedMotion) {
-        runReducedMotion();
-      } else {
-        runFullSequence();
-      }
+      noMotion ? runReduced() : runFull();
     } catch (err) {
-      /* Fail silently — never break the host page */
-      console.warn('[Anniversary] init error:', err);
+      console.warn('[Anniversary] error:', err);
       unlockScroll();
       timers.forEach(clearTimeout);
     }
   }
 
-  /* ── Boot ────────────────────────────────────────────────────────── */
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init, { once: true });
   } else {
