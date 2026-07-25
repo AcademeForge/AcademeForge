@@ -1,171 +1,248 @@
+/* fest/anniversary.js
+   ═══════════════════════════════════════════════════════════════════
+   Indian Flag Anniversary Intro Animation — Premium Edition
+   Injects all DOM, sequences the animation, cleans up completely.
+   No external dependencies. Pure Vanilla JS. IIFE-wrapped.
+   ═══════════════════════════════════════════════════════════════════ */
+
 (function () {
   'use strict';
 
-  /* ── Config ──────────────────────────────────────────────────────── */
-  var CFG = {
-    confettiSrc : 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js',
-    effectDuration: 1500, // ms — total time the celebration effect is shown before cleanup
+  /* ── Timing (ms) ─────────────────────────────────────────────────
+     stripeDur   : CSS stripe animation (matches --anv-stripe-dur)
+     stripeSettle: brief pause after stripes land, flag complete
+     chakraDur   : CSS chakra appear animation (matches --anv-chakra-dur)
+     pause       : hold complete flag before exit
+     exitDur     : CSS overlay exit animation (matches --anv-exit-dur)
+  ─────────────────────────────────────────────────────────────────── */
+  var T = {
+    stripeDur   : 900,
+    stripeSettle: 300,
+    chakraDur   : 700,
+    pause       : 1000,
+    exitDur     : 820,
   };
 
-  var CONFIG = {
-    STORAGE_KEY : 'af_ecosystem_launch_v1', // 1 device / 1 browser = shown once, ever
-  };
+  /* Derived trigger points */
+  var tChakra = T.stripeDur + T.stripeSettle;           // 1 200ms
+  var tExit   = tChakra + T.chakraDur + T.pause;        // 2 900ms
+  var tRemove = tExit + T.exitDur + 40;                 // 3 760ms
+
+  /* ── Reduced-motion check ────────────────────────────────────────── */
+  var reducedMotion = (
+    window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
 
   /* ── State ───────────────────────────────────────────────────────── */
-  var confettiFn = null;
+  var overlay       = null;
+  var timers        = [];
+  var originalOverflow    = '';
+  var originalOverflowBody = '';
 
-  /* ── Sparkles ────────────────────────────────────────────────────── */
-  function spawnSparkles(cx, cy) {
-    var pal = ['#FFD700','#FFA500','#FF6B6B','#9C27B0','#00BCD4','#ffffff','#FFB74D','#E040FB'];
-    var N = 18;
-    for (var i = 0; i < N; i++) {
-      (function (i) {
-        var ang  = (360/N)*i + (Math.random()-0.5)*14;
-        var dist = 40 + Math.random()*80;
-        var dx   = Math.cos(ang*Math.PI/180)*dist;
-        var dy   = Math.sin(ang*Math.PI/180)*dist;
-        var sz   = 5 + Math.random()*8;
-        var col  = pal[Math.floor(Math.random()*pal.length)];
-        var dur  = 400 + Math.random()*320;
-        var el   = document.createElement('div');
-        el.className = 'anv-sparkle';
-        el.style.cssText = [
-          'left:'+cx+'px','top:'+cy+'px',
-          'width:'+sz+'px','height:'+sz+'px',
-          'background:'+col,
-          'box-shadow:0 0 '+(sz*2.4)+'px '+col,
-          'border-radius:'+(Math.random()>0.38?'50%':'3px'),
-          '--dx:'+dx+'px','--dy:'+dy+'px','--dur:'+dur+'ms',
-        ].join(';');
-        document.body.appendChild(el);
-        setTimeout(function () { if (el.isConnected) el.remove(); }, dur+80);
-      })(i);
-    }
+  /* ── Tiny scheduler that tracks IDs for cleanup ─────────────────── */
+  function after(delay, fn) {
+    timers.push(setTimeout(fn, delay));
   }
 
-  /* ── Stars ───────────────────────────────────────────────────────── */
-  function spawnStars(cx, cy) {
-    var pal = ['#FFD700','#FFF176','#FF8C00','#ffffff'];
-    var N = 8;
-    for (var i = 0; i < N; i++) {
-      (function () {
-        var ang  = Math.random()*360;
-        var dist = 28 + Math.random()*65;
-        var dx   = Math.cos(ang*Math.PI/180)*dist;
-        var dy   = Math.sin(ang*Math.PI/180)*dist;
-        var sz   = 8 + Math.random()*9;
-        var col  = pal[Math.floor(Math.random()*pal.length)];
-        var dur  = 480 + Math.random()*360;
-        var sx   = (Math.random()-0.5)*9;
-        var sy   = (Math.random()-0.5)*9;
-        var el   = document.createElement('div');
-        el.className = 'anv-star';
-        el.style.cssText = [
-          'left:'+cx+'px','top:'+cy+'px',
-          'width:'+sz+'px','height:'+sz+'px',
-          'background:'+col,
-          'box-shadow:0 0 '+sz+'px '+col,
-          '--sx:'+sx+'px','--sy:'+sy+'px',
-          '--dx:'+dx+'px','--dy:'+dy+'px','--dur:'+dur+'ms',
-        ].join(';');
-        document.body.appendChild(el);
-        setTimeout(function () { if (el.isConnected) el.remove(); }, dur+80);
-      })();
-    }
+  /* ── Lock / unlock scroll ────────────────────────────────────────── */
+  function lockScroll() {
+    originalOverflow     = document.documentElement.style.overflow;
+    originalOverflowBody = document.body.style.overflow;
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow             = 'hidden';
   }
 
-  /* ── Celebration effect (fires once, lasts CFG.effectDuration ms) ─── */
-  function runCelebration() {
-    if (!confettiFn) return;
-    var ox = 0.5, oy = 0.14;
+  function unlockScroll() {
+    document.documentElement.style.overflow = originalOverflow;
+    document.body.style.overflow             = originalOverflowBody;
+  }
 
-    // Central burst — mixed shapes
-    confettiFn({ particleCount:90, spread:95, origin:{x:ox,y:oy},
-      colors:['#FFD700','#FF8C00','#E040FB','#00BCD4','#FF6B6B','#5C9BF5','#ffffff'],
-      startVelocity:32, gravity:0.72, scalar:0.90, ticks:125, zIndex:9999 });
+  /* ── Build Ashoka Chakra SVG ─────────────────────────────────────── *
+     Accurate 24-spoke design with:
+       • outer ring (thick)
+       • inner hub circle (filled)
+       • 24 evenly spaced spokes (15° apart)
+       • small teardrop caps at each spoke tip
+       • mid-ring for structural detail
+  ─────────────────────────────────────────────────────────────────── */
+  function buildChakraSVG() {
+    var NS  = 'http://www.w3.org/2000/svg';
+    var CX  = 100, CY = 100;     /* viewBox centre */
+    var R   = 94;                /* outer rim radius */
+    var RIN = 8;                 /* hub radius */
+    var RSP = 78;                /* spoke end (just inside outer rim) */
+    var RMID = 54;               /* mid-ring radius */
+    var NAVY = '#000080';
 
-    spawnSparkles(window.innerWidth * 0.5, window.innerHeight * 0.14);
-    spawnStars(window.innerWidth * 0.5, window.innerHeight * 0.14);
+    var svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('viewBox', '0 0 200 200');
+    svg.setAttribute('xmlns', NS);
+    svg.setAttribute('role', 'img');
+    svg.setAttribute('aria-label', 'Ashoka Chakra');
+    svg.classList.add('anv-chakra-svg');
 
-    // Gentle floating circles
-    setTimeout(function () {
-      if (!confettiFn) return;
-      confettiFn({ particleCount:55, spread:78, origin:{x:ox,y:oy},
-        colors:['#FFD700','#FFF176','#FFD54F','#FFFFFF'], shapes:['circle'],
-        startVelocity:18, gravity:0.32, scalar:0.52, ticks:155, zIndex:9999, drift:0.55 });
-    }, 350);
+    function el(tag, attrs) {
+      var e = document.createElementNS(NS, tag);
+      for (var k in attrs) e.setAttribute(k, attrs[k]);
+      return e;
+    }
 
-    // Side bursts (angled, like a grand finale)
-    setTimeout(function () {
-      if (!confettiFn) return;
-      confettiFn({ particleCount:80, angle:55,  spread:60, origin:{x:0.04,y:0.32},
-        colors:['#FFD700','#FF6B6B','#E040FB','#5C9BF5','#fff'],
-        startVelocity:50, gravity:0.85, scalar:0.82, ticks:110, zIndex:9999 });
-      confettiFn({ particleCount:80, angle:125, spread:60, origin:{x:0.96,y:0.32},
-        colors:['#FFD700','#4DD0E1','#FFB347','#ffffff','#FF6B6B'],
-        startVelocity:50, gravity:0.85, scalar:0.82, ticks:110, zIndex:9999 });
-      spawnSparkles(window.innerWidth * 0.07, window.innerHeight * 0.26);
-      spawnSparkles(window.innerWidth * 0.93, window.innerHeight * 0.26);
-    }, 650);
+    /* Outer ring */
+    svg.appendChild(el('circle', {
+      cx: CX, cy: CY, r: R,
+      fill: 'none', stroke: NAVY, 'stroke-width': '4.5'
+    }));
 
-    // Cleanup at the end of the effect window
-    setTimeout(function () {
-      if (confettiFn && confettiFn.reset) confettiFn.reset();
-      document.querySelectorAll('.anv-sparkle, .anv-star').forEach(function (el) {
-        if (el.isConnected) el.remove();
+    /* Mid structural ring */
+    svg.appendChild(el('circle', {
+      cx: CX, cy: CY, r: RMID,
+      fill: 'none', stroke: NAVY, 'stroke-width': '1.2', opacity: '0.45'
+    }));
+
+    /* Thin inner-hub ring */
+    svg.appendChild(el('circle', {
+      cx: CX, cy: CY, r: RIN + 3,
+      fill: 'none', stroke: NAVY, 'stroke-width': '1.2', opacity: '0.5'
+    }));
+
+    /* 24 spokes + teardrop tips */
+    for (var i = 0; i < 24; i++) {
+      var deg = i * 15;
+      var rad = deg * Math.PI / 180;
+
+      /* Spoke line */
+      svg.appendChild(el('line', {
+        x1: CX + (RIN + 3) * Math.cos(rad),
+        y1: CY + (RIN + 3) * Math.sin(rad),
+        x2: CX + RSP        * Math.cos(rad),
+        y2: CY + RSP        * Math.sin(rad),
+        stroke: NAVY, 'stroke-width': '2.1',
+        'stroke-linecap': 'round'
+      }));
+
+      /* Teardrop cap at spoke tip */
+      var tipX = CX + (RSP + 8) * Math.cos(rad);
+      var tipY = CY + (RSP + 8) * Math.sin(rad);
+      var cap  = el('ellipse', {
+        cx: tipX, cy: tipY,
+        rx: '2.6', ry: '5.8',
+        fill: NAVY,
+        transform: 'rotate(' + (deg + 90) + ',' + tipX + ',' + tipY + ')'
       });
-    }, CFG.effectDuration);
-  }
-
-  /* ── Load confetti then fire the celebration ─────────────────────── */
-  function loadConfetti() {
-    var existing = document.querySelector('script[src="'+CFG.confettiSrc+'"]');
-    if (existing) {
-      confettiFn = window.confetti || null;
-      if (confettiFn) { runCelebration(); }
-      else existing.addEventListener('load', function () {
-        confettiFn = window.confetti || null;
-        runCelebration();
-      });
-      return;
+      svg.appendChild(cap);
     }
-    var sc = document.createElement('script');
-    sc.src = CFG.confettiSrc;
-    sc.async = true;
-    sc.onload = function () {
-      confettiFn = window.confetti || null;
-      runCelebration();
-    };
-    document.head.appendChild(sc);
+
+    /* Filled centre hub */
+    svg.appendChild(el('circle', {
+      cx: CX, cy: CY, r: RIN,
+      fill: NAVY
+    }));
+
+    return svg;
   }
 
-  /* ── localStorage helpers — 1 device, 1 time, no expiry ────────────
-     Uses localStorage (not sessionStorage) so the flag survives across
-     browser sessions/tabs on the same device/browser profile.          */
-  function hasSeenExperience() {
-    try {
-      return localStorage.getItem(CONFIG.STORAGE_KEY) === '1';
-    } catch (e) { return false; }
+  /* ── Build the full overlay DOM ──────────────────────────────────── */
+  function buildOverlay() {
+    /* Root overlay */
+    overlay = document.createElement('div');
+    overlay.id = 'anv-intro-overlay';
+    overlay.setAttribute('aria-hidden', 'true');
+    overlay.setAttribute('role', 'presentation');
+
+    /* Flag container */
+    var flagWrap = document.createElement('div');
+    flagWrap.className = 'anv-flag-container';
+
+    var saffron = document.createElement('div');
+    saffron.className = 'anv-stripe anv-stripe-saffron';
+
+    /* White middle — just the overlay background, but add a shine div */
+    var shine = document.createElement('div');
+    shine.className = 'anv-stripe-white-shine';
+
+    var green = document.createElement('div');
+    green.className = 'anv-stripe anv-stripe-green';
+
+    flagWrap.appendChild(saffron);
+    flagWrap.appendChild(shine);
+    flagWrap.appendChild(green);
+
+    /* Chakra */
+    var chakraWrap = document.createElement('div');
+    chakraWrap.className = 'anv-chakra-container';
+
+    var chakraInner = document.createElement('div');
+    chakraInner.className = 'anv-chakra-inner';
+    chakraInner.id = 'anv-chakra-inner';
+
+    chakraInner.appendChild(buildChakraSVG());
+    chakraWrap.appendChild(chakraInner);
+
+    overlay.appendChild(flagWrap);
+    overlay.appendChild(chakraWrap);
+
+    document.body.appendChild(overlay);
   }
 
-  function markExperienceSeen() {
-    try { localStorage.setItem(CONFIG.STORAGE_KEY, '1'); }
-    catch (e) { /* quota / private mode — fail silently */ }
+  /* ── Exit — add class, wait, then remove everything ─────────────── */
+  function startExit() {
+    if (!overlay) return;
+    overlay.classList.add('anv-exit');
+
+    after(T.exitDur + 40, function () {
+      if (overlay && overlay.parentNode) {
+        overlay.parentNode.removeChild(overlay);
+      }
+      overlay = null;
+      unlockScroll();
+    });
+  }
+
+  /* ── Reduced-motion fast path ────────────────────────────────────── */
+  function runReducedMotion() {
+    /* Flag is already fully visible (CSS nullifies animations).
+       Show chakra immediately, then exit after a short pause. */
+    var inner = document.getElementById('anv-chakra-inner');
+    if (inner) inner.classList.add('anv-chakra-in');
+
+    after(900, startExit);
+  }
+
+  /* ── Full animation sequence ─────────────────────────────────────── */
+  function runFullSequence() {
+    /* Chakra appears after stripes settle */
+    after(tChakra, function () {
+      var inner = document.getElementById('anv-chakra-inner');
+      if (inner) inner.classList.add('anv-chakra-in');
+    });
+
+    /* Start cinematic exit */
+    after(tExit, startExit);
   }
 
   /* ── Entry point ─────────────────────────────────────────────────── */
   function init() {
-    if (hasSeenExperience()) return;
     try {
-      markExperienceSeen();
-      loadConfetti();
-    } catch (e) {
-      console.warn('[Anniversary] init error:', e);
+      lockScroll();
+      buildOverlay();
+
+      if (reducedMotion) {
+        runReducedMotion();
+      } else {
+        runFullSequence();
+      }
+    } catch (err) {
+      /* Fail silently — never break the host page */
+      console.warn('[Anniversary] init error:', err);
+      unlockScroll();
+      timers.forEach(clearTimeout);
     }
   }
 
+  /* ── Boot ────────────────────────────────────────────────────────── */
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', init, { once: true });
   } else {
     init();
   }
