@@ -3,7 +3,7 @@
 
   var noMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
-  var overlay, saffron, green, chakraInner;
+  var overlay, saffron, green, chakraInner, messageEl;
   var docOvf = '', bodyOvf = '';
 
   function lockScroll() {
@@ -32,7 +32,7 @@
       return e;
     }
 
-    var size = window.innerWidth < 768 ? 90 : window.innerWidth < 1024 ? 120 : 150;
+    var size = window.innerWidth < 768 ? 80 : window.innerWidth < 1024 ? 110 : 130;
 
     var svg = document.createElementNS(NS, 'svg');
     svg.setAttribute('viewBox', '0 0 200 200');
@@ -71,11 +71,72 @@
     return svg;
   }
 
+  function buildMessage() {
+    var isMobile = window.innerWidth < 768;
+
+    messageEl = document.createElement('div');
+    css(messageEl, {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      textAlign: 'center',
+      opacity: '0',
+      marginTop: isMobile ? '70px' : '100px',
+      width: '90vw',
+      pointerEvents: 'none',
+      userSelect: 'none'
+    });
+
+    var title = document.createElement('div');
+    css(title, {
+      fontFamily: 'Georgia, "Times New Roman", serif',
+      fontSize: isMobile ? '22px' : '36px',
+      fontWeight: '700',
+      letterSpacing: '-0.01em',
+      lineHeight: '1.2',
+      background: 'linear-gradient(135deg, #FF9933 0%, #c47a00 40%, #138808 100%)',
+      webkitBackgroundClip: 'text',
+      webkitTextFillColor: 'transparent',
+      backgroundClip: 'text',
+      marginBottom: '8px'
+    });
+    title.textContent = 'Happy Independence Day';
+
+    var divider = document.createElement('div');
+    css(divider, {
+      width: '48px',
+      height: '2px',
+      borderRadius: '99px',
+      background: 'linear-gradient(90deg, #FF9933, #000080, #138808)',
+      margin: '0 auto 8px',
+      opacity: '0.75'
+    });
+
+    var sub = document.createElement('div');
+    css(sub, {
+      fontFamily: 'Georgia, "Times New Roman", serif',
+      fontSize: isMobile ? '13px' : '16px',
+      fontWeight: '500',
+      color: '#000080',
+      letterSpacing: '0.12em',
+      opacity: '0.85'
+    });
+    sub.textContent = '🇮🇳  Jai Hind  🇮🇳';
+
+    messageEl.appendChild(title);
+    messageEl.appendChild(divider);
+    messageEl.appendChild(sub);
+    return messageEl;
+  }
+
   function buildDOM() {
     overlay = document.createElement('div');
     css(overlay, {
       position: 'fixed',
-      inset: '0',
       top: '0', left: '0', right: '0', bottom: '0',
       width: '100vw',
       height: '100vh',
@@ -86,7 +147,7 @@
     });
 
     var flagWrap = document.createElement('div');
-    css(flagWrap, { position: 'absolute', inset: '0', top:'0', left:'0', right:'0', bottom:'0' });
+    css(flagWrap, { position: 'absolute', top:'0', left:'0', right:'0', bottom:'0' });
 
     saffron = document.createElement('div');
     css(saffron, {
@@ -115,7 +176,10 @@
     css(chakraWrap, {
       position: 'absolute',
       top: '50%', left: '50%',
-      transform: 'translate(-50%, -50%)'
+      transform: 'translate(-50%, -50%)',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center'
     });
 
     chakraInner = document.createElement('div');
@@ -126,6 +190,7 @@
 
     chakraInner.appendChild(buildChakra());
     chakraWrap.appendChild(chakraInner);
+    chakraWrap.appendChild(buildMessage());
 
     overlay.appendChild(flagWrap);
     overlay.appendChild(chakraWrap);
@@ -140,6 +205,14 @@
       transform: 'scale(1)'
     });
     if (svg) svg.style.animationPlayState = 'running';
+
+    setTimeout(function () {
+      css(messageEl, {
+        transition: 'opacity 0.8s ease, margin-top 0.8s ease',
+        opacity: '1',
+        marginTop: window.innerWidth < 768 ? '60px' : '90px'
+      });
+    }, 300);
   }
 
   function exitOverlay() {
@@ -159,7 +232,7 @@
       css(saffron, { transform: 'translateY(0)' });
       css(green,   { transform: 'translateY(0)' });
       showChakra();
-      setTimeout(exitOverlay, 1200);
+      setTimeout(exitOverlay, 1800);
       return;
     }
 
@@ -169,8 +242,7 @@
         css(green,   { transition: stripeTrans, transform: 'translateY(0)' });
 
         setTimeout(showChakra, 1080);
-
-        setTimeout(exitOverlay, 4500);
+        setTimeout(exitOverlay, 5200);
       });
     });
   }
