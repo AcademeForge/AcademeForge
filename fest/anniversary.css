@@ -1,236 +1,165 @@
 /* fest/anniversary.css
    ═══════════════════════════════════════════════════════════════════
-   Indian Flag Anniversary Intro Animation — Premium Edition
-   Architecture: fixed fullscreen overlay → animated flag stripes
-   → Ashoka Chakra reveal → cinematic exit.
-   JS injects all DOM. This file owns all styles & keyframes.
+   Indian Flag Anniversary Intro — Premium Edition v3
+   All state changes driven by JS class toggles → transitions.
+   No raw CSS animation on inserted elements (avoids race conditions).
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── Design Tokens ───────────────────────────────────────────────── */
 :root {
-  --anv-saffron      : #FF9933;
-  --anv-flag-white   : #FFFFFF;
-  --anv-green        : #138808;
-  --anv-navy         : #000080;
-  --anv-glow-soft    : rgba(0, 0, 128, 0.28);
-  --anv-glow-strong  : rgba(0, 0, 128, 0.50);
-
-  --anv-stripe-ease  : cubic-bezier(0.22, 0.61, 0.36, 1);
-  --anv-chakra-ease  : cubic-bezier(0.22, 0.61, 0.36, 1);
-  --anv-exit-ease    : cubic-bezier(0.4, 0, 0.6, 1);
-
-  --anv-stripe-dur   : 0.9s;
-  --anv-chakra-dur   : 0.7s;
-  --anv-exit-dur     : 0.8s;
-  --anv-spin-dur     : 9s;
+  --anv-saffron   : #FF9933;
+  --anv-white     : #FFFFFF;
+  --anv-green     : #138808;
+  --anv-navy      : #000080;
+  --anv-glow      : rgba(0, 0, 128, 0.32);
+  --anv-stripe-spd: 0.92s;
+  --anv-chakra-spd: 0.75s;
+  --anv-exit-spd  : 0.85s;
+  --anv-ease-out  : cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-/* ── Fullscreen Overlay ──────────────────────────────────────────── */
-#anv-intro-overlay {
-  position         : fixed;
-  inset            : 0;
-  width            : 100vw;
-  height           : 100vh;
-  z-index          : 2147483647;
-  background       : var(--anv-flag-white);
-  overflow         : hidden;
-  will-change      : opacity, transform, filter;
+/* ══════════════════════════════════════════════════════════════════
+   Overlay — fullscreen, highest z-index
+   ══════════════════════════════════════════════════════════════════ */
+#anv-overlay {
+  position  : fixed;
+  inset     : 0;
+  width     : 100vw;
+  height    : 100vh;
+  z-index   : 2147483647;
+  background: var(--anv-white);
+  overflow  : hidden;
+
+  /* Exit transition — opacity only, clean fade */
+  opacity   : 1;
+  transition: opacity var(--anv-exit-spd) ease;
+  will-change: opacity;
 }
 
-/* Exit state — added by JS right before removal */
-#anv-intro-overlay.anv-exit {
-  animation    : anv-overlay-exit var(--anv-exit-dur) var(--anv-exit-ease) forwards;
+/* Exit state — JS adds this class */
+#anv-overlay.anv-exit {
+  opacity       : 0;
   pointer-events: none;
 }
 
-/* ── Flag Container ──────────────────────────────────────────────── */
-.anv-flag-container {
-  position       : absolute;
-  inset          : 0;
-  pointer-events : none;
+/* ══════════════════════════════════════════════════════════════════
+   Flag Stripes
+   ══════════════════════════════════════════════════════════════════ */
+.anv-flag {
+  position: absolute;
+  inset   : 0;
 }
 
-/* ── Flag Stripes ────────────────────────────────────────────────── */
 .anv-stripe {
-  position   : absolute;
-  left       : 0;
-  width      : 100%;
-  height     : 33.334%;
+  position  : absolute;
+  left      : 0;
+  width     : 100%;
+  height    : 33.334%;
   will-change: transform;
 }
 
+/* ── Saffron: starts above screen, slides DOWN ─── */
 .anv-stripe-saffron {
-  top        : 0;
-  background : var(--anv-saffron);
-  animation  : anv-slide-down var(--anv-stripe-dur) var(--anv-stripe-ease) forwards;
+  top       : 0;
+  background: var(--anv-saffron);
+  transform : translateY(-100%);
+  transition: transform var(--anv-stripe-spd) var(--anv-ease-out);
 }
 
+/* ── Green: starts below screen, slides UP ─────── */
 .anv-stripe-green {
-  bottom     : 0;
-  background : var(--anv-green);
-  animation  : anv-slide-up var(--anv-stripe-dur) var(--anv-stripe-ease) forwards;
+  bottom    : 0;
+  background: var(--anv-green);
+  transform : translateY(100%);
+  transition: transform var(--anv-stripe-spd) var(--anv-ease-out);
 }
 
-/* ── Ashoka Chakra — outer wrapper (handles positioning) ─────────── */
-.anv-chakra-container {
-  position       : absolute;
-  top            : 50%;
-  left           : 50%;
-  transform      : translate(-50%, -50%);
-  pointer-events : none;
+/* ── Triggered when JS adds .anv-go to overlay ─── */
+#anv-overlay.anv-go .anv-stripe-saffron { transform: translateY(0); }
+#anv-overlay.anv-go .anv-stripe-green   { transform: translateY(0); }
+
+/* ── Subtle inner edge shadow so stripes read cleanly on white ─── */
+.anv-stripe-saffron::after,
+.anv-stripe-green::before {
+  content : '';
+  position: absolute;
+  left    : 0;
+  width   : 100%;
+  height  : 6px;
+}
+.anv-stripe-saffron::after {
+  bottom    : 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.06), transparent);
+}
+.anv-stripe-green::before {
+  top       : 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.06), transparent);
 }
 
-/* Inner wrapper — handles fade-in + scale-up appear animation */
+/* ══════════════════════════════════════════════════════════════════
+   Ashoka Chakra
+   ══════════════════════════════════════════════════════════════════ */
+.anv-chakra-wrap {
+  position : absolute;
+  top      : 50%;
+  left     : 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Fade + scale in — JS adds .anv-chakra-in */
 .anv-chakra-inner {
   opacity    : 0;
-  transform  : scale(0.5);
+  transform  : scale(0.4);
+  transition : opacity  var(--anv-chakra-spd) var(--anv-ease-out),
+               transform var(--anv-chakra-spd) var(--anv-ease-out);
   will-change: opacity, transform;
 }
 
 .anv-chakra-inner.anv-chakra-in {
-  animation: anv-chakra-appear var(--anv-chakra-dur) var(--anv-chakra-ease) forwards;
+  opacity  : 1;
+  transform: scale(1);
 }
 
-/* SVG — handles continuous spin; starts when appear class is added */
+/* Spinning SVG — continuous rotation via animation (on SVG itself,
+   not on the element doing the transition, so no conflict) */
 .anv-chakra-svg {
-  display     : block;
-  width       : 156px;
-  height      : 156px;
-  will-change : transform;
-  filter      : drop-shadow(0 0 10px var(--anv-glow-soft))
-                drop-shadow(0 0 26px var(--anv-glow-soft))
-                drop-shadow(0 0  6px rgba(255, 255, 255, 0.6));
+  display    : block;
+  width      : 150px;
+  height     : 150px;
+  will-change: transform;
+  filter     : drop-shadow(0 0 10px var(--anv-glow))
+               drop-shadow(0 0 22px var(--anv-glow));
+
+  /* Paused by default; JS starts it via class */
+  animation           : anv-spin 9s linear infinite;
+  animation-play-state: paused;
 }
 
 .anv-chakra-inner.anv-chakra-in .anv-chakra-svg {
-  animation: anv-chakra-spin var(--anv-spin-dur) linear infinite;
+  animation-play-state: running;
 }
 
-/* ── Shine sweep on white stripe ─────────────────────────────────── */
-.anv-stripe-white-shine {
-  position   : absolute;
-  inset      : 0;
-  pointer-events: none;
-  background : linear-gradient(
-    105deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.0) 35%,
-    rgba(255, 255, 255, 0.55) 50%,
-    rgba(255, 255, 255, 0.0) 65%,
-    transparent 100%
-  );
-  animation  : anv-shine-sweep 1.6s ease 1.3s forwards;
-  opacity    : 0;
-}
-
-@keyframes anv-shine-sweep {
-  0%   { opacity: 0; transform: translateX(-120%); }
-  15%  { opacity: 1; }
-  85%  { opacity: 1; }
-  100% { opacity: 0; transform: translateX(120%); }
+@keyframes anv-spin {
+  to { transform: rotate(360deg); }
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   Keyframes
+   Responsive Chakra size
    ══════════════════════════════════════════════════════════════════ */
-
-@keyframes anv-slide-down {
-  from { transform: translateY(-100%); }
-  to   { transform: translateY(0);     }
-}
-
-@keyframes anv-slide-up {
-  from { transform: translateY(100%); }
-  to   { transform: translateY(0);    }
-}
-
-@keyframes anv-chakra-appear {
-  0%   { opacity: 0; transform: scale(0.46); }
-  60%  { opacity: 1; transform: scale(1.05); }
-  100% { opacity: 1; transform: scale(1);    }
-}
-
-@keyframes anv-chakra-spin {
-  from { transform: rotate(0deg);   }
-  to   { transform: rotate(360deg); }
-}
-
-@keyframes anv-overlay-exit {
-  0%   {
-    opacity   : 1;
-    transform : scale(1);
-    filter    : blur(0px);
-  }
-  100% {
-    opacity   : 0;
-    transform : scale(1.05);
-    filter    : blur(12px);
-  }
-}
-
-/* ══════════════════════════════════════════════════════════════════
-   Responsive
-   ══════════════════════════════════════════════════════════════════ */
-
-/* Tablet */
-@media (min-width: 768px) and (max-width: 1023.98px) {
-  .anv-chakra-svg {
-    width : 128px;
-    height: 128px;
-  }
-}
-
-/* Mobile */
 @media (max-width: 767.98px) {
-  .anv-chakra-svg {
-    width : 96px;
-    height: 96px;
-  }
+  .anv-chakra-svg { width: 92px; height: 92px; }
 }
-
-/* Very small phones */
-@media (max-width: 374.98px) {
-  .anv-chakra-svg {
-    width : 80px;
-    height: 80px;
-  }
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .anv-chakra-svg { width: 120px; height: 120px; }
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   Dark Mode — flag colours are vivid enough, no change needed.
-   Overlay bg stays white so the flag reads correctly on any theme.
-   ══════════════════════════════════════════════════════════════════ */
-
-/* ══════════════════════════════════════════════════════════════════
-   Reduced Motion — skip all heavy animation; fade overlay only.
+   Reduced motion — instant flag, immediate fade out
    ══════════════════════════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
   .anv-stripe-saffron,
-  .anv-stripe-green {
-    animation : none !important;
-    transform : translateY(0) !important;
-  }
-
-  .anv-stripe-white-shine {
-    display : none !important;
-  }
-
-  .anv-chakra-inner.anv-chakra-in {
-    animation : none !important;
-    opacity   : 1 !important;
-    transform : scale(1) !important;
-  }
-
-  .anv-chakra-inner.anv-chakra-in .anv-chakra-svg {
-    animation : none !important;
-  }
-
-  #anv-intro-overlay.anv-exit {
-    animation : anv-overlay-fade-reduced 0.45s ease forwards !important;
-  }
-}
-
-@keyframes anv-overlay-fade-reduced {
-  from { opacity: 1; }
-  to   { opacity: 0; }
+  .anv-stripe-green   { transition: none !important; transform: translateY(0) !important; }
+  .anv-chakra-inner   { transition: none !important; opacity: 1 !important; transform: scale(1) !important; }
+  .anv-chakra-svg     { animation: none !important; }
+  #anv-overlay        { transition: opacity 0.4s ease !important; }
 }
