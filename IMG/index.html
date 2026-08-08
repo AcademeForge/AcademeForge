@@ -1330,4 +1330,60 @@ function clearPhotos() {
 
 
     zoomValue1.textContent =
-      
+        "1.00x";
+
+    zoomValue2.textContent =
+        "1.00x";
+
+
+    updateImage(1);
+
+    updateImage(2);
+
+
+    showToast(
+        "🗑 Photos cleared"
+    );
+
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+let toastTimer;
+
+
+function showToast(message) {
+
+    toast.textContent =
+        message;
+
+
+    toast.style.display =
+        "block";
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            function () {
+
+                toast.style.display =
+                    "none";
+
+            },
+            1600
+        );
+
+}
+
+</script>
+
+</body>
+</html>
