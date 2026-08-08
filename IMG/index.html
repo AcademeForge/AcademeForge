@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>2 Photo Collage Maker</title>
 
 <style>
@@ -13,7 +14,7 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #f1f3f5;
+    background: #eef1f5;
     color: #222;
 }
 
@@ -24,11 +25,19 @@ header {
     text-align: center;
 }
 
+header h2 {
+    margin: 0;
+}
+
 .container {
     max-width: 1100px;
     margin: auto;
     padding: 20px;
 }
+
+/* =========================
+   CONTROL PANEL
+========================= */
 
 .controls {
     background: white;
@@ -36,6 +45,16 @@ header {
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0,0,0,.08);
     margin-bottom: 20px;
+}
+
+.paste-info {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+    color: #1e40af;
 }
 
 .uploads {
@@ -49,6 +68,10 @@ header {
     padding: 15px;
     border-radius: 10px;
     text-align: center;
+}
+
+.upload-box h3 {
+    margin-top: 0;
 }
 
 input[type="file"] {
@@ -88,7 +111,15 @@ button.danger {
     background: #dc2626;
 }
 
-/* Collage */
+/* =========================
+   COLLAGE
+========================= */
+
+.collage-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
 #collage {
     width: 800px;
     max-width: 100%;
@@ -100,40 +131,66 @@ button.danger {
     position: relative;
 }
 
+/* =========================
+   PHOTO BOX
+========================= */
+
 .photo {
     width: 50%;
     height: 100%;
     position: relative;
     overflow: hidden;
     background: #ddd;
-    border: 1px solid #fff;
+    border: 2px solid white;
+    cursor: grab;
+}
+
+.photo:active {
+    cursor: grabbing;
 }
 
 .photo img {
     position: absolute;
+
+    /*
+      Image is intentionally larger than
+      the box so that zoom/pan works nicely.
+    */
     width: 100%;
     height: 100%;
+
     object-fit: cover;
+
     user-select: none;
-    pointer-events: none;
+    -webkit-user-drag: none;
 
     transform-origin: center center;
-    transition: transform .1s;
+
+    pointer-events: none;
 }
 
 .placeholder {
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    inset: 0;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     color: #777;
+    font-size: 18px;
 }
+
+/* =========================
+   ZOOM CONTROLS
+========================= */
 
 .photo-controls {
     margin-top: 20px;
+
     display: grid;
     grid-template-columns: 1fr 1fr;
+
     gap: 15px;
 }
 
@@ -141,6 +198,8 @@ button.danger {
     background: white;
     padding: 15px;
     border-radius: 10px;
+
+    box-shadow: 0 3px 10px rgba(0,0,0,.05);
 }
 
 .photo-control h3 {
@@ -151,7 +210,38 @@ button.danger {
     width: 100%;
 }
 
-/* Print */
+/* =========================
+   TOAST MESSAGE
+========================= */
+
+#toast {
+    position: fixed;
+
+    bottom: 20px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    background: #111827;
+    color: white;
+
+    padding: 11px 18px;
+
+    border-radius: 8px;
+
+    z-index: 9999;
+
+    display: none;
+
+    font-size: 14px;
+
+    box-shadow: 0 5px 20px rgba(0,0,0,.2);
+}
+
+/* =========================
+   PRINT
+========================= */
+
 @media print {
 
     body {
@@ -160,7 +250,8 @@ button.danger {
 
     header,
     .controls,
-    .photo-controls {
+    .photo-controls,
+    #toast {
         display: none !important;
     }
 
@@ -170,11 +261,19 @@ button.danger {
         max-width: none;
     }
 
+    .collage-wrapper {
+        display: block;
+        width: 100%;
+    }
+
     #collage {
         width: 100%;
         max-width: none;
+
         margin: 0;
+
         box-shadow: none;
+
         page-break-inside: avoid;
     }
 
@@ -184,7 +283,11 @@ button.danger {
     }
 }
 
-@media(max-width:700px) {
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width: 700px) {
 
     .uploads,
     .photo-controls {
@@ -198,92 +301,160 @@ button.danger {
 </style>
 </head>
 
+
 <body>
 
 <header>
     <h2>📸 2 Photo Collage Maker</h2>
 </header>
 
+
 <div class="container">
 
+    <!-- =========================
+         CONTROLS
+    ========================== -->
+
     <div class="controls">
+
+        <div class="paste-info">
+            💡 <b>Fast Method:</b>
+            Photo copy karo aur yahan
+            <b>Ctrl + V</b> dabao.
+            <br>
+            Pehli paste → Photo 1 &nbsp; | &nbsp;
+            Dusri paste → Photo 2
+        </div>
+
 
         <div class="uploads">
 
             <div class="upload-box">
-                <h3>Photo 1</h3>
-                <input type="file"
-                       id="file1"
-                       accept="image/*">
+
+                <h3>🖼️ Photo 1</h3>
+
+                <input
+                    type="file"
+                    id="file1"
+                    accept="image/*">
+
             </div>
 
+
             <div class="upload-box">
-                <h3>Photo 2</h3>
-                <input type="file"
-                       id="file2"
-                       accept="image/*">
+
+                <h3>🖼️ Photo 2</h3>
+
+                <input
+                    type="file"
+                    id="file2"
+                    accept="image/*">
+
             </div>
 
         </div>
 
+
         <div class="buttons">
+
             <button onclick="swapPhotos()">
                 🔄 Swap Photos
             </button>
 
-            <button class="secondary" onclick="resetZoom()">
+            <button
+                class="secondary"
+                onclick="resetAllZoom()">
+
                 ↺ Reset Zoom
+
             </button>
 
-            <button class="danger" onclick="clearPhotos()">
+            <button
+                class="danger"
+                onclick="clearPhotos()">
+
                 🗑 Clear
+
             </button>
 
-            <button class="print" onclick="window.print()">
+            <button
+                class="print"
+                onclick="window.print()">
+
                 🖨️ Print
+
             </button>
-        </div>
-
-    </div>
-
-
-    <!-- COLLAGE -->
-
-    <div id="collage">
-
-        <div class="photo" id="photoBox1">
-
-            <div class="placeholder" id="placeholder1">
-                Photo 1
-            </div>
-
-            <img id="img1"
-                 style="display:none;">
-
-        </div>
-
-
-        <div class="photo" id="photoBox2">
-
-            <div class="placeholder" id="placeholder2">
-                Photo 2
-            </div>
-
-            <img id="img2"
-                 style="display:none;">
 
         </div>
 
     </div>
 
 
-    <!-- ZOOM CONTROLS -->
+    <!-- =========================
+         COLLAGE
+    ========================== -->
+
+    <div class="collage-wrapper">
+
+        <div id="collage">
+
+            <!-- PHOTO 1 -->
+
+            <div
+                class="photo"
+                id="photoBox1">
+
+                <div
+                    class="placeholder"
+                    id="placeholder1">
+
+                    Photo 1
+
+                </div>
+
+                <img
+                    id="img1"
+                    style="display:none;"
+                    draggable="false">
+
+            </div>
+
+
+            <!-- PHOTO 2 -->
+
+            <div
+                class="photo"
+                id="photoBox2">
+
+                <div
+                    class="placeholder"
+                    id="placeholder2">
+
+                    Photo 2
+
+                </div>
+
+                <img
+                    id="img2"
+                    style="display:none;"
+                    draggable="false">
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         PHOTO CONTROLS
+    ========================== -->
 
     <div class="photo-controls">
 
         <div class="photo-control">
 
-            <h3>Photo 1 🔍</h3>
+            <h3>🔍 Photo 1 Zoom</h3>
 
             <input
                 class="slider"
@@ -296,7 +467,7 @@ button.danger {
 
             <p>
                 Zoom:
-                <span id="zoomValue1">1x</span>
+                <b id="zoomValue1">1.00x</b>
             </p>
 
         </div>
@@ -304,7 +475,7 @@ button.danger {
 
         <div class="photo-control">
 
-            <h3>Photo 2 🔍</h3>
+            <h3>🔍 Photo 2 Zoom</h3>
 
             <input
                 class="slider"
@@ -317,7 +488,7 @@ button.danger {
 
             <p>
                 Zoom:
-                <span id="zoomValue2">1x</span>
+                <b id="zoomValue2">1.00x</b>
             </p>
 
         </div>
@@ -327,154 +498,836 @@ button.danger {
 </div>
 
 
+<!-- TOAST -->
+
+<div id="toast"></div>
+
+
 <script>
 
-const file1 = document.getElementById("file1");
-const file2 = document.getElementById("file2");
+/* =====================================================
+   ELEMENTS
+===================================================== */
 
-const img1 = document.getElementById("img1");
-const img2 = document.getElementById("img2");
+const file1 =
+    document.getElementById("file1");
 
-const placeholder1 = document.getElementById("placeholder1");
-const placeholder2 = document.getElementById("placeholder2");
-
-const zoom1 = document.getElementById("zoom1");
-const zoom2 = document.getElementById("zoom2");
-
-const zoomValue1 = document.getElementById("zoomValue1");
-const zoomValue2 = document.getElementById("zoomValue2");
+const file2 =
+    document.getElementById("file2");
 
 
-// Upload photo 1
-file1.addEventListener("change", function() {
+const img1 =
+    document.getElementById("img1");
+
+const img2 =
+    document.getElementById("img2");
+
+
+const placeholder1 =
+    document.getElementById("placeholder1");
+
+const placeholder2 =
+    document.getElementById("placeholder2");
+
+
+const photoBox1 =
+    document.getElementById("photoBox1");
+
+const photoBox2 =
+    document.getElementById("photoBox2");
+
+
+const zoom1 =
+    document.getElementById("zoom1");
+
+const zoom2 =
+    document.getElementById("zoom2");
+
+
+const zoomValue1 =
+    document.getElementById("zoomValue1");
+
+const zoomValue2 =
+    document.getElementById("zoomValue2");
+
+
+const toast =
+    document.getElementById("toast");
+
+
+/* =====================================================
+   PHOTO STATE
+===================================================== */
+
+let pastePhotoNumber = 0;
+
+
+/*
+    Each photo has its own position and zoom.
+*/
+
+const photoState = {
+
+    1: {
+        zoom: 1,
+        x: 0,
+        y: 0
+    },
+
+    2: {
+        zoom: 1,
+        x: 0,
+        y: 0
+    }
+
+};
+
+
+/* =====================================================
+   FILE UPLOAD
+===================================================== */
+
+file1.addEventListener("change", function () {
+
+    if (!this.files[0]) {
+        return;
+    }
 
     loadImage(
         this.files[0],
-        img1,
-        placeholder1
+        1
     );
 
 });
 
 
-// Upload photo 2
-file2.addEventListener("change", function() {
+file2.addEventListener("change", function () {
+
+    if (!this.files[0]) {
+        return;
+    }
 
     loadImage(
         this.files[0],
-        img2,
-        placeholder2
+        2
     );
 
 });
 
 
-// Load image
-function loadImage(file, img, placeholder) {
+/* =====================================================
+   LOAD IMAGE
+===================================================== */
 
-    if (!file) return;
+function loadImage(file, photoNumber) {
 
-    const reader = new FileReader();
+    const reader =
+        new FileReader();
 
-    reader.onload = function(e) {
 
-        img.src = e.target.result;
+    reader.onload = function (event) {
 
-        img.style.display = "block";
-        placeholder.style.display = "none";
+        const img =
+            photoNumber === 1
+                ? img1
+                : img2;
+
+
+        const placeholder =
+            photoNumber === 1
+                ? placeholder1
+                : placeholder2;
+
+
+        img.src =
+            event.target.result;
+
+
+        img.style.display =
+            "block";
+
+
+        placeholder.style.display =
+            "none";
+
+
+        /*
+            Reset position when new photo
+            is loaded.
+        */
+
+        photoState[photoNumber] = {
+
+            zoom: 1,
+
+            x: 0,
+
+            y: 0
+
+        };
+
+
+        if (photoNumber === 1) {
+
+            zoom1.value = 1;
+
+            zoomValue1.textContent =
+                "1.00x";
+
+        }
+        else {
+
+            zoom2.value = 1;
+
+            zoomValue2.textContent =
+                "1.00x";
+
+        }
+
+
+        updateImage(photoNumber);
+
+
+        showToast(
+            "✅ Photo " +
+            photoNumber +
+            " added"
+        );
 
     };
 
+
     reader.readAsDataURL(file);
+
 }
 
 
-// Zoom Photo 1
-zoom1.addEventListener("input", function() {
+/* =====================================================
+   CTRL + V IMAGE PASTE
+===================================================== */
 
-    const value = this.value;
+document.addEventListener(
+    "paste",
+    function (event) {
 
-    img1.style.transform =
-        `scale(${value})`;
-
-    zoomValue1.textContent =
-        value + "x";
-
-});
+        const clipboard =
+            event.clipboardData;
 
 
-// Zoom Photo 2
-zoom2.addEventListener("input", function() {
-
-    const value = this.value;
-
-    img2.style.transform =
-        `scale(${value})`;
-
-    zoomValue2.textContent =
-        value + "x";
-
-});
+        if (!clipboard) {
+            return;
+        }
 
 
-// Swap Photos
+        const items =
+            clipboard.items;
+
+
+        let foundImage = false;
+
+
+        for (
+            let i = 0;
+            i < items.length;
+            i++
+        ) {
+
+            const item =
+                items[i];
+
+
+            /*
+                Check whether clipboard
+                contains an image.
+            */
+
+            if (
+                item.type &&
+                item.type.startsWith("image/")
+            ) {
+
+                const imageFile =
+                    item.getAsFile();
+
+
+                if (!imageFile) {
+                    continue;
+                }
+
+
+                foundImage = true;
+
+
+                /*
+                    First paste:
+                    Photo 1
+                */
+
+                if (pastePhotoNumber === 0) {
+
+                    loadImage(
+                        imageFile,
+                        1
+                    );
+
+                    pastePhotoNumber = 1;
+
+                }
+
+
+                /*
+                    Second paste:
+                    Photo 2
+                */
+
+                else {
+
+                    loadImage(
+                        imageFile,
+                        2
+                    );
+
+                    pastePhotoNumber = 0;
+
+                }
+
+
+                event.preventDefault();
+
+                break;
+            }
+
+        }
+
+
+        /*
+            If clipboard does not contain
+            an image, do nothing.
+        */
+
+        if (!foundImage) {
+
+            return;
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   ZOOM
+===================================================== */
+
+zoom1.addEventListener(
+    "input",
+    function () {
+
+        photoState[1].zoom =
+            parseFloat(this.value);
+
+
+        zoomValue1.textContent =
+            photoState[1].zoom.toFixed(2) + "x";
+
+
+        updateImage(1);
+
+    }
+);
+
+
+zoom2.addEventListener(
+    "input",
+    function () {
+
+        photoState[2].zoom =
+            parseFloat(this.value);
+
+
+        zoomValue2.textContent =
+            photoState[2].zoom.toFixed(2) + "x";
+
+
+        updateImage(2);
+
+    }
+);
+
+
+/* =====================================================
+   UPDATE IMAGE POSITION
+===================================================== */
+
+function updateImage(photoNumber) {
+
+    const img =
+        photoNumber === 1
+            ? img1
+            : img2;
+
+
+    const state =
+        photoState[photoNumber];
+
+
+    img.style.transform =
+        `translate(${state.x}px, ${state.y}px)
+         scale(${state.zoom})`;
+
+}
+
+
+/* =====================================================
+   DRAG / PAN PHOTO
+===================================================== */
+
+function enableDragging(
+    box,
+    photoNumber
+) {
+
+    let dragging = false;
+
+    let startX = 0;
+
+    let startY = 0;
+
+    let originalX = 0;
+
+    let originalY = 0;
+
+
+    box.addEventListener(
+        "mousedown",
+        function (event) {
+
+            const img =
+                photoNumber === 1
+                    ? img1
+                    : img2;
+
+
+            if (
+                img.style.display === "none"
+            ) {
+
+                return;
+
+            }
+
+
+            dragging = true;
+
+
+            startX =
+                event.clientX;
+
+
+            startY =
+                event.clientY;
+
+
+            originalX =
+                photoState[photoNumber].x;
+
+
+            originalY =
+                photoState[photoNumber].y;
+
+
+            event.preventDefault();
+
+        }
+    );
+
+
+    window.addEventListener(
+        "mousemove",
+        function (event) {
+
+            if (!dragging) {
+                return;
+            }
+
+
+            const dx =
+                event.clientX - startX;
+
+
+            const dy =
+                event.clientY - startY;
+
+
+            photoState[photoNumber].x =
+                originalX + dx;
+
+
+            photoState[photoNumber].y =
+                originalY + dy;
+
+
+            updateImage(photoNumber);
+
+        }
+    );
+
+
+    window.addEventListener(
+        "mouseup",
+        function () {
+
+            dragging = false;
+
+        }
+    );
+
+}
+
+
+enableDragging(
+    photoBox1,
+    1
+);
+
+
+enableDragging(
+    photoBox2,
+    2
+);
+
+
+/* =====================================================
+   TOUCH DRAG
+===================================================== */
+
+function enableTouchDragging(
+    box,
+    photoNumber
+) {
+
+    let dragging = false;
+
+    let startX = 0;
+
+    let startY = 0;
+
+    let originalX = 0;
+
+    let originalY = 0;
+
+
+    box.addEventListener(
+        "touchstart",
+        function (event) {
+
+            if (
+                event.touches.length !== 1
+            ) {
+                return;
+            }
+
+
+            const img =
+                photoNumber === 1
+                    ? img1
+                    : img2;
+
+
+            if (
+                img.style.display === "none"
+            ) {
+                return;
+            }
+
+
+            const touch =
+                event.touches[0];
+
+
+            dragging = true;
+
+
+            startX =
+                touch.clientX;
+
+
+            startY =
+                touch.clientY;
+
+
+            originalX =
+                photoState[photoNumber].x;
+
+
+            originalY =
+                photoState[photoNumber].y;
+
+        },
+        { passive: true }
+    );
+
+
+    box.addEventListener(
+        "touchmove",
+        function (event) {
+
+            if (
+                !dragging ||
+                event.touches.length !== 1
+            ) {
+                return;
+            }
+
+
+            const touch =
+                event.touches[0];
+
+
+            const dx =
+                touch.clientX - startX;
+
+
+            const dy =
+                touch.clientY - startY;
+
+
+            photoState[photoNumber].x =
+                originalX + dx;
+
+
+            photoState[photoNumber].y =
+                originalY + dy;
+
+
+            updateImage(photoNumber);
+
+        },
+        { passive: true }
+    );
+
+
+    box.addEventListener(
+        "touchend",
+        function () {
+
+            dragging = false;
+
+        }
+    );
+
+}
+
+
+enableTouchDragging(
+    photoBox1,
+    1
+);
+
+
+enableTouchDragging(
+    photoBox2,
+    2
+);
+
+
+/* =====================================================
+   SWAP PHOTOS
+===================================================== */
+
 function swapPhotos() {
 
-    const tempSrc = img1.src;
-    const tempDisplay = img1.style.display;
+    const src1 =
+        img1.src;
 
-    img1.src = img2.src;
-    img2.src = tempSrc;
+    const src2 =
+        img2.src;
 
-    img1.style.display = img2.style.display;
-    img2.style.display = tempDisplay;
 
-    const tempPlaceholder =
+    const display1 =
+        img1.style.display;
+
+    const display2 =
+        img2.style.display;
+
+
+    img1.src =
+        src2;
+
+    img2.src =
+        src1;
+
+
+    img1.style.display =
+        display2;
+
+    img2.style.display =
+        display1;
+
+
+    /*
+        Swap placeholders
+    */
+
+    const placeholderDisplay1 =
         placeholder1.style.display;
 
-    placeholder1.style.display =
+    const placeholderDisplay2 =
         placeholder2.style.display;
 
+
+    placeholder1.style.display =
+        placeholderDisplay2;
+
     placeholder2.style.display =
-        tempPlaceholder;
+        placeholderDisplay1;
+
+
+    /*
+        Swap position + zoom
+    */
+
+    const tempState =
+        photoState[1];
+
+
+    photoState[1] =
+        photoState[2];
+
+
+    photoState[2] =
+        tempState;
+
+
+    /*
+        Update sliders
+    */
+
+    zoom1.value =
+        photoState[1].zoom;
+
+    zoom2.value =
+        photoState[2].zoom;
+
+
+    zoomValue1.textContent =
+        photoState[1].zoom.toFixed(2) + "x";
+
+
+    zoomValue2.textContent =
+        photoState[2].zoom.toFixed(2) + "x";
+
+
+    updateImage(1);
+
+    updateImage(2);
+
+
+    showToast(
+        "🔄 Photos swapped"
+    );
 
 }
 
 
-// Reset zoom
-function resetZoom() {
+/* =====================================================
+   RESET ZOOM
+===================================================== */
+
+function resetAllZoom() {
+
+    photoState[1].zoom = 1;
+    photoState[1].x = 0;
+    photoState[1].y = 0;
+
+
+    photoState[2].zoom = 1;
+    photoState[2].x = 0;
+    photoState[2].y = 0;
+
 
     zoom1.value = 1;
     zoom2.value = 1;
 
-    img1.style.transform = "scale(1)";
-    img2.style.transform = "scale(1)";
 
-    zoomValue1.textContent = "1x";
-    zoomValue2.textContent = "1x";
+    zoomValue1.textContent =
+        "1.00x";
+
+    zoomValue2.textContent =
+        "1.00x";
+
+
+    updateImage(1);
+
+    updateImage(2);
+
+
+    showToast(
+        "↺ Zoom reset"
+    );
 
 }
 
 
-// Clear photos
+/* =====================================================
+   CLEAR PHOTOS
+===================================================== */
+
 function clearPhotos() {
 
     img1.src = "";
+
     img2.src = "";
 
-    img1.style.display = "none";
-    img2.style.display = "none";
 
-    placeholder1.style.display = "flex";
-    placeholder2.style.display = "flex";
+    img1.style.display =
+        "none";
+
+    img2.style.display =
+        "none";
+
+
+    placeholder1.style.display =
+        "flex";
+
+    placeholder2.style.display =
+        "flex";
+
 
     file1.value = "";
+
     file2.value = "";
 
-    resetZoom();
-}
 
-</script>
+    photoState[1] = {
 
-</body>
-</html>
+        zoom: 1,
+
+        x: 0,
+
+        y: 0
+
+    };
+
+
+    photoState[2] = {
+
+        zoom: 1,
+
+        x: 0,
+
+        y: 0
+
+    };
+
+
+    pastePhotoNumber = 0;
+
+
+    zoom1.value = 1;
+
+    zoom2.value = 1;
+
+
+    zoomValue1.textContent =
+      
