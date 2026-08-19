@@ -1,1389 +1,517 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sorry Nishu 💖</title>
 
-<title>2 Photo Collage Maker</title>
-
-<style>
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #eef1f5;
-    color: #222;
-}
-
-header {
-    background: #111827;
-    color: white;
-    padding: 16px;
-    text-align: center;
-}
-
-header h2 {
-    margin: 0;
-}
-
-.container {
-    max-width: 1100px;
-    margin: auto;
-    padding: 20px;
-}
-
-/* =========================
-   CONTROL PANEL
-========================= */
-
-.controls {
-    background: white;
-    padding: 18px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,.08);
-    margin-bottom: 20px;
-}
-
-.paste-info {
-    background: #eff6ff;
-    border: 1px solid #bfdbfe;
-    padding: 12px;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    text-align: center;
-    color: #1e40af;
-}
-
-.uploads {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-
-.upload-box {
-    border: 2px dashed #aaa;
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-}
-
-.upload-box h3 {
-    margin-top: 0;
-}
-
-input[type="file"] {
-    width: 100%;
-}
-
-.buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-button {
-    border: 0;
-    padding: 10px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    background: #2563eb;
-    color: white;
-    font-size: 14px;
-}
-
-button:hover {
-    opacity: .9;
-}
-
-button.secondary {
-    background: #4b5563;
-}
-
-button.print {
-    background: #16a34a;
-}
-
-button.danger {
-    background: #dc2626;
-}
-
-/* =========================
-   COLLAGE
-========================= */
-
-.collage-wrapper {
-    display: flex;
-    justify-content: center;
-}
-
-#collage {
-    width: 800px;
-    max-width: 100%;
-    aspect-ratio: 2 / 1;
-    margin: auto;
-    background: white;
-    display: flex;
-    overflow: hidden;
-    position: relative;
-}
-
-/* =========================
-   PHOTO BOX
-========================= */
-
-.photo {
-    width: 50%;
-    height: 100%;
-    position: relative;
-    overflow: hidden;
-    background: #ddd;
-    border: 2px solid white;
-    cursor: grab;
-}
-
-.photo:active {
-    cursor: grabbing;
-}
-
-.photo img {
-    position: absolute;
-
-    /*
-      Image is intentionally larger than
-      the box so that zoom/pan works nicely.
-    */
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-
-    user-select: none;
-    -webkit-user-drag: none;
-
-    transform-origin: center center;
-
-    pointer-events: none;
-}
-
-.placeholder {
-    position: absolute;
-    inset: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: #777;
-    font-size: 18px;
-}
-
-/* =========================
-   ZOOM CONTROLS
-========================= */
-
-.photo-controls {
-    margin-top: 20px;
-
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-
-    gap: 15px;
-}
-
-.photo-control {
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-
-    box-shadow: 0 3px 10px rgba(0,0,0,.05);
-}
-
-.photo-control h3 {
-    margin-top: 0;
-}
-
-.slider {
-    width: 100%;
-}
-
-/* =========================
-   TOAST MESSAGE
-========================= */
-
-#toast {
-    position: fixed;
-
-    bottom: 20px;
-    left: 50%;
-
-    transform: translateX(-50%);
-
-    background: #111827;
-    color: white;
-
-    padding: 11px 18px;
-
-    border-radius: 8px;
-
-    z-index: 9999;
-
-    display: none;
-
-    font-size: 14px;
-
-    box-shadow: 0 5px 20px rgba(0,0,0,.2);
-}
-
-/* =========================
-   PRINT
-========================= */
-
-@media print {
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
     body {
-        background: white;
+      min-height: 100vh;
+      font-family: "Poppins", Arial, sans-serif;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at top left, #ffb6d9, transparent 35%),
+        radial-gradient(circle at bottom right, #b9a7ff, transparent 35%),
+        linear-gradient(135deg, #ff6fae, #8e7dff);
+      color: white;
     }
 
-    header,
-    .controls,
-    .photo-controls,
-    #toast {
-        display: none !important;
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 25px 15px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .container {
-        padding: 0;
-        margin: 0;
-        max-width: none;
+    /* Background floating hearts */
+    .heart {
+      position: absolute;
+      bottom: -50px;
+      font-size: 25px;
+      animation: floatUp linear infinite;
+      opacity: 0.75;
+      pointer-events: none;
     }
 
-    .collage-wrapper {
-        display: block;
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+      }
+
+      15% {
+        opacity: 0.8;
+      }
+
+      100% {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .card {
+      width: min(92%, 500px);
+      padding: 35px 25px;
+      text-align: center;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 5;
+      animation: cardIn 1s ease;
+    }
+
+    @keyframes cardIn {
+      from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.9);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .emoji {
+      font-size: 65px;
+      animation: bounce 1.5s infinite;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0) rotate(-5deg);
+      }
+
+      50% {
+        transform: translateY(-12px) rotate(5deg);
+      }
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 10vw, 4rem);
+      margin-bottom: 8px;
+      text-shadow: 0 5px 15px rgba(0,0,0,.2);
+    }
+
+    .name {
+      color: #fff6a8;
+      animation: glow 1.5s infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 5px #fff6a8;
+      }
+
+      to {
+        text-shadow:
+          0 0 10px #fff6a8,
+          0 0 25px #fff6a8;
+      }
+    }
+
+    .subtitle {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin: 15px 0 25px;
+      opacity: .95;
+    }
+
+    .sorry {
+      font-size: 1.35rem;
+      font-weight: bold;
+      margin: 20px 0;
+      line-height: 1.6;
+    }
+
+    .question-box {
+      margin-top: 25px;
+      padding: 22px 15px;
+      border-radius: 22px;
+      background: rgba(0, 0, 0, 0.13);
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .question {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      animation: questionIn .5s ease;
+    }
+
+    @keyframes questionIn {
+      from {
+        opacity: 0;
+        transform: scale(.8);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      padding: 13px 23px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: .25s ease;
+      font-family: inherit;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .yes {
+      background: #fff;
+      color: #ff4f9a;
+      box-shadow: 0 8px 20px rgba(0,0,0,.18);
+    }
+
+    .yes:hover {
+      transform: scale(1.08);
+    }
+
+    .no {
+      background: rgba(255,255,255,.18);
+      color: white;
+      border: 1px solid rgba(255,255,255,.4);
+    }
+
+    .no:hover {
+      transform: translateY(-3px);
+    }
+
+    .next {
+      margin-top: 20px;
+      background: #ffe66d;
+      color: #7b4c00;
+      display: none;
+    }
+
+    .message {
+      margin-top: 25px;
+      font-size: 1.15rem;
+      line-height: 1.7;
+      display: none;
+      animation: pop .6s ease;
+    }
+
+    @keyframes pop {
+      from {
+        opacity: 0;
+        transform: scale(.7);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .signature {
+      margin-top: 25px;
+      font-size: .9rem;
+      opacity: .8;
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 9px;
+      height: 14px;
+      top: -20px;
+      z-index: 100;
+      pointer-events: none;
+      animation: confettiFall 2.5s linear forwards;
+    }
+
+    @keyframes confettiFall {
+      to {
+        transform:
+          translateY(110vh)
+          rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 30px 18px;
+        border-radius: 25px;
+      }
+
+      .emoji {
+        font-size: 55px;
+      }
+
+      .subtitle {
+        font-size: .95rem;
+      }
+
+      .question {
+        font-size: 1.05rem;
+      }
+
+      button {
         width: 100%;
+        max-width: 230px;
+      }
     }
-
-    #collage {
-        width: 100%;
-        max-width: none;
-
-        margin: 0;
-
-        box-shadow: none;
-
-        page-break-inside: avoid;
-    }
-
-    @page {
-        size: A4 landscape;
-        margin: 10mm;
-    }
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width: 700px) {
-
-    .uploads,
-    .photo-controls {
-        grid-template-columns: 1fr;
-    }
-
-    #collage {
-        aspect-ratio: 1.5 / 1;
-    }
-}
-</style>
+  </style>
 </head>
-
 
 <body>
 
-<header>
-    <h2>📸 2 Photo Collage Maker</h2>
-</header>
+  <div class="page">
 
+    <!-- Floating hearts -->
+    <div id="hearts"></div>
 
-<div class="container">
+    <main class="card">
 
-    <!-- =========================
-         CONTROLS
-    ========================== -->
+      <div class="emoji">🥺💗</div>
 
-    <div class="controls">
+      <h1>
+        Sorry <span class="name">Nishu</span>! 💕
+      </h1>
 
-        <div class="paste-info">
-            💡 <b>Fast Method:</b>
-            Photo copy karo aur yahan
-            <b>Ctrl + V</b> dabao.
-            <br>
-            Pehli paste → Photo 1 &nbsp; | &nbsp;
-            Dusri paste → Photo 2
+      <p class="subtitle">
+        Okay okay... I have something VERY important to ask you 😭👉👈
+      </p>
+
+      <div class="sorry">
+        Can we please press the<br>
+        <strong>"Forgive Me"</strong> button? 🥹
+      </div>
+
+      <div class="question-box">
+
+        <div id="question" class="question">
+          Nishu... are you still angry with me? 😭
         </div>
-
-
-        <div class="uploads">
-
-            <div class="upload-box">
-
-                <h3>🖼️ Photo 1</h3>
-
-                <input
-                    type="file"
-                    id="file1"
-                    accept="image/*">
-
-            </div>
-
-
-            <div class="upload-box">
-
-                <h3>🖼️ Photo 2</h3>
-
-                <input
-                    type="file"
-                    id="file2"
-                    accept="image/*">
-
-            </div>
-
-        </div>
-
 
         <div class="buttons">
+          <button class="yes" onclick="answerYes()">
+            YESSS! 💖
+          </button>
 
-            <button onclick="swapPhotos()">
-                🔄 Swap Photos
-            </button>
-
-            <button
-                class="secondary"
-                onclick="resetAllZoom()">
-
-                ↺ Reset Zoom
-
-            </button>
-
-            <button
-                class="danger"
-                onclick="clearPhotos()">
-
-                🗑 Clear
-
-            </button>
-
-            <button
-                class="print"
-                onclick="window.print()">
-
-                🖨️ Print
-
-            </button>
-
+          <button class="no" onclick="answerNo()">
+            Hmm... 😤
+          </button>
         </div>
 
-    </div>
+        <button id="nextBtn" class="next" onclick="nextQuestion()">
+          Next Question ➡️
+        </button>
 
+      </div>
 
-    <!-- =========================
-         COLLAGE
-    ========================== -->
+      <div id="message" class="message"></div>
 
-    <div class="collage-wrapper">
+      <div class="signature">
+        Made with maximum panic &amp; 1000% sincerity 😭💗
+      </div>
 
-        <div id="collage">
+    </main>
+  </div>
 
-            <!-- PHOTO 1 -->
 
-            <div
-                class="photo"
-                id="photoBox1">
+  <script>
 
-                <div
-                    class="placeholder"
-                    id="placeholder1">
+    const questions = [
+      "Nishu... are you still angry with me? 😭",
+      "Can I get one tiny chance to make it up to you? 🥺",
+      "Can we forget the stupid mistake? 🫣",
+      "Do I deserve at least a little forgiveness? 😭👉👈",
+      "Okay final question... FRIENDS AGAIN? 🥹💖"
+    ];
 
-                    Photo 1
+    let currentQuestion = 0;
 
-                </div>
+    const question = document.getElementById("question");
+    const nextBtn = document.getElementById("nextBtn");
+    const message = document.getElementById("message");
 
-                <img
-                    id="img1"
-                    style="display:none;"
-                    draggable="false">
 
-            </div>
+    function answerYes() {
 
+      createConfetti();
 
-            <!-- PHOTO 2 -->
+      if (currentQuestion === questions.length - 1) {
 
-            <div
-                class="photo"
-                id="photoBox2">
+        question.innerHTML = "YEEEEESSSSS!!! 😭💖🎉";
 
-                <div
-                    class="placeholder"
-                    id="placeholder2">
+        message.style.display = "block";
+        message.innerHTML = `
+          <strong>NISHUUUUU!!! 🥹💗</strong><br><br>
+          Thank you for forgiving me! 😭✨<br>
+          I promise I really am sorry.
+          <br><br>
+          🫶 Peace restored!<br>
+          💕 Friendship saved!<br>
+          🎉 Happiness unlocked!
+        `;
 
-                    Photo 2
+        nextBtn.style.display = "none";
 
-                </div>
+      } else {
 
-                <img
-                    id="img2"
-                    style="display:none;"
-                    draggable="false">
+        message.style.display = "block";
 
-            </div>
+        message.innerHTML = `
+          AAAAAAA YES!!! 😭💗<br>
+          Okay okay... one more question! 👀
+        `;
 
-        </div>
-
-    </div>
-
-
-    <!-- =========================
-         PHOTO CONTROLS
-    ========================== -->
-
-    <div class="photo-controls">
-
-        <div class="photo-control">
-
-            <h3>🔍 Photo 1 Zoom</h3>
-
-            <input
-                class="slider"
-                type="range"
-                id="zoom1"
-                min="1"
-                max="3"
-                step="0.01"
-                value="1">
-
-            <p>
-                Zoom:
-                <b id="zoomValue1">1.00x</b>
-            </p>
-
-        </div>
-
-
-        <div class="photo-control">
-
-            <h3>🔍 Photo 2 Zoom</h3>
-
-            <input
-                class="slider"
-                type="range"
-                id="zoom2"
-                min="1"
-                max="3"
-                step="0.01"
-                value="1">
-
-            <p>
-                Zoom:
-                <b id="zoomValue2">1.00x</b>
-            </p>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- TOAST -->
-
-<div id="toast"></div>
-
-
-<script>
-
-/* =====================================================
-   ELEMENTS
-===================================================== */
-
-const file1 =
-    document.getElementById("file1");
-
-const file2 =
-    document.getElementById("file2");
-
-
-const img1 =
-    document.getElementById("img1");
-
-const img2 =
-    document.getElementById("img2");
-
-
-const placeholder1 =
-    document.getElementById("placeholder1");
-
-const placeholder2 =
-    document.getElementById("placeholder2");
-
-
-const photoBox1 =
-    document.getElementById("photoBox1");
-
-const photoBox2 =
-    document.getElementById("photoBox2");
-
-
-const zoom1 =
-    document.getElementById("zoom1");
-
-const zoom2 =
-    document.getElementById("zoom2");
-
-
-const zoomValue1 =
-    document.getElementById("zoomValue1");
-
-const zoomValue2 =
-    document.getElementById("zoomValue2");
-
-
-const toast =
-    document.getElementById("toast");
-
-
-/* =====================================================
-   PHOTO STATE
-===================================================== */
-
-let pastePhotoNumber = 0;
-
-
-/*
-    Each photo has its own position and zoom.
-*/
-
-const photoState = {
-
-    1: {
-        zoom: 1,
-        x: 0,
-        y: 0
-    },
-
-    2: {
-        zoom: 1,
-        x: 0,
-        y: 0
+        nextBtn.style.display = "inline-block";
+      }
     }
 
-};
 
+    function answerNo() {
 
-/* =====================================================
-   FILE UPLOAD
-===================================================== */
+      const reactions = [
+        "NOOOO 😭💔 Please reconsider!",
+        "WAIT WAIT WAIT 😭 I can explain!",
+        "NISHU PLEASEEE 🥺👉👈",
+        "My apology application has been rejected?! 😭",
+        "Okay... activating maximum sorry mode 🚨🥹"
+      ];
 
-file1.addEventListener("change", function () {
+      question.innerHTML =
+        reactions[Math.floor(Math.random() * reactions.length)];
 
-    if (!this.files[0]) {
-        return;
+      message.style.display = "block";
+
+      message.innerHTML = `
+        <strong>🥺 I'm genuinely sorry!</strong><br>
+        Please give me one tiny chance? 💗
+      `;
+
+      nextBtn.style.display = "inline-block";
     }
 
-    loadImage(
-        this.files[0],
-        1
-    );
 
-});
+    function nextQuestion() {
 
+      currentQuestion++;
 
-file2.addEventListener("change", function () {
+      if (currentQuestion < questions.length) {
 
-    if (!this.files[0]) {
-        return;
+        question.style.animation = "none";
+
+        void question.offsetWidth;
+
+        question.style.animation = "questionIn .5s ease";
+
+        question.innerHTML = questions[currentQuestion];
+
+        message.style.display = "none";
+        nextBtn.style.display = "none";
+
+      }
     }
 
-    loadImage(
-        this.files[0],
-        2
-    );
 
-});
+    /* Floating hearts */
 
+    function createHeart() {
 
-/* =====================================================
-   LOAD IMAGE
-===================================================== */
+      const heart = document.createElement("div");
 
-function loadImage(file, photoNumber) {
+      heart.className = "heart";
 
-    const reader =
-        new FileReader();
+      const emojis = [
+        "💗",
+        "💖",
+        "💕",
+        "💓",
+        "💞",
+        "✨",
+        "🥹"
+      ];
 
+      heart.innerHTML =
+        emojis[Math.floor(Math.random() * emojis.length)];
 
-    reader.onload = function (event) {
+      heart.style.left =
+        Math.random() * 100 + "vw";
 
-        const img =
-            photoNumber === 1
-                ? img1
-                : img2;
+      heart.style.fontSize =
+        (15 + Math.random() * 25) + "px";
 
+      heart.style.animationDuration =
+        (5 + Math.random() * 6) + "s";
 
-        const placeholder =
-            photoNumber === 1
-                ? placeholder1
-                : placeholder2;
+      document.getElementById("hearts").appendChild(heart);
 
-
-        img.src =
-            event.target.result;
-
-
-        img.style.display =
-            "block";
-
-
-        placeholder.style.display =
-            "none";
-
-
-        /*
-            Reset position when new photo
-            is loaded.
-        */
-
-        photoState[photoNumber] = {
-
-            zoom: 1,
-
-            x: 0,
-
-            y: 0
-
-        };
-
-
-        if (photoNumber === 1) {
-
-            zoom1.value = 1;
-
-            zoomValue1.textContent =
-                "1.00x";
-
-        }
-        else {
-
-            zoom2.value = 1;
-
-            zoomValue2.textContent =
-                "1.00x";
-
-        }
-
-
-        updateImage(photoNumber);
-
-
-        showToast(
-            "✅ Photo " +
-            photoNumber +
-            " added"
-        );
-
-    };
-
-
-    reader.readAsDataURL(file);
-
-}
-
-
-/* =====================================================
-   CTRL + V IMAGE PASTE
-===================================================== */
-
-document.addEventListener(
-    "paste",
-    function (event) {
-
-        const clipboard =
-            event.clipboardData;
-
-
-        if (!clipboard) {
-            return;
-        }
-
-
-        const items =
-            clipboard.items;
-
-
-        let foundImage = false;
-
-
-        for (
-            let i = 0;
-            i < items.length;
-            i++
-        ) {
-
-            const item =
-                items[i];
-
-
-            /*
-                Check whether clipboard
-                contains an image.
-            */
-
-            if (
-                item.type &&
-                item.type.startsWith("image/")
-            ) {
-
-                const imageFile =
-                    item.getAsFile();
-
-
-                if (!imageFile) {
-                    continue;
-                }
-
-
-                foundImage = true;
-
-
-                /*
-                    First paste:
-                    Photo 1
-                */
-
-                if (pastePhotoNumber === 0) {
-
-                    loadImage(
-                        imageFile,
-                        1
-                    );
-
-                    pastePhotoNumber = 1;
-
-                }
-
-
-                /*
-                    Second paste:
-                    Photo 2
-                */
-
-                else {
-
-                    loadImage(
-                        imageFile,
-                        2
-                    );
-
-                    pastePhotoNumber = 0;
-
-                }
-
-
-                event.preventDefault();
-
-                break;
-            }
-
-        }
-
-
-        /*
-            If clipboard does not contain
-            an image, do nothing.
-        */
-
-        if (!foundImage) {
-
-            return;
-
-        }
-
+      setTimeout(() => {
+        heart.remove();
+      }, 12000);
     }
-);
+
+    setInterval(createHeart, 500);
 
 
-/* =====================================================
-   ZOOM
-===================================================== */
+    /* Confetti */
 
-zoom1.addEventListener(
-    "input",
-    function () {
+    function createConfetti() {
 
-        photoState[1].zoom =
-            parseFloat(this.value);
+      for (let i = 0; i < 80; i++) {
 
+        const confetti = document.createElement("div");
 
-        zoomValue1.textContent =
-            photoState[1].zoom.toFixed(2) + "x";
+        confetti.className = "confetti";
 
+        confetti.style.left =
+          Math.random() * 100 + "vw";
 
-        updateImage(1);
+        confetti.style.background =
+          `hsl(${Math.random() * 360}, 90%, 65%)`;
 
+        confetti.style.animationDuration =
+          (1.5 + Math.random() * 2) + "s";
+
+        confetti.style.animationDelay =
+          Math.random() * .5 + "s";
+
+        document.body.appendChild(confetti);
+
+        setTimeout(() => {
+          confetti.remove();
+        }, 4000);
+      }
     }
-);
 
-
-zoom2.addEventListener(
-    "input",
-    function () {
-
-        photoState[2].zoom =
-            parseFloat(this.value);
-
-
-        zoomValue2.textContent =
-            photoState[2].zoom.toFixed(2) + "x";
-
-
-        updateImage(2);
-
-    }
-);
-
-
-/* =====================================================
-   UPDATE IMAGE POSITION
-===================================================== */
-
-function updateImage(photoNumber) {
-
-    const img =
-        photoNumber === 1
-            ? img1
-            : img2;
-
-
-    const state =
-        photoState[photoNumber];
-
-
-    img.style.transform =
-        `translate(${state.x}px, ${state.y}px)
-         scale(${state.zoom})`;
-
-}
-
-
-/* =====================================================
-   DRAG / PAN PHOTO
-===================================================== */
-
-function enableDragging(
-    box,
-    photoNumber
-) {
-
-    let dragging = false;
-
-    let startX = 0;
-
-    let startY = 0;
-
-    let originalX = 0;
-
-    let originalY = 0;
-
-
-    box.addEventListener(
-        "mousedown",
-        function (event) {
-
-            const img =
-                photoNumber === 1
-                    ? img1
-                    : img2;
-
-
-            if (
-                img.style.display === "none"
-            ) {
-
-                return;
-
-            }
-
-
-            dragging = true;
-
-
-            startX =
-                event.clientX;
-
-
-            startY =
-                event.clientY;
-
-
-            originalX =
-                photoState[photoNumber].x;
-
-
-            originalY =
-                photoState[photoNumber].y;
-
-
-            event.preventDefault();
-
-        }
-    );
-
-
-    window.addEventListener(
-        "mousemove",
-        function (event) {
-
-            if (!dragging) {
-                return;
-            }
-
-
-            const dx =
-                event.clientX - startX;
-
-
-            const dy =
-                event.clientY - startY;
-
-
-            photoState[photoNumber].x =
-                originalX + dx;
-
-
-            photoState[photoNumber].y =
-                originalY + dy;
-
-
-            updateImage(photoNumber);
-
-        }
-    );
-
-
-    window.addEventListener(
-        "mouseup",
-        function () {
-
-            dragging = false;
-
-        }
-    );
-
-}
-
-
-enableDragging(
-    photoBox1,
-    1
-);
-
-
-enableDragging(
-    photoBox2,
-    2
-);
-
-
-/* =====================================================
-   TOUCH DRAG
-===================================================== */
-
-function enableTouchDragging(
-    box,
-    photoNumber
-) {
-
-    let dragging = false;
-
-    let startX = 0;
-
-    let startY = 0;
-
-    let originalX = 0;
-
-    let originalY = 0;
-
-
-    box.addEventListener(
-        "touchstart",
-        function (event) {
-
-            if (
-                event.touches.length !== 1
-            ) {
-                return;
-            }
-
-
-            const img =
-                photoNumber === 1
-                    ? img1
-                    : img2;
-
-
-            if (
-                img.style.display === "none"
-            ) {
-                return;
-            }
-
-
-            const touch =
-                event.touches[0];
-
-
-            dragging = true;
-
-
-            startX =
-                touch.clientX;
-
-
-            startY =
-                touch.clientY;
-
-
-            originalX =
-                photoState[photoNumber].x;
-
-
-            originalY =
-                photoState[photoNumber].y;
-
-        },
-        { passive: true }
-    );
-
-
-    box.addEventListener(
-        "touchmove",
-        function (event) {
-
-            if (
-                !dragging ||
-                event.touches.length !== 1
-            ) {
-                return;
-            }
-
-
-            const touch =
-                event.touches[0];
-
-
-            const dx =
-                touch.clientX - startX;
-
-
-            const dy =
-                touch.clientY - startY;
-
-
-            photoState[photoNumber].x =
-                originalX + dx;
-
-
-            photoState[photoNumber].y =
-                originalY + dy;
-
-
-            updateImage(photoNumber);
-
-        },
-        { passive: true }
-    );
-
-
-    box.addEventListener(
-        "touchend",
-        function () {
-
-            dragging = false;
-
-        }
-    );
-
-}
-
-
-enableTouchDragging(
-    photoBox1,
-    1
-);
-
-
-enableTouchDragging(
-    photoBox2,
-    2
-);
-
-
-/* =====================================================
-   SWAP PHOTOS
-===================================================== */
-
-function swapPhotos() {
-
-    const src1 =
-        img1.src;
-
-    const src2 =
-        img2.src;
-
-
-    const display1 =
-        img1.style.display;
-
-    const display2 =
-        img2.style.display;
-
-
-    img1.src =
-        src2;
-
-    img2.src =
-        src1;
-
-
-    img1.style.display =
-        display2;
-
-    img2.style.display =
-        display1;
-
-
-    /*
-        Swap placeholders
-    */
-
-    const placeholderDisplay1 =
-        placeholder1.style.display;
-
-    const placeholderDisplay2 =
-        placeholder2.style.display;
-
-
-    placeholder1.style.display =
-        placeholderDisplay2;
-
-    placeholder2.style.display =
-        placeholderDisplay1;
-
-
-    /*
-        Swap position + zoom
-    */
-
-    const tempState =
-        photoState[1];
-
-
-    photoState[1] =
-        photoState[2];
-
-
-    photoState[2] =
-        tempState;
-
-
-    /*
-        Update sliders
-    */
-
-    zoom1.value =
-        photoState[1].zoom;
-
-    zoom2.value =
-        photoState[2].zoom;
-
-
-    zoomValue1.textContent =
-        photoState[1].zoom.toFixed(2) + "x";
-
-
-    zoomValue2.textContent =
-        photoState[2].zoom.toFixed(2) + "x";
-
-
-    updateImage(1);
-
-    updateImage(2);
-
-
-    showToast(
-        "🔄 Photos swapped"
-    );
-
-}
-
-
-/* =====================================================
-   RESET ZOOM
-===================================================== */
-
-function resetAllZoom() {
-
-    photoState[1].zoom = 1;
-    photoState[1].x = 0;
-    photoState[1].y = 0;
-
-
-    photoState[2].zoom = 1;
-    photoState[2].x = 0;
-    photoState[2].y = 0;
-
-
-    zoom1.value = 1;
-    zoom2.value = 1;
-
-
-    zoomValue1.textContent =
-        "1.00x";
-
-    zoomValue2.textContent =
-        "1.00x";
-
-
-    updateImage(1);
-
-    updateImage(2);
-
-
-    showToast(
-        "↺ Zoom reset"
-    );
-
-}
-
-
-/* =====================================================
-   CLEAR PHOTOS
-===================================================== */
-
-function clearPhotos() {
-
-    img1.src = "";
-
-    img2.src = "";
-
-
-    img1.style.display =
-        "none";
-
-    img2.style.display =
-        "none";
-
-
-    placeholder1.style.display =
-        "flex";
-
-    placeholder2.style.display =
-        "flex";
-
-
-    file1.value = "";
-
-    file2.value = "";
-
-
-    photoState[1] = {
-
-        zoom: 1,
-
-        x: 0,
-
-        y: 0
-
-    };
-
-
-    photoState[2] = {
-
-        zoom: 1,
-
-        x: 0,
-
-        y: 0
-
-    };
-
-
-    pastePhotoNumber = 0;
-
-
-    zoom1.value = 1;
-
-    zoom2.value = 1;
-
-
-    zoomValue1.textContent =
-        "1.00x";
-
-    zoomValue2.textContent =
-        "1.00x";
-
-
-    updateImage(1);
-
-    updateImage(2);
-
-
-    showToast(
-        "🗑 Photos cleared"
-    );
-
-}
-
-
-/* =====================================================
-   TOAST
-===================================================== */
-
-let toastTimer;
-
-
-function showToast(message) {
-
-    toast.textContent =
-        message;
-
-
-    toast.style.display =
-        "block";
-
-
-    clearTimeout(
-        toastTimer
-    );
-
-
-    toastTimer =
-        setTimeout(
-            function () {
-
-                toast.style.display =
-                    "none";
-
-            },
-            1600
-        );
-
-}
-
-</script>
+  </script>
 
 </body>
 </html>
