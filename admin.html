@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -641,7 +640,7 @@
       <div class="toolbar">
         <div class="search-box">
           <span class="search-icon">&#128269;</span>
-          <input type="text" id="search-input" placeholder="Search by skills, work experience, or reason to join..." />
+          <input type="text" id="search-input" placeholder="Search by name, email, phone, role, skills, experience…" />
         </div>
         <select class="filter-select" id="filter-status">
           <option value="">All Status</option>
@@ -697,8 +696,15 @@
 
   <script>
     // ═══ CONFIG ═══
+    // Supabase project credentials
     const SUPABASE_URL = 'https://afooyyydhlwngzssgqih.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFmb295eXlkaGx3bmd6c3NncWloIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NDQxMjgsImV4cCI6MjA5NDIyMDEyOH0.KG0XO0oP_2MpewHoIwTtbrKg5FkyOYRUtVzLH1MSJiE';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFmb295eXlkaGx3bmd6c3NncWloIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NDQxMjgsImV4cCI6MjA5NDIyMDEyOH0.KG0XO0oP_2MpewHoIwTtbrKg5FkyOYRUtVzLH1MSJiE';
+    // Edge function URL — used for all writes (status updates)
+    // Deploy: supabase functions deploy admin-applications
+    const EDGE_FN_URL = 'https://afooyyydhlwngzssgqih.supabase.co/functions/v1/admin-applications';
+    // This password gates the login screen AND is sent as x-admin-key to the edge function.
+    // Set the same value as ADMIN_PASSWORD in your Supabase edge function secrets:
+    //   supabase secrets set ADMIN_PASSWORD=academeforge2026
     const ADMIN_GATE_PASSWORD = 'academeforge2026';
     const ALLOWED_STATUS_VALUES = ['submitted', 'under_review', 'approved', 'rejected'];
     const PER_PAGE = 20;
@@ -739,7 +745,7 @@
       document.getElementById('login-btn').textContent = 'Connecting...';
 
       try {
-        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
       } catch (e) {
         errorEl.textContent = 'Connection failed: ' + e.message;
         errorEl.style.display = 'block';
@@ -772,7 +778,7 @@
     (function autoLogin() {
       if (sessionStorage.getItem('af_authed') === 'true') {
         try {
-          supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+          supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
           fetchApplications().then(success => {
             if (success) {
               document.getElementById('login-screen').style.display = 'none';
@@ -797,10 +803,18 @@
         let countQ = supabaseClient.from('join_team_applications').select('*', { count: 'exact', head: true });
         let dataQ = supabaseClient.from('join_team_applications').select('*');
 
-        // Search
+        // Search — covers name, email, phone, skills, work history, and reason to join
         if (STATE.search) {
           const pattern = '%' + STATE.search + '%';
-          const orFilter = 'previous_work.ilike.' + pattern + ',skills_text.ilike.' + pattern + ',why_join.ilike.' + pattern;
+          const orFilter = [
+            'full_name.ilike.' + pattern,
+            'email.ilike.' + pattern,
+            'contact_number.ilike.' + pattern,
+            'selected_role.ilike.' + pattern,
+            'skills_text.ilike.' + pattern,
+            'previous_work.ilike.' + pattern,
+            'why_join.ilike.' + pattern,
+          ].join(',');
           countQ = countQ.or(orFilter);
           dataQ = dataQ.or(orFilter);
         }
@@ -859,31 +873,22 @@
       } catch (err) { console.error('Stats error:', err); }
     }
 
-    // ═══ UPDATE (Direct Supabase — only allowed fields) ═══
+    // ═══ UPDATE via Edge Function (server-side field whitelist + auth) ═══
+    // All writes go through the edge function — the anon key is never used for updates.
+    // The edge function enforces its own field whitelist and validates status values.
     async function updateApplication(id, updates) {
-      const ALLOWED = ['status', 'hr_read', 'hr_approved_resume', 'tried_to_contact', 'final_rejected', 'job_secured'];
-      const sanitized = {};
+      const res = await fetch(EDGE_FN_URL, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-key': ADMIN_GATE_PASSWORD,   // matched against ADMIN_PASSWORD env var
+        },
+        body: JSON.stringify({ id, updates }),
+      });
 
-      for (const [k, v] of Object.entries(updates)) {
-        if (!ALLOWED.includes(k)) continue;
-        if (k === 'status' && !ALLOWED_STATUS_VALUES.includes(v)) {
-          throw new Error('Invalid status: ' + v);
-        }
-        sanitized[k] = v;
-      }
-
-      if (Object.keys(sanitized).length === 0) throw new Error('No valid fields to update.');
-      sanitized.updated_at = new Date().toISOString();
-
-      const { data, error } = await supabaseClient
-        .from('join_team_applications')
-        .update(sanitized)
-        .eq('id', id)
-        .select()
-        .single();
-
-      if (error) throw new Error(error.message);
-      return data;
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || 'Update failed (HTTP ' + res.status + ')');
+      return json.data;
     }
 
     // ═══ RENDERING ═══
