@@ -1395,7 +1395,7 @@
 
       // Store config
       STATE.supabaseUrl = url.replace(/\/$/, '');
-      STATE.functionUrl = STATE.supabaseUrl + '/functions/v1/admin-applications';
+      STATE.functionUrl = STATE.supabaseUrl + '/functions/v1/admin-applications-index-ts';
       STATE.adminKey = password;
       STATE.anonKey = anonKey;
 
@@ -1436,7 +1436,7 @@
       const key = sessionStorage.getItem('af_admin_key');
       if (url && anonKey && key) {
         STATE.supabaseUrl = url;
-        STATE.functionUrl = url + '/functions/v1/admin-applications';
+        STATE.functionUrl = url + '/functions/v1/admin-applications-index-ts';
         STATE.anonKey = anonKey;
         STATE.adminKey = key;
         document.getElementById('supabase-url').value = url;
