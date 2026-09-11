@@ -1380,8 +1380,12 @@
     function handleLogin() {
       const url = document.getElementById('supabase-url').value.trim();
       const anonKey = document.getElementById('supabase-anon-key').value.trim();
-      const password = document.getElementById('admin-password').value.trim();
+      const passwordField = document.getElementById('admin-password').value.trim();
       const errorEl = document.getElementById('login-error');
+
+      // Use sessionStorage password if the field has placeholder asterisks
+      const storedKey = sessionStorage.getItem('af_admin_key');
+      const password = (passwordField === '********' && storedKey) ? storedKey : passwordField;
 
       if (!url || !anonKey || !password) {
         errorEl.textContent = 'Please fill in all fields.';
@@ -1437,7 +1441,7 @@
         STATE.adminKey = key;
         document.getElementById('supabase-url').value = url;
         document.getElementById('supabase-anon-key').value = anonKey;
-        document.getElementById('admin-password').value = '••••••••';
+        document.getElementById('admin-password').value = '********';
 
         fetchApplications().then(success => {
           if (success) {
