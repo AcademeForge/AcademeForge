@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#f8fafc" />
-  <meta name="description" content="HopeNext is AcademeForge's donation portal — funding free tools for students and making quality education accessible for everyone." />
-  <meta name="keywords" content="AcademeForge, HopeNext, Donation, Education, Free Tools, Students, Accessibility" />
+  <meta name="description" content="HopeNext is AcademeForge's donation portal — donate via UPI to fund free tools for students and keep the platform running." />
+  <meta name="keywords" content="AcademeForge, HopeNext, Donation, UPI, Education, Free Tools, Students, Accessibility" />
   <meta name="author" content="AcademeForge" />
   <meta name="robots" content="index, follow" />
   <meta name="googlebot" content="index, follow" />
@@ -13,7 +13,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="AcademeForge" />
   <meta property="og:title" content="HopeNext — Support Education. Support AcademeForge." />
-  <meta property="og:description" content="HopeNext is AcademeForge's donation portal — funding free tools for students and making quality education accessible for everyone." />
+  <meta property="og:description" content="HopeNext is AcademeForge's donation portal — donate via UPI to fund free tools for students and keep the platform running." />
   <meta property="og:url" content="https://academeforge.in/other-tools/hopenext/" />
   <meta property="og:image" content="https://academeforge.in/IMG/og-image.webp" />
   <meta property="og:image:type" content="image/webp" />
@@ -26,6 +26,7 @@
 
   <link rel="stylesheet" href="/assets/css/style.min.css?v=6.0">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="pay.css?v=1.0">
 </head>
 <body>
 
@@ -33,7 +34,7 @@
        NAVIGATION
   ========================================================= -->
   <div id="site-header"></div>
-  
+
   <!-- =========================================================
        MAIN CONTENT — HopeNext
   ========================================================= -->
@@ -42,13 +43,46 @@
     <section class="hn-hero">
       <div class="hero-badge">
         <div class="hero-badge-dot"></div>
-        <span class="i18n-text">Coming Soon</span>
+        <span class="i18n-text">Donations Open</span>
       </div>
       <h1 class="i18n-text">Education should be<br /><em>free for everyone.</em></h1>
-      <p class="i18n-text">Millions of students in India and beyond lack access to quality learning resources. Donations to HopeNext go toward making AcademeForge's courses, tools, and exams accessible to underprivileged students who need them most.</p>
-      <div class="coming-soon-banner">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        <span class="i18n-text">Donations are <strong>not open yet.</strong> We'll announce when they are — follow us to stay updated.</span>
+      <p class="i18n-text">Millions of students in India and beyond lack access to quality learning resources. Your donation to HopeNext helps keep AcademeForge running and makes our courses, tools, and exams accessible to students who need them most.</p>
+
+      <!-- ══ DONATE CARD ══ -->
+      <div class="hn-pay" id="donate">
+        <h2 class="i18n-text">Donate with UPI</h2>
+        <p class="hn-pay-sub i18n-text">Choose an amount. Any UPI app works: Google Pay, PhonePe, Paytm, BHIM and others.</p>
+
+        <div class="hn-amounts" role="group" aria-label="Choose an amount">
+          <button type="button" class="hn-amount" data-amt="50"  aria-pressed="false">₹50</button>
+          <button type="button" class="hn-amount" data-amt="100" aria-pressed="false">₹100</button>
+          <button type="button" class="hn-amount" data-amt="250" aria-pressed="true">₹250</button>
+          <button type="button" class="hn-amount" data-amt="500" aria-pressed="false">₹500</button>
+          <button type="button" class="hn-amount" data-amt="1000" aria-pressed="false">₹1000</button>
+        </div>
+
+        <label class="hn-custom" for="hnCustom">
+          <span>₹</span>
+          <input type="number" id="hnCustom" inputmode="numeric" min="1" max="100000" step="1" placeholder="Or enter your own amount" />
+        </label>
+        <p class="hn-pay-error" id="hnError" role="alert"></p>
+
+        <button type="button" class="hn-pay-btn" id="hnPayBtn">Donate ₹250</button>
+
+        <div class="hn-qr" id="hnQr">
+          <div class="hn-qr-box" id="hnQrBox"></div>
+          <p>Scan with any UPI app to donate <strong id="hnQrAmt">₹250</strong></p>
+        </div>
+
+        <div class="hn-upi">
+          <div>
+            <small>UPI ID</small>
+            <code id="hnUpiId">nightbites@slc</code>
+          </div>
+          <button type="button" class="hn-copy" id="hnCopy">Copy</button>
+        </div>
+
+        <p class="hn-pay-note">Payments go directly to AcademeForge's UPI ID. Check the receiver name in your UPI app before you confirm. Your UPI app shows the payment confirmation.</p>
       </div>
     </section>
 
@@ -62,12 +96,107 @@
       </div>
     </div>
   </main>
-  
- <!-- =========================================================
+
+  <!-- =========================================================
        FOOTER
   ========================================================= -->
   <div id="site-footer"></div>
- <script src="/assets/js/include.js?v=3.0"></script>
-  
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    (function () {
+      var UPI_ID = 'nightbites@slc';
+      var PAYEE  = 'AcademeForge';   // receiver name shown in the UPI app
+      var NOTE   = 'HopeNext donation';
+      var MIN = 1, MAX = 100000;
+
+      var isMobile = /android|iphone|ipad|ipod/i.test(navigator.userAgent);
+      var amount = 250;
+      var qr = null;
+
+      var chips  = document.querySelectorAll('.hn-amount');
+      var custom = document.getElementById('hnCustom');
+      var err    = document.getElementById('hnError');
+      var btn    = document.getElementById('hnPayBtn');
+      var qrWrap = document.getElementById('hnQr');
+      var qrBox  = document.getElementById('hnQrBox');
+      var qrAmt  = document.getElementById('hnQrAmt');
+
+      function upiLink(amt) {
+        return 'upi://pay?pa=' + encodeURIComponent(UPI_ID) +
+               '&pn=' + encodeURIComponent(PAYEE) +
+               '&am=' + amt + '&cu=INR' +
+               '&tn=' + encodeURIComponent(NOTE);
+      }
+
+      function valid(a) { return Number.isInteger(a) && a >= MIN && a <= MAX; }
+
+      function render() {
+        var ok = valid(amount);
+        err.textContent = '';
+        btn.disabled = !ok;
+        btn.textContent = ok ? 'Donate ₹' + amount : 'Enter an amount';
+        if (!isMobile && ok && window.QRCode) {
+          qrWrap.classList.add('show');
+          qrAmt.textContent = '₹' + amount;
+          if (!qr) {
+            qr = new QRCode(qrBox, { text: upiLink(amount), width: 190, height: 190, correctLevel: QRCode.CorrectLevel.M });
+          } else {
+            qr.clear();
+            qr.makeCode(upiLink(amount));
+          }
+        } else if (!ok) {
+          qrWrap.classList.remove('show');
+        }
+      }
+
+      chips.forEach(function (c) {
+        c.addEventListener('click', function () {
+          chips.forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+          c.setAttribute('aria-pressed', 'true');
+          custom.value = '';
+          amount = parseInt(c.dataset.amt, 10);
+          render();
+        });
+      });
+
+      custom.addEventListener('input', function () {
+        chips.forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+        amount = custom.value === '' ? NaN : Number(custom.value);
+        render();
+        if (custom.value !== '' && !valid(amount)) {
+          err.textContent = 'Enter a whole amount from ₹' + MIN + ' to ₹' + MAX.toLocaleString('en-IN') + '.';
+        }
+      });
+
+      btn.addEventListener('click', function () {
+        if (!valid(amount)) return;
+        if (isMobile) {
+          window.location.href = upiLink(amount);
+        } else {
+          err.style.color = 'var(--hn-text-muted)';
+          err.textContent = 'On a computer, scan the QR code below with your phone.';
+          qrWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
+
+      document.getElementById('hnCopy').addEventListener('click', function () {
+        var b = this;
+        function done() { b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy'; }, 1800); }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(UPI_ID).then(done).catch(function () {});
+        } else {
+          var t = document.createElement('textarea');
+          t.value = UPI_ID; document.body.appendChild(t); t.select();
+          try { document.execCommand('copy'); done(); } catch (e) {}
+          t.remove();
+        }
+      });
+
+      render();
+    })();
+  </script>
+  <script src="/assets/js/include.js?v=3.0"></script>
+
 </body>
 </html>
