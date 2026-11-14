@@ -478,10 +478,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-
- document.addEventListener('change', function (e) {
-    if (e.target.id !== 'hero-quick-picker' || e.target.value !== 'download') return;
-    e.stopImmediatePropagation();   // keep your existing picker logic from running for this option
-    e.target.value = '';            // reset so the dropdown isn't stuck on "Download Apps" after Back
-    window.location.href = 'https://download.academeforge.in/';
-  }, true);
