@@ -50,6 +50,7 @@
 
       <!-- ══ DONATE CARD ══ -->
       <div class="hn-pay" id="donate">
+        <div id="hnFlow">
         <h2 class="i18n-text">Donate with UPI</h2>
         <p class="hn-pay-sub i18n-text">Choose an amount. Any UPI app works: Google Pay, PhonePe, Paytm, BHIM and others.</p>
 
@@ -74,16 +75,46 @@
           <p>Scan with any UPI app to donate <strong id="hnQrAmt">₹250</strong></p>
         </div>
 
+        <div class="hn-done" id="hnDoneWrap" hidden>
+          <button type="button" class="hn-done-btn" id="hnDoneBtn">Done, I've paid</button>
+          <p>Tap this after your payment is complete.</p>
+        </div>
+
         <div class="hn-upi">
           <div>
             <small>UPI ID</small>
-            <code id="hnUpiId">nightbites@slc</code>
+            <code id="hnUpiId">academeforge@ybl</code>
           </div>
           <button type="button" class="hn-copy" id="hnCopy">Copy</button>
         </div>
 
         <p class="hn-pay-note">Payments go directly to AcademeForge's UPI ID. Check the receiver name in your UPI app before you confirm. Your UPI app shows the payment confirmation.</p>
-      </div>
+        </div><!-- /hnFlow -->
+
+        <!-- ══ THANK YOU ══ -->
+        <div class="hn-thanks" id="hnThanks" hidden>
+          <div class="hn-thanks-icon" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          </div>
+          <h2>Thank you for your support!</h2>
+          <p class="hn-thanks-text">We're verifying your payment of <strong id="hnThanksAmt"></strong>. Once it's verified, your name will appear on our <a href="#wall-of-fame">Wall of Fame</a>.</p>
+
+          <form class="hn-verify" id="hnVerify" novalidate>
+            <p class="hn-verify-title">Help us verify it faster</p>
+            <label for="hnName">Name for the Wall of Fame</label>
+            <input type="text" id="hnName" maxlength="100" autocomplete="name" placeholder="Your name" />
+            <label for="hnEmail">Email</label>
+            <input type="email" id="hnEmail" maxlength="120" autocomplete="email" placeholder="you@example.com" />
+            <label for="hnUtr">UPI reference number (UTR)</label>
+            <input type="text" id="hnUtr" inputmode="numeric" maxlength="12" placeholder="12-digit number" />
+            <span class="hn-hint">Find it in your UPI app under the payment details.</span>
+            <p class="hn-pay-error" id="hnVerifyMsg" role="alert"></p>
+            <button type="submit" class="hn-pay-btn" id="hnVerifyBtn">Send for verification</button>
+          </form>
+
+          <p class="hn-verify-done" id="hnVerifyDone" hidden>Details received. We'll add your name to the Wall of Fame after we verify your payment.</p>
+          <button type="button" class="hn-copy" id="hnAgain">Make another donation</button>
+        </div>
     </section>
 
     <div class="hn-divider"></div>
@@ -95,6 +126,23 @@
         <p class="i18n-text">AcademeForge was built from day one to be affordable and accessible. HopeNext is the next step — making it possible to extend that promise to students who can't afford even the smallest fee, while ensuring the platform never has to compromise on quality or shut down.</p>
       </div>
     </div>
+
+    <!-- ══ WALL OF FAME — edit this section by hand ══ -->
+    <section class="hn-section wof" id="wall-of-fame">
+      <span class="section-label">Wall of Fame</span>
+      <h2 class="i18n-text">Our supporters</h2>
+      <p class="i18n-text">Thank you to everyone who has helped keep AcademeForge running.</p>
+
+      <!-- No donations yet: delete the line below when you add the first name -->
+      <p class="wof-empty">No donation received yet.</p>
+
+      <!-- Add names like this (uncomment and copy one <li> per supporter):
+      <ul class="wof-list">
+        <li class="wof-item">Supporter Name</li>
+        <li class="wof-item">Another Name</li>
+      </ul>
+      -->
+    </section>
   </main>
 
   <!-- =========================================================
@@ -105,7 +153,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script>
     (function () {
-      var UPI_ID = 'nightbites@slc';
+      var UPI_ID = 'academeforge@ybl';
       var PAYEE  = 'AcademeForge';   // receiver name shown in the UPI app
       var NOTE   = 'HopeNext donation';
       var MIN = 1, MAX = 100000;
@@ -121,6 +169,9 @@
       var qrWrap = document.getElementById('hnQr');
       var qrBox  = document.getElementById('hnQrBox');
       var qrAmt  = document.getElementById('hnQrAmt');
+      var doneWrap = document.getElementById('hnDoneWrap');
+      var FN_URL  = 'https://YOUR_PROJECT_REF.supabase.co/functions/v1/contact-requests-unified';
+      var ANON_KEY = '';   // only if your function has JWT verification on
 
       function upiLink(amt) {
         return 'upi://pay?pa=' + encodeURIComponent(UPI_ID) +
@@ -136,6 +187,7 @@
         err.textContent = '';
         btn.disabled = !ok;
         btn.textContent = ok ? 'Donate ₹' + amount : 'Enter an amount';
+        if (!isMobile) doneWrap.hidden = !ok;
         if (!isMobile && ok && window.QRCode) {
           qrWrap.classList.add('show');
           qrAmt.textContent = '₹' + amount;
@@ -172,6 +224,7 @@
       btn.addEventListener('click', function () {
         if (!valid(amount)) return;
         if (isMobile) {
+          doneWrap.hidden = false;   // show Done for when they come back from the UPI app
           window.location.href = upiLink(amount);
         } else {
           err.style.color = 'var(--hn-text-muted)';
@@ -191,6 +244,66 @@
           try { document.execCommand('copy'); done(); } catch (e) {}
           t.remove();
         }
+      });
+
+      // ── Done → thank-you + verification form ──
+      var flow = document.getElementById('hnFlow');
+      var thanks = document.getElementById('hnThanks');
+      var form = document.getElementById('hnVerify');
+      var vMsg = document.getElementById('hnVerifyMsg');
+      var vBtn = document.getElementById('hnVerifyBtn');
+      var vDone = document.getElementById('hnVerifyDone');
+
+      document.getElementById('hnDoneBtn').addEventListener('click', function () {
+        document.getElementById('hnThanksAmt').textContent = '₹' + amount;
+        flow.hidden = true;
+        thanks.hidden = false;
+        thanks.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+
+      document.getElementById('hnAgain').addEventListener('click', function () {
+        thanks.hidden = true;
+        flow.hidden = false;
+        form.hidden = false;
+        vDone.hidden = true;
+        vMsg.textContent = '';
+      });
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var name  = document.getElementById('hnName').value.trim();
+        var email = document.getElementById('hnEmail').value.trim().toLowerCase();
+        var utr   = document.getElementById('hnUtr').value.trim();
+        vMsg.style.color = '';
+        if (name.length < 2) { vMsg.textContent = 'Enter the name to show on the Wall of Fame.'; return; }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { vMsg.textContent = 'Enter a valid email address.'; return; }
+        if (!/^\d{12}$/.test(utr)) { vMsg.textContent = 'Enter the 12-digit UPI reference number.'; return; }
+
+        var headers = { 'Content-Type': 'application/json' };
+        if (ANON_KEY) { headers.apikey = ANON_KEY; headers.Authorization = 'Bearer ' + ANON_KEY; }
+        vBtn.disabled = true; vBtn.textContent = 'Sending…'; vMsg.textContent = '';
+
+        fetch(FN_URL, {
+          method: 'POST', headers: headers,
+          body: JSON.stringify({
+            full_name: name,
+            email: email,
+            mobile_number: '',
+            contact_reason: 'donation',
+            problem_description: 'HopeNext donation of Rs ' + amount + '. UPI reference (UTR): ' + utr + '. Name for Wall of Fame: ' + name + '. Paid to ' + UPI_ID + '.'
+          })
+        }).then(function (r) {
+          return r.json().catch(function () { return {}; }).then(function (d) {
+            if (!r.ok || d.success === false) throw new Error(d.message || 'Could not send. Please try again.');
+          });
+        }).then(function () {
+          form.hidden = true;
+          vDone.hidden = false;
+        }).catch(function (err) {
+          vMsg.textContent = err.message || 'Could not send. Please try again.';
+        }).then(function () {
+          vBtn.disabled = false; vBtn.textContent = 'Send for verification';
+        });
       });
 
       render();
